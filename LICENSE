@@ -1,0 +1,13 @@
+This repository contains material with different source licenses.
+
+1. Repository-owned tools and original documentation are licensed under
+   the MIT License in LICENSES/MIT.txt.
+2. Files under architecture/arm/m-profile are generated from Arm
+   CMSIS-Core(M) and retain the Apache License 2.0 terms recorded in each
+   file and in LICENSES/Apache-2.0.txt.
+3. Other register YAML files retain the source and distribution notices
+   recorded in the file header and NOTICE.md. The repository does not
+   grant rights to source manuals, vendor trademarks, or implementations.
+
+When a file-specific source or license notice conflicts with this summary,
+the file-specific notice controls.

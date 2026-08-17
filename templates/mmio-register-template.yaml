@@ -1,0 +1,26 @@
+# 将所有 CHIP_MODEL、地址、名称和说明替换为 datasheet 中的真实内容。
+schema_version: 1
+sensor: CHIP_MODEL
+vendor: VENDOR_NAME
+family: CHIP_FAMILY
+device_type: sensor
+who_am_i:
+  reg: null
+  values: []
+
+pages:
+  UI:
+    page_id: 0x00
+    address_unit_bits: 8
+    access: "SPI / I2C"
+    desc: "主接口寄存器页；依据 DOCUMENT_NAME REVISION 整理"
+    registers:
+      - addr: 0x00
+        name: REGISTER_NAME
+        access: RO
+        width: 1
+        desc: "寄存器用途；资料未提供的内容不要推测"
+        fields:
+          - name: value
+            bits: "7:0"
+            desc: "位域含义"

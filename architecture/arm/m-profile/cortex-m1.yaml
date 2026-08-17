@@ -1,0 +1,580 @@
+# Generated from Arm CMSIS-Core headers under Apache-2.0; retain source attribution.
+schema_version: 2
+sensor: "Arm Cortex-M1 system registers"
+vendor: "Arm"
+family: "Armv6-M"
+device_type: "architecture_registers"
+register_space:
+  kind: "arm_system"
+  architecture: "Armv6-M"
+  profile: "M"
+source:
+  title: "Arm CMSIS-Core(M) header definitions"
+  version: "6.3.0"
+  revision: "Cortex-M1"
+  document: "core_cm1.h; m-profile/cmsis_gcc_m.h"
+  url: "https://github.com/ARM-software/CMSIS_6"
+  license: "Apache-2.0"
+  notice: "Generated derivative; retain the Apache-2.0 license and Arm copyright/attribution notices. Special-register value fields without CMSIS *_Pos/*_Msk macros are normalized from stable Arm M-profile architectural semantics."
+pages:
+  Special Registers:
+    access: "MRS / MSR special-register interface"
+    desc: "M-profile processor status, mask, control, and stack-pointer registers exposed by CMSIS-Core intrinsics"
+    registers:
+      - name: "APSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Get APSR Register Returns the content of the APSR Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "APSR"
+        accessors:
+          - name: "__get_APSR"
+            kind: "read"
+            instruction: "MRS <value>, APSR"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "APSR"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#APSR_Type; CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "N"
+            bits: "31"
+            desc: "CMSIS N field"
+          - name: "Z"
+            bits: "30"
+            desc: "CMSIS Z field"
+          - name: "C"
+            bits: "29"
+            desc: "CMSIS C field"
+          - name: "V"
+            bits: "28"
+            desc: "CMSIS V field"
+      - name: "CONTROL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Control Register Returns the content of the Control Register. Set Control Register Writes the given value to the Control Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "CONTROL"
+        accessors:
+          - name: "__get_CONTROL"
+            kind: "read"
+            instruction: "MRS <value>, CONTROL"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "CONTROL"
+          - name: "__set_CONTROL"
+            kind: "write"
+            instruction: "MSR CONTROL, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "CONTROL"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#CONTROL_Type; CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "SPSEL"
+            bits: "1"
+            desc: "CMSIS SPSEL field"
+      - name: "IPSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Get IPSR Register Returns the content of the IPSR Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "IPSR"
+        accessors:
+          - name: "__get_IPSR"
+            kind: "read"
+            instruction: "MRS <value>, IPSR"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "IPSR"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#IPSR_Type; CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "ISR"
+            bits: "8:0"
+            desc: "CMSIS ISR field"
+      - name: "MSP"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Main Stack Pointer Returns the current value of the Main Stack Pointer (MSP). Set Main Stack Pointer Assigns the given value to the Main Stack Pointer (MSP)."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "MSP"
+        accessors:
+          - name: "__get_MSP"
+            kind: "read"
+            instruction: "MRS <value>, MSP"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "MSP"
+          - name: "__set_MSP"
+            kind: "write"
+            instruction: "MSR MSP, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "MSP"
+        source_ref: "CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "ADDRESS"
+            bits: "31:0"
+            desc: "Main Stack Pointer value"
+      - name: "PRIMASK"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Priority Mask Returns the current state of the priority mask bit from the Priority Mask Register. Set Priority Mask Assigns the given value to the Priority Mask Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "PRIMASK"
+        accessors:
+          - name: "__get_PRIMASK"
+            kind: "read"
+            instruction: "MRS <value>, PRIMASK"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "PRIMASK"
+          - name: "__set_PRIMASK"
+            kind: "write"
+            instruction: "MSR PRIMASK, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "PRIMASK"
+        source_ref: "CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "PM"
+            bits: "0"
+            desc: "Exception mask bit"
+      - name: "PSP"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Process Stack Pointer Returns the current value of the Process Stack Pointer (PSP). Set Process Stack Pointer Assigns the given value to the Process Stack Pointer (PSP)."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "PSP"
+        accessors:
+          - name: "__get_PSP"
+            kind: "read"
+            instruction: "MRS <value>, PSP"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "PSP"
+          - name: "__set_PSP"
+            kind: "write"
+            instruction: "MSR PSP, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "PSP"
+        source_ref: "CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "ADDRESS"
+            bits: "31:0"
+            desc: "Process Stack Pointer value"
+      - name: "xPSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Get xPSR Register Returns the content of the xPSR Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "XPSR"
+        accessors:
+          - name: "__get_xPSR"
+            kind: "read"
+            instruction: "MRS <value>, XPSR"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "XPSR"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#xPSR_Type; CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "N"
+            bits: "31"
+            desc: "CMSIS N field"
+          - name: "Z"
+            bits: "30"
+            desc: "CMSIS Z field"
+          - name: "C"
+            bits: "29"
+            desc: "CMSIS C field"
+          - name: "V"
+            bits: "28"
+            desc: "CMSIS V field"
+          - name: "T"
+            bits: "24"
+            desc: "CMSIS T field"
+          - name: "ISR"
+            bits: "8:0"
+            desc: "CMSIS ISR field"
+  SCnSCB:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "SCnSCB registers from SCnSCB_Type"
+    registers:
+      - addr: 3758153736
+        name: "ACTLR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Auxiliary Control Register"
+        groups:
+          - "SCnSCB"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SCnSCB_Type.ACTLR"
+        fields:
+          - name: "ITCMUAEN"
+            bits: "4"
+            desc: "ACTLR: Instruction TCM Upper Alias Enable"
+          - name: "ITCMLAEN"
+            bits: "3"
+            desc: "ACTLR: Instruction TCM Lower Alias Enable"
+  SCB:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "SCB registers from SCB_Type"
+    registers:
+      - addr: 3758157056
+        name: "CPUID"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "CPUID Base Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SCB_Type.CPUID"
+        fields:
+          - name: "IMPLEMENTER"
+            bits: "31:24"
+            desc: "CMSIS IMPLEMENTER field"
+          - name: "VARIANT"
+            bits: "23:20"
+            desc: "CMSIS VARIANT field"
+          - name: "ARCHITECTURE"
+            bits: "19:16"
+            desc: "CMSIS ARCHITECTURE field"
+          - name: "PARTNO"
+            bits: "15:4"
+            desc: "CMSIS PARTNO field"
+          - name: "REVISION"
+            bits: "3:0"
+            desc: "CMSIS REVISION field"
+      - addr: 3758157060
+        name: "ICSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Control and State Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SCB_Type.ICSR"
+        fields:
+          - name: "NMIPENDSET"
+            bits: "31"
+            desc: "CMSIS NMIPENDSET field"
+          - name: "PENDSVSET"
+            bits: "28"
+            desc: "CMSIS PENDSVSET field"
+          - name: "PENDSVCLR"
+            bits: "27"
+            desc: "CMSIS PENDSVCLR field"
+          - name: "PENDSTSET"
+            bits: "26"
+            desc: "CMSIS PENDSTSET field"
+          - name: "PENDSTCLR"
+            bits: "25"
+            desc: "CMSIS PENDSTCLR field"
+          - name: "ISRPREEMPT"
+            bits: "23"
+            desc: "CMSIS ISRPREEMPT field"
+          - name: "ISRPENDING"
+            bits: "22"
+            desc: "CMSIS ISRPENDING field"
+          - name: "VECTPENDING"
+            bits: "20:12"
+            desc: "CMSIS VECTPENDING field"
+          - name: "VECTACTIVE"
+            bits: "8:0"
+            desc: "CMSIS VECTACTIVE field"
+      - addr: 3758157068
+        name: "AIRCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Application Interrupt and Reset Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SCB_Type.AIRCR"
+        fields:
+          - name: "VECTKEY"
+            bits: "31:16"
+            desc: "CMSIS VECTKEY field"
+            condition: "Field view: VECTKEY"
+          - name: "VECTKEYSTAT"
+            bits: "31:16"
+            desc: "CMSIS VECTKEYSTAT field"
+            condition: "Field view: VECTKEYSTAT"
+          - name: "ENDIANNESS"
+            bits: "15"
+            desc: "CMSIS ENDIANNESS field"
+          - name: "SYSRESETREQ"
+            bits: "2"
+            desc: "CMSIS SYSRESETREQ field"
+          - name: "VECTCLRACTIVE"
+            bits: "1"
+            desc: "CMSIS VECTCLRACTIVE field"
+      - addr: 3758157072
+        name: "SCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "System Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SCB_Type.SCR"
+        fields:
+          - name: "SEVONPEND"
+            bits: "4"
+            desc: "CMSIS SEVONPEND field"
+          - name: "SLEEPDEEP"
+            bits: "2"
+            desc: "CMSIS SLEEPDEEP field"
+          - name: "SLEEPONEXIT"
+            bits: "1"
+            desc: "CMSIS SLEEPONEXIT field"
+      - addr: 3758157076
+        name: "CCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Configuration Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SCB_Type.CCR"
+        fields:
+          - name: "STKALIGN"
+            bits: "9"
+            desc: "CMSIS STKALIGN field"
+          - name: "UNALIGN_TRP"
+            bits: "3"
+            desc: "CMSIS UNALIGN_TRP field"
+      - addr: 3758157084
+        name: "SHPR[0]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "System Handlers Priority Registers. [0] is RESERVED (element 0)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SCB_Type.SHPR"
+      - addr: 3758157088
+        name: "SHPR[1]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "System Handlers Priority Registers. [0] is RESERVED (element 1)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SCB_Type.SHPR"
+      - addr: 3758157092
+        name: "SHCSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "System Handler Control and State Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SCB_Type.SHCSR"
+        fields:
+          - name: "SVCALLPENDED"
+            bits: "15"
+            desc: "CMSIS SVCALLPENDED field"
+  SysTick:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "SysTick registers from SysTick_Type"
+    registers:
+      - addr: 3758153744
+        name: "CTRL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "SysTick Control and Status Register"
+        groups:
+          - "SysTick"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SysTick_Type.CTRL"
+        fields:
+          - name: "COUNTFLAG"
+            bits: "16"
+            desc: "CMSIS COUNTFLAG field"
+          - name: "CLKSOURCE"
+            bits: "2"
+            desc: "CMSIS CLKSOURCE field"
+          - name: "TICKINT"
+            bits: "1"
+            desc: "CMSIS TICKINT field"
+          - name: "ENABLE"
+            bits: "0"
+            desc: "CMSIS ENABLE field"
+      - addr: 3758153748
+        name: "LOAD"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "SysTick Reload Value Register"
+        groups:
+          - "SysTick"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SysTick_Type.LOAD"
+        fields:
+          - name: "RELOAD"
+            bits: "23:0"
+            desc: "CMSIS RELOAD field"
+      - addr: 3758153752
+        name: "VAL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "SysTick Current Value Register"
+        groups:
+          - "SysTick"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SysTick_Type.VAL"
+        fields:
+          - name: "CURRENT"
+            bits: "23:0"
+            desc: "CMSIS CURRENT field"
+      - addr: 3758153756
+        name: "CALIB"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "SysTick Calibration Register"
+        groups:
+          - "SysTick"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#SysTick_Type.CALIB"
+        fields:
+          - name: "NOREF"
+            bits: "31"
+            desc: "CMSIS NOREF field"
+          - name: "SKEW"
+            bits: "30"
+            desc: "CMSIS SKEW field"
+          - name: "TENMS"
+            bits: "23:0"
+            desc: "CMSIS TENMS field"
+  NVIC:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "NVIC registers from NVIC_Type"
+    registers:
+      - addr: 3758153984
+        name: "ISER"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Enable Register"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.ISER"
+      - addr: 3758154112
+        name: "ICER"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Enable Register"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.ICER"
+      - addr: 3758154240
+        name: "ISPR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Pending Register"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.ISPR"
+      - addr: 3758154368
+        name: "ICPR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Pending Register"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.ICPR"
+      - addr: 3758154752
+        name: "IPR[0]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Priority Register (element 0)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.IPR"
+      - addr: 3758154756
+        name: "IPR[1]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Priority Register (element 1)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.IPR"
+      - addr: 3758154760
+        name: "IPR[2]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Priority Register (element 2)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.IPR"
+      - addr: 3758154764
+        name: "IPR[3]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Priority Register (element 3)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.IPR"
+      - addr: 3758154768
+        name: "IPR[4]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Priority Register (element 4)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.IPR"
+      - addr: 3758154772
+        name: "IPR[5]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Priority Register (element 5)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.IPR"
+      - addr: 3758154776
+        name: "IPR[6]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Priority Register (element 6)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.IPR"
+      - addr: 3758154780
+        name: "IPR[7]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Priority Register (element 7)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm1.h#NVIC_Type.IPR"

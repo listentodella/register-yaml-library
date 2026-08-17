@@ -1,0 +1,11 @@
+node_modules/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Local source archives and generated scratch data are never repository data.
+sources/
+local/
+tmp/
+/*.yaml
+/*.yml

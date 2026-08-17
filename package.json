@@ -1,0 +1,15 @@
+{
+  "name": "register-yaml-library",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reusable and validated register-description YAML library",
+  "scripts": {
+    "catalog": "node tools/build-catalog.mjs",
+    "catalog:check": "node tools/build-catalog.mjs --check",
+    "validate": "node tools/validate-all.mjs",
+    "test": "npm run validate && npm run catalog:check"
+  },
+  "devDependencies": {
+    "yaml": "2.9.0"
+  }
+}

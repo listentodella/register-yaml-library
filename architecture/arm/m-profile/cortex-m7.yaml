@@ -1,0 +1,5813 @@
+# Generated from Arm CMSIS-Core headers under Apache-2.0; retain source attribution.
+schema_version: 2
+sensor: "Arm Cortex-M7 system registers"
+vendor: "Arm"
+family: "Armv7E-M"
+device_type: "architecture_registers"
+register_space:
+  kind: "arm_system"
+  architecture: "Armv7E-M"
+  profile: "M"
+source:
+  title: "Arm CMSIS-Core(M) header definitions"
+  version: "6.3.0"
+  revision: "Cortex-M7"
+  document: "core_cm7.h; m-profile/cmsis_gcc_m.h"
+  url: "https://github.com/ARM-software/CMSIS_6"
+  license: "Apache-2.0"
+  notice: "Generated derivative; retain the Apache-2.0 license and Arm copyright/attribution notices. Special-register value fields without CMSIS *_Pos/*_Msk macros are normalized from stable Arm M-profile architectural semantics."
+pages:
+  Special Registers:
+    access: "MRS / MSR special-register interface"
+    desc: "M-profile processor status, mask, control, and stack-pointer registers exposed by CMSIS-Core intrinsics"
+    registers:
+      - name: "APSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Get APSR Register Returns the content of the APSR Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "APSR"
+        accessors:
+          - name: "__get_APSR"
+            kind: "read"
+            instruction: "MRS <value>, APSR"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "APSR"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#APSR_Type; CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "N"
+            bits: "31"
+            desc: "CMSIS N field"
+          - name: "Z"
+            bits: "30"
+            desc: "CMSIS Z field"
+          - name: "C"
+            bits: "29"
+            desc: "CMSIS C field"
+          - name: "V"
+            bits: "28"
+            desc: "CMSIS V field"
+          - name: "Q"
+            bits: "27"
+            desc: "CMSIS Q field"
+          - name: "GE"
+            bits: "19:16"
+            desc: "CMSIS GE field"
+      - name: "BASEPRI"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Base Priority Returns the current value of the Base Priority register. Set Base Priority Assigns the given value to the Base Priority register. Set Base Priority with condition Assigns the given value to the Base Priority register only if BASEPRI masking is disabled, or the new value increases the BASEPRI priority level."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "BASEPRI"
+        accessors:
+          - name: "__get_BASEPRI"
+            kind: "read"
+            instruction: "MRS <value>, BASEPRI"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "BASEPRI"
+          - name: "__set_BASEPRI"
+            kind: "write"
+            instruction: "MSR BASEPRI, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "BASEPRI"
+          - name: "__set_BASEPRI_MAX"
+            kind: "write"
+            instruction: "MSR BASEPRI_MAX, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "BASEPRI_MAX"
+        source_ref: "CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "BASEPRI"
+            bits: "7:0"
+            desc: "Base priority mask value"
+      - name: "CONTROL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Control Register Returns the content of the Control Register. Set Control Register Writes the given value to the Control Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "CONTROL"
+        accessors:
+          - name: "__get_CONTROL"
+            kind: "read"
+            instruction: "MRS <value>, CONTROL"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "CONTROL"
+          - name: "__set_CONTROL"
+            kind: "write"
+            instruction: "MSR CONTROL, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "CONTROL"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#CONTROL_Type; CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "FPCA"
+            bits: "2"
+            desc: "CMSIS FPCA field"
+          - name: "SPSEL"
+            bits: "1"
+            desc: "CMSIS SPSEL field"
+          - name: "nPRIV"
+            bits: "0"
+            desc: "CMSIS nPRIV field"
+      - name: "FAULTMASK"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Fault Mask Returns the current value of the Fault Mask register. Set Fault Mask Assigns the given value to the Fault Mask register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "FAULTMASK"
+        accessors:
+          - name: "__get_FAULTMASK"
+            kind: "read"
+            instruction: "MRS <value>, FAULTMASK"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "FAULTMASK"
+          - name: "__set_FAULTMASK"
+            kind: "write"
+            instruction: "MSR FAULTMASK, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "FAULTMASK"
+        source_ref: "CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "FM"
+            bits: "0"
+            desc: "Fault mask bit"
+      - name: "IPSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Get IPSR Register Returns the content of the IPSR Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "IPSR"
+        accessors:
+          - name: "__get_IPSR"
+            kind: "read"
+            instruction: "MRS <value>, IPSR"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "IPSR"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#IPSR_Type; CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "ISR"
+            bits: "8:0"
+            desc: "CMSIS ISR field"
+      - name: "MSP"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Main Stack Pointer Returns the current value of the Main Stack Pointer (MSP). Set Main Stack Pointer Assigns the given value to the Main Stack Pointer (MSP)."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "MSP"
+        accessors:
+          - name: "__get_MSP"
+            kind: "read"
+            instruction: "MRS <value>, MSP"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "MSP"
+          - name: "__set_MSP"
+            kind: "write"
+            instruction: "MSR MSP, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "MSP"
+        source_ref: "CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "ADDRESS"
+            bits: "31:0"
+            desc: "Main Stack Pointer value"
+      - name: "PRIMASK"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Priority Mask Returns the current state of the priority mask bit from the Priority Mask Register. Set Priority Mask Assigns the given value to the Priority Mask Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "PRIMASK"
+        accessors:
+          - name: "__get_PRIMASK"
+            kind: "read"
+            instruction: "MRS <value>, PRIMASK"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "PRIMASK"
+          - name: "__set_PRIMASK"
+            kind: "write"
+            instruction: "MSR PRIMASK, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "PRIMASK"
+        source_ref: "CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "PM"
+            bits: "0"
+            desc: "Exception mask bit"
+      - name: "PSP"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Get Process Stack Pointer Returns the current value of the Process Stack Pointer (PSP). Set Process Stack Pointer Assigns the given value to the Process Stack Pointer (PSP)."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "PSP"
+        accessors:
+          - name: "__get_PSP"
+            kind: "read"
+            instruction: "MRS <value>, PSP"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "PSP"
+          - name: "__set_PSP"
+            kind: "write"
+            instruction: "MSR PSP, <value>"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "PSP"
+        source_ref: "CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "ADDRESS"
+            bits: "31:0"
+            desc: "Process Stack Pointer value"
+      - name: "xPSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Get xPSR Register Returns the content of the xPSR Register."
+        execution_state: "M-profile"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "XPSR"
+        accessors:
+          - name: "__get_xPSR"
+            kind: "read"
+            instruction: "MRS <value>, XPSR"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "XPSR"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#xPSR_Type; CMSIS/Core/Include/m-profile/cmsis_gcc_m.h"
+        fields:
+          - name: "N"
+            bits: "31"
+            desc: "CMSIS N field"
+          - name: "Z"
+            bits: "30"
+            desc: "CMSIS Z field"
+          - name: "C"
+            bits: "29"
+            desc: "CMSIS C field"
+          - name: "V"
+            bits: "28"
+            desc: "CMSIS V field"
+          - name: "Q"
+            bits: "27"
+            desc: "CMSIS Q field"
+          - name: "ICI_IT_2"
+            bits: "26:25"
+            desc: "xPSR: ICI/IT part 2"
+          - name: "T"
+            bits: "24"
+            desc: "CMSIS T field"
+          - name: "GE"
+            bits: "19:16"
+            desc: "CMSIS GE field"
+          - name: "ICI_IT_1"
+            bits: "15:10"
+            desc: "xPSR: ICI/IT part 1"
+          - name: "ISR"
+            bits: "8:0"
+            desc: "CMSIS ISR field"
+  SCnSCB:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "SCnSCB registers from SCnSCB_Type"
+    registers:
+      - addr: 3758153732
+        name: "ICTR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Controller Type Register"
+        groups:
+          - "SCnSCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCnSCB_Type.ICTR"
+        fields:
+          - name: "INTLINESNUM"
+            bits: "3:0"
+            desc: "CMSIS INTLINESNUM field"
+      - addr: 3758153736
+        name: "ACTLR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Auxiliary Control Register"
+        groups:
+          - "SCnSCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCnSCB_Type.ACTLR"
+        fields:
+          - name: "DISDYNADD"
+            bits: "26"
+            desc: "CMSIS DISDYNADD field"
+          - name: "DISISSCH1"
+            bits: "25:21"
+            desc: "CMSIS DISISSCH1 field"
+          - name: "DISDI"
+            bits: "20:16"
+            desc: "CMSIS DISDI field"
+          - name: "DISCRITAXIRUR"
+            bits: "15"
+            desc: "CMSIS DISCRITAXIRUR field"
+          - name: "DISBTACALLOC"
+            bits: "14"
+            desc: "CMSIS DISBTACALLOC field"
+          - name: "DISBTACREAD"
+            bits: "13"
+            desc: "CMSIS DISBTACREAD field"
+          - name: "DISITMATBFLUSH"
+            bits: "12"
+            desc: "CMSIS DISITMATBFLUSH field"
+          - name: "DISRAMODE"
+            bits: "11"
+            desc: "CMSIS DISRAMODE field"
+          - name: "FPEXCODIS"
+            bits: "10"
+            desc: "CMSIS FPEXCODIS field"
+          - name: "DISFOLD"
+            bits: "2"
+            desc: "CMSIS DISFOLD field"
+          - name: "DISMCYCINT"
+            bits: "0"
+            desc: "CMSIS DISMCYCINT field"
+  SCB:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "SCB registers from SCB_Type"
+    registers:
+      - addr: 3758157056
+        name: "CPUID"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "CPUID Base Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.CPUID"
+        fields:
+          - name: "IMPLEMENTER"
+            bits: "31:24"
+            desc: "CMSIS IMPLEMENTER field"
+          - name: "VARIANT"
+            bits: "23:20"
+            desc: "CMSIS VARIANT field"
+          - name: "ARCHITECTURE"
+            bits: "19:16"
+            desc: "CMSIS ARCHITECTURE field"
+          - name: "PARTNO"
+            bits: "15:4"
+            desc: "CMSIS PARTNO field"
+          - name: "REVISION"
+            bits: "3:0"
+            desc: "CMSIS REVISION field"
+      - addr: 3758157060
+        name: "ICSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Control and State Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ICSR"
+        fields:
+          - name: "NMIPENDSET"
+            bits: "31"
+            desc: "CMSIS NMIPENDSET field"
+          - name: "PENDSVSET"
+            bits: "28"
+            desc: "CMSIS PENDSVSET field"
+          - name: "PENDSVCLR"
+            bits: "27"
+            desc: "CMSIS PENDSVCLR field"
+          - name: "PENDSTSET"
+            bits: "26"
+            desc: "CMSIS PENDSTSET field"
+          - name: "PENDSTCLR"
+            bits: "25"
+            desc: "CMSIS PENDSTCLR field"
+          - name: "ISRPREEMPT"
+            bits: "23"
+            desc: "CMSIS ISRPREEMPT field"
+          - name: "ISRPENDING"
+            bits: "22"
+            desc: "CMSIS ISRPENDING field"
+          - name: "VECTPENDING"
+            bits: "20:12"
+            desc: "CMSIS VECTPENDING field"
+          - name: "RETTOBASE"
+            bits: "11"
+            desc: "CMSIS RETTOBASE field"
+          - name: "VECTACTIVE"
+            bits: "8:0"
+            desc: "CMSIS VECTACTIVE field"
+      - addr: 3758157064
+        name: "VTOR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Vector Table Offset Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.VTOR"
+        fields:
+          - name: "TBLOFF"
+            bits: "31:7"
+            desc: "CMSIS TBLOFF field"
+      - addr: 3758157068
+        name: "AIRCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Application Interrupt and Reset Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.AIRCR"
+        fields:
+          - name: "VECTKEY"
+            bits: "31:16"
+            desc: "CMSIS VECTKEY field"
+            condition: "Field view: VECTKEY"
+          - name: "VECTKEYSTAT"
+            bits: "31:16"
+            desc: "CMSIS VECTKEYSTAT field"
+            condition: "Field view: VECTKEYSTAT"
+          - name: "ENDIANNESS"
+            bits: "15"
+            desc: "CMSIS ENDIANNESS field"
+          - name: "PRIGROUP"
+            bits: "10:8"
+            desc: "CMSIS PRIGROUP field"
+          - name: "SYSRESETREQ"
+            bits: "2"
+            desc: "CMSIS SYSRESETREQ field"
+          - name: "VECTCLRACTIVE"
+            bits: "1"
+            desc: "CMSIS VECTCLRACTIVE field"
+          - name: "VECTRESET"
+            bits: "0"
+            desc: "CMSIS VECTRESET field"
+      - addr: 3758157072
+        name: "SCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "System Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SCR"
+        fields:
+          - name: "SEVONPEND"
+            bits: "4"
+            desc: "CMSIS SEVONPEND field"
+          - name: "SLEEPDEEP"
+            bits: "2"
+            desc: "CMSIS SLEEPDEEP field"
+          - name: "SLEEPONEXIT"
+            bits: "1"
+            desc: "CMSIS SLEEPONEXIT field"
+      - addr: 3758157076
+        name: "CCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Configuration Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.CCR"
+        fields:
+          - name: "BP"
+            bits: "18"
+            desc: "SCB CCR: Branch prediction enable bit"
+          - name: "IC"
+            bits: "17"
+            desc: "SCB CCR: Instruction cache enable bit"
+          - name: "DC"
+            bits: "16"
+            desc: "SCB CCR: Cache enable bit"
+          - name: "STKALIGN"
+            bits: "9"
+            desc: "CMSIS STKALIGN field"
+          - name: "BFHFNMIGN"
+            bits: "8"
+            desc: "CMSIS BFHFNMIGN field"
+          - name: "DIV_0_TRP"
+            bits: "4"
+            desc: "CMSIS DIV_0_TRP field"
+          - name: "UNALIGN_TRP"
+            bits: "3"
+            desc: "CMSIS UNALIGN_TRP field"
+          - name: "USERSETMPEND"
+            bits: "1"
+            desc: "CMSIS USERSETMPEND field"
+          - name: "NONBASETHRDENA"
+            bits: "0"
+            desc: "CMSIS NONBASETHRDENA field"
+      - addr: 3758157080
+        name: "SHPR[0]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 0)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157081
+        name: "SHPR[1]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 1)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157082
+        name: "SHPR[2]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 2)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157083
+        name: "SHPR[3]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 3)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157084
+        name: "SHPR[4]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 4)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157085
+        name: "SHPR[5]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 5)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157086
+        name: "SHPR[6]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 6)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157087
+        name: "SHPR[7]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 7)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157088
+        name: "SHPR[8]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 8)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157089
+        name: "SHPR[9]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 9)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157090
+        name: "SHPR[10]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 10)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157091
+        name: "SHPR[11]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "System Handlers Priority Registers (4-7, 8-11, 12-15) (element 11)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHPR"
+      - addr: 3758157092
+        name: "SHCSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "System Handler Control and State Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.SHCSR"
+        fields:
+          - name: "USGFAULTENA"
+            bits: "18"
+            desc: "CMSIS USGFAULTENA field"
+          - name: "BUSFAULTENA"
+            bits: "17"
+            desc: "CMSIS BUSFAULTENA field"
+          - name: "MEMFAULTENA"
+            bits: "16"
+            desc: "CMSIS MEMFAULTENA field"
+          - name: "SVCALLPENDED"
+            bits: "15"
+            desc: "CMSIS SVCALLPENDED field"
+          - name: "BUSFAULTPENDED"
+            bits: "14"
+            desc: "CMSIS BUSFAULTPENDED field"
+          - name: "MEMFAULTPENDED"
+            bits: "13"
+            desc: "CMSIS MEMFAULTPENDED field"
+          - name: "USGFAULTPENDED"
+            bits: "12"
+            desc: "CMSIS USGFAULTPENDED field"
+          - name: "SYSTICKACT"
+            bits: "11"
+            desc: "CMSIS SYSTICKACT field"
+          - name: "PENDSVACT"
+            bits: "10"
+            desc: "CMSIS PENDSVACT field"
+          - name: "MONITORACT"
+            bits: "8"
+            desc: "CMSIS MONITORACT field"
+          - name: "SVCALLACT"
+            bits: "7"
+            desc: "CMSIS SVCALLACT field"
+          - name: "USGFAULTACT"
+            bits: "3"
+            desc: "CMSIS USGFAULTACT field"
+          - name: "BUSFAULTACT"
+            bits: "1"
+            desc: "CMSIS BUSFAULTACT field"
+          - name: "MEMFAULTACT"
+            bits: "0"
+            desc: "CMSIS MEMFAULTACT field"
+      - addr: 3758157096
+        name: "CFSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Configurable Fault Status Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.CFSR"
+        fields:
+          - name: "USGFAULTSR"
+            bits: "31:16"
+            desc: "SCB CFSR: Usage Fault Status Register"
+            condition: "Field view: USGFAULTSR"
+          - name: "DIVBYZERO"
+            bits: "25"
+            desc: "CMSIS DIVBYZERO field"
+            condition: "Field view: DIVBYZERO"
+          - name: "UNALIGNED"
+            bits: "24"
+            desc: "CMSIS UNALIGNED field"
+            condition: "Field view: UNALIGNED"
+          - name: "NOCP"
+            bits: "19"
+            desc: "CMSIS NOCP field"
+            condition: "Field view: NOCP"
+          - name: "INVPC"
+            bits: "18"
+            desc: "CMSIS INVPC field"
+            condition: "Field view: INVPC"
+          - name: "INVSTATE"
+            bits: "17"
+            desc: "CMSIS INVSTATE field"
+            condition: "Field view: INVSTATE"
+          - name: "UNDEFINSTR"
+            bits: "16"
+            desc: "CMSIS UNDEFINSTR field"
+            condition: "Field view: UNDEFINSTR"
+          - name: "BFARVALID"
+            bits: "15"
+            desc: "CMSIS BFARVALID field"
+            condition: "Field view: BFARVALID"
+          - name: "BUSFAULTSR"
+            bits: "15:8"
+            desc: "SCB CFSR: Bus Fault Status Register"
+            condition: "Field view: BUSFAULTSR"
+          - name: "LSPERR"
+            bits: "13"
+            desc: "CMSIS LSPERR field"
+            condition: "Field view: LSPERR"
+          - name: "STKERR"
+            bits: "12"
+            desc: "CMSIS STKERR field"
+            condition: "Field view: STKERR"
+          - name: "UNSTKERR"
+            bits: "11"
+            desc: "CMSIS UNSTKERR field"
+            condition: "Field view: UNSTKERR"
+          - name: "IMPRECISERR"
+            bits: "10"
+            desc: "CMSIS IMPRECISERR field"
+            condition: "Field view: IMPRECISERR"
+          - name: "PRECISERR"
+            bits: "9"
+            desc: "CMSIS PRECISERR field"
+            condition: "Field view: PRECISERR"
+          - name: "IBUSERR"
+            bits: "8"
+            desc: "CMSIS IBUSERR field"
+            condition: "Field view: IBUSERR"
+          - name: "MEMFAULTSR"
+            bits: "7:0"
+            desc: "SCB CFSR: Memory Manage Fault Status Register"
+            condition: "Field view: MEMFAULTSR"
+          - name: "MMARVALID"
+            bits: "7"
+            desc: "CMSIS MMARVALID field"
+            condition: "Field view: MMARVALID"
+          - name: "MLSPERR"
+            bits: "5"
+            desc: "CMSIS MLSPERR field"
+            condition: "Field view: MLSPERR"
+          - name: "MSTKERR"
+            bits: "4"
+            desc: "CMSIS MSTKERR field"
+            condition: "Field view: MSTKERR"
+          - name: "MUNSTKERR"
+            bits: "3"
+            desc: "CMSIS MUNSTKERR field"
+            condition: "Field view: MUNSTKERR"
+          - name: "DACCVIOL"
+            bits: "1"
+            desc: "CMSIS DACCVIOL field"
+            condition: "Field view: DACCVIOL"
+          - name: "IACCVIOL"
+            bits: "0"
+            desc: "CMSIS IACCVIOL field"
+            condition: "Field view: IACCVIOL"
+      - addr: 3758157100
+        name: "HFSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "HardFault Status Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.HFSR"
+        fields:
+          - name: "DEBUGEVT"
+            bits: "31"
+            desc: "CMSIS DEBUGEVT field"
+          - name: "FORCED"
+            bits: "30"
+            desc: "CMSIS FORCED field"
+          - name: "VECTTBL"
+            bits: "1"
+            desc: "CMSIS VECTTBL field"
+      - addr: 3758157104
+        name: "DFSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Debug Fault Status Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.DFSR"
+        fields:
+          - name: "EXTERNAL"
+            bits: "4"
+            desc: "CMSIS EXTERNAL field"
+          - name: "VCATCH"
+            bits: "3"
+            desc: "CMSIS VCATCH field"
+          - name: "DWTTRAP"
+            bits: "2"
+            desc: "CMSIS DWTTRAP field"
+          - name: "BKPT"
+            bits: "1"
+            desc: "CMSIS BKPT field"
+          - name: "HALTED"
+            bits: "0"
+            desc: "CMSIS HALTED field"
+      - addr: 3758157108
+        name: "MMFAR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MemManage Fault Address Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.MMFAR"
+      - addr: 3758157112
+        name: "BFAR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "BusFault Address Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.BFAR"
+      - addr: 3758157116
+        name: "AFSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Auxiliary Fault Status Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.AFSR"
+      - addr: 3758157120
+        name: "ID_PFR[0]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Processor Feature Register (element 0)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_PFR"
+      - addr: 3758157124
+        name: "ID_PFR[1]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Processor Feature Register (element 1)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_PFR"
+      - addr: 3758157128
+        name: "ID_DFR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Debug Feature Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_DFR"
+      - addr: 3758157132
+        name: "ID_AFR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Auxiliary Feature Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_AFR"
+      - addr: 3758157136
+        name: "ID_MMFR[0]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Memory Model Feature Register (element 0)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_MMFR"
+      - addr: 3758157140
+        name: "ID_MMFR[1]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Memory Model Feature Register (element 1)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_MMFR"
+      - addr: 3758157144
+        name: "ID_MMFR[2]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Memory Model Feature Register (element 2)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_MMFR"
+      - addr: 3758157148
+        name: "ID_MMFR[3]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Memory Model Feature Register (element 3)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_MMFR"
+      - addr: 3758157152
+        name: "ID_ISAR[0]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Instruction Set Attributes Register (element 0)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_ISAR"
+      - addr: 3758157156
+        name: "ID_ISAR[1]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Instruction Set Attributes Register (element 1)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_ISAR"
+      - addr: 3758157160
+        name: "ID_ISAR[2]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Instruction Set Attributes Register (element 2)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_ISAR"
+      - addr: 3758157164
+        name: "ID_ISAR[3]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Instruction Set Attributes Register (element 3)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_ISAR"
+      - addr: 3758157168
+        name: "ID_ISAR[4]"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Instruction Set Attributes Register (element 4)"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ID_ISAR"
+      - addr: 3758157176
+        name: "CLIDR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Cache Level ID register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.CLIDR"
+        fields:
+          - name: "LOUU"
+            bits: "29:27"
+            desc: "CMSIS LOUU field"
+          - name: "LOC"
+            bits: "26:24"
+            desc: "CMSIS LOC field"
+      - addr: 3758157180
+        name: "CTR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Cache Type register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.CTR"
+        fields:
+          - name: "FORMAT"
+            bits: "31:29"
+            desc: "CMSIS FORMAT field"
+          - name: "CWG"
+            bits: "27:24"
+            desc: "CMSIS CWG field"
+          - name: "ERG"
+            bits: "23:20"
+            desc: "CMSIS ERG field"
+          - name: "DMINLINE"
+            bits: "19:16"
+            desc: "CMSIS DMINLINE field"
+          - name: "IMINLINE"
+            bits: "3:0"
+            desc: "CMSIS IMINLINE field"
+      - addr: 3758157184
+        name: "CCSIDR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Cache Size ID Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.CCSIDR"
+        fields:
+          - name: "WT"
+            bits: "31"
+            desc: "CMSIS WT field"
+          - name: "WB"
+            bits: "30"
+            desc: "CMSIS WB field"
+          - name: "RA"
+            bits: "29"
+            desc: "CMSIS RA field"
+          - name: "WA"
+            bits: "28"
+            desc: "CMSIS WA field"
+          - name: "NUMSETS"
+            bits: "27:13"
+            desc: "CMSIS NUMSETS field"
+          - name: "ASSOCIATIVITY"
+            bits: "12:3"
+            desc: "CMSIS ASSOCIATIVITY field"
+          - name: "LINESIZE"
+            bits: "2:0"
+            desc: "CMSIS LINESIZE field"
+      - addr: 3758157188
+        name: "CSSELR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Cache Size Selection Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.CSSELR"
+        fields:
+          - name: "LEVEL"
+            bits: "3:1"
+            desc: "CMSIS LEVEL field"
+          - name: "IND"
+            bits: "0"
+            desc: "CMSIS IND field"
+      - addr: 3758157192
+        name: "CPACR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Coprocessor Access Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.CPACR"
+      - addr: 3758157568
+        name: "STIR"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Software Triggered Interrupt Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.STIR"
+        fields:
+          - name: "INTID"
+            bits: "8:0"
+            desc: "CMSIS INTID field"
+      - addr: 3758157632
+        name: "MVFR0"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Media and VFP Feature Register 0"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.MVFR0"
+      - addr: 3758157636
+        name: "MVFR1"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Media and VFP Feature Register 1"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.MVFR1"
+      - addr: 3758157640
+        name: "MVFR2"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Media and VFP Feature Register 2"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.MVFR2"
+      - addr: 3758157648
+        name: "ICIALLU"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "I-Cache Invalidate All to PoU"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ICIALLU"
+      - addr: 3758157656
+        name: "ICIMVAU"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "I-Cache Invalidate by MVA to PoU"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ICIMVAU"
+      - addr: 3758157660
+        name: "DCIMVAC"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "D-Cache Invalidate by MVA to PoC"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.DCIMVAC"
+      - addr: 3758157664
+        name: "DCISW"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "D-Cache Invalidate by Set-way"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.DCISW"
+        fields:
+          - name: "WAY"
+            bits: "31:30"
+            desc: "CMSIS WAY field"
+          - name: "SET"
+            bits: "13:5"
+            desc: "CMSIS SET field"
+      - addr: 3758157668
+        name: "DCCMVAU"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "D-Cache Clean by MVA to PoU"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.DCCMVAU"
+      - addr: 3758157672
+        name: "DCCMVAC"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "D-Cache Clean by MVA to PoC"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.DCCMVAC"
+      - addr: 3758157676
+        name: "DCCSW"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "D-Cache Clean by Set-way"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.DCCSW"
+        fields:
+          - name: "WAY"
+            bits: "31:30"
+            desc: "CMSIS WAY field"
+          - name: "SET"
+            bits: "13:5"
+            desc: "CMSIS SET field"
+      - addr: 3758157680
+        name: "DCCIMVAC"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "D-Cache Clean and Invalidate by MVA to PoC"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.DCCIMVAC"
+      - addr: 3758157684
+        name: "DCCISW"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "D-Cache Clean and Invalidate by Set-way"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.DCCISW"
+        fields:
+          - name: "WAY"
+            bits: "31:30"
+            desc: "CMSIS WAY field"
+          - name: "SET"
+            bits: "13:5"
+            desc: "CMSIS SET field"
+      - addr: 3758157688
+        name: "BPIALL"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Branch Predictor Invalidate All"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.BPIALL"
+      - addr: 3758157712
+        name: "ITCMCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Instruction Tightly-Coupled Memory Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ITCMCR"
+        fields:
+          - name: "SZ"
+            bits: "6:3"
+            desc: "CMSIS SZ field"
+          - name: "RETEN"
+            bits: "2"
+            desc: "CMSIS RETEN field"
+          - name: "RMW"
+            bits: "1"
+            desc: "CMSIS RMW field"
+          - name: "EN"
+            bits: "0"
+            desc: "CMSIS EN field"
+      - addr: 3758157716
+        name: "DTCMCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Data Tightly-Coupled Memory Control Registers"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.DTCMCR"
+        fields:
+          - name: "SZ"
+            bits: "6:3"
+            desc: "CMSIS SZ field"
+          - name: "RETEN"
+            bits: "2"
+            desc: "CMSIS RETEN field"
+          - name: "RMW"
+            bits: "1"
+            desc: "CMSIS RMW field"
+          - name: "EN"
+            bits: "0"
+            desc: "CMSIS EN field"
+      - addr: 3758157720
+        name: "AHBPCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "AHBP Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.AHBPCR"
+        fields:
+          - name: "SZ"
+            bits: "3:1"
+            desc: "CMSIS SZ field"
+          - name: "EN"
+            bits: "0"
+            desc: "CMSIS EN field"
+      - addr: 3758157724
+        name: "CACR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "L1 Cache Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.CACR"
+        fields:
+          - name: "FORCEWT"
+            bits: "2"
+            desc: "CMSIS FORCEWT field"
+          - name: "ECCDIS"
+            bits: "1"
+            desc: "CMSIS ECCDIS field"
+          - name: "SIWT"
+            bits: "0"
+            desc: "CMSIS SIWT field"
+      - addr: 3758157728
+        name: "AHBSCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "AHB Slave Control Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.AHBSCR"
+        fields:
+          - name: "INITCOUNT"
+            bits: "15:11"
+            desc: "CMSIS INITCOUNT field"
+          - name: "TPRI"
+            bits: "10:2"
+            desc: "CMSIS TPRI field"
+          - name: "CTL"
+            bits: "1:0"
+            desc: "CMSIS CTL field"
+      - addr: 3758157736
+        name: "ABFSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Auxiliary Bus Fault Status Register"
+        groups:
+          - "SCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SCB_Type.ABFSR"
+        fields:
+          - name: "AXIMTYPE"
+            bits: "9:8"
+            desc: "CMSIS AXIMTYPE field"
+          - name: "EPPB"
+            bits: "4"
+            desc: "CMSIS EPPB field"
+          - name: "AXIM"
+            bits: "3"
+            desc: "CMSIS AXIM field"
+          - name: "AHBP"
+            bits: "2"
+            desc: "CMSIS AHBP field"
+          - name: "DTCM"
+            bits: "1"
+            desc: "CMSIS DTCM field"
+          - name: "ITCM"
+            bits: "0"
+            desc: "CMSIS ITCM field"
+  SysTick:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "SysTick registers from SysTick_Type"
+    registers:
+      - addr: 3758153744
+        name: "CTRL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "SysTick Control and Status Register"
+        groups:
+          - "SysTick"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SysTick_Type.CTRL"
+        fields:
+          - name: "COUNTFLAG"
+            bits: "16"
+            desc: "CMSIS COUNTFLAG field"
+          - name: "CLKSOURCE"
+            bits: "2"
+            desc: "CMSIS CLKSOURCE field"
+          - name: "TICKINT"
+            bits: "1"
+            desc: "CMSIS TICKINT field"
+          - name: "ENABLE"
+            bits: "0"
+            desc: "CMSIS ENABLE field"
+      - addr: 3758153748
+        name: "LOAD"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "SysTick Reload Value Register"
+        groups:
+          - "SysTick"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SysTick_Type.LOAD"
+        fields:
+          - name: "RELOAD"
+            bits: "23:0"
+            desc: "CMSIS RELOAD field"
+      - addr: 3758153752
+        name: "VAL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "SysTick Current Value Register"
+        groups:
+          - "SysTick"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SysTick_Type.VAL"
+        fields:
+          - name: "CURRENT"
+            bits: "23:0"
+            desc: "CMSIS CURRENT field"
+      - addr: 3758153756
+        name: "CALIB"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "SysTick Calibration Register"
+        groups:
+          - "SysTick"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#SysTick_Type.CALIB"
+        fields:
+          - name: "NOREF"
+            bits: "31"
+            desc: "CMSIS NOREF field"
+          - name: "SKEW"
+            bits: "30"
+            desc: "CMSIS SKEW field"
+          - name: "TENMS"
+            bits: "23:0"
+            desc: "CMSIS TENMS field"
+  NVIC:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "NVIC registers from NVIC_Type"
+    registers:
+      - addr: 3758153984
+        name: "ISER[0]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Enable Register (element 0)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISER"
+      - addr: 3758153988
+        name: "ISER[1]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Enable Register (element 1)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISER"
+      - addr: 3758153992
+        name: "ISER[2]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Enable Register (element 2)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISER"
+      - addr: 3758153996
+        name: "ISER[3]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Enable Register (element 3)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISER"
+      - addr: 3758154000
+        name: "ISER[4]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Enable Register (element 4)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISER"
+      - addr: 3758154004
+        name: "ISER[5]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Enable Register (element 5)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISER"
+      - addr: 3758154008
+        name: "ISER[6]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Enable Register (element 6)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISER"
+      - addr: 3758154012
+        name: "ISER[7]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Enable Register (element 7)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISER"
+      - addr: 3758154112
+        name: "ICER[0]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Enable Register (element 0)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICER"
+      - addr: 3758154116
+        name: "ICER[1]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Enable Register (element 1)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICER"
+      - addr: 3758154120
+        name: "ICER[2]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Enable Register (element 2)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICER"
+      - addr: 3758154124
+        name: "ICER[3]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Enable Register (element 3)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICER"
+      - addr: 3758154128
+        name: "ICER[4]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Enable Register (element 4)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICER"
+      - addr: 3758154132
+        name: "ICER[5]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Enable Register (element 5)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICER"
+      - addr: 3758154136
+        name: "ICER[6]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Enable Register (element 6)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICER"
+      - addr: 3758154140
+        name: "ICER[7]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Enable Register (element 7)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICER"
+      - addr: 3758154240
+        name: "ISPR[0]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Pending Register (element 0)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISPR"
+      - addr: 3758154244
+        name: "ISPR[1]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Pending Register (element 1)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISPR"
+      - addr: 3758154248
+        name: "ISPR[2]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Pending Register (element 2)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISPR"
+      - addr: 3758154252
+        name: "ISPR[3]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Pending Register (element 3)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISPR"
+      - addr: 3758154256
+        name: "ISPR[4]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Pending Register (element 4)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISPR"
+      - addr: 3758154260
+        name: "ISPR[5]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Pending Register (element 5)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISPR"
+      - addr: 3758154264
+        name: "ISPR[6]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Pending Register (element 6)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISPR"
+      - addr: 3758154268
+        name: "ISPR[7]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Set Pending Register (element 7)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ISPR"
+      - addr: 3758154368
+        name: "ICPR[0]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Pending Register (element 0)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICPR"
+      - addr: 3758154372
+        name: "ICPR[1]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Pending Register (element 1)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICPR"
+      - addr: 3758154376
+        name: "ICPR[2]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Pending Register (element 2)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICPR"
+      - addr: 3758154380
+        name: "ICPR[3]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Pending Register (element 3)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICPR"
+      - addr: 3758154384
+        name: "ICPR[4]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Pending Register (element 4)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICPR"
+      - addr: 3758154388
+        name: "ICPR[5]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Pending Register (element 5)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICPR"
+      - addr: 3758154392
+        name: "ICPR[6]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Pending Register (element 6)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICPR"
+      - addr: 3758154396
+        name: "ICPR[7]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Clear Pending Register (element 7)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.ICPR"
+      - addr: 3758154496
+        name: "IABR[0]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Active bit Register (element 0)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IABR"
+      - addr: 3758154500
+        name: "IABR[1]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Active bit Register (element 1)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IABR"
+      - addr: 3758154504
+        name: "IABR[2]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Active bit Register (element 2)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IABR"
+      - addr: 3758154508
+        name: "IABR[3]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Active bit Register (element 3)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IABR"
+      - addr: 3758154512
+        name: "IABR[4]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Active bit Register (element 4)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IABR"
+      - addr: 3758154516
+        name: "IABR[5]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Active bit Register (element 5)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IABR"
+      - addr: 3758154520
+        name: "IABR[6]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Active bit Register (element 6)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IABR"
+      - addr: 3758154524
+        name: "IABR[7]"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Interrupt Active bit Register (element 7)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IABR"
+      - addr: 3758154752
+        name: "IPR[0]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 0)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154753
+        name: "IPR[1]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 1)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154754
+        name: "IPR[2]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 2)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154755
+        name: "IPR[3]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 3)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154756
+        name: "IPR[4]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 4)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154757
+        name: "IPR[5]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 5)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154758
+        name: "IPR[6]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 6)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154759
+        name: "IPR[7]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 7)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154760
+        name: "IPR[8]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 8)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154761
+        name: "IPR[9]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 9)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154762
+        name: "IPR[10]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 10)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154763
+        name: "IPR[11]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 11)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154764
+        name: "IPR[12]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 12)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154765
+        name: "IPR[13]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 13)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154766
+        name: "IPR[14]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 14)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154767
+        name: "IPR[15]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 15)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154768
+        name: "IPR[16]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 16)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154769
+        name: "IPR[17]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 17)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154770
+        name: "IPR[18]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 18)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154771
+        name: "IPR[19]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 19)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154772
+        name: "IPR[20]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 20)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154773
+        name: "IPR[21]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 21)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154774
+        name: "IPR[22]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 22)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154775
+        name: "IPR[23]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 23)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154776
+        name: "IPR[24]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 24)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154777
+        name: "IPR[25]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 25)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154778
+        name: "IPR[26]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 26)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154779
+        name: "IPR[27]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 27)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154780
+        name: "IPR[28]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 28)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154781
+        name: "IPR[29]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 29)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154782
+        name: "IPR[30]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 30)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154783
+        name: "IPR[31]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 31)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154784
+        name: "IPR[32]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 32)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154785
+        name: "IPR[33]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 33)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154786
+        name: "IPR[34]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 34)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154787
+        name: "IPR[35]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 35)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154788
+        name: "IPR[36]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 36)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154789
+        name: "IPR[37]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 37)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154790
+        name: "IPR[38]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 38)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154791
+        name: "IPR[39]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 39)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154792
+        name: "IPR[40]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 40)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154793
+        name: "IPR[41]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 41)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154794
+        name: "IPR[42]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 42)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154795
+        name: "IPR[43]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 43)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154796
+        name: "IPR[44]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 44)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154797
+        name: "IPR[45]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 45)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154798
+        name: "IPR[46]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 46)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154799
+        name: "IPR[47]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 47)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154800
+        name: "IPR[48]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 48)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154801
+        name: "IPR[49]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 49)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154802
+        name: "IPR[50]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 50)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154803
+        name: "IPR[51]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 51)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154804
+        name: "IPR[52]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 52)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154805
+        name: "IPR[53]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 53)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154806
+        name: "IPR[54]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 54)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154807
+        name: "IPR[55]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 55)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154808
+        name: "IPR[56]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 56)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154809
+        name: "IPR[57]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 57)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154810
+        name: "IPR[58]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 58)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154811
+        name: "IPR[59]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 59)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154812
+        name: "IPR[60]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 60)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154813
+        name: "IPR[61]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 61)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154814
+        name: "IPR[62]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 62)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154815
+        name: "IPR[63]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 63)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154816
+        name: "IPR[64]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 64)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154817
+        name: "IPR[65]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 65)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154818
+        name: "IPR[66]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 66)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154819
+        name: "IPR[67]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 67)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154820
+        name: "IPR[68]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 68)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154821
+        name: "IPR[69]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 69)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154822
+        name: "IPR[70]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 70)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154823
+        name: "IPR[71]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 71)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154824
+        name: "IPR[72]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 72)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154825
+        name: "IPR[73]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 73)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154826
+        name: "IPR[74]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 74)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154827
+        name: "IPR[75]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 75)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154828
+        name: "IPR[76]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 76)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154829
+        name: "IPR[77]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 77)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154830
+        name: "IPR[78]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 78)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154831
+        name: "IPR[79]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 79)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154832
+        name: "IPR[80]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 80)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154833
+        name: "IPR[81]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 81)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154834
+        name: "IPR[82]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 82)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154835
+        name: "IPR[83]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 83)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154836
+        name: "IPR[84]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 84)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154837
+        name: "IPR[85]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 85)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154838
+        name: "IPR[86]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 86)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154839
+        name: "IPR[87]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 87)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154840
+        name: "IPR[88]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 88)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154841
+        name: "IPR[89]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 89)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154842
+        name: "IPR[90]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 90)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154843
+        name: "IPR[91]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 91)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154844
+        name: "IPR[92]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 92)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154845
+        name: "IPR[93]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 93)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154846
+        name: "IPR[94]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 94)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154847
+        name: "IPR[95]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 95)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154848
+        name: "IPR[96]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 96)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154849
+        name: "IPR[97]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 97)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154850
+        name: "IPR[98]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 98)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154851
+        name: "IPR[99]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 99)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154852
+        name: "IPR[100]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 100)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154853
+        name: "IPR[101]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 101)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154854
+        name: "IPR[102]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 102)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154855
+        name: "IPR[103]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 103)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154856
+        name: "IPR[104]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 104)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154857
+        name: "IPR[105]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 105)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154858
+        name: "IPR[106]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 106)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154859
+        name: "IPR[107]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 107)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154860
+        name: "IPR[108]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 108)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154861
+        name: "IPR[109]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 109)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154862
+        name: "IPR[110]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 110)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154863
+        name: "IPR[111]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 111)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154864
+        name: "IPR[112]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 112)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154865
+        name: "IPR[113]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 113)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154866
+        name: "IPR[114]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 114)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154867
+        name: "IPR[115]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 115)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154868
+        name: "IPR[116]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 116)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154869
+        name: "IPR[117]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 117)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154870
+        name: "IPR[118]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 118)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154871
+        name: "IPR[119]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 119)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154872
+        name: "IPR[120]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 120)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154873
+        name: "IPR[121]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 121)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154874
+        name: "IPR[122]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 122)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154875
+        name: "IPR[123]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 123)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154876
+        name: "IPR[124]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 124)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154877
+        name: "IPR[125]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 125)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154878
+        name: "IPR[126]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 126)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154879
+        name: "IPR[127]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 127)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154880
+        name: "IPR[128]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 128)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154881
+        name: "IPR[129]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 129)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154882
+        name: "IPR[130]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 130)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154883
+        name: "IPR[131]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 131)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154884
+        name: "IPR[132]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 132)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154885
+        name: "IPR[133]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 133)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154886
+        name: "IPR[134]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 134)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154887
+        name: "IPR[135]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 135)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154888
+        name: "IPR[136]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 136)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154889
+        name: "IPR[137]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 137)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154890
+        name: "IPR[138]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 138)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154891
+        name: "IPR[139]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 139)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154892
+        name: "IPR[140]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 140)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154893
+        name: "IPR[141]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 141)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154894
+        name: "IPR[142]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 142)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154895
+        name: "IPR[143]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 143)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154896
+        name: "IPR[144]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 144)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154897
+        name: "IPR[145]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 145)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154898
+        name: "IPR[146]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 146)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154899
+        name: "IPR[147]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 147)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154900
+        name: "IPR[148]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 148)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154901
+        name: "IPR[149]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 149)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154902
+        name: "IPR[150]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 150)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154903
+        name: "IPR[151]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 151)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154904
+        name: "IPR[152]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 152)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154905
+        name: "IPR[153]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 153)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154906
+        name: "IPR[154]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 154)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154907
+        name: "IPR[155]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 155)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154908
+        name: "IPR[156]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 156)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154909
+        name: "IPR[157]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 157)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154910
+        name: "IPR[158]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 158)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154911
+        name: "IPR[159]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 159)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154912
+        name: "IPR[160]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 160)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154913
+        name: "IPR[161]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 161)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154914
+        name: "IPR[162]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 162)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154915
+        name: "IPR[163]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 163)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154916
+        name: "IPR[164]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 164)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154917
+        name: "IPR[165]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 165)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154918
+        name: "IPR[166]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 166)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154919
+        name: "IPR[167]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 167)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154920
+        name: "IPR[168]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 168)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154921
+        name: "IPR[169]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 169)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154922
+        name: "IPR[170]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 170)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154923
+        name: "IPR[171]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 171)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154924
+        name: "IPR[172]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 172)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154925
+        name: "IPR[173]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 173)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154926
+        name: "IPR[174]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 174)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154927
+        name: "IPR[175]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 175)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154928
+        name: "IPR[176]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 176)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154929
+        name: "IPR[177]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 177)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154930
+        name: "IPR[178]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 178)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154931
+        name: "IPR[179]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 179)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154932
+        name: "IPR[180]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 180)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154933
+        name: "IPR[181]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 181)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154934
+        name: "IPR[182]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 182)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154935
+        name: "IPR[183]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 183)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154936
+        name: "IPR[184]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 184)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154937
+        name: "IPR[185]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 185)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154938
+        name: "IPR[186]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 186)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154939
+        name: "IPR[187]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 187)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154940
+        name: "IPR[188]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 188)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154941
+        name: "IPR[189]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 189)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154942
+        name: "IPR[190]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 190)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154943
+        name: "IPR[191]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 191)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154944
+        name: "IPR[192]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 192)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154945
+        name: "IPR[193]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 193)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154946
+        name: "IPR[194]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 194)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154947
+        name: "IPR[195]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 195)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154948
+        name: "IPR[196]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 196)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154949
+        name: "IPR[197]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 197)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154950
+        name: "IPR[198]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 198)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154951
+        name: "IPR[199]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 199)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154952
+        name: "IPR[200]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 200)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154953
+        name: "IPR[201]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 201)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154954
+        name: "IPR[202]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 202)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154955
+        name: "IPR[203]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 203)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154956
+        name: "IPR[204]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 204)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154957
+        name: "IPR[205]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 205)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154958
+        name: "IPR[206]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 206)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154959
+        name: "IPR[207]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 207)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154960
+        name: "IPR[208]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 208)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154961
+        name: "IPR[209]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 209)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154962
+        name: "IPR[210]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 210)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154963
+        name: "IPR[211]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 211)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154964
+        name: "IPR[212]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 212)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154965
+        name: "IPR[213]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 213)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154966
+        name: "IPR[214]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 214)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154967
+        name: "IPR[215]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 215)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154968
+        name: "IPR[216]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 216)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154969
+        name: "IPR[217]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 217)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154970
+        name: "IPR[218]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 218)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154971
+        name: "IPR[219]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 219)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154972
+        name: "IPR[220]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 220)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154973
+        name: "IPR[221]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 221)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154974
+        name: "IPR[222]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 222)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154975
+        name: "IPR[223]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 223)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154976
+        name: "IPR[224]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 224)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154977
+        name: "IPR[225]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 225)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154978
+        name: "IPR[226]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 226)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154979
+        name: "IPR[227]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 227)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154980
+        name: "IPR[228]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 228)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154981
+        name: "IPR[229]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 229)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154982
+        name: "IPR[230]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 230)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154983
+        name: "IPR[231]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 231)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154984
+        name: "IPR[232]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 232)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154985
+        name: "IPR[233]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 233)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154986
+        name: "IPR[234]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 234)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154987
+        name: "IPR[235]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 235)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154988
+        name: "IPR[236]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 236)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154989
+        name: "IPR[237]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 237)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154990
+        name: "IPR[238]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 238)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758154991
+        name: "IPR[239]"
+        access: "RW"
+        width: 1
+        bit_width: 8
+        desc: "Interrupt Priority Register (8Bit wide) (element 239)"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.IPR"
+      - addr: 3758157568
+        name: "STIR"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Software Trigger Interrupt Register"
+        groups:
+          - "NVIC"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#NVIC_Type.STIR"
+        fields:
+          - name: "INTID"
+            bits: "8:0"
+            desc: "STIR: INTLINESNUM"
+  ITM:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "ITM registers from ITM_Type"
+    registers:
+      - addr: 3758096384
+        name: "PORT[0]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 0)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096384
+        name: "u16"
+        access: "WO"
+        width: 2
+        bit_width: 16
+        desc: "Stimulus Port 16-bit"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.u16"
+      - addr: 3758096384
+        name: "u32"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port 32-bit"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.u32"
+      - addr: 3758096384
+        name: "u8"
+        access: "WO"
+        width: 1
+        bit_width: 8
+        desc: "Stimulus Port 8-bit"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.u8"
+      - addr: 3758096388
+        name: "PORT[1]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 1)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096392
+        name: "PORT[2]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 2)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096396
+        name: "PORT[3]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 3)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096400
+        name: "PORT[4]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 4)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096404
+        name: "PORT[5]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 5)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096408
+        name: "PORT[6]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 6)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096412
+        name: "PORT[7]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 7)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096416
+        name: "PORT[8]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 8)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096420
+        name: "PORT[9]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 9)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096424
+        name: "PORT[10]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 10)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096428
+        name: "PORT[11]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 11)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096432
+        name: "PORT[12]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 12)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096436
+        name: "PORT[13]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 13)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096440
+        name: "PORT[14]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 14)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096444
+        name: "PORT[15]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 15)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096448
+        name: "PORT[16]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 16)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096452
+        name: "PORT[17]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 17)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096456
+        name: "PORT[18]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 18)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096460
+        name: "PORT[19]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 19)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096464
+        name: "PORT[20]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 20)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096468
+        name: "PORT[21]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 21)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096472
+        name: "PORT[22]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 22)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096476
+        name: "PORT[23]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 23)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096480
+        name: "PORT[24]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 24)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096484
+        name: "PORT[25]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 25)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096488
+        name: "PORT[26]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 26)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096492
+        name: "PORT[27]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 27)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096496
+        name: "PORT[28]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 28)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096500
+        name: "PORT[29]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 29)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096504
+        name: "PORT[30]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 30)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758096508
+        name: "PORT[31]"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Stimulus Port Registers (element 31)"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.PORT"
+      - addr: 3758099968
+        name: "TER"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Trace Enable Register"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.TER"
+      - addr: 3758100032
+        name: "TPR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Trace Privilege Register"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.TPR"
+        fields:
+          - name: "PRIVMASK"
+            bits: "31:0"
+            desc: "CMSIS PRIVMASK field"
+      - addr: 3758100096
+        name: "TCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Trace Control Register"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.TCR"
+        fields:
+          - name: "BUSY"
+            bits: "23"
+            desc: "CMSIS BUSY field"
+          - name: "TRACEBUSID"
+            bits: "22:16"
+            desc: "ITM TCR: ATBID"
+          - name: "GTSFREQ"
+            bits: "11:10"
+            desc: "ITM TCR: Global timestamp frequency"
+          - name: "TSPRESCALE"
+            bits: "9:8"
+            desc: "CMSIS TSPRESCALE field"
+          - name: "SWOENA"
+            bits: "4"
+            desc: "CMSIS SWOENA field"
+          - name: "DWTENA"
+            bits: "3"
+            desc: "CMSIS DWTENA field"
+          - name: "SYNCENA"
+            bits: "2"
+            desc: "CMSIS SYNCENA field"
+          - name: "TSENA"
+            bits: "1"
+            desc: "CMSIS TSENA field"
+          - name: "ITMENA"
+            bits: "0"
+            desc: "ITM TCR: ITM Enable bit"
+      - addr: 3758100400
+        name: "LAR"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Lock Access Register"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.LAR"
+      - addr: 3758100404
+        name: "LSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Lock Status Register"
+        groups:
+          - "ITM"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ITM_Type.LSR"
+        fields:
+          - name: "BYTEACC"
+            bits: "2"
+            desc: "CMSIS BYTEACC field"
+          - name: "ACCESS"
+            bits: "1"
+            desc: "CMSIS ACCESS field"
+          - name: "PRESENT"
+            bits: "0"
+            desc: "CMSIS PRESENT field"
+  DWT:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "DWT registers from DWT_Type"
+    registers:
+      - addr: 3758100480
+        name: "CTRL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Control Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.CTRL"
+        fields:
+          - name: "NUMCOMP"
+            bits: "31:28"
+            desc: "CMSIS NUMCOMP field"
+          - name: "NOTRCPKT"
+            bits: "27"
+            desc: "CMSIS NOTRCPKT field"
+          - name: "NOEXTTRIG"
+            bits: "26"
+            desc: "CMSIS NOEXTTRIG field"
+          - name: "NOCYCCNT"
+            bits: "25"
+            desc: "CMSIS NOCYCCNT field"
+          - name: "NOPRFCNT"
+            bits: "24"
+            desc: "CMSIS NOPRFCNT field"
+          - name: "CYCEVTENA"
+            bits: "22"
+            desc: "CMSIS CYCEVTENA field"
+          - name: "FOLDEVTENA"
+            bits: "21"
+            desc: "CMSIS FOLDEVTENA field"
+          - name: "LSUEVTENA"
+            bits: "20"
+            desc: "CMSIS LSUEVTENA field"
+          - name: "SLEEPEVTENA"
+            bits: "19"
+            desc: "CMSIS SLEEPEVTENA field"
+          - name: "EXCEVTENA"
+            bits: "18"
+            desc: "CMSIS EXCEVTENA field"
+          - name: "CPIEVTENA"
+            bits: "17"
+            desc: "CMSIS CPIEVTENA field"
+          - name: "EXCTRCENA"
+            bits: "16"
+            desc: "CMSIS EXCTRCENA field"
+          - name: "PCSAMPLENA"
+            bits: "12"
+            desc: "CMSIS PCSAMPLENA field"
+          - name: "SYNCTAP"
+            bits: "11:10"
+            desc: "CMSIS SYNCTAP field"
+          - name: "CYCTAP"
+            bits: "9"
+            desc: "CMSIS CYCTAP field"
+          - name: "POSTINIT"
+            bits: "8:5"
+            desc: "CMSIS POSTINIT field"
+          - name: "POSTPRESET"
+            bits: "4:1"
+            desc: "CMSIS POSTPRESET field"
+          - name: "CYCCNTENA"
+            bits: "0"
+            desc: "CMSIS CYCCNTENA field"
+      - addr: 3758100484
+        name: "CYCCNT"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Cycle Count Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.CYCCNT"
+      - addr: 3758100488
+        name: "CPICNT"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "CPI Count Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.CPICNT"
+        fields:
+          - name: "CPICNT"
+            bits: "7:0"
+            desc: "CPICNT"
+      - addr: 3758100492
+        name: "EXCCNT"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Exception Overhead Count Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.EXCCNT"
+        fields:
+          - name: "EXCCNT"
+            bits: "7:0"
+            desc: "EXCCNT"
+      - addr: 3758100496
+        name: "SLEEPCNT"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Sleep Count Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.SLEEPCNT"
+        fields:
+          - name: "SLEEPCNT"
+            bits: "7:0"
+            desc: "SLEEPCNT"
+      - addr: 3758100500
+        name: "LSUCNT"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "LSU Count Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.LSUCNT"
+        fields:
+          - name: "LSUCNT"
+            bits: "7:0"
+            desc: "LSUCNT"
+      - addr: 3758100504
+        name: "FOLDCNT"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Folded-instruction Count Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.FOLDCNT"
+        fields:
+          - name: "FOLDCNT"
+            bits: "7:0"
+            desc: "FOLDCNT"
+      - addr: 3758100508
+        name: "PCSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Program Counter Sample Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.PCSR"
+      - addr: 3758100512
+        name: "COMP0"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Comparator Register 0"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.COMP0"
+      - addr: 3758100516
+        name: "MASK0"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Mask Register 0"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.MASK0"
+        fields:
+          - name: "MASK"
+            bits: "4:0"
+            desc: "MASK"
+      - addr: 3758100520
+        name: "FUNCTION0"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Function Register 0"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.FUNCTION0"
+        fields:
+          - name: "MATCHED"
+            bits: "24"
+            desc: "CMSIS MATCHED field"
+          - name: "DATAVADDR1"
+            bits: "19:16"
+            desc: "CMSIS DATAVADDR1 field"
+          - name: "DATAVADDR0"
+            bits: "15:12"
+            desc: "CMSIS DATAVADDR0 field"
+          - name: "DATAVSIZE"
+            bits: "11:10"
+            desc: "CMSIS DATAVSIZE field"
+          - name: "LNK1ENA"
+            bits: "9"
+            desc: "CMSIS LNK1ENA field"
+          - name: "DATAVMATCH"
+            bits: "8"
+            desc: "CMSIS DATAVMATCH field"
+          - name: "CYCMATCH"
+            bits: "7"
+            desc: "CMSIS CYCMATCH field"
+          - name: "EMITRANGE"
+            bits: "5"
+            desc: "CMSIS EMITRANGE field"
+          - name: "FUNCTION"
+            bits: "3:0"
+            desc: "FUNCTION"
+      - addr: 3758100528
+        name: "COMP1"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Comparator Register 1"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.COMP1"
+      - addr: 3758100532
+        name: "MASK1"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Mask Register 1"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.MASK1"
+        fields:
+          - name: "MASK"
+            bits: "4:0"
+            desc: "MASK"
+      - addr: 3758100536
+        name: "FUNCTION1"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Function Register 1"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.FUNCTION1"
+        fields:
+          - name: "MATCHED"
+            bits: "24"
+            desc: "CMSIS MATCHED field"
+          - name: "DATAVADDR1"
+            bits: "19:16"
+            desc: "CMSIS DATAVADDR1 field"
+          - name: "DATAVADDR0"
+            bits: "15:12"
+            desc: "CMSIS DATAVADDR0 field"
+          - name: "DATAVSIZE"
+            bits: "11:10"
+            desc: "CMSIS DATAVSIZE field"
+          - name: "LNK1ENA"
+            bits: "9"
+            desc: "CMSIS LNK1ENA field"
+          - name: "DATAVMATCH"
+            bits: "8"
+            desc: "CMSIS DATAVMATCH field"
+          - name: "CYCMATCH"
+            bits: "7"
+            desc: "CMSIS CYCMATCH field"
+          - name: "EMITRANGE"
+            bits: "5"
+            desc: "CMSIS EMITRANGE field"
+          - name: "FUNCTION"
+            bits: "3:0"
+            desc: "FUNCTION"
+      - addr: 3758100544
+        name: "COMP2"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Comparator Register 2"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.COMP2"
+      - addr: 3758100548
+        name: "MASK2"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Mask Register 2"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.MASK2"
+        fields:
+          - name: "MASK"
+            bits: "4:0"
+            desc: "MASK"
+      - addr: 3758100552
+        name: "FUNCTION2"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Function Register 2"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.FUNCTION2"
+        fields:
+          - name: "MATCHED"
+            bits: "24"
+            desc: "CMSIS MATCHED field"
+          - name: "DATAVADDR1"
+            bits: "19:16"
+            desc: "CMSIS DATAVADDR1 field"
+          - name: "DATAVADDR0"
+            bits: "15:12"
+            desc: "CMSIS DATAVADDR0 field"
+          - name: "DATAVSIZE"
+            bits: "11:10"
+            desc: "CMSIS DATAVSIZE field"
+          - name: "LNK1ENA"
+            bits: "9"
+            desc: "CMSIS LNK1ENA field"
+          - name: "DATAVMATCH"
+            bits: "8"
+            desc: "CMSIS DATAVMATCH field"
+          - name: "CYCMATCH"
+            bits: "7"
+            desc: "CMSIS CYCMATCH field"
+          - name: "EMITRANGE"
+            bits: "5"
+            desc: "CMSIS EMITRANGE field"
+          - name: "FUNCTION"
+            bits: "3:0"
+            desc: "FUNCTION"
+      - addr: 3758100560
+        name: "COMP3"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Comparator Register 3"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.COMP3"
+      - addr: 3758100564
+        name: "MASK3"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Mask Register 3"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.MASK3"
+        fields:
+          - name: "MASK"
+            bits: "4:0"
+            desc: "MASK"
+      - addr: 3758100568
+        name: "FUNCTION3"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Function Register 3"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.FUNCTION3"
+        fields:
+          - name: "MATCHED"
+            bits: "24"
+            desc: "CMSIS MATCHED field"
+          - name: "DATAVADDR1"
+            bits: "19:16"
+            desc: "CMSIS DATAVADDR1 field"
+          - name: "DATAVADDR0"
+            bits: "15:12"
+            desc: "CMSIS DATAVADDR0 field"
+          - name: "DATAVSIZE"
+            bits: "11:10"
+            desc: "CMSIS DATAVSIZE field"
+          - name: "LNK1ENA"
+            bits: "9"
+            desc: "CMSIS LNK1ENA field"
+          - name: "DATAVMATCH"
+            bits: "8"
+            desc: "CMSIS DATAVMATCH field"
+          - name: "CYCMATCH"
+            bits: "7"
+            desc: "CMSIS CYCMATCH field"
+          - name: "EMITRANGE"
+            bits: "5"
+            desc: "CMSIS EMITRANGE field"
+          - name: "FUNCTION"
+            bits: "3:0"
+            desc: "FUNCTION"
+      - addr: 3758104496
+        name: "LAR"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Lock Access Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.LAR"
+      - addr: 3758104500
+        name: "LSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Lock Status Register"
+        groups:
+          - "DWT"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DWT_Type.LSR"
+  TPIU:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "TPIU registers from TPIU_Type"
+    registers:
+      - addr: 3758358528
+        name: "SSPSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Supported Parallel Port Size Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.SSPSR"
+      - addr: 3758358532
+        name: "CSPSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Current Parallel Port Size Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.CSPSR"
+      - addr: 3758358544
+        name: "ACPR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Asynchronous Clock Prescaler Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.ACPR"
+        fields:
+          - name: "PRESCALER"
+            bits: "12:0"
+            desc: "CMSIS PRESCALER field"
+      - addr: 3758358768
+        name: "SPPR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Selected Pin Protocol Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.SPPR"
+        fields:
+          - name: "TXMODE"
+            bits: "1:0"
+            desc: "CMSIS TXMODE field"
+      - addr: 3758359296
+        name: "FFSR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Formatter and Flush Status Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.FFSR"
+        fields:
+          - name: "FtNonStop"
+            bits: "3"
+            desc: "CMSIS FtNonStop field"
+          - name: "TCPresent"
+            bits: "2"
+            desc: "CMSIS TCPresent field"
+          - name: "FtStopped"
+            bits: "1"
+            desc: "CMSIS FtStopped field"
+          - name: "FlInProg"
+            bits: "0"
+            desc: "CMSIS FlInProg field"
+      - addr: 3758359300
+        name: "FFCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Formatter and Flush Control Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.FFCR"
+        fields:
+          - name: "TrigIn"
+            bits: "8"
+            desc: "CMSIS TrigIn field"
+          - name: "EnFCont"
+            bits: "1"
+            desc: "CMSIS EnFCont field"
+      - addr: 3758359304
+        name: "FSCR"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Formatter Synchronization Counter Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.FSCR"
+      - addr: 3758362344
+        name: "TRIGGER"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "TRIGGER Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.TRIGGER"
+        fields:
+          - name: "TRIGGER"
+            bits: "0"
+            desc: "TRIGGER"
+      - addr: 3758362348
+        name: "FIFO0"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Integration ETM Data"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.FIFO0"
+        fields:
+          - name: "ITM_ATVALID"
+            bits: "29"
+            desc: "CMSIS ITM_ATVALID field"
+          - name: "ITM_bytecount"
+            bits: "28:27"
+            desc: "CMSIS ITM_bytecount field"
+          - name: "ETM_ATVALID"
+            bits: "26"
+            desc: "CMSIS ETM_ATVALID field"
+          - name: "ETM_bytecount"
+            bits: "25:24"
+            desc: "CMSIS ETM_bytecount field"
+          - name: "ETM2"
+            bits: "23:16"
+            desc: "CMSIS ETM2 field"
+          - name: "ETM1"
+            bits: "15:8"
+            desc: "CMSIS ETM1 field"
+          - name: "ETM0"
+            bits: "7:0"
+            desc: "CMSIS ETM0 field"
+      - addr: 3758362352
+        name: "ITATBCTR2"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "ITATBCTR2"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.ITATBCTR2"
+        fields:
+          - name: "ATREADY1"
+            bits: "0"
+            desc: "CMSIS ATREADY1 field"
+            condition: "Field view: ATREADY1"
+          - name: "ATREADY2"
+            bits: "0"
+            desc: "CMSIS ATREADY2 field"
+            condition: "Field view: ATREADY2"
+      - addr: 3758362360
+        name: "ITATBCTR0"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "ITATBCTR0"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.ITATBCTR0"
+        fields:
+          - name: "ATREADY1"
+            bits: "0"
+            desc: "CMSIS ATREADY1 field"
+            condition: "Field view: ATREADY1"
+          - name: "ATREADY2"
+            bits: "0"
+            desc: "CMSIS ATREADY2 field"
+            condition: "Field view: ATREADY2"
+      - addr: 3758362364
+        name: "FIFO1"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Integration ITM Data"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.FIFO1"
+        fields:
+          - name: "ITM_ATVALID"
+            bits: "29"
+            desc: "CMSIS ITM_ATVALID field"
+          - name: "ITM_bytecount"
+            bits: "28:27"
+            desc: "CMSIS ITM_bytecount field"
+          - name: "ETM_ATVALID"
+            bits: "26"
+            desc: "CMSIS ETM_ATVALID field"
+          - name: "ETM_bytecount"
+            bits: "25:24"
+            desc: "CMSIS ETM_bytecount field"
+          - name: "ITM2"
+            bits: "23:16"
+            desc: "CMSIS ITM2 field"
+          - name: "ITM1"
+            bits: "15:8"
+            desc: "CMSIS ITM1 field"
+          - name: "ITM0"
+            bits: "7:0"
+            desc: "CMSIS ITM0 field"
+      - addr: 3758362368
+        name: "ITCTRL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Integration Mode Control"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.ITCTRL"
+        fields:
+          - name: "Mode"
+            bits: "1:0"
+            desc: "CMSIS Mode field"
+      - addr: 3758362528
+        name: "CLAIMSET"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Claim tag set"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.CLAIMSET"
+      - addr: 3758362532
+        name: "CLAIMCLR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Claim tag clear"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.CLAIMCLR"
+      - addr: 3758362568
+        name: "DEVID"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Device Configuration Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.DEVID"
+        fields:
+          - name: "NRZVALID"
+            bits: "11"
+            desc: "CMSIS NRZVALID field"
+          - name: "MANCVALID"
+            bits: "10"
+            desc: "CMSIS MANCVALID field"
+          - name: "PTINVALID"
+            bits: "9"
+            desc: "CMSIS PTINVALID field"
+          - name: "MinBufSz"
+            bits: "8:6"
+            desc: "CMSIS MinBufSz field"
+          - name: "AsynClkIn"
+            bits: "5"
+            desc: "CMSIS AsynClkIn field"
+            condition: "Field view: AsynClkIn"
+          - name: "NrTraceInput"
+            bits: "5:0"
+            desc: "CMSIS NrTraceInput field"
+            condition: "Field view: NrTraceInput"
+      - addr: 3758362572
+        name: "DEVTYPE"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Device Type Identifier Register"
+        groups:
+          - "TPIU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#TPIU_Type.DEVTYPE"
+        fields:
+          - name: "MajorType"
+            bits: "3:0"
+            desc: "CMSIS MajorType field"
+            condition: "Field view: MajorType"
+          - name: "SubType"
+            bits: "3:0"
+            desc: "CMSIS SubType field"
+            condition: "Field view: SubType"
+  DCB:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "DCB registers from DCB_Type"
+    registers:
+      - addr: 3758157296
+        name: "DHCSR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Debug Halting Control and Status Register"
+        groups:
+          - "DCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DCB_Type.DHCSR"
+        fields:
+          - name: "DBGKEY"
+            bits: "31:16"
+            desc: "DCB DHCSR: Debug key"
+            condition: "Field view: DBGKEY"
+          - name: "S_RESET_ST"
+            bits: "25"
+            desc: "DCB DHCSR: Reset sticky status"
+            condition: "Field view: S_RESET_ST"
+          - name: "S_RETIRE_ST"
+            bits: "24"
+            desc: "DCB DHCSR: Retire sticky status"
+            condition: "Field view: S_RETIRE_ST"
+          - name: "S_LOCKUP"
+            bits: "19"
+            desc: "DCB DHCSR: Lockup status"
+            condition: "Field view: S_LOCKUP"
+          - name: "S_SLEEP"
+            bits: "18"
+            desc: "DCB DHCSR: Sleeping status"
+            condition: "Field view: S_SLEEP"
+          - name: "S_HALT"
+            bits: "17"
+            desc: "DCB DHCSR: Halted status"
+            condition: "Field view: S_HALT"
+          - name: "S_REGRDY"
+            bits: "16"
+            desc: "DCB DHCSR: Register ready status"
+            condition: "Field view: S_REGRDY"
+          - name: "C_SNAPSTALL"
+            bits: "5"
+            desc: "DCB DHCSR: Snap stall control"
+          - name: "C_MASKINTS"
+            bits: "3"
+            desc: "DCB DHCSR: Mask interrupts control"
+          - name: "C_STEP"
+            bits: "2"
+            desc: "DCB DHCSR: Step control"
+          - name: "C_HALT"
+            bits: "1"
+            desc: "DCB DHCSR: Halt control"
+          - name: "C_DEBUGEN"
+            bits: "0"
+            desc: "DCB DHCSR: Debug enable control"
+      - addr: 3758157300
+        name: "DCRSR"
+        access: "WO"
+        width: 4
+        bit_width: 32
+        desc: "Debug Core Register Selector Register"
+        groups:
+          - "DCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DCB_Type.DCRSR"
+        fields:
+          - name: "REGWnR"
+            bits: "16"
+            desc: "DCB DCRSR: Register write/not-read"
+          - name: "REGSEL"
+            bits: "6:0"
+            desc: "DCB DCRSR: Register selector"
+      - addr: 3758157304
+        name: "DCRDR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Debug Core Register Data Register"
+        groups:
+          - "DCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DCB_Type.DCRDR"
+        fields:
+          - name: "DBGTMP"
+            bits: "31:0"
+            desc: "DCB DCRDR: Data temporary buffer"
+      - addr: 3758157308
+        name: "DEMCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Debug Exception and Monitor Control Register"
+        groups:
+          - "DCB"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#DCB_Type.DEMCR"
+        fields:
+          - name: "TRCENA"
+            bits: "24"
+            desc: "DCB DEMCR: Trace enable"
+          - name: "MON_REQ"
+            bits: "19"
+            desc: "DCB DEMCR: Monitor request"
+          - name: "MON_STEP"
+            bits: "18"
+            desc: "DCB DEMCR: Monitor step"
+          - name: "MON_PEND"
+            bits: "17"
+            desc: "DCB DEMCR: Monitor pend"
+          - name: "MON_EN"
+            bits: "16"
+            desc: "DCB DEMCR: Monitor enable"
+          - name: "VC_HARDERR"
+            bits: "10"
+            desc: "DCB DEMCR: Vector Catch HardFault errors"
+          - name: "VC_INTERR"
+            bits: "9"
+            desc: "DCB DEMCR: Vector Catch interrupt errors"
+          - name: "VC_BUSERR"
+            bits: "8"
+            desc: "DCB DEMCR: Vector Catch BusFault errors"
+          - name: "VC_STATERR"
+            bits: "7"
+            desc: "DCB DEMCR: Vector Catch state errors"
+          - name: "VC_CHKERR"
+            bits: "6"
+            desc: "DCB DEMCR: Vector Catch check errors"
+          - name: "VC_NOCPERR"
+            bits: "5"
+            desc: "DCB DEMCR: Vector Catch NOCP errors"
+          - name: "VC_MMERR"
+            bits: "4"
+            desc: "DCB DEMCR: Vector Catch MemManage errors"
+          - name: "VC_CORERESET"
+            bits: "0"
+            desc: "DCB DEMCR: Vector Catch Core reset"
+  ERRBNK:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "ERRBNK registers from ErrBnk_Type"
+    registers:
+      - addr: 3758157744
+        name: "IEBR0"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Instruction Cache Error Bank Register 0"
+        groups:
+          - "ERRBNK"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ErrBnk_Type.IEBR0"
+        fields:
+          - name: "USER"
+            bits: "31:30"
+            desc: "CMSIS USER field"
+          - name: "TYPE"
+            bits: "17"
+            desc: "CMSIS TYPE field"
+          - name: "RAMBank"
+            bits: "16"
+            desc: "CMSIS RAMBank field"
+          - name: "WAY"
+            bits: "14"
+            desc: "CMSIS WAY field"
+          - name: "INDEX"
+            bits: "13:4"
+            desc: "CMSIS INDEX field"
+          - name: "LDO"
+            bits: "3:2"
+            desc: "CMSIS LDO field"
+          - name: "LOCK"
+            bits: "1"
+            desc: "CMSIS LOCK field"
+          - name: "VALID"
+            bits: "0"
+            desc: "CMSIS VALID field"
+      - addr: 3758157748
+        name: "IEBR1"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Instruction Cache Error Bank Register 1"
+        groups:
+          - "ERRBNK"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ErrBnk_Type.IEBR1"
+        fields:
+          - name: "USER"
+            bits: "31:30"
+            desc: "CMSIS USER field"
+          - name: "TYPE"
+            bits: "17"
+            desc: "CMSIS TYPE field"
+          - name: "RAMBank"
+            bits: "16"
+            desc: "CMSIS RAMBank field"
+          - name: "WAY"
+            bits: "14"
+            desc: "CMSIS WAY field"
+          - name: "INDEX"
+            bits: "13:4"
+            desc: "CMSIS INDEX field"
+          - name: "LDO"
+            bits: "3:2"
+            desc: "CMSIS LDO field"
+          - name: "LOCK"
+            bits: "1"
+            desc: "CMSIS LOCK field"
+          - name: "VALID"
+            bits: "0"
+            desc: "CMSIS VALID field"
+      - addr: 3758157752
+        name: "DEBR0"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Data Cache Error Bank Register 0"
+        groups:
+          - "ERRBNK"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ErrBnk_Type.DEBR0"
+        fields:
+          - name: "USER"
+            bits: "31:30"
+            desc: "CMSIS USER field"
+          - name: "TYPE"
+            bits: "17"
+            desc: "CMSIS TYPE field"
+          - name: "RAMBank"
+            bits: "16"
+            desc: "CMSIS RAMBank field"
+          - name: "WAY"
+            bits: "14"
+            desc: "CMSIS WAY field"
+          - name: "INDEX"
+            bits: "13:4"
+            desc: "CMSIS INDEX field"
+          - name: "LDO"
+            bits: "3:2"
+            desc: "CMSIS LDO field"
+          - name: "LOCK"
+            bits: "1"
+            desc: "CMSIS LOCK field"
+          - name: "VALID"
+            bits: "0"
+            desc: "CMSIS VALID field"
+      - addr: 3758157756
+        name: "DEBR1"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Data Cache Error Bank Register 1"
+        groups:
+          - "ERRBNK"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#ErrBnk_Type.DEBR1"
+        fields:
+          - name: "USER"
+            bits: "31:30"
+            desc: "CMSIS USER field"
+          - name: "TYPE"
+            bits: "17"
+            desc: "CMSIS TYPE field"
+          - name: "RAMBank"
+            bits: "16"
+            desc: "CMSIS RAMBank field"
+          - name: "WAY"
+            bits: "14"
+            desc: "CMSIS WAY field"
+          - name: "INDEX"
+            bits: "13:4"
+            desc: "CMSIS INDEX field"
+          - name: "LDO"
+            bits: "3:2"
+            desc: "CMSIS LDO field"
+          - name: "LOCK"
+            bits: "1"
+            desc: "CMSIS LOCK field"
+          - name: "VALID"
+            bits: "0"
+            desc: "CMSIS VALID field"
+  MPU:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "MPU registers from MPU_Type"
+    registers:
+      - addr: 3758157200
+        name: "TYPE"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "MPU Type Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.TYPE"
+        fields:
+          - name: "IREGION"
+            bits: "23:16"
+            desc: "CMSIS IREGION field"
+          - name: "DREGION"
+            bits: "15:8"
+            desc: "CMSIS DREGION field"
+          - name: "SEPARATE"
+            bits: "0"
+            desc: "CMSIS SEPARATE field"
+      - addr: 3758157204
+        name: "CTRL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Control Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.CTRL"
+        fields:
+          - name: "PRIVDEFENA"
+            bits: "2"
+            desc: "CMSIS PRIVDEFENA field"
+          - name: "HFNMIENA"
+            bits: "1"
+            desc: "CMSIS HFNMIENA field"
+          - name: "ENABLE"
+            bits: "0"
+            desc: "CMSIS ENABLE field"
+      - addr: 3758157208
+        name: "RNR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Region Number Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.RNR"
+        fields:
+          - name: "REGION"
+            bits: "7:0"
+            desc: "CMSIS REGION field"
+      - addr: 3758157212
+        name: "RBAR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Region Base Address Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.RBAR"
+        fields:
+          - name: "ADDR"
+            bits: "31:5"
+            desc: "CMSIS ADDR field"
+          - name: "VALID"
+            bits: "4"
+            desc: "CMSIS VALID field"
+          - name: "REGION"
+            bits: "3:0"
+            desc: "CMSIS REGION field"
+      - addr: 3758157216
+        name: "RASR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Region Attribute and Size Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.RASR"
+        fields:
+          - name: "ATTRS"
+            bits: "31:16"
+            desc: "MPU RASR: MPU Region Attribute field"
+            condition: "Field view: ATTRS"
+          - name: "XN"
+            bits: "28"
+            desc: "CMSIS XN field"
+            condition: "Field view: XN"
+          - name: "AP"
+            bits: "26:24"
+            desc: "CMSIS AP field"
+            condition: "Field view: AP"
+          - name: "TEX"
+            bits: "21:19"
+            desc: "CMSIS TEX field"
+            condition: "Field view: TEX"
+          - name: "S"
+            bits: "18"
+            desc: "R: ATTRS.S"
+            condition: "Field view: S"
+          - name: "C"
+            bits: "17"
+            desc: "CMSIS C field"
+            condition: "Field view: C"
+          - name: "B"
+            bits: "16"
+            desc: "CMSIS B field"
+            condition: "Field view: B"
+          - name: "SRD"
+            bits: "15:8"
+            desc: "MPU RASR: Sub-Region Disable"
+          - name: "SIZE"
+            bits: "5:1"
+            desc: "Field"
+          - name: "ENABLE"
+            bits: "0"
+            desc: "bit"
+      - addr: 3758157220
+        name: "RBAR_A1"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Alias 1 Region Base Address Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.RBAR_A1"
+        fields:
+          - name: "ADDR"
+            bits: "31:5"
+            desc: "CMSIS ADDR field"
+          - name: "VALID"
+            bits: "4"
+            desc: "CMSIS VALID field"
+          - name: "REGION"
+            bits: "3:0"
+            desc: "CMSIS REGION field"
+      - addr: 3758157224
+        name: "RASR_A1"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Alias 1 Region Attribute and Size Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.RASR_A1"
+        fields:
+          - name: "ATTRS"
+            bits: "31:16"
+            desc: "MPU RASR: MPU Region Attribute field"
+            condition: "Field view: ATTRS"
+          - name: "XN"
+            bits: "28"
+            desc: "CMSIS XN field"
+            condition: "Field view: XN"
+          - name: "AP"
+            bits: "26:24"
+            desc: "CMSIS AP field"
+            condition: "Field view: AP"
+          - name: "TEX"
+            bits: "21:19"
+            desc: "CMSIS TEX field"
+            condition: "Field view: TEX"
+          - name: "S"
+            bits: "18"
+            desc: "R: ATTRS.S"
+            condition: "Field view: S"
+          - name: "C"
+            bits: "17"
+            desc: "CMSIS C field"
+            condition: "Field view: C"
+          - name: "B"
+            bits: "16"
+            desc: "CMSIS B field"
+            condition: "Field view: B"
+          - name: "SRD"
+            bits: "15:8"
+            desc: "MPU RASR: Sub-Region Disable"
+          - name: "SIZE"
+            bits: "5:1"
+            desc: "Field"
+          - name: "ENABLE"
+            bits: "0"
+            desc: "bit"
+      - addr: 3758157228
+        name: "RBAR_A2"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Alias 2 Region Base Address Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.RBAR_A2"
+        fields:
+          - name: "ADDR"
+            bits: "31:5"
+            desc: "CMSIS ADDR field"
+          - name: "VALID"
+            bits: "4"
+            desc: "CMSIS VALID field"
+          - name: "REGION"
+            bits: "3:0"
+            desc: "CMSIS REGION field"
+      - addr: 3758157232
+        name: "RASR_A2"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Alias 2 Region Attribute and Size Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.RASR_A2"
+        fields:
+          - name: "ATTRS"
+            bits: "31:16"
+            desc: "MPU RASR: MPU Region Attribute field"
+            condition: "Field view: ATTRS"
+          - name: "XN"
+            bits: "28"
+            desc: "CMSIS XN field"
+            condition: "Field view: XN"
+          - name: "AP"
+            bits: "26:24"
+            desc: "CMSIS AP field"
+            condition: "Field view: AP"
+          - name: "TEX"
+            bits: "21:19"
+            desc: "CMSIS TEX field"
+            condition: "Field view: TEX"
+          - name: "S"
+            bits: "18"
+            desc: "R: ATTRS.S"
+            condition: "Field view: S"
+          - name: "C"
+            bits: "17"
+            desc: "CMSIS C field"
+            condition: "Field view: C"
+          - name: "B"
+            bits: "16"
+            desc: "CMSIS B field"
+            condition: "Field view: B"
+          - name: "SRD"
+            bits: "15:8"
+            desc: "MPU RASR: Sub-Region Disable"
+          - name: "SIZE"
+            bits: "5:1"
+            desc: "Field"
+          - name: "ENABLE"
+            bits: "0"
+            desc: "bit"
+      - addr: 3758157236
+        name: "RBAR_A3"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Alias 3 Region Base Address Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.RBAR_A3"
+        fields:
+          - name: "ADDR"
+            bits: "31:5"
+            desc: "CMSIS ADDR field"
+          - name: "VALID"
+            bits: "4"
+            desc: "CMSIS VALID field"
+          - name: "REGION"
+            bits: "3:0"
+            desc: "CMSIS REGION field"
+      - addr: 3758157240
+        name: "RASR_A3"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "MPU Alias 3 Region Attribute and Size Register"
+        condition: "When __MPU_PRESENT == 1"
+        groups:
+          - "MPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#MPU_Type.RASR_A3"
+        fields:
+          - name: "ATTRS"
+            bits: "31:16"
+            desc: "MPU RASR: MPU Region Attribute field"
+            condition: "Field view: ATTRS"
+          - name: "XN"
+            bits: "28"
+            desc: "CMSIS XN field"
+            condition: "Field view: XN"
+          - name: "AP"
+            bits: "26:24"
+            desc: "CMSIS AP field"
+            condition: "Field view: AP"
+          - name: "TEX"
+            bits: "21:19"
+            desc: "CMSIS TEX field"
+            condition: "Field view: TEX"
+          - name: "S"
+            bits: "18"
+            desc: "R: ATTRS.S"
+            condition: "Field view: S"
+          - name: "C"
+            bits: "17"
+            desc: "CMSIS C field"
+            condition: "Field view: C"
+          - name: "B"
+            bits: "16"
+            desc: "CMSIS B field"
+            condition: "Field view: B"
+          - name: "SRD"
+            bits: "15:8"
+            desc: "MPU RASR: Sub-Region Disable"
+          - name: "SIZE"
+            bits: "5:1"
+            desc: "Field"
+          - name: "ENABLE"
+            bits: "0"
+            desc: "bit"
+  FPU:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "FPU registers from FPU_Type"
+    registers:
+      - addr: 3758157620
+        name: "FPCCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Floating-Point Context Control Register"
+        condition: "When __FPU_PRESENT == 1"
+        groups:
+          - "FPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#FPU_Type.FPCCR"
+        fields:
+          - name: "ASPEN"
+            bits: "31"
+            desc: "bit"
+          - name: "LSPEN"
+            bits: "30"
+            desc: "CMSIS LSPEN field"
+          - name: "MONRDY"
+            bits: "8"
+            desc: "CMSIS MONRDY field"
+          - name: "BFRDY"
+            bits: "6"
+            desc: "CMSIS BFRDY field"
+          - name: "MMRDY"
+            bits: "5"
+            desc: "CMSIS MMRDY field"
+          - name: "HFRDY"
+            bits: "4"
+            desc: "CMSIS HFRDY field"
+          - name: "THREAD"
+            bits: "3"
+            desc: "FPCCR: processor mode bit"
+          - name: "USER"
+            bits: "1"
+            desc: "FPCCR: privilege level bit"
+          - name: "LSPACT"
+            bits: "0"
+            desc: "FPCCR: Lazy state preservation active bit"
+      - addr: 3758157624
+        name: "FPCAR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Floating-Point Context Address Register"
+        condition: "When __FPU_PRESENT == 1"
+        groups:
+          - "FPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#FPU_Type.FPCAR"
+        fields:
+          - name: "ADDRESS"
+            bits: "31:3"
+            desc: "bit"
+      - addr: 3758157628
+        name: "FPDSCR"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Floating-Point Default Status Control Register"
+        condition: "When __FPU_PRESENT == 1"
+        groups:
+          - "FPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#FPU_Type.FPDSCR"
+        fields:
+          - name: "AHP"
+            bits: "26"
+            desc: "bit"
+          - name: "DN"
+            bits: "25"
+            desc: "bit"
+          - name: "FZ"
+            bits: "24"
+            desc: "bit"
+          - name: "RMode"
+            bits: "23:22"
+            desc: "bit"
+      - addr: 3758157632
+        name: "MVFR0"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Media and VFP Feature Register 0"
+        condition: "When __FPU_PRESENT == 1"
+        groups:
+          - "FPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#FPU_Type.MVFR0"
+        fields:
+          - name: "FPRound"
+            bits: "31:28"
+            desc: "MVFR0: Rounding modes bits"
+          - name: "FPShortvec"
+            bits: "27:24"
+            desc: "MVFR0: Short vectors bits"
+          - name: "FPSqrt"
+            bits: "23:20"
+            desc: "MVFR0: Square root bits"
+          - name: "FPDivide"
+            bits: "19:16"
+            desc: "MVFR0: Divide bits"
+          - name: "FPExceptrap"
+            bits: "15:12"
+            desc: "MVFR0: Exception trapping bits"
+          - name: "FPDP"
+            bits: "11:8"
+            desc: "MVFR0: Double-precision bits"
+          - name: "FPSP"
+            bits: "7:4"
+            desc: "MVFR0: Single-precision bits"
+          - name: "SIMDReg"
+            bits: "3:0"
+            desc: "MVFR0: SIMD registers bits"
+      - addr: 3758157636
+        name: "MVFR1"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Media and VFP Feature Register 1"
+        condition: "When __FPU_PRESENT == 1"
+        groups:
+          - "FPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#FPU_Type.MVFR1"
+        fields:
+          - name: "FMAC"
+            bits: "31:28"
+            desc: "MVFR1: Fused MAC bits"
+          - name: "FPHP"
+            bits: "27:24"
+            desc: "MVFR1: FP HPFP bits"
+          - name: "FPDNaN"
+            bits: "7:4"
+            desc: "MVFR1: D_NaN mode bits"
+          - name: "FPFtZ"
+            bits: "3:0"
+            desc: "MVFR1: FtZ mode bits"
+      - addr: 3758157640
+        name: "MVFR2"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "Media and VFP Feature Register 2"
+        condition: "When __FPU_PRESENT == 1"
+        groups:
+          - "FPU"
+        source_ref: "CMSIS/Core/Include/core_cm7.h#FPU_Type.MVFR2"
+        fields:
+          - name: "FPMisc"
+            bits: "7:4"
+            desc: "MVFR2: VFP Misc bits"

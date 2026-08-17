@@ -1,0 +1,58 @@
+# ARM M-profile schema v2 template. Keep special registers and SCS MMIO in one file.
+schema_version: 2
+sensor: "ARM Cortex-M33 system registers"
+vendor: "Arm"
+family: "Armv8-M Mainline"
+device_type: "architecture_registers"
+register_space:
+  kind: "arm_system"
+  architecture: "Armv8-M Mainline"
+  profile: "M"
+source:
+  title: "Arm CMSIS-Core(M) header definitions"
+  version: "CMSIS_VERSION"
+  revision: "CORE_REVISION"
+  document: "core_cm33.h; m-profile/cmsis_gcc_m.h"
+  url: "https://github.com/ARM-software/CMSIS_6"
+  license: "Apache-2.0"
+  notice: "Generated derivative; retain Arm copyright and Apache-2.0 attribution"
+
+pages:
+  Special Registers:
+    access: "MRS / MSR special-register interface"
+    desc: "CPU special registers"
+    registers:
+      - name: "CONTROL"
+        access: "RW"
+        width: 4
+        bit_width: 32
+        desc: "Control Register"
+        encoding:
+          scheme: "m_profile_special"
+          selector: "CONTROL"
+        accessors:
+          - name: "__get_CONTROL"
+            kind: "read"
+            instruction: "MRS <value>, CONTROL"
+            encoding:
+              scheme: "m_profile_special"
+              selector: "CONTROL"
+        fields:
+          - name: "SPSEL"
+            bits: "1"
+            desc: "Stack-pointer select"
+
+  SCB:
+    access: "Memory-mapped Core Peripheral access"
+    desc: "System Control Block"
+    registers:
+      - addr: 0xE000ED00
+        name: "CPUID"
+        access: "RO"
+        width: 4
+        bit_width: 32
+        desc: "CPUID Base Register"
+        fields:
+          - name: "IMPLEMENTER"
+            bits: "31:24"
+            desc: "Implementer code"

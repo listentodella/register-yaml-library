@@ -1,0 +1,403 @@
+{
+  "schema_version": 1,
+  "format": "register-reference-yaml-catalog",
+  "entries": [
+    {
+      "id": "architecture:arm:m-profile:cortex-m0-plus",
+      "path": "architecture/arm/m-profile/cortex-m0-plus.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M0+ system registers",
+      "vendor": "Arm",
+      "family": "Armv6-M",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv6-M",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M0+",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 5,
+        "registers": 37,
+        "fields": 71
+      },
+      "sha256": "b265a7ab043baa3bb28500fc2ac9b4ff9503cb8aee3ae3ef72f839beca472c77"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m0",
+      "path": "architecture/arm/m-profile/cortex-m0.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M0 system registers",
+      "vendor": "Arm",
+      "family": "Armv6-M",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv6-M",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M0",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 4,
+        "registers": 31,
+        "fields": 49
+      },
+      "sha256": "acc9e3cbf6c294c83d13d34819dcd9437cf45b2865b49169e2be72cdd871d54b"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m1",
+      "path": "architecture/arm/m-profile/cortex-m1.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M1 system registers",
+      "vendor": "Arm",
+      "family": "Armv6-M",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv6-M",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M1",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 5,
+        "registers": 32,
+        "fields": 51
+      },
+      "sha256": "9077070c1c1f8e93280d84d9459e63f8478fd51ebae94fadc4e717fc697f48b1"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m23",
+      "path": "architecture/arm/m-profile/cortex-m23.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M23 system registers",
+      "vendor": "Arm",
+      "family": "Armv8-M Baseline",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv8-M Baseline",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M23",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 16,
+        "registers": 553,
+        "fields": 326
+      },
+      "sha256": "2769e1b567f073ae19e44425c8608d463bf1a9876f97769b02287502421baa35"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m3",
+      "path": "architecture/arm/m-profile/cortex-m3.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M3 system registers",
+      "vendor": "Arm",
+      "family": "Armv7-M",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv7-M",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M3",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 10,
+        "registers": 428,
+        "fields": 312
+      },
+      "sha256": "73021f9e448850601db9c47194944e5b9de332344d64f61239eabe0a21c435b6"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m33",
+      "path": "architecture/arm/m-profile/cortex-m33.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M33 system registers",
+      "vendor": "Arm",
+      "family": "Armv8-M Mainline",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv8-M Mainline",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M33",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 21,
+        "registers": 1487,
+        "fields": 696
+      },
+      "sha256": "ca985828be8e25e61fb690f9997d7e0d74e445bcd19e24da80f20623528c2e9b"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m35p",
+      "path": "architecture/arm/m-profile/cortex-m35p.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M35P system registers",
+      "vendor": "Arm",
+      "family": "Armv8-M Mainline",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv8-M Mainline",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M35P",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 21,
+        "registers": 1487,
+        "fields": 696
+      },
+      "sha256": "42175f3ca9fb79c91d4c72705a4f41ac19eca4d6d7ced7becd6a717e447389c0"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m4",
+      "path": "architecture/arm/m-profile/cortex-m4.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M4 system registers",
+      "vendor": "Arm",
+      "family": "Armv7E-M",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv7E-M",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M4",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 11,
+        "registers": 434,
+        "fields": 343
+      },
+      "sha256": "8d83fe440a212f1c74fd657fc90422356cfe19cc6374feecd6883f75a6127c18"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m52",
+      "path": "architecture/arm/m-profile/cortex-m52.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M52 system registers",
+      "vendor": "Arm",
+      "family": "Armv8.1-M Mainline",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv8.1-M Mainline",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M52",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 30,
+        "registers": 1626,
+        "fields": 1201
+      },
+      "sha256": "8085dc641e45b75613832863caebe23b5b939bd099b1354f104bfa6c8b8c48c5"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m55",
+      "path": "architecture/arm/m-profile/cortex-m55.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M55 system registers",
+      "vendor": "Arm",
+      "family": "Armv8.1-M Mainline",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv8.1-M Mainline",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M55",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 29,
+        "registers": 1622,
+        "fields": 1185
+      },
+      "sha256": "a9916dd62cfda60ac0b66862af48120bbae9862803fd795853bb5ccfa702a4e5"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m7",
+      "path": "architecture/arm/m-profile/cortex-m7.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M7 system registers",
+      "vendor": "Arm",
+      "family": "Armv7E-M",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv7E-M",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M7",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 12,
+        "registers": 463,
+        "fields": 429
+      },
+      "sha256": "04e98bebb88b7f4b0ae266b098fa8ed34e9011d212bfa8979e431b37f94af1cf"
+    },
+    {
+      "id": "architecture:arm:m-profile:cortex-m85",
+      "path": "architecture/arm/m-profile/cortex-m85.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M85 system registers",
+      "vendor": "Arm",
+      "family": "Armv8.1-M Mainline",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv8.1-M Mainline",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M85",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 29,
+        "registers": 1626,
+        "fields": 1186
+      },
+      "sha256": "612a60c5eac801c0e7ec7aee2c0ceba5bc52ff44fc3627ccf8c1465be8d6c734"
+    },
+    {
+      "id": "controllers:usb:rockchip:rk3588-dwc3",
+      "path": "controllers/usb/rockchip/rk3588-dwc3.yaml",
+      "category": "controllers",
+      "taxonomy": [
+        "controllers",
+        "usb",
+        "rockchip"
+      ],
+      "sensor": "RK3588_DWC3",
+      "vendor": "Rockchip / Synopsys",
+      "family": "DesignWare USB 3 Dual-Role Device Controller",
+      "device_type": "usb_controller",
+      "schema_version": 1,
+      "register_space": "mmio",
+      "architecture": null,
+      "profile": null,
+      "source": null,
+      "stats": {
+        "pages": 1,
+        "registers": 57,
+        "fields": 270
+      },
+      "sha256": "118ef4d37d478e49985226ffa69f5bb63b87641880bda3211b11450c548acbf3"
+    }
+  ]
+}

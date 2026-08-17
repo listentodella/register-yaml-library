@@ -1,0 +1,1996 @@
+# Source: RK3588 TRM-Part2, Chapter 13 USB3 Controller
+# Register facts are extracted only from the Rockchip TRM tables.
+schema_version: 1
+sensor: RK3588_DWC3
+vendor: "Rockchip / Synopsys"
+family: "DesignWare USB 3 Dual-Role Device Controller"
+device_type: usb_controller
+who_am_i:
+  reg: 0xC120
+  values:
+    - value: 0x5533300A
+      desc: "RK3588 TRM 中 USB3OTG_GSNPSID 的复位值"
+
+pages:
+  MMIO:
+    page_id: 0x00
+    address_unit_bits: 8
+    access: "32-bit MMIO"
+    desc: "RK3588 TRM-Part2 Chapter 13 USB3 Controller 寄存器；DWC3 核内部偏移，USB3OTG_0/1/2 的 SoC 基地址见 TRM 13.4.1。"
+    registers:
+      - addr: 0xC100
+        name: USB3OTG_GSBUSCFG0
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000001
+        desc: "Global SoC Bus Configuration Register 0"
+        fields:
+          - name: datrdreqinfo
+            bits: "31:28"
+            access: RW
+            reset: 0x0
+            desc: "AXI-cache for Data Read (DatRdReqInfo)."
+          - name: desrdreqinfo
+            bits: "27:24"
+            access: RW
+            reset: 0x0
+            desc: "AXI-cache for Descriptor Read (DesRdReqInfo)."
+          - name: datwrreqinfo
+            bits: "23:20"
+            access: RW
+            reset: 0x0
+            desc: "AXI-cache for Data Write (DatWrReqInfo)."
+          - name: deswrreqinfo
+            bits: "19:16"
+            access: RW
+            reset: 0x0
+            desc: "AXI-cache for Descriptor Write (DesWrReqInfo)."
+          - name: reserved_15_12
+            bits: "15:12"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: datbigend
+            bits: "11:11"
+            access: RW
+            reset: 0x0
+            desc: "This bit controls the endian mode for data accesses.\n1'b0: Little-endian (default)\n1'b1: Big-endian"
+          - name: desbigend
+            bits: "10:10"
+            access: RW
+            reset: 0x0
+            desc: "This bit controls the endian mode for descriptor accesses.\n1'b0: Little-endian (default)\n1'b1: Big-endian"
+          - name: reserved_9_8
+            bits: "9:8"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: incr256brstena
+            bits: "7:7"
+            access: RW
+            reset: 0x0
+            desc: "If software set this bit to 1, the AXI master uses INCR to do the\n256-beat burst."
+          - name: incr128brstena
+            bits: "6:6"
+            access: RW
+            reset: 0x0
+            desc: "If software set this bit to 1, the AXI master uses INCR to do the\n128-beat burst."
+          - name: incr64brstena
+            bits: "5:5"
+            access: RW
+            reset: 0x0
+            desc: "If software set this bit to 1, AXI master uses INCR to do the 64beat burst."
+          - name: incr32brstena
+            bits: "4:4"
+            access: RW
+            reset: 0x0
+            desc: "If software set this bit to 1, the AXI master uses INCR to do the\n32-beat burst."
+          - name: incr16brstena
+            bits: "3:3"
+            access: RW
+            reset: 0x0
+            desc: "If software set this bit to 1, the AXI master uses INCR to do the\n16-beat burst."
+          - name: incr8brstena
+            bits: "2:2"
+            access: RW
+            reset: 0x0
+            desc: "If software set this bit to 1, the AXI master uses INCR to do the\n8-beat burst."
+          - name: incr4brstena
+            bits: "1:1"
+            access: RW
+            reset: 0x0
+            desc: "When this bit is enabled the controller is allowed to do bursts of\nbeat length 1, 2, 3, and 4. It is highly recommended that this bit\nis enabled to prevent descriptor reads and writes from being\nbroken up into separate transfers."
+          - name: incrbrstena
+            bits: "0:0"
+            access: RW
+            reset: 0x1
+            desc: "This bit determines the set of burst lengths the master interface\nuses. It works in conjunction with the GSBUSCFG0[7:1] enables\n(INCR256/128/64/32/16/8/4).\n0: INCRX burst mode\nARLEN/AWLEN do not use INCR. They use only the following\nburst lengths:\n4 (if GSBUSCFG0.INCR4BrstEna = 1);\n8 (if GSBUSCFG0.INCR8BrstEna = 1);\n16 (if GSBUSCFG0.INCR16BrstEna = 1);\n32 (if GSBUSCFG0.INCR32BrstEna = 1);\n64 (if GSBUSCFG0.INCR64BrstEna = 1);\n128 (if GSBUSCFG0.INCR128BrstEna = 1);\n256 (if GSBUSCFG0.INCR256BrstEna = 1);\n1: INCR (undefined length) burst mode;\nARLEN/AWLEN uses any length less than or equal to the largestenabled burst length of INCR4/8/16/32/64/128/256.\nFor cache line-aligned applications, this bit is typically set to 0 to\nensure that the master interface uses only power-of-2 burst\nlengths (as enabled via GSBUSCFG0[7:0])."
+
+      - addr: 0xC104
+        name: USB3OTG_GSBUSCFG1
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000300
+        desc: "Global SoC Bus Configuration Register 1"
+        fields:
+          - name: reserved_31_13
+            bits: "31:13"
+            access: RO
+            reset: 0x00000
+            desc: "Reserved."
+          - name: en1kpage
+            bits: "12:12"
+            access: RW
+            reset: 0x0
+            desc: "1K Page Boundary Enable.\nBy default (this bit is disabled) the AXI breaks transfers at the 4k\npage boundary. When this bit is enabled, the AXI master (DMA\ndata) breaks transfers at the 1k page boundary."
+          - name: pipe_trans_limit
+            bits: "11:8"
+            access: RW
+            reset: 0x3
+            desc: "AXI Pipelined Transfers Burst Request Limit.\nThe field controls the number of outstanding pipelined transfer\nrequests the AXI master pushes to the AXI slave. When the AXI\nmaster reaches this limit, it does not make any more requests on\nthe AXI ARADDR and AWADDR buses until the associated data\nphases complete.\nThis field is encoded as follows:\n4'h0: 1 request\n4'h1: 2 requests\n4'h2: 3 requests\n4'h3: 4 requests\n...\n4'hF: 16 requests"
+          - name: reserved_7_0
+            bits: "7:0"
+            access: RO
+            reset: 0x00
+            desc: "Reserved."
+
+      - addr: 0xC108
+        name: USB3OTG_GTXTHRCFG
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Tx Threshold Control Register"
+        fields:
+          - name: reserved_31_30
+            bits: "31:30"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: USBTxPktCntSel
+            bits: "29:29"
+            access: RO
+            reset: 0x0
+            desc: "This field enables/disables the USB transmission multi-packet\nthresholding:\n1'b0: USB transmission multi-packet thresholding is disabled; the\ncore can only start transmission on the USB after the entire\npacket has been fetched into the corresponding TXFIFO.\n1'b1: USB transmission multi-packet thresholding is enabled. The\ncore can only start transmission on the USB after USB Transmit\nPacket Count amounts of packets for the USB transaction (burst)\nare already in the corresponding TXFIFO. This mode is only valid\nin the host mode. It is only used for SuperSpeed."
+          - name: reserved_28
+            bits: "28:28"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: USBTxPktCnt
+            bits: "27:24"
+            access: RW
+            reset: 0x0
+            desc: "This field specifies the number of packets that must be in the\nTXFIFO before the core can start transmission for the\ncorresponding USB transaction (burst). This field is only valid\nwhen the USB Transmit Packet Count Enable field is set to one.\nValid values are from 1 to 15.\nNote: This field must be less than or equal to the USB Maximum\nTX Burst Size field."
+          - name: USBMaxTxBurstSize
+            bits: "23:16"
+            access: RW
+            reset: 0x00
+            desc: "When USBTxPktCntSel is one, this field specifies the Maximum\nBulk OUT burst the core can do. When the system bus is\nslower than the USB, TX FIFO can underrun during a long\nburst.\nYou can program a smaller value to this field to limit the TX\nburst size that the core can execute.\nHost mode: It only applies to SS Bulk, Isochronous, and\nInterrupt\nOUT endpoints.\nDevice mode: This value is not used in device mode, but users\nneed to program a value when using the TX threshold feature\nto make sure that the value programmed in USBTxPktCnt is\nless than this value.\nValid values are from 1 to 16."
+          - name: reserved_15_0
+            bits: "15:0"
+            access: RO
+            reset: 0x0000
+            desc: "Reserved."
+
+      - addr: 0xC10C
+        name: USB3OTG_GRXTHRCFG
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Rx Threshold Control Register"
+        fields:
+          - name: reserved_31_30
+            bits: "31:30"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: usb_rx_pkt_cntsel
+            bits: "29:29"
+            access: RW
+            reset: 0x0
+            desc: "USB ReceivePacket Count Enable.\nThis field enables/disables the USB reception multi-packet\nthresholding:\n1'b0: The core can only start reception on the USB when the RX\nFIFO has space for at least one packet.\n1'b1: Not applied.\nIf you are using external buffer control (EBC) feature, disable this\nmode by setting USBRxPktCntSel to 0."
+          - name: reserved_28_13
+            bits: "28:13"
+            access: RO
+            reset: 0x0000
+            desc: "Reserved."
+          - name: resvl_socout_spc
+            bits: "12:0"
+            access: RW
+            reset: 0x0000
+            desc: "Space reserved in rx fifo for ISOC OUT.\nIn host mode, this field is not applicable and must be\nprogrammed to 0.\nIn device mode, this value represents the amount of space to be\nreserved for ISOC OUT packets.\nThe value to be programmed should be chosen so as to ensure\nthat non ISOC packets are not completely dropped,\nIf no space needs to be reserved for ISOC OUT packets, program\nthis field to 0.\nThis field is valid only in device mode. The maximum configurable\ndepth of rx fifo is 8192. Therefore, this field is 13 bits wide.\nFor HS/FS, the space reservation is the actual value."
+
+      - addr: 0xC110
+        name: USB3OTG_GCTL
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x13512004
+        desc: "Global Core Control Register"
+        fields:
+          - name: pwrdnscale
+            bits: "31:19"
+            access: RW
+            reset: 0x026A
+            desc: "Not applied."
+          - name: masterfiltbypass
+            bits: "18:18"
+            access: RW
+            reset: 0x0
+            desc: "Master Filter Bypass\nWhen this bit is set to 1'b1, all the filters are bypassed. The\ndouble synchronizers to mac clk preceding the filters are also\nbypassed. For enabling the filters, this bit must be 1'b0."
+          - name: bypassetaddr
+            bits: "17:17"
+            access: RW
+            reset: 0x0
+            desc: "Bypass SetAddress in Device Mode.\nWhen BYPSSETADDR bit is set, the device core uses the value in\nthe DCFG[DevAddr] bits directly for comparing the device\naddress in the tokens.\nFor simulation, you can use this feature to avoid sending an\nactual SET ADDRESS control transfer on the USB, and make the\ndevice core respond to a new address.\nNote: You can set this bit for simulation purposes only. In the\nactual hardware, this bit must be set to 1'b0."
+          - name: u2rstecn
+            bits: "16:16"
+            access: RW
+            reset: 0x1
+            desc: "Device controller on USB 2.0 reset checks for receiver\ntermination eight times per attempt if this bit is set to zero, or\nonly once per attempt if the bit is set to one.\nNote: This bit is applicable only in device mode."
+          - name: frmscldwn
+            bits: "15:14"
+            access: RW
+            reset: 0x0
+            desc: "This field scales down device view of a SOF/USOF duration.\nFor HS mode:\nValue of 2'h3 implements interval to be 15.625 us\nValue of 2'h2 implements interval to be 31.25 us\nValue of 2'h1 implements interval to be 62.5 us\nValue of 2'h0 implements interval to be 125us\nFor FS mode, the scale-down value is multiplied by 8.\nThis field also scales down the MaxPacketSize of the IN and OUT\nbulk endpoint to allow more traffic during simulation. It can only\nbe changed from a non-zero value during simulation.\n2'h0: 1024 bytes\n2'h1: 512 bytes\n2'h2: 256 bytes\n2'h3: 128 bytes"
+          - name: prtcapdir
+            bits: "13:12"
+            access: RW
+            reset: 0x2
+            desc: "PRTCAPDIR: Port Capability Direction (PrtCapDir)\n2'b01: for Host configurations\n2'b10: for Device configurations\nSW should base on IDDIG input to set usb controller as an OTG\n2.0 device with A-device or B-device."
+          - name: coresoftreset
+            bits: "11:11"
+            access: RW
+            reset: 0x0
+            desc: "Core Soft Reset (CoreSoftReset)\n1'b0: No soft reset;\n1'b1: Soft reset to core\nClears the interrupts and all the CSRs except the following\nregisters:\nGCTL; GUCTL; GSTS; GSNPSID; GGPIO; GUID; GUSB2PHYCFGn\nregisters; GUSB3PIPECTLn registers; DCFG; DCTL; DEVTEN;\nDSTS."
+          - name: sofitpsync
+            bits: "10:10"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: u1u2_timescale
+            bits: "9:9"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: debugattach
+            bits: "8:8"
+            access: RW
+            reset: 0x0
+            desc: "Debug Attach.\nNot applied."
+          - name: ramclksel
+            bits: "7:6"
+            access: RW
+            reset: 0x0
+            desc: "RAM Clock Select (RAMClkSel)\n2'b00: bus clock\n2'b01: pipe clock (Only used in device mode)\n2'b10: In device mode, pipe/2 clock. In Host mode, controller\nswitches ram_clk between pipe/2 clock, mac2_clk and bus_clk\nbased on the status of the U2 ports\n2'b11: In device mode, selects mac2_clk as ram_clk (when 8-bit\nUTMI or ULPI used. Not supported in 16-bit UTMI mode); In Host\nmode, controller switches ram_clk between pipe_clk, mac2_clk\nand bus_clk based on the status of the U2 ports.\nIn device mode, upon a USB reset and USB disconnect, the\nhardware clears these bits to 2'b00."
+          - name: scaledown
+            bits: "5:4"
+            access: RW
+            reset: 0x0
+            desc: "Scale-Down Mode (ScaleDown)\nWhen Scale-Down mode is enabled for simulation, the core uses\nscaled-down timing values, resulting in faster simulations.\nWhen Scale-Down mode is disabled, actual timing values are\nused. This is required for hardware operation.\nHS/FS/LS Modes:\n2'b00: Disables all scale-downs. Actual timing values are used.\n2'b01: Enables scale-down of all timing values except Device\nmode suspend and resume. These include Speed enumeration,\nHNP/SRP, and Host mode suspend and resume\n2'b10: Enables scale-down of Device mode suspend and resume\ntiming values only.\n2'b11: Enables bit 0 and bit 1 scale-down timing values."
+          - name: disscramble
+            bits: "3:3"
+            access: RW
+            reset: 0x0
+            desc: "Disable Scrambling (DisScramble)\nTransmit request to Link Partner on next transition to Recovery or\nPolling."
+          - name: u2exit_lfps
+            bits: "2:2"
+            access: RW
+            reset: 0x1
+            desc: "If this bit is:\n1'b0: the link treats 248ns LFPS as a valid U2 exit.\n1'b1: the link waits for 8us of LFPS before it detects a valid U2\nexit.\nThis bit is added to improve interoperability with a third part host\ncontroller. This host controller in U2 state while performing\nreceiver detection generates an LFPS glitch of about 4ms\nduration. This causes the device to exit from U2 state because\nthe LFPS filter value is 248ns. With the new functionality enabled,\nthe device can stay in U2 while ignoring this glitch from the host\ncontroller."
+          - name: gbl_hibernation_en
+            bits: "1:1"
+            access: RO
+            reset: 0x0
+            desc: "This bit enables hibernation at the global level. If hibernation is\nnot enabled through this bit, the PMU immediately accepts the\nD0->D3 and D3->D0 power state change requests, but does not\nsave or restore any core state. In addition, the PMUs never drive\nthe PHY interfaces and let the core continue to drive the PHY\ninterfaces."
+          - name: dsblclkgtng
+            bits: "0:0"
+            access: RW
+            reset: 0x0
+            desc: "Disable Clock Gating.\nThis bit is set to 1 and the core is in Low Power mode, internal\nclock gating is disabled. You can set this bit to 1'b1 after Power\nOn Reset."
+
+      - addr: 0xC118
+        name: USB3OTG_GSTS
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x7E800000
+        desc: "Global Status Register"
+        fields:
+          - name: cbelt
+            bits: "31:20"
+            access: RO
+            reset: 0x7E8
+            desc: "Current BELT Value.\nIn Host mode, this field indicates the minimum value of all\nreceived device BELT values and the BELT value that is set by the\nSet Latency Tolerance Value command."
+          - name: reserved_19_12
+            bits: "19:12"
+            access: RO
+            reset: 0x00
+            desc: "Reserved."
+          - name: SSIC_IP
+            bits: "11:11"
+            access: RO
+            reset: 0x0
+            desc: "Not applied."
+          - name: OTG_IP
+            bits: "10:10"
+            access: RO
+            reset: 0x0
+            desc: "OTG Interrupt Pending.\nThis field indicates that there is a pending interrupt pertaining to\nOTG in OEVT register."
+          - name: bc_ip
+            bits: "9:9"
+            access: RO
+            reset: 0x0
+            desc: "Battery Charger Interrupt Pending\nThis field indicates that there is a pending interrupt pertaining to\nBC in BCEVT register."
+          - name: adp_ip
+            bits: "8:8"
+            access: RO
+            reset: 0x0
+            desc: "ADP Interrupt Pending.\nThis field indicates that there is a pending interrupt pertaining to\nADP in ADPEVT register."
+          - name: host_ip
+            bits: "7:7"
+            access: RO
+            reset: 0x0
+            desc: "Host Interrupt Pending.\nThis field indicates that there is a pending interrupt pertaining to\nxHC in the Host event queue."
+          - name: device_ip
+            bits: "6:6"
+            access: RO
+            reset: 0x0
+            desc: "Device Interrupt Pending\nThis field indicates that there is a pending interrupt pertaining to\nperipheral (device) operation in the Device event queue."
+          - name: csr_timeout
+            bits: "5:5"
+            access: W1C
+            reset: 0x0
+            desc: "When this bit is 1'b1, it indicates that the software performed a\nwrite or read to a core register that could not be completed\nwithin DWC_USB3_CSR_ACCESS_TIMEOUT bus clock cycles\n(default: h1FFFF)."
+          - name: buserraddrvld
+            bits: "4:4"
+            access: W1C
+            reset: 0x0
+            desc: "us Error Address Valid\nIndicates that the GBUSERRADDR register is valid and reports the\nfirst bus address that encounters a bus error."
+          - name: reserved_3_2
+            bits: "3:2"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: curmod
+            bits: "1:0"
+            access: RO
+            reset: 0x0
+            desc: "Current Mode of Operation."
+
+      - addr: 0xC11C
+        name: USB3OTG_GUCTL1
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x0004018A
+        desc: "Global User Control Register 1"
+        fields:
+          - name: reserved_31_30
+            bits: "31:30"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: filter_se0_fsls_eop
+            bits: "29:29"
+            access: RW
+            reset: 0x0
+            desc: "1'b0: Default behaviour, no change in Linestate check for SE0\ndetection in FS/LS.\n1'b1: Feature enabled, FS/LS SE0 is filtered for 2 clocks for\ndetecting EOP.\nThis bit is applicable for FS/LS operation. If this feature is\nenabled, then SE0 on the Linestate is validated for 2 consecutive\nutmi/ulpi clock edges for EOP detection. This feature is applicable\nonly in FS in device mode and FS/LS mode of operation in host\nmode.\nDevice mode: FS - If GUCTL1.FILTER_SE0_FSLS_EOP is set, then\nfor device LPM handshake, the core will ignore single SE0 glitch\non the Linestate during transmit. Only 2 or more SE0 is\nconsidered as a valid EOP on FS.\nHost mode: FS/LS - If GUCTL1.FILTER_SE0_FSLS_EOP is set,\nthen the core will ignore single SE0 glitch on the Linestate during\ntransmit. Only 2 or more SE0 is considered as a valid EOP on\nFS/LS port. Enable this feature if the Linestate has SE0 glitches\nduring transmission. This bit is quasi-static, i.e., should not be\nchanged during device operation."
+          - name: tx_ipgap_linecheck_dis
+            bits: "28:28"
+            access: RW
+            reset: 0x0
+            desc: "1'b0: Default behavior, no change in Linestate check.\n1'b1: Feature enable, 2.0 MAC disables Linestate check during HS\ntransmit.\nThis bit is applicable for HS operation of u2mac. If this feature is\nenabled, then the 2.0 mac operating in HS ignores the UTMI/ULPI\nLinestate during the transmit of a token (during token-to-token\nand token-to-data IPGAP). When enabled, the controller\nimplements a fixed 40-bit TxEndDelay after the packet is given\non UTMI and ignores the Linestate during this time. This feature\nis applicable only in HS mode of operation.\nDevice mode: If GUCTL1.TX_IPGAP_LINECHECK_DIS is set, then\nfor device LPM handshake, the core will ignore the Linestate after\nTX and wait for a fixed clocks (40 bit times equivalent) after\ntransmitting ACK on utmi.\nHost mode: If GUCTL1.TX_IPGAP_LINECHECK_DIS is set, then\nthe ipgap between (tkn to tkn/data) is added by 40 bit times of\nTXENDDELAY, and linestate is ignored during this 40 bit times\ndelay.\nEnable this bit if the LineState will not reflect the expected line\nstate (J) during transmission. This bit is quasi-static, i.e., should\nnot be changed during device operation."
+          - name: dev_trb_out_spr_ind
+            bits: "27:27"
+            access: RW
+            reset: 0x0
+            desc: "1'b0: Default behavior, no change in TRB status dword.\n1'b1: Feature enable, OUT TRB status indicates Short Packet.\nThis bit is applicable for device mode only (and ignored in host\nmode). If the device application (SW/HW) wants to know if a\nshort packet was received for an OUT in the TRB status itself,\nthen this feature can be enabled, so that a bit is set in the TRB\nwriteback in the buf_size dword. Bit[26] - SPR of the trbstatus,\nRSVD, SPR,PCM1, bufsize dword will be set during an OUT\ntransfer TRB write back if this is the last TRB used for that\ntransfer descriptor. This bit is quasi-static, i.e., should not be\nchanged during device operation."
+          - name: dve_force_20clk_for_30clk
+            bits: "26:26"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: p3_in_u2
+            bits: "25:25"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: dev_l1_exit_by_hw
+            bits: "24:24"
+            access: RW
+            reset: 0x0
+            desc: "1'b0: Default behavior, disables device L1 hardware exit logic.\n1'b1: Feature enabled\nThis bit is applicable for device mode (2.0) only. This field enables\ndevice controller sending remote wakeup for L1 if the device\nbecomes ready for sending/accepting data when in L1 state. If\nthe host expects the device to send remote wkp signaling to\nresume after going into L1 in flow controlled state, then this bit\ncan be set to send the remote wake signal automatically when\nthe device controller becomes ready. This HW remote wake\nfeature is applicable only to bulk and interrupt transfers, and not\nfor Isoch/Control\nWhen control transfers are in progress, the LPM will be rejected\n(NYET response). Only after control transfers are completed\n(either with ACK/STALL), LPM will be accepted\nFor Isoch transfers, the host needs to do the wake-up and start\nthe transfer. Device controller will not do remote-wakeup when\nIsoch endpoints get ready. The device SW needs to keep the\nGUSB2PHYCFG[EnblSlpM] reset in order to keep the PHY clock to\nbe running for keeping track of SOF intervals.\nWhen L1 hibernation is enabled, the controller will not do\nautomatic exit for hibernation requests thru L1.\nThis bit is quasi-static, i.e., should not be changed during device\noperation."
+          - name: ip_gap_add_on
+            bits: "23:21"
+            access: RW
+            reset: 0x0
+            desc: "This register field is used to add on to the default inter packet\ngap setting in the USB 2.0 MAC."
+          - name: dev_lsp_tail_lock_dis
+            bits: "20:20"
+            access: RW
+            reset: 0x0
+            desc: "1'b0: Default behaviour, enables device lsp lock logic for tail TRB\nupdate.\n1'b1: Fix disabled\nThis is a bug fix for STAR 9000716195 that affects the CSP mode\nfor OUT endpoints in device mode. The issue is that tail TRB\nindex is not synchronized with the cache Scratchpad bytecount\nupdate. If the fast-forward request comes in-between the\nbytecount update on a newly fetched TRB and the tail-index write\nupdate in TPF, the RDP works on an incorrect tail index and\nmisses the byte count decrement for the newly fetched TRB in\nthe fast-forwarding process. This fix needs to be present all the\ntimes."
+          - name: nak_per_enh_fs
+            bits: "19:19"
+            access: RW
+            reset: 0x0
+            desc: "1'b1: Enables performance enhancement for FS async endpoints\nin the presence of NAKs.\n1'b0: Enhancement not applied.\nIf a periodic endpoint is present, and if a bulk endpoint which is\nalso active is being NAKed by the device, then this could result in\na decrease in performance of other Full Speed bulk endpoint\nwhich is ACKed by the device. Setting this bit to 1, will enable the\nhost controller to schedule more transactions to the async\nendpoints (bulk/ control) and hence will improve the performance\nof the bulk endpoint. This control bit should be enabled only if the\nexisting performance with the default setting is not sufficient for\nyour FullSpeed application. Setting this bit will only control, and\nis only required for Full Speed transfers."
+          - name: nak_per_enh_hs
+            bits: "18:18"
+            access: RW
+            reset: 0x1
+            desc: "1'b1: Enables performance enhancement for HS async endpoints\nin the presence of NAKs.\n1'b0: Enhancement not applied.\nIf a periodic endpoint is present, and if a bulk endpoint which is\nalso active is being NAKed by the device, then this could result in\na decrease in performance of other High Speed bulk endpoint\nwhich is ACKed by the device. Setting this bit to 1, will enable the\nhost controller to schedule more transactions to the async\nendpoints (bulk/ control) and hence will improve the performance\nof the bulk endpoint. This control bit should be enabled only if the\nexisting performance with the default setting is not sufficient for\nyour HighSpeed application. Setting this bit will only control, and\nis only required for High Speed transfers."
+          - name: parkmode_disbale_ss
+            bits: "17:17"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: parkmode_disable_hs
+            bits: "16:16"
+            access: RW
+            reset: 0x0
+            desc: "This bit is used only in host mode.\nWhen this bit is set to 1 all HS bus instances park mode are\ndisabled.\nTo improve performance in park mode, the xHCI scheduler\nqueues in three requests of 4 packets each for High Speed\nasynchronous endpoints in a micro-frame. But if a device is slow\nand if it NAKs more than 3 times, then it is rescheduled only in\nthe next micro-frame. This could decrease the performance of a\nslow device even further.\nIn a few High Speed devices (such as Sandisk Cruzer Blade 4GB\nVID: 1921, PID: 21863 and Flex Drive VID: 3744, PID: 8552)\nwhen an IN request is sent within 900ns of the ACK of the\nprevious packet, these devices send a NAK. When connected to\nthese devices, if required, the software can disable the park\nmode if you see performance drop in your system. When park\nmode is disabled, pipelining of multiple packet is disabled and\ninstead one packet at a time is requested by the scheduler. This\nallows up to 12 NAKs in a micro-frame and improves performance\nof these slow devices."
+          - name: parkmod_disavale_fsls
+            bits: "15:15"
+            access: RW
+            reset: 0x0
+            desc: "This bit is used only in host mode, and is for debug purpose only.\nWhen this bit is set to 1 all FS/LS bus instances in park mode\ndisabled."
+          - name: reserved_14_9
+            bits: "14:9"
+            access: RO
+            reset: 0x00
+            desc: "Reserved."
+          - name: l1_susp_thrld_en_for_host
+            bits: "8:8"
+            access: RW
+            reset: 0x1
+            desc: "This bit is used only in host mode.\nThe host controller asserts the utmi_l1_suspend_n and\nutmi_sleep_n output signals (see LPM Interface Signals table in\nthe Databook) as follows:\nThe controller asserts the utmi_l1_suspend_n signal to put the\nPHY into deep low-power mode in L1 when both of the following\nare true:\nThe HIRD/BESL value used is greater than or equal to the value\nin L1_SUSP_THRLD_FOR_HOST field.\nThe L1_SUSP_THRLD_EN_FOR_HOST bit is set to 1'b1. The\ncontroller asserts utmi_sleep_n on L1 when one of the following\nis true:\nThe HIRD/BESL value used is less than the value in\nL1_SUSP_THRLD_FOR_HOST field.\nThe L1_SUSP_THRLD_EN_FOR_HOST bit is set to 1'b0."
+          - name: l1_susp_thrld_for_host
+            bits: "7:4"
+            access: RW
+            reset: 0x8
+            desc: "This field is effective only when the\nL1_SUSP_THRLD_EN_FOR_HOST bit is set to 1. For more details,\nrefer to the description of the L1_SUSP_THRLD_EN_FOR_HOST\nbit."
+          - name: hc_errata_enable
+            bits: "3:3"
+            access: RW
+            reset: 0x1
+            desc: "Not applied."
+          - name: hc_parchk_disable
+            bits: "2:2"
+            access: RW
+            reset: 0x0
+            desc: "Host Parameter Check Disable.\nWhen this bit is set to 0 (by default), the xHC checks that the\ninput slot/EP context fields comply to the xHCI Specification.\nUpon detection of a parameter error during command execution,\nthe xHC generates an event TRB with completion code indicating\nPARAMETER ERROR.\nWhen the bit is set to 1, the xHC does not perform parameter\nchecks and does not generate PARAMETER ERROR completion\ncode."
+          - name: ovrld_l1_susp_com
+            bits: "1:1"
+            access: RW
+            reset: 0x1
+            desc: "If this bit is set, the utmi_l1_suspend_com_n is overloaded with\nthe utmi_sleep_n signal. This bit is usually set if the PHY stops\nthe port clock during L1 sleep condition."
+          - name: loa_filter_en
+            bits: "0:0"
+            access: RW
+            reset: 0x0
+            desc: "If this bit is set, the USB 2.0 port babble is checked at least three\nconsecutive times before the port is disabled. This prevents false\ntriggering of the babble condition when using low quality cables.\nNote: This bit is valid only in host mode."
+
+      - addr: 0xC120
+        name: USB3OTG_GSNPSID
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x5533300A
+        desc: "Global SNPS ID Register"
+        fields:
+          - name: snpsid
+            bits: "31:0"
+            access: RO
+            reset: 0x5533300A
+            desc: "SNPSID[31:16] indicates Core Identification Number. 0x5533 is\nASCII for U3 (DWC_usb3).\nSNPSID[15:0] indicates the release number. Current Release is\n3.00a.\nSoftware uses this register to configure release-specific features\nin the driver."
+
+      - addr: 0xC124
+        name: USB3OTG_GGPIO
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global General Purpose Input/Output Register"
+        fields:
+          - name: gpo
+            bits: "31:16"
+            access: RW
+            reset: 0x0000
+            desc: "General Purpose Output\nThis field's value is driven out on the gp_out[15:0] core output\nport."
+          - name: gpi
+            bits: "15:0"
+            access: RO
+            reset: 0x0000
+            desc: "General Purpose Input\nThis field's read value reflects the gp_in[15:0] core input value."
+
+      - addr: 0xC128
+        name: USB3OTG_GUID
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x20190520
+        desc: "Global User ID Register"
+        fields:
+          - name: userid
+            bits: "31:0"
+            access: RW
+            reset: 0x20190520
+            desc: "Application-programmable ID field."
+
+      - addr: 0xC12C
+        name: USB3OTG_GUCTL
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x02008010
+        desc: "Global User Control Register"
+        fields:
+          - name: refclkper
+            bits: "31:22"
+            access: RW
+            reset: 0x008
+            desc: "This field indicates in terms of nano seconds the period of ref_clk.\nThe default value of this register is set to 'h8 (8ns/125 MHz).\nThis field needs to be updated during power-on initialization, if\nGCTL.SOFITPSYNC or GFLADJ.GFLADJ_REFCLK_LPM_SEL is set to\n1. The programmable maximum value is 62ns, and the minimum\nvalue is 8ns.\nYou must use a reference clock with a period that is an integer\nmultiple, so that ITP can meet the jitter margin of 32ns. The\nallowable ref_clk frequencies whose period is not integer\nmultiples are 16/17/19.2/24/39.7MHz.\nThis field must not be set to 0 at any time. If you never plan to\nuse this feature, then set this field to 'h8, the default value."
+          - name: no_extr_di
+            bits: "21:21"
+            access: RW
+            reset: 0x0
+            desc: "No Extra Delay Between SOF and the First.\nSome HS devices misbehave when the host sends a packet\nimmediately after a SOF. However, adding an extra delay between\na SOF and the first packet can reduce the USB data rate and\nperformance.\nThis bit is used to control whether the host must wait for 2\nmicroseconds before it sends the first packet after a SOF, or not.\nUser can set this bit to one to improve the performance if those\nproblematic devices are not a concern in the user's host\nenvironment.\n1'b0: Host waits for 2 microseconds after a SOF before it sends\nthe first USB packet.\n1'b1: Host doesn't wait after a SOF before it sends the first USB\npacket."
+          - name: reserved_20_18
+            bits: "20:18"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: sprs_ctrl_trans_en
+            bits: "17:17"
+            access: RW
+            reset: 0x0
+            desc: "Sparse Control Transaction Enable.\nSome devices are slow in responding to Control transfers.\nScheduling multiple transactions in one microframe/frame can\ncause these devices to misbehave.\nIf this bit is set to 1'b1, the host controller schedules transactions\nfor a Control transfer in different microframes/frames."
+          - name: res_bw_hs_esp
+            bits: "16:16"
+            access: RW
+            reset: 0x0
+            desc: "Reserving 85% Bandwidth for HS Periodic EPs.\nBy default, HC reserves 80% of the bandwidth for periodic EPs. If\nthis bit is set, the bandwidth is relaxed to 85% to accommodate\ntwo high speed, high bandwidth ISOC EPs.\nUSB 2.0 required 80% bandwidth allocated for ISOC traffic. If two\nHigh-bandwidth ISOC devices (HD Webcams) are connected, and\nif each requires 1024-bytes X 3 packets per Micro-Frame, then\nthe bandwidth required is around 82%. If this bit is set, then it is\npossible to connect two Webcams of 1024bytes X 3 payload per\nMicro-Frame each. Otherwise, you may have to reduce the\nresolution of the Webcams.\nThis bit is valid in Host and DRD configuration and is used in host\nmode operation only. Ignore this bit in device mode."
+          - name: cm_dev_addr
+            bits: "15:15"
+            access: RW
+            reset: 0x1
+            desc: "Compliance Mode for Device Address.\nWhen this bit is 1'b1, Slot ID may have different value than\nDevice Address if max_slot_enabled < 128.\n1'b1: Increment Device Address on each Address Device\ncommand.\n1'b0: Device Address is equal to Slot ID.\nThe xHCI compliance requires this bit to be set to 1. The 0 mode\nis for debug purpose only. This allows you to easily identify a\ndevice connected to a port in the Lecroy or Eliisys trace during\nhardware debug.\nThis bit is valid in Host and DRD configuration and is used in host\nmode operation only. Ignore this bit in device mode."
+          - name: usb_host_in_auto_retry_en
+            bits: "14:14"
+            access: RW
+            reset: 0x0
+            desc: "Host IN Auto Retry.\n1'b0: Auto Retry Disabled\n1'b1: Auto Retry Enabled\nNote: This bit is also applicable to the device mode."
+          - name: en_overlap_chk
+            bits: "13:13"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: ext_cap_suppt_en
+            bits: "12:12"
+            access: RW
+            reset: 0x0
+            desc: "External Extended Capability Support Enable\nWhen set, this field enables extended capabilities to be\nimplemented outside the core.\nWhen the ExtCapSupEN is set and the Debug Capability is\nenabled, the Next Capability pointer in Debug Capability returns\n16.\nA read to the first DWORD of the last internal extended capability\n(the \"xHCI Supported Protocol Capability for USB 3.0\" when the\nDebug Capability is not enabled) returns a value of 4 in the Next\nCapability Pointer field.\nThis indicates to software that there is another capability four\nDWORDs after this capability (for example, at address N+16\nwhere N is the address of this DWORD). If enabled, an external\naddress decoder that snoops the xHC slave interface must be\nimplemented.\nIf it sees an access to N+16 or greater, the slave access is rerouted to a piece of hardware which returns the external\ncapability pointer register of the new capability and also handles\nreads/writes to this new capability and the side effects.\nIf disabled, a read to the first DWORD of the last internal\nextended capability returns 0 in the 'Next Capability Pointer' field.\nThis indicates there are no more capabilities."
+          - name: insrt_extr_fsbodi
+            bits: "11:11"
+            access: RW
+            reset: 0x0
+            desc: "Insert Extra Delay Between FS Bulk OUT.\nSome FS devices are slow to receive Bulk OUT data and can get\nstuck when there are consecutive Bulk OUT transactions with\nshort inter-transaction delays. This bit is used to control whether\nthe host inserts extra delay between consecutive Bulk OUT\ntransactions to a FS Endpoint.\n1'b0: Host doesn't insert extra delay between consecutive Bulk\nOUT transactions to a FS Endpoint.\n1'b1: Host inserts about 12us extra delay between consecutive\nBulk OUT transactions to a FS Endpoint to work around the\ndevice issue.\nNote: Setting this bit to one will reduce the Bulk OUT transfer\nperformance for most of the FS devices."
+          - name: dtct
+            bits: "10:9"
+            access: RW
+            reset: 0x0
+            desc: "Device Timeout Coarse Tuning.\nThis field is a Host mode parameter which determines how long\nthe host waits for a response from device before considering a\ntimeout.\nThe core first checks the DTCT value. If it is 0, then the timeout\nvalue is defined by the DTFT. If it is non-zero, then it uses the\nfollowing timeout values:\n2'b00: 0 usec -> use DTFT value instead\n2'b01: 500 usec\n2'b10: 1.5 msec\n2'b11: 6.5 msec"
+          - name: ctft
+            bits: "8:0"
+            access: RW
+            reset: 0x010
+            desc: "Device Timeout Fine Tuning.\nThis field is a Host mode parameter which determines how long\nthe host waits for a response from device before considering a\ntimeout.\nFor the DTFT field to take effect, DTCT must be set to 2'b00.\nThe DTFT value is the number of 125 MHz clocks * 256 to count\nbefore considering a device timeout.\nThe minimum value of DTFT is 2.\nFor example, if the mac3_clk is 125 MHz clk (8 ns period), this is\ncalculated as follows:\n(DTFT value) * 256 * (8 ns)\nQuick Reference:\nif DTFT = 0x2, 2*256*8 = 4usec timeout\nif DTFT = 0x5, 5*256*8 = 10usec timeout\nif DTFT = 0xA, 10*256*8 = 20usec timeout\nif DTFT = 0x10, 16*256*8 = 32usec timeout\nif DTFT = 0x19, 25*256*8 = 51usec timeout\nif DTFT = 0x31, 49*256*8 = 100usec timeout\nif DTFT = 0x62, 98*256*8 = 200usec timeout"
+
+      - addr: 0xC130
+        name: USB3OTG_GBUSERRADDRLO
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global SoC Bus Error Address Register - Low"
+        fields:
+          - name: buserraddr
+            bits: "31:0"
+            access: RO
+            reset: 0x00000000
+            desc: "Bus Address - Low.\nThis register contains the lower 32 bits of the first bus address\nthat encountered a SoC bus error. It is valid when the\nGSTS.BusErrAddrVld field is 1. It can only be cleared by resetting\nthe core.\nNote: Only supported in AHB and AXI configurations."
+
+      - addr: 0xC134
+        name: USB3OTG_GBUSERRADDRHI
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global SoC Bus Error Address Register - High"
+        fields:
+          - name: buserraddr
+            bits: "31:0"
+            access: RU
+            reset: 0x00000000
+            desc: "Bus Address - High.\nThis register contains the higher 32 bits of the first bus address\nthat encountered a SoC bus error. It is valid when the\nGSTS.BusErrAddrVld field is 1. It can only be cleared by resetting\nthe core.\nNote: Only supported in AHB and AXI configurations."
+
+      - addr: 0xC138
+        name: USB3OTG_GPRTBIMAPLO
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global SS Port to Bus Instance Mapping Register"
+        fields:
+          - name: reserved_31_4
+            bits: "31:4"
+            access: RO
+            reset: 0x0000000
+            desc: "Reserved."
+          - name: BINUM1
+            bits: "3:0"
+            access: RW
+            reset: 0x0
+            desc: "SS USB Instance Number for Port 1\nApplication-programmable ID field."
+
+      - addr: 0xC140
+        name: USB3OTG_GHWPARAMS0
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x2020400A
+        desc: "Global Hardware Parameters Register 0"
+        fields:
+          - name: ghwparams0
+            bits: "31:0"
+            access: RO
+            reset: 0x2020400A
+            desc: "Global Hardware Parameters Register 0."
+
+      - addr: 0xC144
+        name: USB3OTG_GHWPARAMS1
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x0120C93B
+        desc: "Global Hardware Parameters Register 1"
+        fields:
+          - name: ghwparams1
+            bits: "31:0"
+            access: RO
+            reset: 0x0120C93B
+            desc: "Global Hardware Parameters Register 1."
+
+      - addr: 0xC148
+        name: USB3OTG_GHWPARAMS2
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x20190520
+        desc: "Global Hardware Parameters Register 2"
+        fields:
+          - name: ghwparams2
+            bits: "31:0"
+            access: RO
+            reset: 0x20190520
+            desc: "Global Hardware Parameters Register 2."
+
+      - addr: 0xC14C
+        name: USB3OTG_GHWPARAMS3
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x069CD084
+        desc: "Global Hardware Parameters Register 3"
+        fields:
+          - name: ghwparams3
+            bits: "31:0"
+            access: RO
+            reset: 0x069CD084
+            desc: "Global Hardware Parameters Register 3."
+
+      - addr: 0xC150
+        name: USB3OTG_GHWPARAMS4
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x47822010
+        desc: "Global Hardware Parameters Register 4"
+        fields:
+          - name: ghwparams4
+            bits: "31:0"
+            access: RO
+            reset: 0x47822010
+            desc: "Global Hardware Parameters Register 4."
+
+      - addr: 0xC154
+        name: USB3OTG_GHWPARAMS5
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x04204018
+        desc: "Global Hardware Parameters Register 5"
+        fields:
+          - name: ghwparams5
+            bits: "31:0"
+            access: RO
+            reset: 0x04204018
+            desc: "Global Hardware Parameters Register 5."
+
+      - addr: 0xC158
+        name: USB3OTG_GHWPARAMS6
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x09D78020
+        desc: "Global Hardware Parameters Register 6"
+        fields:
+          - name: ghwparams6
+            bits: "31:0"
+            access: RO
+            reset: 0x09D78020
+            desc: "Global Hardware Parameters Register 6."
+
+      - addr: 0xC15C
+        name: USB3OTG_GHWPARAMS7
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Hardware Parameters Register 7"
+        fields:
+          - name: ghwparams7
+            bits: "31:0"
+            access: RO
+            reset: 0x00000000
+            desc: "Global Hardware Parameters Register 7."
+
+      - addr: 0xC160
+        name: USB3OTG_GDBGFIFOSPACE
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x000A0000
+        desc: "Global Debug Queue/FIFO Space Available Register"
+        fields:
+          - name: space_available
+            bits: "31:16"
+            access: RO
+            reset: 0x000A
+            desc: "Space Available."
+          - name: reserved_15_9
+            bits: "15:9"
+            access: RO
+            reset: 0x00
+            desc: "Reserved."
+          - name: fifo_queue_select
+            bits: "8:0"
+            access: RW
+            reset: 0x000
+            desc: "FIFO/Queue Select (or) Port-Select.\nFIFO/Queue Select[8:5] indicates the FIFO/Queue Type.\nFIFO/Queue Select[4:0] indicates the FIFO/Queue Number.\nPort-Select[3:0] selects the port-number when accessing\nGDBGLTSSM register."
+
+      - addr: 0xC168
+        name: USB3OTG_GDBGLNMCC
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Debug LNMCC Register"
+        fields:
+          - name: reserved_31_9
+            bits: "31:9"
+            access: RO
+            reset: 0x000000
+            desc: "Reserved."
+          - name: lnmcc_berc
+            bits: "8:0"
+            access: RO
+            reset: 0x000
+            desc: "This field indicates the bit error rate information for the port\nselected in the GDBGFIFOSPACE.PortSelect field. This field is for\ndebug purposes only."
+
+      - addr: 0xC16C
+        name: USB3OTG_GDBGBMU
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Debug BMU Register"
+        fields:
+          - name: bmu_bcu
+            bits: "31:8"
+            access: RW
+            reset: 0x000000
+            desc: "BMU_BCU Debug information."
+          - name: bmu_dcu
+            bits: "7:4"
+            access: RO
+            reset: 0x0
+            desc: "BMU_DCU Debug information."
+          - name: bmu_ccu
+            bits: "3:0"
+            access: RO
+            reset: 0x0
+            desc: "BMU_CCU Debug information."
+
+      - addr: 0xC170
+        name: USB3OTG_GDBGLSPMUX
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x003F0000
+        desc: "Global Debug LSP MUX Register - Device"
+        fields:
+          - name: reserved_31_24
+            bits: "31:24"
+            access: RO
+            reset: 0x00
+            desc: "Reserved."
+          - name: logic_analyzer_trace
+            bits: "23:16"
+            access: RW
+            reset: 0x3F
+            desc: "Logic Analyzer Trace Port MUX Select.\nCurrently only bits[21:16] are used. A value of 6'h3F drives \"0\"s\non the logic_analyzer_trace signal. If you plan to OR (instead\nusing a mux) this signal with other trace signals in your system\nto generate a common trace signal, you can use this feature."
+          - name: endbc
+            bits: "15:15"
+            access: RW
+            reset: 0x0
+            desc: "Enable debugging of Debug capability LSP in Host mode. Use\nHostSelect to select DbC LSP debug information presented in the\nGDBGLSP register."
+          - name: reserved_14
+            bits: "14:14"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: hostselect
+            bits: "13:8"
+            access: RW
+            reset: 0x00
+            desc: "Host LSP Select.\nSelects the LSP debug information presented in the GDBGLSP\nregister in host mode."
+          - name: devselect
+            bits: "7:4"
+            access: RW
+            reset: 0x0
+            desc: "Device LSP Select.\nSelects the LSP debug information presented in the GDBGLSP\nregister in device mode. Or bit[7:4] of HOSTSELECT, Selects the\nLSP debug information presented in the GDBGLSP register in host\nmode."
+          - name: epselect
+            bits: "3:0"
+            access: RW
+            reset: 0x0
+            desc: "Device Endpoint Select.\nSelects the Endpoint debug information presented in the\nGDBGEPINFO registers in device mode. Or bit[3:0] of\nHOSTSELECT, Selects the LSP debug information presented in the\nGDBGLSP register in host mode."
+
+      - addr: 0xC174
+        name: USB3OTG_GDBGLSP
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Debug LSP Register"
+        fields:
+          - name: lspdebug
+            bits: "31:0"
+            access: RO
+            reset: 0x00000000
+            desc: "LSP Debug Information."
+
+      - addr: 0xC178
+        name: USB3OTG_GDBGEPINFO0
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Debug Endpoint Information Register 0"
+        fields:
+          - name: epdebug
+            bits: "31:0"
+            access: RO
+            reset: 0x00000000
+            desc: "Endpoint Debug Information Low 32-bit."
+
+      - addr: 0xC17C
+        name: USB3OTG_GDBGEPINFO1
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00800000
+        desc: "Global Debug Endpoint Information Register 1"
+        fields:
+          - name: epdebug
+            bits: "31:0"
+            access: RO
+            reset: 0x00800000
+            desc: "Endpoint Debug Information High 32-bit."
+
+      - addr: 0xC180
+        name: USB3OTG_GPRTBIMAP_HSLO
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global High-Speed Port to Bus Instance Mapping Register - Low"
+        fields:
+          - name: reserved_31_4
+            bits: "31:4"
+            access: RO
+            reset: 0x0000000
+            desc: "Reserved."
+          - name: binum1
+            bits: "3:0"
+            access: RW
+            reset: 0x0
+            desc: "HS USB Instance Number for Port 1.\nApplication-programmable ID field."
+
+      - addr: 0xC188
+        name: USB3OTG_GPRTBIMAP_FSLO
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Full-Speed Port to Bus Instance Mapping Register - Low"
+        fields:
+          - name: reserved_31_4
+            bits: "31:4"
+            access: RO
+            reset: 0x0000000
+            desc: "Reserved."
+          - name: binum1
+            bits: "3:0"
+            access: RW
+            reset: 0x0
+            desc: "FS USB Instance Number for Port 1.\nApplication-programmable ID field."
+
+      - addr: 0xC200
+        name: USB3OTG_GUSB2PHYCFG0
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x40102400
+        desc: "Global USB2 PHY Configuration Register 0"
+        fields:
+          - name: physoftrst
+            bits: "31:31"
+            access: RW
+            reset: 0x0
+            desc: "UTMI PHY Soft Reset.\nCauses the usb2phy_reset signal to be asserted to reset a UTMI\nPHY. Not applicable to ULPI because ULPI PHYs are reset via their\nFunctionControl. Reset register, and the core automatically writes\nto this register when the core is reset (vcc_reset_n,\nUSBCMD.HCRST, DCTL.SoftReset, or GCTL.SoftReset)."
+          - name: u2_freeclk_exists
+            bits: "30:30"
+            access: RW
+            reset: 0x1
+            desc: "Specifies whether your USB 2.0 PHY provides a free-running PHY\nclock, which is active when the clock control input is active.\nIf your USB 2.0 PHY provides a free-running PHY clock, it must be\nconnected to the utmi_clk[0] input. The remaining utmi_clk[n]\nmust be connected to the respective port clocks. The core uses\nthe Port-0 clock for generating the internal mac2 clock.\n1'b0: USB 2.0 free clock does not exist\n1'b1: USB 2.0 free clock exists\nNote: When the core is configured as device-only, do not set this\nbit to 1."
+          - name: reserved_29_25
+            bits: "29:25"
+            access: RO
+            reset: 0x00
+            desc: "Reserved."
+          - name: lstrd
+            bits: "24:22"
+            access: RW
+            reset: 0x0
+            desc: "LS Turnaround Time.\nThis field indicates the value of the Rx-to-Tx packet gap for LS\ndevices. The encoding is as follows:\n3'h0: 2 bit times\n3'h1: 2.5 bit times\n3'h2: 3 bit times\n3'h3: 3.5 bit times\n3'h4: 4 bit times\n3'h5: 4.5 bit times\n3'h6: 5 bit times\n3'h7: 5.5 bit times\nNote:\nThis field is applicable only in Host mode.\nFor normal operation (to work with most LS devices), set the\ndefault value of this field to 3'h0 (2 bit times).\nThe programmable LS device inter-packet gap and turnaround\ndelays are provided to support some legacy LS devices that might\nrequire different delays than the default/fixed ones. For instance,\nthe Open LS mouse requires 3 bit times of inter-packet gap to\nwork correctly."
+          - name: lsipd
+            bits: "21:19"
+            access: RW
+            reset: 0x2
+            desc: "LS Inter-Packet Time.\nThis field indicates the value of Tx-to-Tx packet gap for LS\ndevices.\nThe encoding is as follows:\n3'h0: 2 bit times\n3'h1: 2.5 bit times\n3'h2: 3 bit times\n3'h3: 3.5 bit times\n3'h4: 4 bit times\n3'h5: 4.5 bit times\n3'h6: 5 bit times\n3'h7: 5.5 bit times\nNote:\nThis field is applicable only in Host mode.\nFor normal operation (to work with most LS devices), set the\ndefault value of this field to 3'h2 (3 bit times).\nThe programmable LS device inter-packet gap and turnaround\ndelays are provided to support some legacy LS devices that might\nrequire different delays than the default/fixed ones. For instance,\nthe AOpen LS mouse requires 3 bit times of inter-packet gap to\nwork correctly."
+          - name: reserved_18_14
+            bits: "18:14"
+            access: RO
+            reset: 0x00
+            desc: "Reserved."
+          - name: usbtrdim
+            bits: "13:10"
+            access: RW
+            reset: 0x9
+            desc: "USB 2.0 Turnaround Time.\nSets the turnaround time in PHY clocks.\nSpecifies the response time for a MAC request to the Packet FIFO\nController (PFC) to fetch data from the DFIFO (SPRAM).\nThe following are the required values for the minimum SoC bus\nfrequency of 60 MHz. USB turnaround time is a critical\ncertification criteria when using long cables and five hub levels.\nThe required values for this field:\n4'h5: When the MAC interface is 16-bit UTMI+.\n4'h9: When the MAC interface is 8-bit UTMI+/ULPI.\nIf SoC bus clock is less than 60 MHz, and USB turnaround time is\nnot critical, this field can be set to a larger value.\nNote: This field is valid only in device mode."
+          - name: xcvrdly
+            bits: "9:9"
+            access: RW
+            reset: 0x0
+            desc: "Transceiver Delay.\nEnables a delay between the assertion of the UTMI/ULPI\nTransceiver Select signal (for HS) and the assertion of the TxValid\nsignal during a HS Chirp.\nWhen this bit is set to 1, a delay (of approximately 2.5 us) is\nintroduced from the time when the Transceiver Select is set to\n2'b00 (HS) to the time the TxValid is driven to 0 for sending the\nchirp-K.\nThis delay is required for some UTMI/ULPI PHYs.\nNote:\nIf you enable the hibernation feature when the device core comes\nout of power-off, you must re-initialize this bit with the\nappropriate value because the core does not save and restore\nthis bit value during hibernation.\nThis bit is valid only in device mode."
+          - name: enblslpm
+            bits: "8:8"
+            access: RW
+            reset: 0x0
+            desc: "Enable utmi_sleep_n and utmi_l1_suspend_n.\nThe application uses this bit to control utmi_sleep_n and\nutmi_l1_suspend_n assertion to the PHY in the L1 state.\n1'b0: utmi_sleep_n and utmi_l1_suspend_n assertion from the\ncore is not transferred to the external PHY.\n1'b1: utmi_sleep_n and utmi_l1_suspend_n assertion from the\ncore is transferred to the external PHY.\nNote:\nThis bit must be set high for Port0 if SNPS PHY is used.\nIn Device mode - Before issuing any device endpoint command\nwhen operating in 2.0 speeds, disable this bit and enable it after\nthe command completes. Without disabling this bit, if a command\nis issued when the device is in L1 state and if mac2_clk\n(utmi_clk/ulpi_clk) is gated off, the command will not get\ncompleted."
+          - name: physel
+            bits: "7:7"
+            access: RO
+            reset: 0x0
+            desc: "USB 2.0 High-Speed PHY or USB 1.1 Full-Speed.\n1'b0: USB 2.0 high-speed UTMI+ or ULPI PHY.\n1'b1: USB 1.1 full-speed serial transceiver."
+          - name: suspendusb20
+            bits: "6:6"
+            access: RW
+            reset: 0x0
+            desc: "Suspend USB2.0 HS/FS/LS PHY.\nWhen set, USB2.0 PHY enters Suspend mode if Suspend\nconditions are valid.\nIf it is set to 1, then the application must clear this bit after\npower-on reset. Application needs to set it to 1 after the core\ninitialization completes.\nFor all other configurations, this bit can be set to 1 during core\nconfiguration.\nNote:\nIn host mode, on reset, this bit is set to 1. Software can override\nthis bit after reset.\nIn device mode, before issuing any device endpoint command\nwhen operating in 2.0 speeds, disable this bit and enable it after\nthe command completes. If you issue a command without\ndisabling this bit when the device is in L2 state and if mac2_clk\n(utmi_clk/ulpi_clk) is gated off, the command will not get\ncompleted."
+          - name: reserved_5
+            bits: "5:5"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: ulpi_utmi_sel
+            bits: "4:4"
+            access: RO
+            reset: 0x0
+            desc: "ULPI or UTMI+ Select.\n1'b0: UTMI+ Interface\n1'b1: ULPI Interface"
+          - name: phyif
+            bits: "3:3"
+            access: RW
+            reset: 0x0
+            desc: "If UTMI+ is selected, the application uses this bit to configure the\ncore to support a UTMI+ PHY with an 8- or 16-bit interface.\n1'b0: 8 bits\n1'b1: 16 bits"
+          - name: tout_cal
+            bits: "2:0"
+            access: RW
+            reset: 0x0
+            desc: "HS/FS Timeout Calibration.\nThe number of PHY clocks, as indicated by the application in this\nfield, is multiplied by a bit-time factor; this factor is added to the\nhigh-speed/full-speed interpacket timeout duration in the core to\naccount for additional delays introduced by the PHY. This may be\nrequired, since the delay introduced by the PHY in generating the\nlinestate condition may vary among PHYs.\nThe USB standard timeout value for high-speed operation is 736\nto 816 (inclusive) bit times. The USB standard timeout value for\nfull-speed operation is 16 to 18 (inclusive) bit times. The\napplication must program this field based on the speed of\nconnection. The number of bit times added per PHY clock are:\nHigh-speed operation:\nOne 30-MHz PHY clock = 16 bit times\nOne 60-MHz PHY clock = 8 bit times\nFull-speed operation:\nOne 30-MHz PHY clock = 0.4 bit times\nOne 60-MHz PHY clock = 0.2 bit times"
+
+      - addr: 0xC2C0
+        name: USB3OTG_GUSB3PIPECTL0
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global PIPE PHY Configuration Register 0"
+        fields:
+          - name: PHYSoftRst
+            bits: "31:31"
+            access: RW
+            reset: 0x0
+            desc: "USB3 PHY Soft Reset\nAfter setting this bit to 1, the software needs to clear this bit."
+          - name: HstPrtCmpl
+            bits: "30:30"
+            access: RW
+            reset: 0x0
+            desc: "This feature tests the PIPE PHY compliance patterns without\nhaving to have a test fixture on the USB 3.0 cable.\nThis bit enables placing the SS port link into a compliance\nstate. By default, this bit must be set to 1'b0.\nIn compliance lab testing, the SS port link enters compliance\nafter failing the first polling sequence after power on. Set this\nbit to 0, when you run compliance tests.\nThe sequence for using this functionality is as follows:\n1. Disconnect any plugged in devices.\n2. Perform USBCMD.HCRST or power-on-chip reset.\n3. Set PORTSC.PP=0.\n4. Set GUSB3PIPECTL. HstPrtCmpl=1. This places the link into\ncompliance state.\nTo advance the compliance pattern, follow this sequence\n(toggle\nthe set GUSB3PIPECTL. HstPrtCmpl):\n1. Set GUSB3PIPECTL.HstPrtCmpl=0.\n2. Set GUSB3PIPECTL.HstPrtCmpl=1. This advances the link to\nthe next compliance pattern.\nTo exit from the compliance state perform USBCMD.HCRST or\npower-on-chip reset."
+          - name: U2SSInactP3ok
+            bits: "29:29"
+            access: RW
+            reset: 0x0
+            desc: "1'b0: During link state U2/SS.Inactive, put PHY in P2 (Default)\n1'b1: During link state U2/SS.Inactive, put PHY in P3"
+          - name: DisRxDetP3
+            bits: "28:28"
+            access: RW
+            reset: 0x0
+            desc: "Disabled receiver detection in P3\n1'b0: If PHY is in P3 and Core needs to perform receiver\ndetection, The core performs receiver detection in P3. (Default)\n1'b1: If PHY is in P3 and Core needs to perform receiver\ndetection, The core changes the PHY power state to P2 and then\nperforms receiver detection. After receiver detection, the cores\nchanges PHY power state to P3."
+          - name: Ux_exit_in_Px
+            bits: "27:27"
+            access: RW
+            reset: 0x0
+            desc: "1'b0: The core does U1/U2/U3 exit in PHY power state P0\n(default behavior).\n1'b1: The core does U1/U2/U3 exit in PHY power state\nP1/P2/P3\nrespectively."
+          - name: ping_enhancement_en
+            bits: "26:26"
+            access: RW
+            reset: 0x0
+            desc: "Ping Enhancement Enable\nWhen set, the Downstream port U1 ping receive timeout becomes\n500 ms instead of 300 ms. Minimum Ping.LFPS receive duration is\n8 ns (one mac3_clk). This field is valid for the downstream port\nonly."
+          - name: u1u2exitfail_to_recov
+            bits: "25:25"
+            access: RW
+            reset: 0x0
+            desc: "U1U2exitfail to Recovery\nWhen set, and U1/U2 LFPS handshake fails, the LTSSM transitions\nfrom U1/U2 to Recovery instead of SS Inactive. If Recovery fails,\nthen the LTSSM can enter SS.Inactive. This is an enhancement\nonly. It prevents interoperability issue if the remote link does not\ndo proper handshake."
+          - name: request_p1p2p3
+            bits: "24:24"
+            access: RW
+            reset: 0x0
+            desc: "Always Request P1/P2/P3 for U1/U2/U3\nWhen set, the core always requests PHY power change from P0 to\nP1/P2/P3 during U0 to U1/U2/U3 transition.\nIf this bit is 0, and immediate Ux exit (remotely initiated, or\nlocally initiated) happens, the core does not request P1/P2/P3\npower state change."
+          - name: StartRxDetU3RxDet
+            bits: "23:23"
+            access: RW
+            reset: 0x0
+            desc: "Start Receiver Detection in U3/Rx.Detect (StartRxdetU3RxDet)\nIf DWC_USB3_GUSB3PIPECTL_INIT[22] is set, and the link is\nin\neither U3 or Rx.Detect state, the core starts receiver detection\non the rising edge of this bit. This can only be used for\nDownstream ports. This bit must be set to '0' for Upstream\nports. This feature must not be enabled for normal operation."
+          - name: DisRxDetU3RxDet
+            bits: "22:22"
+            access: RW
+            reset: 0x0
+            desc: "Disable Receiver Detection in U3/Rx.Det\nWhen set, the core does not handle receiver detection in either\nU3 or Rx.Detect states. DWC_USB3_GUSB3PIPECTL_INIT[23]\nmust be used to start receiver detection manually. This bit can\nonly be used for the downstream port. This bit must be set to 0\nfor Upstream ports. This feature must not be enabled for normal\noperation. If you have to use this feature, contact SNPS."
+          - name: DelayP1P2P3
+            bits: "21:19"
+            access: RW
+            reset: 0x0
+            desc: "Delay P1P2P3\nDelay P0 to P1/P2/P3 request when entering U1/U2/U3 until\n(DWC_USB3_GUSB3PIPECTL_INIT[21:19]*8) 8B10B error\noccurs, or Pipe3_RxValid drops to 0.\nDWC_USB3_GUSB3PIPECTL_INIT[18] must be 1 to enable this\nfunctionality."
+          - name: DELAYP1TRANS
+            bits: "18:18"
+            access: RW
+            reset: 0x0
+            desc: "DELAYP1TRANS\nDelay PHY power change from P0 to P1/P2/P3 when link state\nchanging from U0 to U1/U2/U3 respectively.\n1'b1: When entering U1/U2/U3, delay the transition to P1/P2/P3\nuntil the pipe3 signals, Pipe3_RxElecIlde is 1 and pipe3_RxValid is\n0\n1'b0: When entering U1/U2/U3, transition to P1/P2/P3 without\nchecking for Pipe3_RxElecIlde and pipe3_RxValid.\nNote: This bit must be set to '1' for SNPS PHY. It is also used by\nthird-party SS PHY."
+          - name: SUSPENDENABLE
+            bits: "17:17"
+            access: RW
+            reset: 0x0
+            desc: "Suspend USB3.0 SS PHY (Suspend_en)\nWhen set, and if Suspend conditions are valid, the USB 3.0\nPHY\nenters Suspend mode.\nApplication needs to set it to '1' after the core initialization is\ncompleted."
+          - name: DATWIDTH
+            bits: "16:15"
+            access: RW
+            reset: 0x0
+            desc: "2'b00: 32 bits\n2'b01: 16 bits\n2'b10: 8 bits\nOne clock after reset, these bits receive the value seen on the\npipe3_DataBusWidth."
+          - name: AbortRxDetInU2
+            bits: "14:14"
+            access: RW
+            reset: 0x0
+            desc: "Abort Rx Detect in U2 (AbortRxDetInU2)\nWhen set, and the link state is U2, then the core will abort\nreceiver detection if it receives U2 exit LFPS from the remote\nlink partner.\nThis bit is for the downstream port only."
+          - name: SkipRxDet
+            bits: "13:13"
+            access: RW
+            reset: 0x0
+            desc: "Skip Rx Detect:\nWhen set, the core skips Rx Detection if pipe3_RxElecIdle is\nlow.\nSkip is defined as waiting for the appropriate timeout, then\nrepeating the operation."
+          - name: LFPSP0Algn
+            bits: "12:12"
+            access: RW
+            reset: 0x0
+            desc: "LFPS P0 Align\nWhen set:\n1. The core deasserts LFPS transmission on the clock edge that it\nrequests PHY power state 0 when exiting U1, U2, or U3 low\npower states. Otherwise, LFPS transmission is asserted one clock\nearlier.\n2. The core requests symbol transmission two pipe3_rx_pclks\nperiods after the PHY asserts PhyStatus as a result of the PHY\nswitching from P1 or P2 state to P0 state.\nCurrently, this bit is only used in USB 3.0 HUB with SNPS PHY. For\nother USB 3.0 Host, Device, and DRD cores, this bit is not\nrequired."
+          - name: P3P2TranOK
+            bits: "11:11"
+            access: RW
+            reset: 0x0
+            desc: "P3 P2 Transitions OK (P3P2TranOK)\nWhen set, the core transitions directly from PHY power state\nP2 to P3 or from state P3 to P2. When not set, P0 is always\nentered as an intermediate state during transitions between\nP2 and P3, as defined in the PIPE3 Specification.\nAccording to the PIPE3 Specification, any direct transition\nbetween P3 and P2 is illegal."
+          - name: P3ExSigP2
+            bits: "10:10"
+            access: RW
+            reset: 0x0
+            desc: "P3 Exit Signal in P2\nWhen this bit is set, the core always changes the PHY power state\nto P2, before attempting a U3 exit handshake. This bit is used\nonly for some non-SNPS PHYs that cannot do LFPS in P3."
+          - name: LFPSFILTER
+            bits: "9:9"
+            access: RW
+            reset: 0x0
+            desc: "LFPS Filter\nWhen set, filter LFPS reception with pipe3_RxValid in PHY power\nstate P0, that is, ignore LFPS reception from the PHY unless both\npipe3_Rxelecidle and pipe3_RxValid are deasserted."
+          - name: RX_DETECT_to_Polling_L
+            bits: "8:8"
+            access: RW
+            reset: 0x0
+            desc: "RX_DETECT to Polling.LFPS Control\n1'b0 (Default): Enables a 400us delay to start Polling LFPS after\nRX_DETECT. This allows VCM offset to settle to a proper level.\n1'b1: Disables the 400us delay to start Polling LFPS after\nRX_DETECT.\nDuring controller certification with third party PHY it is observed\nthat the PHY is not able to meet the Tx AC common mode voltage\nactive (VTX-CM-ACPP_ACTIVE <100mv) if the link starts polling\nwithin 80us from the time rx.detect is performed.\nTo meet this VTX-CM-ACPP_ACTIVE specification, the polling must\nbe delayed further. If the PHY does not have issue then they can\nset this bit to 1 which allows polling to start within 80us."
+          - name: reserved_7
+            bits: "7:7"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: TX_SWING
+            bits: "6:6"
+            access: RW
+            reset: 0x0
+            desc: "Tx Swing (TxSwing)\nRefer to the PIPE3 specification."
+          - name: TX_MARGIN
+            bits: "5:3"
+            access: RW
+            reset: 0x0
+            desc: "Tx Margin[2:0] (TxMargin)\nRefer to Table 5-3 of the PIPE3 Specification."
+          - name: TX_DE_EPPHASIS
+            bits: "2:1"
+            access: RW
+            reset: 0x0
+            desc: "Tx Deemphasis\nThe value driven to the PHY is controlled by the LTSSM during\nUSB3 Compliance mode."
+          - name: ELASTIC_BUFFER_MODE
+            bits: "0:0"
+            access: RW
+            reset: 0x0
+            desc: "Elastic Buffer Mode (ElasticBufferMode)\n(Refer to Table 5-3 of the PIPE3 specification.)"
+
+      - addr: 0xC300
+        name: USB3OTG_GTXFIFOSIZn
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000042
+        desc: "Global Transmit FIFO Size Register n, offset (0xc300 + 4*n), n=0~6"
+        fields:
+          - name: txfstaddr_n
+            bits: "31:16"
+            access: RW
+            reset: 0x0000
+            desc: "Transmit FIFOn RAM Start Address.\nThis field contains the memory start address for TxFIFOn in 64bit words."
+          - name: txfdep_n
+            bits: "15:0"
+            access: RW
+            reset: 0x0042
+            desc: "TxFIFO Depth.\nThis field contains the depth of TxFIFOn in 64-bit words.\nMinimum value: 32; Maximum value: 32,768."
+
+      - addr: 0xC380
+        name: USB3OTG_GRXFIFOSIZn
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x03340185
+        desc: "Global Receive FIFO Size Register n"
+        fields:
+          - name: rxfstaddr_n
+            bits: "31:16"
+            access: RW
+            reset: 0x0334
+            desc: "RxFIFOn RAM Start Address.\nThis field contains the memory start address for RxFIFOn in 64bit words."
+          - name: rxfdep_n
+            bits: "15:0"
+            access: RW
+            reset: 0x0185
+            desc: "RxFIFOn RAM Start Address.\nThis field contains the memory start address for RxFIFOn in 64bit words."
+
+      - addr: 0xC400
+        name: USB3OTG_GEVNTADRLO0
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Event Buffer Address (Low) Register 0"
+        fields:
+          - name: evntadrlo
+            bits: "31:0"
+            access: RW
+            reset: 0x00000000
+            desc: "Event Buffer Address.\nHolds the lower 32 bits of start address of the external memory\nfor the Event Buffer. During operation, hardware does not update\nthis address."
+
+      - addr: 0xC404
+        name: USB3OTG_GEVNTADRHI0
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Event Buffer Address (High) Register 0"
+        fields:
+          - name: evntadrhi
+            bits: "31:0"
+            access: RW
+            reset: 0x00000000
+            desc: "Event Buffer Address.\nHolds the higher 32 bits of start address of the external memory\nfor the Event Buffer. During operation, hardware does not update\nthis address."
+
+      - addr: 0xC408
+        name: USB3OTG_GEVNTSIZ0
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Event Buffer Size Register 0"
+        fields:
+          - name: evntintrptmask
+            bits: "31:31"
+            access: RW
+            reset: 0x0
+            desc: "Event Interrupt Mask.\nWhen set to '1', this prevents the interrupt from being generated.\nHowever, even when the mask is set, the events are queued."
+          - name: reserved_30_16
+            bits: "30:16"
+            access: RO
+            reset: 0x0000
+            desc: "Reserved."
+          - name: eventsiz
+            bits: "15:0"
+            access: RW
+            reset: 0x0000
+            desc: "Event Buffer Size in bytes.\nHolds the size of the Event Buffer in bytes; must be a multiple of\nfour. This is programmed by software once during initialization.\nThe minimum size of the event buffer is 32 bytes."
+
+      - addr: 0xC40C
+        name: USB3OTG_GEVNTCOUNT0
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Event Buffer Count Register 0"
+        fields:
+          - name: reserved_31_16
+            bits: "31:16"
+            access: RO
+            reset: 0x0000
+            desc: "Reserved."
+          - name: evntcount
+            bits: "15:0"
+            access: RW
+            reset: 0x0000
+            desc: "Event Count.\nWhen read, returns the number of valid events in the Event\nBuffer (in bytes).\nWhen written, hardware decrements the count by the value\nwritten. The interrupt line remains high when count is not 0."
+
+      - addr: 0xC600
+        name: USB3OTG_GHWPARAMS8
+        access: RO
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x0000047C
+        desc: "Global Hardware Parameters Register 8"
+        fields:
+          - name: ghwparams8_32_0
+            bits: "31:0"
+            access: RO
+            reset: 0x0000047C
+            desc: "ghwparams8"
+
+      - addr: 0xC610
+        name: USB3OTG_GTXFIFOPRIDEV
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Device TX FIFO DMA Priority Register"
+        fields:
+          - name: reserved_31_7
+            bits: "31:7"
+            access: RO
+            reset: 0x0000000
+            desc: "Reserved."
+          - name: gtxfifopridev
+            bits: "6:0"
+            access: RW
+            reset: 0x00
+            desc: "Device TxFIFO priority.\nThis register specifies the relative DMA priority level among the\nDevice TXFIFOs (one per IN endpoint). Each register bit[n]\ncontrols the priority (1: high, 0: low) of each TXFIFO[n]. When\nmultiple TXFIFOs compete for DMA service at a given time (that\nis, multiple TXQs contain TX DMA requests and their\ncorresponding TXFIFOs have space available), the TX DMA arbiter\ngrants access on a packet-basis in the following manner:\n1. High-priority TXFIFOs are granted access using round-robin\narbitration\n2. Low-priority TXFIFOs are granted access using round-robin\narbitration only after the high-priority TXFIFOs have no further\nprocessing to do (that is, either the TXQs are empty or the\ncorresponding TXFIFOs are full).\nFor scatter-gather packets, the arbiter grants successive DMA\nrequests to the same FIFO until the entire packet is completed.\nWhen configuring periodic IN endpoints, software must set\nregister bit[n]=1, where n is the TXFIFO assignment. This\nensures that the DMA for isochronous or interrupt IN endpoints\nare prioritized over bulk or control IN endpoints.\nThis register is present only when the core is configured to\noperate in the device mode. The register size corresponds to the\nnumber of Device IN endpoints."
+
+      - addr: 0xC618
+        name: USB3OTG_GTXFIFOPRIHST
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Host TX FIFO DMA Priority Register"
+        fields:
+          - name: reserved_31_3
+            bits: "31:3"
+            access: RO
+            reset: 0x00000000
+            desc: "Reserved."
+          - name: gtxfifoprihst
+            bits: "2:0"
+            access: RW
+            reset: 0x0
+            desc: "Host TxFIFO priority.\nThis register specifies the relative DMA priority level among the\nHost TXFIFOs (one per USB bus instance) within the associated\nspeed group (HS/FSLS). Each register bit[n] controls the priority\n(1: high, 0: low) of TXFIFO[n] within a speed group. When\nmultiple TXFIFOs compete for DMA service at a given time (i.e.,\nmultiple TXQs contain TX DMA requests and their corresponding\nTXFIFOs have space available), the TX DMA arbiter grants access\non a packet-basis in the following manner:\n1. Among the FIFOs in the same speed group (HS/FSLS):\na. High-priority TXFIFOs are granted access using round-robin\narbitration\nb. Low-priority TXFIFOs are granted access using round-robin\narbitration only after the high-priority TXFIFOs have no further\nprocessing to do (that is, either the TXQs are empty or the\ncorresponding TXFIFOs are full).\n2. The TX DMA arbiter prioritizes the HS/FSLS speed group\naccording to the ratio programmed in the GDMAHLRATIO register.\nFor scatter-gather packets, the arbiter grants successive DMA\nrequests to the same FIFO until the entire packet is completed.\nThis register is present only when the core is configured to\noperate in the host mode (includes DRD and OTG modes). The\nregister size corresponds to the number of configured USB bus\ninstances; for example, in the default configuration, there are 2\nUSB bus instances (1 HS, and 1 FSLS)."
+
+      - addr: 0xC61C
+        name: USB3OTG_GRXFIFOPRIHST
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Host RX FIFO DMA Priority Register"
+        fields:
+          - name: reserved_31_3
+            bits: "31:3"
+            access: RO
+            reset: 0x00000000
+            desc: "Reserved."
+          - name: grxfifoprihst
+            bits: "2:0"
+            access: RW
+            reset: 0x0
+            desc: "Host RxFIFO priority\nThis register specifies the relative DMA priority level among the\nHost RXFIFOs (one per USB bus instance) within the associated\nspeed group (HS/FSLS). Each register bit[n] controls the priority\n(1: high, 0: low) of RXFIFO[n] within a speed group. When\nmultiple RXFIFOs compete for DMA service at a given time (i.e.,\nmultiple RXQs contain RX DMA requests and their corresponding\nRXFIFOs have data available), the RX DMA arbiter grants access\non a packet-basis in the following manner:\n1. Among the FIFOs in the same speed group (HS/FSLS):\na. High-priority RXFIFOs are granted access using round-robin\narbitration\nb. Low-priority RXFIFOs are granted access using round-robin\narbitration only after high-priority RXFIFOs have no further\nprocessing to do (that is, either the RXQs are empty or the\ncorresponding RXFIFOs do not have the required data).\n2. The RX DMA arbiter prioritizes the HS/FSLS speed group\naccording to the ratio programmed in the GDMAHLRATIO register.\nFor scatter-gather packets, the arbiter grants successive DMA\nrequests to the same FIFO until the entire packet is completed.\nThis register is present only when the core is configured to\noperate in the host mode (includes DRD and OTG modes). The\nregister size corresponds to the number of configured USB bus\ninstances; for example, in the default configuration, there are 2\nUSB bus instances (1 HS, and 1 FSLS)."
+
+      - addr: 0xC620
+        name: USB3OTG_GFIFOPRIDBC
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Host Debug Capability DMA Priority Register"
+        fields:
+          - name: reserved_31_2
+            bits: "31:2"
+            access: RO
+            reset: 0x00000000
+            desc: "Reserved."
+          - name: gfifopridbc
+            bits: "1:0"
+            access: RW
+            reset: 0x0
+            desc: "Host DbC DMA priority.\nThis register specifies the relative priority of the RXFIFOs and\nTXFIFOs associated with the DbC mode. It overrides the priority\nassigned in the corresponding indexes of the Host RXFIFO and\nTXFIFO DMA priority registers, when the DbC mode is enabled."
+
+      - addr: 0xC624
+        name: USB3OTG_GDMAHLRATIO
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Host FIFO DMA High-Low Priority Ratio Register"
+        fields:
+          - name: reserved_31_22
+            bits: "31:22"
+            access: RO
+            reset: 0x000
+            desc: "Reserved."
+          - name: hstrxfifo
+            bits: "21:8"
+            access: RW
+            reset: 0x0000
+            desc: "Host RXFIFO DMA High-Low Priority."
+          - name: reserved_7_5
+            bits: "7:5"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: hsttxfifo
+            bits: "4:0"
+            access: RW
+            reset: 0x00
+            desc: "Host TXFIFO DMA High-Low Priority."
+
+      - addr: 0xC630
+        name: USB3OTG_GFLADJ
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Global Frame Length Adjustment Register"
+        fields:
+          - name: gfladj_refclk_240mhzdecr_pls1
+            bits: "31:31"
+            access: RW
+            reset: 0x0
+            desc: "This field indicates that the decrement value that the controller\napplies for each ref_clk must be GFLADJ_REFCLK_240MHZ_DECR\nand GFLADJ_REFCLK_240MHZ_DECR +1 alternatively on each\nref_clk.\nSet this bit to a 1 only if GFLADJ_REFCLK_LPM_SEL is set to 1\nand the fractional component of 240/ref_frequency is greater\nthan or equal to 0.5.\nExamples:\nIf the ref_clk is 24 MHz then\n1. GUCTL.REF_CLK_PERIOD = 41\n2. GFLADJ.GFLADJ_REFCLK_240MHZ_DECR = (240/24) = 10\n3. GFLADJ.GFLADJ_REFCLK_240MHZDECR_PLS1 = 0"
+          - name: gfladj_refclk_240mhz_decr
+            bits: "30:24"
+            access: RW
+            reset: 0x00
+            desc: "This field indicates the decrement value that the controller applies\nfor each ref_clk in order to derive a frame timer in terms of a\n240-MHz clock.\nThis field must be programmed to a non-zero value only if\nGFLADJ_REFCLK_LPM_SEL is set to 1.\nThe value is derived as follows:\nGFLADJ_REFCLK_240MHZ_DECR = 240/ref_clk_frequency\nExamples: If the ref_clk is 24 MHz then\n1. GUCTL.REF_CLK_PERIOD = 41\n2. GFLADJ.GFLADJ_REFCLK_240MHZ_DECR = 240/24 = 10"
+          - name: gfladj_refclk_lpm_sel
+            bits: "23:23"
+            access: RW
+            reset: 0x0
+            desc: "This bit enables the functionality of running SOF counters on the\nref_clk. This bit must not be set to 1 if GCTL.SOFITPSYNC bit is\nset to 1. Similarly, if GFLADJ_REFCLK_LPM_SEL set to 1,\nGCTL.SOFITPSYNC must not be set to 1.\nNote that the ref_clk frequencies supported in this mode are\n16/17/19.2/20/24/39.7/40 MHz. The utmi_clk[0] signal of the\ncore must be connected to the FREECLK of the PHY.\nNote: If you set this bit to 1, the\nGUSB2PHYCFG.U2_FREECLK_EXISTS bit must be set to 0."
+          - name: reserved_22
+            bits: "22:22"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: gfladj_refclk_fladj
+            bits: "21:8"
+            access: RW
+            reset: 0x0000
+            desc: "This field indicates the frame length adjustment to be applied\nwhen SOF counter is running on the ref_clk.\nSOF interval when GLADJ.GFLADJ_REFCLK_LPM_SEL is set to 1.\nThis field must be programmed to a non-zero value only if\nGFLADJ_REFCLK_LPM_SEL is set to 1 or GCTL.SOFITPSYNC is set\nto 1.\nThe value is derived as follows:\nFLADJ_REF_CLK_FLADJ=((125000/ref_clk_period_integer) -\n(125000/ref_clk_period)) * ref_clk_period where:\n1. The ref_clk_period_integer is the integer value of the ref_clk\nperiod got by truncating the decimal (fractional) value that is\nprogrammed in the GUCTL.REF_CLK_PERIOD field.\n2. The ref_clk_period is the ref_clk period including the fractional\nvalue.\nExamples: If the ref_clk is 24 MHz then\n1. GUCTL.REF_CLK_PERIOD = 41\n2. GFLADJ.GLADJ_REFCLK_FLADJ = ((125000/41) -\n(125000/41.6666)) * 41.6666 = 2032 (ignoring the fractional\nvalue)."
+          - name: gfladj_30mhz_sdbnd_sel
+            bits: "7:7"
+            access: RW
+            reset: 0x0
+            desc: "This field selects whether to use the input signal fladj_30mhz_reg\nor the GFLADJ.GFLADJ_30MHZ to adjust the frame length for the\nSOF. When this bit is set to:\n1'b1: the controller uses the register field\nGFLADJ.GFLADJ_30MHZ value\n1'b0: the controller uses the input signal fladj_30mhz_reg value."
+          - name: reserved_6
+            bits: "6:6"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: gfadj_30mhz
+            bits: "5:0"
+            access: RW
+            reset: 0x00
+            desc: "This field indicates the value that is used for frame length\nadjustment instead of considering from the sideband input signal\nfladj_30mhz_reg.\nThis enables post-silicon frame length adjustment in case the\ninput signal fladj_30mhz_reg is connected to a wrong value or is\nnot valid.\nFor details on how to set this value, refer to section 5.2.4, \"Frame\nLength Adjustment Register (FLADJ),\" of the xHCI Specification."
+
+      - addr: 0xC700
+        name: USB3OTG_DCFG
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00080000
+        desc: "Device Configuration Register"
+        fields:
+          - name: reserved_31_24
+            bits: "31:24"
+            access: RO
+            reset: 0x00
+            desc: "Reserved."
+          - name: ignstrmpp
+            bits: "23:23"
+            access: RW
+            reset: 0x0
+            desc: "This bit only affects stream-capable bulk endpoints. Not applied."
+          - name: lpmcap
+            bits: "22:22"
+            access: RW
+            reset: 0x0
+            desc: "LPM Capable. Not applied."
+          - name: nump
+            bits: "21:17"
+            access: RW
+            reset: 0x04
+            desc: "Number of Receive Buffers. Not applied."
+          - name: intrnum
+            bits: "16:12"
+            access: RW
+            reset: 0x00
+            desc: "Interrupt number.\nIndicates interrupt/EventQ number on which non-endpointspecific device-related interrupts (see DEVT) are generated."
+          - name: reserved_11_10
+            bits: "11:10"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: devaddr
+            bits: "9:3"
+            access: RW
+            reset: 0x00
+            desc: "Device Address.\nThe application must perform the following:\n1. Program this field after every SetAddress request.\n2. Reset this field to zero after USB reset."
+          - name: devspd
+            bits: "2:0"
+            access: RW
+            reset: 0x0
+            desc: "Device Speed.\nIndicates the speed at which the application requires the core to\nconnect, or the maximum speed the application can support.\nHowever, the actual bus speed is determined only after the chirp\nsequence is completed, and is based on the speed of the USB\nhost to which the core is connected.\n3'b000: High-speed (USB 2.0 PHY clock is 30 MHz or 60 MHz)\n3'b001: Full-speed (USB 2.0 PHY clock is 30 MHz or 60 MHz)"
+
+      - addr: 0xC704
+        name: USB3OTG_DCTL
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00F00000
+        desc: "Device Control Register"
+        fields:
+          - name: run_stop
+            bits: "31:31"
+            access: RW
+            reset: 0x0
+            desc: "The software writes 1 to this bit to start the device controller\noperation.\nTo stop the device controller operation, the software must remove\nany active transfers and write 0 to this bit. When the controller is\nstopped, it sets the DSTS.DevCtrlHlt bit when the core is idle and\nthe lower layer finishes the disconnect process.\nThe Run/Stop bit must be used in following cases as specified:\n1. After power-on reset and CSR initialization, the software must\nwrite 1 to this bit to start the device controller. The controller\ndoes not signal connect to the host until this bit is set.\n2. The software uses this bit to control the device controller to\nperform a soft disconnect. When the software writes 0 to this bit,\nthe host does not see that the device is connected. The device\ncontroller stays in the disconnected state until the software writes\n1 to this bit.\nThe minimum duration of keeping this bit cleared is specified in\nthe Note below. If the software attempts a connect after the soft\ndisconnect or detects a disconnect event, it must set DCTL[8:5]\nto 5 before reasserting the Run/Stop bit.\n3. When the USB is in a lower power state and the Two Power\nRails configuration is selected, software writes 0 to this bit to\nindicate that it is going to turn off the Core Power Rail. After the\nsoftware turns on the Core Power Rail again and re-initializes the\ndevice controller, it must set this bit to start the device controller.\nNote: The following is the minimum duration under various\nconditions for which the soft disconnect (SftDiscon) bit must be\nset for the USB host to detect a device disconnect:\n10ms: For high-speed, when the device state is Suspended, Idle,\nor not Idle/Suspended (performing transactions); For fullspeed/low-speed, when the device state is Suspended, Idle, or\nnot Idle/Suspended (performing transactions).\nTo accommodate clock jitter, it is recommended that the\napplication add extra delay to the specified minimum duration."
+          - name: csftrst
+            bits: "30:30"
+            access: RW_SC
+            reset: 0x0
+            desc: "Core Soft Reset.\nReset all clock domains as follows:\n1. This bit clears the interrupts and all the CSRs except GSTS,\nGSNPSID, GGPIO, GUID, GUSB2PHYCFGn registers,\nGUSB3PIPECTLn registers, DCFG, DCTL, DEVTEN, and DSTS\nregisters.\n2. All module state machines (except the SoC Bus Slave Unit) are\nreset to the IDLE state, and all the TxFIFOs and the RxFIFO are\nflushed.\n3. Any transactions on the SoC bus Master are terminated as\nsoon as possible, after gracefully completing the last data phase\nof a SoC bus transfer. Any transactions on the USB are\nterminated immediately.\nThe application can write this bit at any time to reset the core.\nThis is a self-clearing bit; the core clears this bit after all\nnecessary logic is reset in the core, which may take several\nclocks depending on the core's current state. Once this bit is\ncleared, the software must wait at least 3 PHY clocks before\naccessing the PHY domain (synchronization delay).\nTypically, software reset is used during software development and\nalso when you dynamically change the PHY selection bits in the\nUSB configuration registers listed above. When you change the\nPHY, the corresponding clock for the PHY is selected and used in\nthe PHY domain. Once a new clock is selected, the PHY domain\nmust be reset for proper operation."
+          - name: reserved_29
+            bits: "29:29"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: hirdthres
+            bits: "28:24"
+            access: RW
+            reset: 0x00
+            desc: "HIRD Threshold.\nThe core asserts output signals utmi_l1_suspend_n and\nutmi_sleep_n on the basis of this signal:\nThe core asserts utmi_l1_suspend_n to put the PHY into Deep\nLow-Power mode in L1 when both of the following are true:\n1. HIRD value is greater than or equal to the value in\nDCTL.HIRD_Thres[3:0]\n2. HIRD_Thres[4] is set to 1'b1.\nThe core asserts utmi_sleep_n on L1 when one of the following is\ntrue:\n1. If the HIRD value is less than HIRD_Thres[3:0] or\n2. HIRD_Thres[4] is set to 1'b0.\nNote: This field must be set to '0' during SuperSpeed mode of\noperation."
+          - name: lpm_nyet_thres
+            bits: "23:20"
+            access: RW
+            reset: 0xF
+            desc: "LPM NYET Threshold\nHandshake response to LPM token specified by device application.\nResponse depends on DCFG.LPMCap.\nDCFG.LPMCap is 1'b0 - The core always responds with Timeout\n(that is, no response).\nDCFG.LPMCap is 1'b1 - The core responds with an ACK on\nsuccessful LPM transaction, which requires that all of the\nfollowing are satisfied:\n1. There are no PID or CRC5 errors in both the EXT token and the\nLPM token (if not true, inactivity results in a timeout ERROR).\n2. No data is pending in the Transmit FIFO and OUT endpoints not\nin flow controlled state (else NYET).\n3. The BESL value in the LPM token is less than or equal to\nLPM_NYET_thres[3:0]."
+          - name: keep_connect
+            bits: "19:19"
+            access: RW
+            reset: 0x0
+            desc: "When 1, this bit enables the save and restore programming\nmodel by preventing the core from disconnecting from the host\nwhen DCTL.RunStop is set to 0.\nThe device core disconnects from the host when DCTL.RunStop is\nset to 0.\nThis bit indicates whether to preserve this behavior (0), or if the\ncore must not disconnect when RunStop is set to 0 (1)."
+          - name: l1_hibernation_en
+            bits: "18:18"
+            access: RW
+            reset: 0x0
+            desc: "When this bit is set along with KeepConnect, the device core\ngenerates a Hibernation Request Event if L1 is enabled and the\nHIRD value in the LPM token is larger than the threshold\nprogrammed in DCTL.HIRD_Thres.\nThe core does not exit the LPM L1 state until software writes\nRecovery into the DCTL.ULStChngReq field.\nThis prevents corner cases where the device is entering\nhibernation at the same time the host is attempting to exit L1."
+          - name: crs
+            bits: "17:17"
+            access: RW
+            reset: 0x0
+            desc: "Controller Restore State.\nThis command is similar to the USBCMD.CRS bit in host mode\nand initiates the restore process. When software sets this bit to 1,\nthe controller immediately sets DSTS.RSS to 1. When the\ncontroller has finished the restore process, it sets DSTS.RSS to 0.\nNote: When read, this field always returns 0."
+          - name: css
+            bits: "16:16"
+            access: RW
+            reset: 0x0
+            desc: "Controller Save State.\nThis command is similar to the USBCMD.CSS bit in host mode\nand initiates the save process. When software sets this bit to 1,\nthe controller immediately sets DSTS.SSS to 1. When the\ncontroller has finished the save process, it sets DSTS.SSS to 0.\nNote: When read, this field always returns 0."
+          - name: reserved_15_13
+            bits: "15:13"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: initu2ena
+            bits: "12:12"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: acceptu2ena
+            bits: "11:11"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: initu1ena
+            bits: "10:10"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: acceptu1ena
+            bits: "9:9"
+            access: RW
+            reset: 0x0
+            desc: "Not applied."
+          - name: ulstchngreq
+            bits: "8:5"
+            access: RW
+            reset: 0x0
+            desc: "Software writes this field to issue a USB state change request. A\nchange in this field indicates a new request to the core.\nIf software wants to issue the same request back-to-back, it must\nwrite a 0 to this field between the two requests. The result of the\nstate change request is reflected in the USB State in DSTS. These\nbits are self-cleared on the MAC Layer exiting suspended state.\nIf software is updating other fields of the DCTL register and not\nintending to force any link state change, then it must write a 0 to\nthis field.\nIn HS/FS/LS mode:\nValue: Requested USB state transition\n8: Remote wakeup request\nOthers: Reserved\nThe Remote wakeup request must be issued 2us after the device\ngoes into suspend state (DSTS[21:18] is 3 ).\nNote: After coming out of hibernation, software must write 8\n(Recovery) into this field to confirm exit from the suspended\nstate."
+          - name: tstctl
+            bits: "4:1"
+            access: RW
+            reset: 0x0
+            desc: "Test Control.\n4'b000: Test mode disabled\n4'b001: Test_J mode\n4'b010: Test_K mode\n4'b011: Test_SE0_NAK mode\n4'b100: Test_Packet mode\n4'b101: Test_Force_Enable\nOthers: Reserved"
+          - name: reserved_0
+            bits: "0:0"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+
+      - addr: 0xC708
+        name: USB3OTG_DEVTEN
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Device Event Enable Register"
+        fields:
+          - name: reserved_31_13
+            bits: "31:13"
+            access: RO
+            reset: 0x00000
+            desc: "Reserved."
+          - name: vendevtstrcvden
+            bits: "12:12"
+            access: RW
+            reset: 0x0
+            desc: "Vendor Device Test LMP Received Event.\n1'b0: Disable this event\n1'b1: Enable this event"
+          - name: reserved_11_10
+            bits: "11:10"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: errticerrevten
+            bits: "9:9"
+            access: RW
+            reset: 0x0
+            desc: "Erratic Error Event Enable.\n1'b0: Disable this event\n1'b1: Enable this event"
+          - name: reserved_8
+            bits: "8:8"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: softevten
+            bits: "7:7"
+            access: RW
+            reset: 0x0
+            desc: "Start of (u)frame Event Enable.\n1'b0: Disable this event\n1'b1: Enable this event"
+          - name: u3l2l1_susp_en
+            bits: "6:6"
+            access: RW
+            reset: 0x0
+            desc: "U3/L2-L1 Suspend Event Enable.\n1'b0: Disable this event\n1'b1: Enable this event"
+          - name: hibernation_req_evt_en
+            bits: "5:5"
+            access: RW
+            reset: 0x0
+            desc: "Hibernation Request Event Enable.\n1'b0: Disable this event\n1'b1: Enable this event"
+          - name: wkupevten
+            bits: "4:4"
+            access: RW
+            reset: 0x0
+            desc: "Resume/Remote Wakeup Detected Event Enable.\n1'b0: Disable this event\n1'b1: Enable this event"
+          - name: ulstcngen
+            bits: "3:3"
+            access: RW
+            reset: 0x0
+            desc: "USB State Change Event Enable.\n1'b0: Disable this event\n1'b1: Enable this event"
+          - name: connectdoneevten
+            bits: "2:2"
+            access: RW
+            reset: 0x0
+            desc: "Connection Done Event Enable.\n1'b0: Disable this event\n1'b1: Enable this event"
+          - name: usbrstevten
+            bits: "1:1"
+            access: RW
+            reset: 0x0
+            desc: "USB Reset Event Enable.\n1'b0: Disable this event\n1'b1: Enable this event"
+          - name: disconnevten
+            bits: "0:0"
+            access: RW
+            reset: 0x0
+            desc: "Disconnect Detected Event Enable.\n1'b0: Disable this event\n1'b1: Enable this event"
+
+      - addr: 0xC70C
+        name: USB3OTG_DSTS
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00520000
+        desc: "Device Status Register"
+        fields:
+          - name: reserved_31_30
+            bits: "31:30"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: dcnrd
+            bits: "29:29"
+            access: RW
+            reset: 0x0
+            desc: "Device Controller Not Ready.\nThe bit indicates that the core is in the process of completing the\nstate transitions after exiting from hibernation.\nTo complete the state transitions, it takes 256 bus clock cycles\nfrom the time DCTL[31].Run/Stop is set. During hibernation, if\nthe UTMI/ULPI PHY is in suspended state, then the 256-bus clock\ncycle delay starts after the PHY exited suspended state. Software\nmust set DCTL[31].Run/Stop to 1 and wait for this bit to be deasserted to zero before processing DSTS.USBLnkSt."
+          - name: reserved_28_26
+            bits: "28:26"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: rss
+            bits: "25:25"
+            access: RW
+            reset: 0x0
+            desc: "Restore State Status.\nThis bit is similar to the USBSTS.RSS in host mode.\nWhen the controller finishes the restore process, it completes the\ncommand by setting DSTS.RSS to 0."
+          - name: sss
+            bits: "24:24"
+            access: RO
+            reset: 0x0
+            desc: "Save State Status.\nThis bit is similar to the USBSTS.SSS in host mode.\nWhen the controller has finished the save process, it completes\nthe command by setting DSTS.SSS to 0."
+          - name: coreidle
+            bits: "23:23"
+            access: RO
+            reset: 0x0
+            desc: "Core Idle.\nThe bit indicates that the core finished transferring all RxFIFO\ndata to system memory, writing out all completed descriptors,\nand all Event Counts are zero.\nNote: While testing for Reset values, mask out the read value.\nThis bit represents the changing state of the core and does not\nhold a static value."
+          - name: devctrlhlt
+            bits: "22:22"
+            access: RO
+            reset: 0x1
+            desc: "Device Controller Halted.\nThis bit is set to 0 when the Run/Stop bit in the DCTL register is\nset to 1.\nThe core sets this bit to 1 when, after SW sets Run/Stop to 0, the\ncore is idle and the lower layer finishes the disconnect process.\nWhen Halted=1, the core does not generate Device events.\nNote: The core does not set this bit to 1 if GEVNTCOUNTn has\nsome valid value. Software needs to acknowledge the events that\nare generated (by writing to GEVNTCOUNTn) while it is waiting\nfor this bit to be set to 1."
+          - name: usblnkst
+            bits: "21:18"
+            access: RO
+            reset: 0x4
+            desc: "USB/Link State\nIn SS mode: LTSSM State\n4'h0: U0\n4'h1: U1\n4'h2: U2\n4'h3: U3\n4'h5: RX_DET\n4'h6: SS_INACT\n4'h7: POLL\n4'h8: RECOV\n4'h9: HRESET\n4'ha: CMPLY\n4'hb: LPBK\n4'hf: Resume/Reset\nIn HS/FS/LS mode:\n4'h0: On state\n4'h2: Sleep (L1) state\n4'h3: Suspend (L2) state\n4'h4: Disconnected state (Default state)\n4'h5: Early Suspend state (valid only when Hibernation is\ndisabled, GCTL[1].GblHibernationEn = 0)\n4'he: Reset (valid only when Hibernation is enabled,\nGCTL[1].GblHibernationEn = 1)\n4'hf: Resume (valid only when Hibernation is enabled,\nGCTL[1].GblHibernationEn = 1)\nThe link state Resume/Reset indicates that the core received a\nresume or USB reset request from the host while the link was in\nhibernation. Software must write 8 (Recovery) to the\nDCTL.ULStChngReq field to acknowledge the resume/reset\nrequest.\nWhen Hibernation is enabled, GCTL[1].GblHibernationEn = 1, this\nfield USBLnkSt is valid only when DCTL[31].Run/Stop set to 1\nand DSTS[29].DCNRD = 0."
+          - name: rx_fifo_empty
+            bits: "17:17"
+            access: RO
+            reset: 0x1
+            desc: "Rx Fifo Empty."
+          - name: reserved_16_3
+            bits: "16:3"
+            access: RO
+            reset: 0x0000
+            desc: "Reserved."
+          - name: connectspd
+            bits: "2:0"
+            access: RU
+            reset: 0x0
+            desc: "Connected Speed.\nIndicates the speed at which the DWC_usb3 core has come up\nafter speed detection through a chirp sequence.\n3'b000: High-speed (PHY clock is running at 30 or 60 MHz)\n3'b001: Full-speed (PHY clock is running at 30 or 60 MHz)"
+
+      - addr: 0xC710
+        name: USB3OTG_DGCMDPAR
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Device Generic Command Parameter Register"
+        fields:
+          - name: parameter
+            bits: "31:0"
+            access: RW
+            reset: 0x00000000
+            desc: "This register indicates the device command parameter. This must\nbe programmed before or along with the device command. The\navailable device commands are listed in DGCMD register."
+
+      - addr: 0xC714
+        name: USB3OTG_DGCMD
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Device Generic Command Register"
+        fields:
+          - name: reserved_31_16
+            bits: "31:16"
+            access: RO
+            reset: 0x0000
+            desc: "Reserved."
+          - name: cmdstatus
+            bits: "15:12"
+            access: RO
+            reset: 0x0
+            desc: "Command Status:\n1'b1: CmdErr: Indicates that the device controller encountered an\nerror while processing the command.\n1'b0: Indicates command success"
+          - name: reserved_11_10
+            bits: "11:10"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: cmdact
+            bits: "9:9"
+            access: RW_SC
+            reset: 0x0
+            desc: "Command Active.\nThe software sets this bit to 1 to enable the device controller to\nexecute the generic command.\nThe device controller sets this bit to 0 after executing the\ncommand."
+          - name: cmdioc
+            bits: "8:8"
+            access: RW
+            reset: 0x0
+            desc: "Command Interrupt on Complete.\nWhen this bit is set, the device controller issues a Generic\nCommand Completion event after executing the command.\nNote that this interrupt is mapped to DCFG.IntrNum.\nNote: This field must not set to 1 if the DCTL.RunStop field is 0."
+          - name: cmdtyp
+            bits: "7:0"
+            access: RW
+            reset: 0x00
+            desc: "Command Type.\nSpecifies the type of command the software driver is requesting\nthe core to perform.\n8'h0: Reserved\n8'h1: Set Endpoint Configuration - 64 or 96-bit Parameter\n8'h2: Set Endpoint Transfer Resource Configuration - 32-bit\nParameter\n8'h3: Get Endpoint State - No Parameter Needed\n8'h4: Clear Stall (see Set Stall) - No Parameter Needed\n8'h5: Start Transfer - 64-bit Parameter\n8'h6: Update Transfer - No Parameter Needed\n8'h7: End Transfer - No Parameter Needed\n8'h8 Start New Configuration - No Parameter Needed"
+
+      - addr: 0xC720
+        name: USB3OTG_DALEPENA
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Device Active USB Endpoint Enable Register"
+        fields:
+          - name: usbactep
+            bits: "31:0"
+            access: RW
+            reset: 0x00000000
+            desc: "USB Active Endpoints.\nThis field indicates if a USB endpoint is active in the current\nconfiguration and interface. It applies to USB IN endpoints 0~15\nand OUT endpoints 0~15, with one bit for each of the 32 possible\nendpoints. Even numbers are for USB OUT endpoints, and odd\nnumbers are for USB IN endpoints, as follows:\nBit[0]: USB EP0-OUT\nBit[1]: USB EP0-IN\nBit[2]: USB EP1-OUT\nBit[3]: USB EP1-IN\n...\nThe entity programming this register must set bits 0 and 1\nbecause they enable control endpoints that map to physical\nendpoints (resources) after USBReset.\nHardware clears these bits for all endpoints (other than EP0-OUT\nand EP0-IN) after detecting a USB reset event. After receiving\nSetConfiguration and SetInterface requests, the application must\nprogram endpoint registers accordingly and set these bits."
+
+      - addr: 0xC800
+        name: USB3OTG_DEPnCMDPAR2
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Device Physical Endpoint-n Command Parameter 2 Register, offset (0xc800 + 4*n), n=0~12"
+        fields:
+          - name: parameter
+            bits: "31:0"
+            access: RW
+            reset: 0x00000000
+            desc: "This register indicates the physical endpoint command Parameter\n2. It must be programmed before issuing the command."
+
+      - addr: 0xC804
+        name: USB3OTG_DEPnCMDPAR1
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Device Physical Endpoint-n Command Parameter 1 Register, offset (0xc804 + 4*n), n=0~12"
+        fields:
+          - name: parameter
+            bits: "31:0"
+            access: RW
+            reset: 0x00000000
+            desc: "This register indicates the physical endpoint command Parameter\n1. It must be programmed before issuing the command."
+
+      - addr: 0xC808
+        name: USB3OTG_DEPnCMDPAR0
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Device Physical Endpoint-n Command Parameter 0 Register, offset (0xc808 + 4*n), n=0~12"
+        fields:
+          - name: parameter
+            bits: "31:0"
+            access: RW
+            reset: 0x00000000
+            desc: "This register indicates the physical endpoint command Parameter\n0. It must be programmed before issuing the command."
+
+      - addr: 0xC80C
+        name: USB3OTG_DEPnCMD
+        access: RW
+        width: 4
+        bit_width: 32
+        address_span: 4
+        byte_order: little
+        reset: 0x00000000
+        desc: "Device Physical Endpoint-n Command Register, offset (0xc80c + 4*n), n=0~12"
+        fields:
+          - name: commandparam
+            bits: "31:16"
+            access: RW
+            reset: 0x0000
+            desc: "Command Parameters or Event Parameters\nwhen this register is written:\nFor Start Transfer command: The 16-bit StreamID assigned to\nthis transfer.\nFor Start Transfer command applied to an isochronous endpoint:\nStartMicroFramNum, Indicates the (micro) frame number to\nwhich the first TRB applies.\nFor Update Transfer, End Transfer, and Start New Configuration\ncommands: [22:16]: Transfer Resource Index (XferRscIdx). The\nhardware-assigned transfer resource index for the transfer, which\nwas returned in response to the Start Transfer command. The\napplication software-assigned transfer resource index for a Start\nNew Configuration command.\nEvent Parameters (EventParam), when this register is read."
+          - name: cmdstatus
+            bits: "15:12"
+            access: RW
+            reset: 0x0
+            desc: "Command Completion Status.\nThe information is in the same format as bits 15:12 of the\nEndpoint Command Complete event."
+          - name: hipri_forcerm
+            bits: "11:11"
+            access: RW
+            reset: 0x0
+            desc: "HighPriority: Only valid for Start Transfer command.\nForceRM: Only valid for End Transfer command.\nClearPendIN: Only valid for Clear Stall command. Software sets\nthis bit to clear any pending IN transaction (on that endpoint)\nstuck at the lower layers when a Clear Stall command is issued."
+          - name: cmdact
+            bits: "10:10"
+            access: RW
+            reset: 0x0
+            desc: "Command Active.\nSoftware sets this bit to 1 to enable the device endpoint\ncontroller to execute the generic command.\nThe device controller sets this bit to 0 when the CmdStatus field\nis valid and the endpoint is ready to accept another command.\nThis does not imply that all the effects of the previously-issued\ncommand have taken place."
+          - name: reserved_9
+            bits: "9:9"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: cmdioc
+            bits: "8:8"
+            access: RW
+            reset: 0x0
+            desc: "Command Interrupt on Complete.\nWhen this bit is set, the device controller issues a generic\nEndpoint Command Complete event after executing the\ncommand.\nNote that this interrupt is mapped to DEPCFG.IntrNum.\nWhen the DEPCFG command is executed, the command interrupt\non completion goes to the interrupt pointed by the\nDEPCFG.IntrNum in the current command.\nNote: This field must not set to 1 if the DCTL.RunStop field is 0."
+          - name: reserved_7_4
+            bits: "7:4"
+            access: RO
+            reset: 0x0
+            desc: "Reserved."
+          - name: cmdtyp
+            bits: "3:0"
+            access: RW
+            reset: 0x0
+            desc: "Command Type.\nSpecifies the type of command the software driver is requesting\nthe core to perform.\n4'h0: Reserved\n4'h1: Set Endpoint Configuration 64 or 96-bit Parameter\n4'h2: Set Endpoint Transfer Resource Configuration - 32bitparameter\n4'h3: Get Endpoint State - No Parameter Needed\n4'h4: Set Stall - No Parameter Needed\n4'h5: Clear Stall (see Set Stall) - No Parameter Needed\n4'h6: Start Transfer - 64-bit Parameter\n4'h7: Update Transfer - No Parameter Needed\n4'h8: End Transfer - No Parameter Needed\n4'h9: Start New Configuration - No Parameter Needed"
