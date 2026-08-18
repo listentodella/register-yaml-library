@@ -1,5 +1,15 @@
 # Data Notices
 
+## Arm A-profile
+
+`architecture/arm/a-profile/*.yaml` 由 Arm 官方 A-profile System Register XML 2026-06（Arm ARM revision M.c）生成。原始数据包来源：
+
+<https://developer.arm.com/-/cdn-downloads/permalink/Exploration-Tools-Arm-Architecture-System-Registers/SysReg/SysReg_xml_A_profile-2026-06_mc.tar.gz>
+
+Copyright (c) 2010-2026 Arm Limited (or its affiliates). All rights reserved.
+
+源数据包标记为 Arm proprietary，notice 标识为 `LES-PRE-20349`。本仓库保留来源、版权与许可标记，不分发原始 XML 或压缩包。文件使用者应自行确认其使用和再分发符合 Arm notice。
+
 ## Arm Cortex-M
 
 `architecture/arm/m-profile/*.yaml` 根据 Arm CMSIS-Core(M) 6.3.0 头文件生成。CMSIS_6 来源：

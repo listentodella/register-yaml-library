@@ -3,39 +3,70 @@
   "format": "register-reference-yaml-catalog",
   "entries": [
     {
-      "id": "architecture:arm:m-profile:cortex-m0-plus",
-      "path": "architecture/arm/m-profile/cortex-m0-plus.yaml",
+      "id": "architecture:arm:a-profile:arm-aarch32-system-registers",
+      "path": "architecture/arm/a-profile/arm-aarch32-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
         "arm",
-        "m-profile"
+        "a-profile"
       ],
-      "sensor": "Arm Cortex-M0+ system registers",
+      "sensor": "ARM AArch32 system registers",
       "vendor": "Arm",
-      "family": "Armv6-M",
+      "family": "A-profile architecture",
       "device_type": "architecture_registers",
       "schema_version": 2,
       "register_space": "arm_system",
-      "architecture": "Armv6-M",
-      "profile": "M",
+      "architecture": "AArch32",
+      "profile": "A",
       "source": {
-        "title": "Arm CMSIS-Core(M) header definitions",
-        "version": "6.3.0",
-        "revision": "Cortex-M0+",
-        "url": "https://github.com/ARM-software/CMSIS_6",
-        "license": "Apache-2.0"
+        "title": "Arm Architecture System Registers XML",
+        "version": "2026-06",
+        "revision": "M.c",
+        "url": "https://developer.arm.com/-/cdn-downloads/permalink/Exploration-Tools-Arm-Architecture-System-Registers/SysReg/SysReg_xml_A_profile-2026-06_mc.tar.gz",
+        "license": "Arm proprietary; review notice.xml before use"
       },
       "stats": {
-        "pages": 5,
-        "registers": 37,
-        "fields": 71
+        "pages": 22,
+        "registers": 276,
+        "fields": 1692
       },
-      "sha256": "b265a7ab043baa3bb28500fc2ac9b4ff9503cb8aee3ae3ef72f839beca472c77"
+      "sha256": "a91dfa133c210b9f76c6e35072734d0f45cd930c9fa53934af5ed414d8fb9d2b"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m0",
-      "path": "architecture/arm/m-profile/cortex-m0.yaml",
+      "id": "architecture:arm:a-profile:arm-aarch64-system-registers",
+      "path": "architecture/arm/a-profile/arm-aarch64-system-registers.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "a-profile"
+      ],
+      "sensor": "ARM AArch64 system registers",
+      "vendor": "Arm",
+      "family": "A-profile architecture",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "AArch64",
+      "profile": "A",
+      "source": {
+        "title": "Arm Architecture System Registers XML",
+        "version": "2026-06",
+        "revision": "M.c",
+        "url": "https://developer.arm.com/-/cdn-downloads/permalink/Exploration-Tools-Arm-Architecture-System-Registers/SysReg/SysReg_xml_A_profile-2026-06_mc.tar.gz",
+        "license": "Arm proprietary; review notice.xml before use"
+      },
+      "stats": {
+        "pages": 31,
+        "registers": 585,
+        "fields": 6882
+      },
+      "sha256": "3549493f308351e7cdb621d635b7a9485d497968d58b0dae48c72cd3503d8f8f"
+    },
+    {
+      "id": "architecture:arm:m-profile:arm-cm0-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm0-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -65,8 +96,39 @@
       "sha256": "acc9e3cbf6c294c83d13d34819dcd9437cf45b2865b49169e2be72cdd871d54b"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m1",
-      "path": "architecture/arm/m-profile/cortex-m1.yaml",
+      "id": "architecture:arm:m-profile:arm-cm0plus-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm0plus-system-registers.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "arm",
+        "m-profile"
+      ],
+      "sensor": "Arm Cortex-M0+ system registers",
+      "vendor": "Arm",
+      "family": "Armv6-M",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "arm_system",
+      "architecture": "Armv6-M",
+      "profile": "M",
+      "source": {
+        "title": "Arm CMSIS-Core(M) header definitions",
+        "version": "6.3.0",
+        "revision": "Cortex-M0+",
+        "url": "https://github.com/ARM-software/CMSIS_6",
+        "license": "Apache-2.0"
+      },
+      "stats": {
+        "pages": 5,
+        "registers": 37,
+        "fields": 71
+      },
+      "sha256": "b265a7ab043baa3bb28500fc2ac9b4ff9503cb8aee3ae3ef72f839beca472c77"
+    },
+    {
+      "id": "architecture:arm:m-profile:arm-cm1-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm1-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -96,8 +158,8 @@
       "sha256": "9077070c1c1f8e93280d84d9459e63f8478fd51ebae94fadc4e717fc697f48b1"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m23",
-      "path": "architecture/arm/m-profile/cortex-m23.yaml",
+      "id": "architecture:arm:m-profile:arm-cm23-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm23-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -127,8 +189,8 @@
       "sha256": "2769e1b567f073ae19e44425c8608d463bf1a9876f97769b02287502421baa35"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m3",
-      "path": "architecture/arm/m-profile/cortex-m3.yaml",
+      "id": "architecture:arm:m-profile:arm-cm3-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm3-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -158,8 +220,8 @@
       "sha256": "73021f9e448850601db9c47194944e5b9de332344d64f61239eabe0a21c435b6"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m33",
-      "path": "architecture/arm/m-profile/cortex-m33.yaml",
+      "id": "architecture:arm:m-profile:arm-cm33-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm33-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -189,8 +251,8 @@
       "sha256": "ca985828be8e25e61fb690f9997d7e0d74e445bcd19e24da80f20623528c2e9b"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m35p",
-      "path": "architecture/arm/m-profile/cortex-m35p.yaml",
+      "id": "architecture:arm:m-profile:arm-cm35p-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm35p-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -220,8 +282,8 @@
       "sha256": "42175f3ca9fb79c91d4c72705a4f41ac19eca4d6d7ced7becd6a717e447389c0"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m4",
-      "path": "architecture/arm/m-profile/cortex-m4.yaml",
+      "id": "architecture:arm:m-profile:arm-cm4-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm4-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -251,8 +313,8 @@
       "sha256": "8d83fe440a212f1c74fd657fc90422356cfe19cc6374feecd6883f75a6127c18"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m52",
-      "path": "architecture/arm/m-profile/cortex-m52.yaml",
+      "id": "architecture:arm:m-profile:arm-cm52-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm52-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -282,8 +344,8 @@
       "sha256": "8085dc641e45b75613832863caebe23b5b939bd099b1354f104bfa6c8b8c48c5"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m55",
-      "path": "architecture/arm/m-profile/cortex-m55.yaml",
+      "id": "architecture:arm:m-profile:arm-cm55-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm55-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -313,8 +375,8 @@
       "sha256": "a9916dd62cfda60ac0b66862af48120bbae9862803fd795853bb5ccfa702a4e5"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m7",
-      "path": "architecture/arm/m-profile/cortex-m7.yaml",
+      "id": "architecture:arm:m-profile:arm-cm7-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm7-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",
@@ -344,8 +406,8 @@
       "sha256": "04e98bebb88b7f4b0ae266b098fa8ed34e9011d212bfa8979e431b37f94af1cf"
     },
     {
-      "id": "architecture:arm:m-profile:cortex-m85",
-      "path": "architecture/arm/m-profile/cortex-m85.yaml",
+      "id": "architecture:arm:m-profile:arm-cm85-system-registers",
+      "path": "architecture/arm/m-profile/arm-cm85-system-registers.yaml",
       "category": "architecture",
       "taxonomy": [
         "architecture",

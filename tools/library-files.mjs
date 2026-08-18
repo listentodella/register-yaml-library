@@ -4,6 +4,7 @@ import { join, relative, resolve, sep } from "node:path";
 
 export const root = resolve(import.meta.dirname, "..");
 const dataRoots = ["architecture", "controllers", "sensors", "soc"];
+const translationsRoot = "locales";
 
 async function walk(directory) {
   let entries;
@@ -27,6 +28,12 @@ export async function registerYamlFiles() {
   const files = [];
   for (const directory of dataRoots) files.push(...await walk(join(root, directory)));
   return files.sort((left, right) => left.localeCompare(right));
+}
+
+export async function translationYamlFiles() {
+  return (await walk(join(root, translationsRoot)))
+    .filter((file) => !file.endsWith(`${sep}README.yaml`))
+    .sort((left, right) => left.localeCompare(right));
 }
 
 export function repositoryPath(path) {

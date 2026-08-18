@@ -1,0 +1,42 @@
+# Copy to locales/<locale>/<source_file>. Delete unused translation sections.
+translation_schema_version: 1
+format: "register-reference-translation"
+source_locale: "en"
+locale: "zh-CN"
+source_file: "architecture/vendor/profile/example.yaml"
+source_sha256: "replace-with-the-64-character-lowercase-source-sha256"
+metadata:
+  status: "draft"
+  coverage: "partial"
+  method: "ai"
+  translator: "translator or model name"
+  updated: "2026-08-17"
+  notes: "Delete this field when no file-level note is needed."
+translations:
+  sensor: "本地化的芯片或寄存器集名称"
+  family: "本地化的系列名称"
+  who_am_i:
+    values:
+      - value: 0x00
+        desc: "器件身份值说明"
+  pages:
+    - name: "Exact source page key"
+      title: "本地化页面标题"
+      access: "本地化接口说明"
+      desc: "本地化页面说明"
+      registers:
+        - name: "EXACT_REGISTER_NAME"
+          desc: "本地化寄存器说明"
+          condition: "本地化存在或访问条件"
+          alias_note: "本地化别名说明"
+          no_dump_reason: "本地化禁止普通读取原因"
+          fields:
+            - name: "EXACT_FIELD_NAME"
+              bits: "7:4"
+              desc: "本地化位域说明"
+              condition: "本地化条件"
+              reset_info: "本地化复位补充说明"
+              values:
+                - value: 0x00
+                  desc: "本地化枚举说明"
+

@@ -6,8 +6,10 @@
   "scripts": {
     "catalog": "node tools/build-catalog.mjs",
     "catalog:check": "node tools/build-catalog.mjs --check",
+    "translations:validate": "node tools/validate-translations.mjs",
+    "translations:test": "node tools/test-translation-validator.mjs",
     "validate": "node tools/validate-all.mjs",
-    "test": "npm run validate && npm run catalog:check"
+    "test": "npm run translations:test && npm run validate && npm run catalog:check"
   },
   "devDependencies": {
     "yaml": "2.9.0"

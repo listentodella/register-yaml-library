@@ -5,7 +5,11 @@ This repository contains material with different source licenses.
 2. Files under architecture/arm/m-profile are generated from Arm
    CMSIS-Core(M) and retain the Apache License 2.0 terms recorded in each
    file and in LICENSES/Apache-2.0.txt.
-3. Other register YAML files retain the source and distribution notices
+3. Files under architecture/arm/a-profile are generated from the Arm
+   A-profile System Register XML and retain the Arm copyright, proprietary
+   source license marker, and LES-PRE-20349 notice recorded in each file
+   and NOTICE.md.
+4. Other register YAML files retain the source and distribution notices
    recorded in the file header and NOTICE.md. The repository does not
    grant rights to source manuals, vendor trademarks, or implementations.
 

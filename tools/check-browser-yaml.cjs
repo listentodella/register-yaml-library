@@ -4,7 +4,7 @@ const path = require("node:path");
 const vm = require("node:vm");
 
 function usage() {
-  console.error("Usage: node check-browser-yaml.js [--parser /path/to/yaml-lite.js] <chip.yaml> [...]");
+  console.error("Usage: node check-browser-yaml.js [--translation] [--parser /path/to/yaml-lite.js] <file.yaml> [...]");
 }
 
 function findDefaultParser() {
@@ -22,15 +22,18 @@ function findDefaultParser() {
 function parseArgs(argv) {
   const files = [];
   let parserPath = null;
+  let translation = false;
   for (let index = 0; index < argv.length; index += 1) {
     if (argv[index] === "--parser") {
       index += 1;
       parserPath = argv[index] || null;
+    } else if (argv[index] === "--translation") {
+      translation = true;
     } else {
       files.push(argv[index]);
     }
   }
-  return { files, parserPath };
+  return { files, parserPath, translation };
 }
 
 const args = parseArgs(process.argv.slice(2));
@@ -65,7 +68,14 @@ for (const fileName of args.files) {
     if (!data || typeof data !== "object" || Array.isArray(data)) {
       throw new Error("YAML 顶层必须是 object");
     }
-    if (!data.pages || typeof data.pages !== "object" || Array.isArray(data.pages)) {
+    if (args.translation) {
+      if (data.format !== "register-reference-translation") {
+        throw new Error("缺少 register-reference-translation format");
+      }
+      if (!data.translations || typeof data.translations !== "object" || Array.isArray(data.translations)) {
+        throw new Error("缺少 translations object");
+      }
+    } else if (!data.pages || typeof data.pages !== "object" || Array.isArray(data.pages)) {
       throw new Error("缺少 pages object");
     }
     console.log(`OK    ${fileName}: browser parser compatible`);

@@ -9,7 +9,7 @@
 - `sensors/<type>/<vendor>/`：IMU、磁力计、环境传感器等独立器件
 - `soc/<vendor>/<family>/`：无法归入独立控制器的 SoC 寄存器块
 
-文件名使用小写型号和连字符，例如 `cortex-m52.yaml`、`rk3588-dwc3.yaml`。不要在仓库根目录放置数据 YAML。
+文件名使用小写型号和连字符。Arm 架构寄存器统一使用生成产物名称，例如 `arm-cm52-system-registers.yaml`、`arm-aarch64-system-registers.yaml`；器件文件可使用 `rk3588-dwc3.yaml`。不要在仓库根目录放置数据 YAML。
 
 ## 来源与许可
 
@@ -38,3 +38,14 @@ npm test
 ```
 
 `npm run catalog` 会更新机器可读索引。提交前，`catalog.json` 必须与数据文件一致，结构校验不得出现错误或警告。
+
+## 翻译贡献
+
+翻译不得直接改写英文源 YAML，也不得复制一份包含地址和位域结构的完整中文版。使用 `locales/<语言>/<英文源路径>` sidecar，并遵循 [`TRANSLATING.md`](TRANSLATING.md) 与 [`schema/register-yaml-translation-schema.md`](schema/register-yaml-translation-schema.md)。
+
+AI 译文必须标记为 `status: draft`，未经独立审校不得声明 `reviewed`。不确定、疑似错误或原文缺失的内容应省略并在提交说明中报告，不得自行补全。提交前运行：
+
+```bash
+npm run translations:validate
+npm test
+```

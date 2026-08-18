@@ -6,11 +6,13 @@
 
 ```text
 architecture/
+  arm/a-profile/          Arm AArch32/AArch64 架构系统寄存器
   arm/m-profile/          Arm Cortex-M 架构与系统寄存器
 controllers/
   usb/rockchip/           Rockchip SoC 中的 USB 控制器
 schema/                   YAML 格式说明
 templates/                新数据文件模板
+locales/                  按语言和源路径组织的翻译 sidecar
 tools/                    目录生成与严格校验工具
 catalog.json              机器可读的全库索引
 ```
@@ -19,18 +21,29 @@ catalog.json              机器可读的全库索引
 
 ## 当前数据
 
+### Arm A-profile
+
+数据位于 [`architecture/arm/a-profile`](architecture/arm/a-profile)，由 Arm 官方 A-profile System Register XML 2026-06（Arm ARM revision M.c）生成。
+
+| 执行状态 | 文件 |
+| --- | --- |
+| AArch64 | [`arm-aarch64-system-registers.yaml`](architecture/arm/a-profile/arm-aarch64-system-registers.yaml) |
+| AArch32 | [`arm-aarch32-system-registers.yaml`](architecture/arm/a-profile/arm-aarch32-system-registers.yaml) |
+
+文件保留官方包 URL、Arm 版权、专有许可标记和 `LES-PRE-20349` notice。仓库不分发原始 XML 压缩包。
+
 ### Arm Cortex-M
 
 数据位于 [`architecture/arm/m-profile`](architecture/arm/m-profile)，来源为 Arm CMSIS-Core(M) 6.3.0。
 
-| 架构 | 处理器 |
+| 架构 | 处理器与文件 |
 | --- | --- |
-| Armv6-M | Cortex-M0、Cortex-M0+、Cortex-M1 |
-| Armv7-M | Cortex-M3 |
-| Armv7E-M | Cortex-M4、Cortex-M7 |
-| Armv8-M Baseline | Cortex-M23 |
-| Armv8-M Mainline | Cortex-M33、Cortex-M35P |
-| Armv8.1-M Mainline | Cortex-M52、Cortex-M55、Cortex-M85 |
+| Armv6-M | [Cortex-M0](architecture/arm/m-profile/arm-cm0-system-registers.yaml)、[Cortex-M0+](architecture/arm/m-profile/arm-cm0plus-system-registers.yaml)、[Cortex-M1](architecture/arm/m-profile/arm-cm1-system-registers.yaml) |
+| Armv7-M | [Cortex-M3](architecture/arm/m-profile/arm-cm3-system-registers.yaml) |
+| Armv7E-M | [Cortex-M4](architecture/arm/m-profile/arm-cm4-system-registers.yaml)、[Cortex-M7](architecture/arm/m-profile/arm-cm7-system-registers.yaml) |
+| Armv8-M Baseline | [Cortex-M23](architecture/arm/m-profile/arm-cm23-system-registers.yaml) |
+| Armv8-M Mainline | [Cortex-M33](architecture/arm/m-profile/arm-cm33-system-registers.yaml)、[Cortex-M35P](architecture/arm/m-profile/arm-cm35p-system-registers.yaml) |
+| Armv8.1-M Mainline | [Cortex-M52](architecture/arm/m-profile/arm-cm52-system-registers.yaml)、[Cortex-M55](architecture/arm/m-profile/arm-cm55-system-registers.yaml)、[Cortex-M85](architecture/arm/m-profile/arm-cm85-system-registers.yaml) |
 
 ### USB 控制器
 
@@ -42,7 +55,7 @@ catalog.json              机器可读的全库索引
 
 ## 使用
 
-在 Register Reference 中点击“导入 YAML”，选择需要的文件即可。其他程序可以读取 `catalog.json` 查找数据文件，并按 `schema_version` 选择解析策略。
+在 Register Reference 中点击“导入 YAML / 译文”，选择需要的寄存器文件即可。需要中文时，再选择对应的 `locales/zh-CN/<源路径>` sidecar；也可以在同一次文件选择中同时导入英文源与译文。应用会严格校验 `source_sha256` 和所有翻译选择器。其他程序可以读取 `catalog.json` 查找数据文件，并按 `schema_version` 选择解析策略。
 
 克隆并验证整个数据仓库：
 
@@ -58,10 +71,10 @@ npm test
 
 - 只接收来源清楚、允许再分发且通过严格校验的数据。
 - 不提交原始手册、受限数据包、保密资料或无法确认分发权限的派生文件。
-- Arm A-profile 专有 XML 的完整派生数据不在本仓库分发。
+- Arm A-profile YAML 是官方 XML 的生成派生数据；使用或再分发前应查阅文件中的 Arm 版权与 `LES-PRE-20349` 来源声明。
 - YAML 中的 `source` 字段、文件头注释和目录 NOTICE 是来源与许可判断的依据。
 
-格式与贡献要求见 [`schema/register-yaml-schema.md`](schema/register-yaml-schema.md) 和 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
+格式与贡献要求见 [`schema/register-yaml-schema.md`](schema/register-yaml-schema.md) 和 [`CONTRIBUTING.md`](CONTRIBUTING.md)。翻译工作请先阅读 [`TRANSLATING.md`](TRANSLATING.md) 和 [`schema/register-yaml-translation-schema.md`](schema/register-yaml-translation-schema.md)。
 
 ## 许可
 

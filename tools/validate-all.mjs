@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: MIT
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { registerYamlFiles, repositoryPath, root } from "./library-files.mjs";
+import {
+  registerYamlFiles,
+  repositoryPath,
+  root,
+  translationYamlFiles,
+} from "./library-files.mjs";
 
 function run(command, args) {
   const result = spawnSync(command, args, { cwd: root, encoding: "utf8", stdio: "inherit" });
@@ -39,3 +44,15 @@ run(process.execPath, [
   join("tools", "yaml-lite.js"),
   ...files,
 ]);
+
+const translations = (await translationYamlFiles()).map(repositoryPath);
+run(process.execPath, [join("tools", "validate-translations.mjs"), ...translations]);
+if (translations.length) {
+  run(process.execPath, [
+    join("tools", "check-browser-yaml.cjs"),
+    "--translation",
+    "--parser",
+    join("tools", "yaml-lite.js"),
+    ...translations,
+  ]);
+}
