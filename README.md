@@ -13,8 +13,7 @@ architecture/
 controllers/
   usb/rockchip/           Rockchip SoC 中的 USB 控制器
 sensors/
-  accelerometer/qst/      QST QMA 系列三轴加速度计
-  imu/qst/                QST QMI 系列六轴惯性测量单元
+  imu/qst/                QST QMA/QMI 系列运动传感器
 schema/                   YAML 格式说明
 templates/                新数据文件模板
 locales/                  按语言和源路径组织的翻译 sidecar
@@ -69,8 +68,8 @@ catalog.json              机器可读的全库索引
 
 | 类型 | 系列 | 文件 |
 | --- | --- | --- |
-| 三轴加速度计 | QMA6100P | [`qma6100p.yaml`](sensors/accelerometer/qst/qma6100p.yaml) |
-| 三轴加速度计 | QMA6101T | [`qma6101t.yaml`](sensors/accelerometer/qst/qma6101t.yaml) |
+| 三轴加速度计 | QMA6100P | [`qma6100p.yaml`](sensors/imu/qst/qma6100p.yaml) |
+| 三轴加速度计 | QMA6101T | [`qma6101t.yaml`](sensors/imu/qst/qma6101t.yaml) |
 | 六轴惯性测量单元 | QMI8658A | [`qmi8658a.yaml`](sensors/imu/qst/qmi8658a.yaml) |
 | 六轴惯性测量单元 | QMI8660 | [`qmi8660.yaml`](sensors/imu/qst/qmi8660.yaml) |
 

@@ -524,12 +524,12 @@
       "sha256": "f3cf6226ce93207e2a0042d275b9b9751d940464bb9ddc935871e1145e60c95b"
     },
     {
-      "id": "sensors:accelerometer:qst:qma6100p",
-      "path": "sensors/accelerometer/qst/qma6100p.yaml",
+      "id": "sensors:imu:qst:qma6100p",
+      "path": "sensors/imu/qst/qma6100p.yaml",
       "category": "sensors",
       "taxonomy": [
         "sensors",
-        "accelerometer",
+        "imu",
         "qst"
       ],
       "sensor": "QMA6100P",
@@ -555,12 +555,12 @@
       "sha256": "9b0a4ad2c51aec0af454f46d0809e329751bb1544a2862c3a30c973da4a566ae"
     },
     {
-      "id": "sensors:accelerometer:qst:qma6101t",
-      "path": "sensors/accelerometer/qst/qma6101t.yaml",
+      "id": "sensors:imu:qst:qma6101t",
+      "path": "sensors/imu/qst/qma6101t.yaml",
       "category": "sensors",
       "taxonomy": [
         "sensors",
-        "accelerometer",
+        "imu",
         "qst"
       ],
       "sensor": "QMA6101T",
@@ -645,7 +645,7 @@
         "registers": 110,
         "fields": 259
       },
-      "sha256": "456e2a58986a602ae5665b9eff1fd8aa6f374b1d9f2f709e47aad8bc8a895b43"
+      "sha256": "01f2231b2dba0845d4cd47b99ab947443ac0e64a87bda55d7d7d7bdfeb87fac4"
     }
   ]
 }
