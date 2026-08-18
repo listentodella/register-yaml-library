@@ -3,14 +3,14 @@ format: "register-reference-translation"
 source_locale: "en"
 locale: "zh-CN"
 source_file: "architecture/arm/m-profile/arm-cm55-system-registers.yaml"
-source_sha256: "a9916dd62cfda60ac0b66862af48120bbae9862803fd795853bb5ccfa702a4e5"
+source_sha256: "de05aeeed86285bb9715902f0f5e8e8eed710c8754b11823aff05a4bc6df92f4"
 metadata:
   status: "draft"
-  coverage: "complete"
+  coverage: "partial"
   method: "ai-assisted"
   translator: "OpenAI Codex"
-  updated: "2026-08-17"
-  notes: "AI 辅助翻译，并完成术语、技术标识符和强制语义一致性检查；标记为 reviewed 前仍需独立人工技术审校。"
+  updated: "2026-08-18"
+  notes: "AI 辅助翻译；已补充 M-profile 条件标志、异常/故障状态、SysTick、MPU/SAU、FPU 和调试控制位的值语义。标记为 reviewed 前仍需独立人工技术审校。"
 translations:
   sensor: "Arm Cortex-M55 系统寄存器"
   family: "Armv8.1-M 主线"
@@ -25,85 +25,160 @@ translations:
           fields:
             - name: "N"
               bits: "31"
-              desc: "CMSIS N 位域"
+              desc: "负数条件码标志。执行会更新条件标志的指令后，N 表示结果按二进制补码解释时的符号：N=1 表示结果为负，N=0 表示结果为非负。它只反映最近一次更新条件标志的指令结果，并不表示任意通用寄存器当前是否为负。"
+              values:
+                - value: 0
+                  desc: "最近一次更新条件标志的结果为非负数。"
+                - value: 1
+                  desc: "最近一次更新条件标志的结果为负数。"
             - name: "Z"
               bits: "30"
-              desc: "CMSIS Z 位域"
+              desc: "零条件码标志。最近一次更新条件标志的指令结果为 0 时 Z=1，否则 Z=0。CMP 等比较指令按减法更新标志但不保存结果，因此 Z=1 通常表示两个操作数相等。"
+              values:
+                - value: 0
+                  desc: "最近一次更新条件标志的结果不为 0；比较结果为不相等。"
+                - value: 1
+                  desc: "最近一次更新条件标志的结果为 0；比较结果为相等。"
             - name: "C"
               bits: "29"
-              desc: "CMSIS C 位域"
+              desc: "进位/借位条件码标志。加法中 C=1 表示产生无符号进位；减法或 CMP 比较中 C=1 表示未借位、C=0 表示发生借位，因此无符号比较时 C=1 通常表示左操作数大于或等于右操作数。对于会更新标志的移位指令，若指令有相应定义，C 保存最后移出的位。"
+              values:
+                - value: 0
+                  desc: "含义取决于指令：加法未产生无符号进位；减法或比较发生了借位；或者最后移出的位为 0。"
+                - value: 1
+                  desc: "含义取决于指令：加法产生无符号进位；减法或比较未发生借位；或者最后移出的位为 1。"
             - name: "V"
               bits: "28"
-              desc: "CMSIS V 位域"
+              desc: "有符号溢出条件码标志。数学结果超出当前运算位宽的二进制补码有符号范围时 V=1，例如两个同号数相加却得到异号结果。V 判断有符号溢出；C 判断无符号进位或借位，两者不能互换。"
+              values:
+                - value: 0
+                  desc: "最近一次更新条件标志的算术结果未超出有符号数范围。"
+                - value: 1
+                  desc: "最近一次更新条件标志的算术结果超出了有符号数范围。"
             - name: "Q"
               bits: "27"
-              desc: "CMSIS Q 位域"
+              desc: "累计饱和标志。支持的饱和算术或 DSP 指令发生饱和或规定的溢出时置 1。Q 是粘滞标志：后续普通指令通常不会自动清零，所以 Q=1 可能来自更早的一条指令；必须按架构规定由软件显式清除。"
+              values:
+                - value: 0
+                  desc: "自上次清除 Q 后，尚未记录到饱和或规定的溢出。"
+                - value: 1
+                  desc: "自上次清除 Q 后发生过饱和或规定的溢出；触发事件可能来自更早的指令。"
             - name: "GE"
               bits: "19:16"
-              desc: "CMSIS GE 位域"
+              desc: "并行 SIMD/DSP 运算的 GE（Greater than or Equal）标志。具体置位条件由指令定义：每个通道可记录有符号“大于或等于”、无符号进位，或无符号减法“无借位”的结果；SEL 等指令按通道读取这些标志来选择结果。"
         - name: "BASEPRI"
           desc: "读取基础优先级，返回基础优先级寄存器的当前值；设置基础优先级：将给定值写入基础优先级寄存器。根据条件设置基础优先级 仅当禁用 BASEPRI 屏蔽或新值增加 BASEPRI 优先级时，才将给定值写入基础优先级寄存器。"
           fields:
             - name: "BASEPRI"
               bits: "7:0"
-              desc: "基础优先级屏蔽值"
+              desc: "基础优先级屏蔽阈值。0 表示不使用 BASEPRI 屏蔽；非 0 值屏蔽优先级数值大于或等于该阈值的可配置异常，实际有效位数由内核实现决定。"
         - name: "BASEPRI_NS"
           desc: "读取基础优先级（非安全） 当处于安全状态时，返回非安全基础优先级寄存器的当前值；设置基础优先级（非安全） 当处于安全状态时，将给定值写入非安全基础优先级寄存器。"
           condition: "实现安全扩展时，可从安全状态访问"
           fields:
             - name: "BASEPRI"
               bits: "7:0"
-              desc: "基础优先级屏蔽值"
+              desc: "基础优先级屏蔽阈值。0 表示不使用 BASEPRI 屏蔽；非 0 值屏蔽优先级数值大于或等于该阈值的可配置异常，实际有效位数由内核实现决定。"
         - name: "CONTROL"
           desc: "读取控制寄存器，返回控制寄存器的内容；设置控制寄存器：将给定值写入控制寄存器。"
           fields:
             - name: "SFPA"
               bits: "3"
-              desc: "CMSIS SFPA 位域"
+              desc: "安全浮点上下文活动标志。SFPA=1 表示安全状态存在活动的浮点上下文。"
+              values:
+                - value: 0
+                  desc: "安全浮点上下文未活动。"
+                - value: 1
+                  desc: "安全浮点上下文处于活动状态。"
             - name: "FPCA"
               bits: "2"
-              desc: "CMSIS FPCA 位域"
+              desc: "浮点上下文活动标志。FPCA=1 表示当前执行上下文已经分配浮点寄存器上下文，异常入栈时可能需要保存浮点状态。"
+              values:
+                - value: 0
+                  desc: "当前执行上下文没有活动的浮点上下文。"
+                - value: 1
+                  desc: "当前执行上下文存在活动的浮点上下文，异常入栈时可能需要保存浮点状态。"
             - name: "SPSEL"
               bits: "1"
-              desc: "CMSIS SPSEL 位域"
+              desc: "线程模式堆栈指针选择。处理模式始终使用 MSP；线程模式下 SPSEL=0 使用 MSP，SPSEL=1 使用 PSP。"
+              values:
+                - value: 0
+                  desc: "线程模式使用 MSP（主堆栈指针）。"
+                - value: 1
+                  desc: "线程模式使用 PSP（进程堆栈指针）。"
             - name: "nPRIV"
               bits: "0"
-              desc: "CMSIS nPRIV 位域"
+              desc: "线程模式特权级控制。nPRIV=0 为特权线程模式，nPRIV=1 为非特权线程模式；处理模式始终为特权模式。"
+              values:
+                - value: 0
+                  desc: "线程模式以特权级运行。"
+                - value: 1
+                  desc: "线程模式以非特权级运行。"
         - name: "CONTROL_NS"
           desc: "读取控制寄存器（非安全） 在安全模式下返回非安全控制寄存器的内容；设置控制寄存器（非安全） 当处于安全状态时，将给定值写入非安全控制寄存器。"
           condition: "实现安全扩展时，可从安全状态访问"
           fields:
             - name: "SFPA"
               bits: "3"
-              desc: "CMSIS SFPA 位域"
+              desc: "安全浮点上下文活动标志。SFPA=1 表示安全状态存在活动的浮点上下文。"
+              values:
+                - value: 0
+                  desc: "安全浮点上下文未活动。"
+                - value: 1
+                  desc: "安全浮点上下文处于活动状态。"
             - name: "FPCA"
               bits: "2"
-              desc: "CMSIS FPCA 位域"
+              desc: "浮点上下文活动标志。FPCA=1 表示当前执行上下文已经分配浮点寄存器上下文，异常入栈时可能需要保存浮点状态。"
+              values:
+                - value: 0
+                  desc: "当前执行上下文没有活动的浮点上下文。"
+                - value: 1
+                  desc: "当前执行上下文存在活动的浮点上下文，异常入栈时可能需要保存浮点状态。"
             - name: "SPSEL"
               bits: "1"
-              desc: "CMSIS SPSEL 位域"
+              desc: "线程模式堆栈指针选择。处理模式始终使用 MSP；线程模式下 SPSEL=0 使用 MSP，SPSEL=1 使用 PSP。"
+              values:
+                - value: 0
+                  desc: "线程模式使用 MSP（主堆栈指针）。"
+                - value: 1
+                  desc: "线程模式使用 PSP（进程堆栈指针）。"
             - name: "nPRIV"
               bits: "0"
-              desc: "CMSIS nPRIV 位域"
+              desc: "线程模式特权级控制。nPRIV=0 为特权线程模式，nPRIV=1 为非特权线程模式；处理模式始终为特权模式。"
+              values:
+                - value: 0
+                  desc: "线程模式以特权级运行。"
+                - value: 1
+                  desc: "线程模式以非特权级运行。"
         - name: "FAULTMASK"
           desc: "读取故障屏蔽，返回故障屏蔽寄存器的当前值；设置故障屏蔽：将给定值写入故障屏蔽寄存器。"
           fields:
             - name: "FM"
               bits: "0"
-              desc: "故障屏蔽位"
+              desc: "故障屏蔽位。FM=1 时屏蔽除 NMI 之外的所有异常，包括 HardFault，直到软件清除该屏蔽。"
+              values:
+                - value: 0
+                  desc: "FAULTMASK 不屏蔽异常。"
+                - value: 1
+                  desc: "FAULTMASK 屏蔽除 NMI 之外的所有异常，包括 HardFault。"
         - name: "FAULTMASK_NS"
           desc: "读取故障掩码（非安全） 当处于安全状态时，返回非安全故障掩码寄存器的当前值；设置故障屏蔽（非安全） 当处于安全状态时，将给定值写入非安全故障屏蔽寄存器。"
           condition: "实现安全扩展时，可从安全状态访问"
           fields:
             - name: "FM"
               bits: "0"
-              desc: "故障屏蔽位"
+              desc: "故障屏蔽位。FM=1 时屏蔽除 NMI 之外的所有异常，包括 HardFault，直到软件清除该屏蔽。"
+              values:
+                - value: 0
+                  desc: "FAULTMASK 不屏蔽异常。"
+                - value: 1
+                  desc: "FAULTMASK 屏蔽除 NMI 之外的所有异常，包括 HardFault。"
         - name: "IPSR"
           desc: "读取 IPSR 寄存器，返回 IPSR 寄存器的内容。"
           fields:
             - name: "ISR"
               bits: "8:0"
-              desc: "CMSIS ISR 位域"
+              desc: "当前异常号。0 表示线程模式；非 0 值按照当前内核实现的异常号表标识正在处理的异常。"
         - name: "MSP"
           desc: "读取主堆栈指针，返回主堆栈指针的当前值 (MSP)；设置主堆栈指针：将给定值写入主堆栈指针（MSP）。"
           fields:
@@ -116,7 +191,7 @@ translations:
           fields:
             - name: "ADDRESS"
               bits: "31:0"
-              desc: "非安全主堆栈指针值"
+              desc: "从安全状态访问的非安全主堆栈指针值。"
         - name: "MSPLIM"
           desc: "读取主堆栈指针限制 没有 ARMv8-M 主扩展（i.e.Cortex-M23）的设备缺少非安全堆栈指针限制寄存器，因此始终返回零。返回主堆栈指针限制 (MSPLIM) 的当前值；设置主堆栈指针限制 不带 ARMv8-M 主扩展的设备 (i.e.Cortex-M23) 缺少非安全堆栈指针限制寄存器，因此写入会被静默忽略。将给定值写入主堆栈指针限制 (MSPLIM)。"
           fields:
@@ -129,20 +204,30 @@ translations:
           fields:
             - name: "ADDRESS"
               bits: "31:0"
-              desc: "非安全主堆栈指针限制值"
+              desc: "从安全状态访问的非安全主堆栈指针下界。实现堆栈限制检查时，非安全 MSP 低于该界限可触发堆栈限制故障。"
         - name: "PRIMASK"
           desc: "读取优先级掩码 从优先级掩码寄存器返回优先级掩码位的当前状态；设置优先级掩码：将给定值写入优先级掩码寄存器。"
           fields:
             - name: "PM"
               bits: "0"
-              desc: "异常屏蔽位"
+              desc: "优先级屏蔽位。PM=1 时屏蔽所有具有可配置优先级的异常，但不会屏蔽 NMI 和 HardFault。"
+              values:
+                - value: 0
+                  desc: "PRIMASK 不屏蔽具有可配置优先级的异常。"
+                - value: 1
+                  desc: "PRIMASK 屏蔽具有可配置优先级的异常；NMI 和 HardFault 仍可响应。"
         - name: "PRIMASK_NS"
           desc: "读取优先级掩码（非安全） 当处于安全状态时，从优先级掩码寄存器返回非安全优先级掩码位的当前状态；设置优先级掩码（非安全） 当处于安全状态时，将给定值写入非安全优先级掩码寄存器。"
           condition: "实现安全扩展时，可从安全状态访问"
           fields:
             - name: "PM"
               bits: "0"
-              desc: "异常屏蔽位"
+              desc: "优先级屏蔽位。PM=1 时屏蔽所有具有可配置优先级的异常，但不会屏蔽 NMI 和 HardFault。"
+              values:
+                - value: 0
+                  desc: "PRIMASK 不屏蔽具有可配置优先级的异常。"
+                - value: 1
+                  desc: "PRIMASK 屏蔽具有可配置优先级的异常；NMI 和 HardFault 仍可响应。"
         - name: "PSP"
           desc: "读取进程堆栈指针，返回进程堆栈指针的当前值 (PSP)；设置进程堆栈指针：将给定值写入进程堆栈指针 (PSP)。"
           fields:
@@ -155,7 +240,7 @@ translations:
           fields:
             - name: "ADDRESS"
               bits: "31:0"
-              desc: "非安全进程堆栈指针值"
+              desc: "从安全状态访问的非安全进程堆栈指针值。"
         - name: "PSPLIM"
           desc: "读取进程堆栈指针限制 没有 ARMv8-M 主扩展的设备 (i.e.Cortex-M23) 缺少非安全堆栈指针限制寄存器，因此在非安全模式下始终返回零。返回进程堆栈指针限制 (PSPLIM) 的当前值；设置进程堆栈指针限制 不带 ARMv8-M 主扩展的设备 (i.e.Cortex-M23) 缺少非安全堆栈指针限制寄存器，因此在非安全模式下写入会被静默忽略。将给定值写入进程堆栈指针限制 (PSPLIM)。"
           fields:
@@ -168,114 +253,120 @@ translations:
           fields:
             - name: "ADDRESS"
               bits: "31:0"
-              desc: "非安全进程堆栈指针限制值"
+              desc: "从安全状态访问的非安全进程堆栈指针下界。实现堆栈限制检查时，非安全 PSP 低于该界限可触发堆栈限制故障。"
         - name: "SP_NS"
           desc: "读取堆栈指针（非安全） 处于安全状态时，返回非安全堆栈指针 (SP) 的当前值；设置堆栈指针（非安全） 当处于安全状态时，将给定值写入非安全堆栈指针 (SP)。"
           condition: "实现安全扩展时，可从安全状态访问"
           fields:
             - name: "ADDRESS"
               bits: "31:0"
-              desc: "非安全堆栈指针值"
+              desc: "从安全状态访问的非安全堆栈指针值。"
         - name: "xPSR"
           desc: "读取 xPSR 寄存器，返回 xPSR 寄存器的内容。"
           fields:
             - name: "N"
               bits: "31"
-              desc: "CMSIS N 位域"
+              desc: "负数条件码标志。执行会更新条件标志的指令后，N 表示结果按二进制补码解释时的符号：N=1 表示结果为负，N=0 表示结果为非负。它只反映最近一次更新条件标志的指令结果，并不表示任意通用寄存器当前是否为负。"
+              values:
+                - value: 0
+                  desc: "最近一次更新条件标志的结果为非负数。"
+                - value: 1
+                  desc: "最近一次更新条件标志的结果为负数。"
             - name: "Z"
               bits: "30"
-              desc: "CMSIS Z 位域"
+              desc: "零条件码标志。最近一次更新条件标志的指令结果为 0 时 Z=1，否则 Z=0。CMP 等比较指令按减法更新标志但不保存结果，因此 Z=1 通常表示两个操作数相等。"
+              values:
+                - value: 0
+                  desc: "最近一次更新条件标志的结果不为 0；比较结果为不相等。"
+                - value: 1
+                  desc: "最近一次更新条件标志的结果为 0；比较结果为相等。"
             - name: "C"
               bits: "29"
-              desc: "CMSIS C 位域"
+              desc: "进位/借位条件码标志。加法中 C=1 表示产生无符号进位；减法或 CMP 比较中 C=1 表示未借位、C=0 表示发生借位，因此无符号比较时 C=1 通常表示左操作数大于或等于右操作数。对于会更新标志的移位指令，若指令有相应定义，C 保存最后移出的位。"
+              values:
+                - value: 0
+                  desc: "含义取决于指令：加法未产生无符号进位；减法或比较发生了借位；或者最后移出的位为 0。"
+                - value: 1
+                  desc: "含义取决于指令：加法产生无符号进位；减法或比较未发生借位；或者最后移出的位为 1。"
             - name: "V"
               bits: "28"
-              desc: "CMSIS V 位域"
+              desc: "有符号溢出条件码标志。数学结果超出当前运算位宽的二进制补码有符号范围时 V=1，例如两个同号数相加却得到异号结果。V 判断有符号溢出；C 判断无符号进位或借位，两者不能互换。"
+              values:
+                - value: 0
+                  desc: "最近一次更新条件标志的算术结果未超出有符号数范围。"
+                - value: 1
+                  desc: "最近一次更新条件标志的算术结果超出了有符号数范围。"
             - name: "Q"
               bits: "27"
-              desc: "CMSIS Q 位域"
+              desc: "累计饱和标志。支持的饱和算术或 DSP 指令发生饱和或规定的溢出时置 1。Q 是粘滞标志：后续普通指令通常不会自动清零，所以 Q=1 可能来自更早的一条指令；必须按架构规定由软件显式清除。"
+              values:
+                - value: 0
+                  desc: "自上次清除 Q 后，尚未记录到饱和或规定的溢出。"
+                - value: 1
+                  desc: "自上次清除 Q 后发生过饱和或规定的溢出；触发事件可能来自更早的指令。"
             - name: "IT"
               bits: "26:25"
-              desc: "CMSIS IT 位域"
+              desc: "保存的 If-Then（IT）执行状态，是 xPSR 中分段保存的 ICI/IT 状态的一部分，不是独立使能位。"
             - name: "T"
               bits: "24"
-              desc: "CMSIS T 位域"
+              desc: "异常现场中的 Thumb 状态指示。CMSIS 将该位标为只读；构造或恢复异常栈帧时必须保留架构规定的值，不能把它当作普通模式开关。"
             - name: "GE"
               bits: "19:16"
-              desc: "CMSIS GE 位域"
+              desc: "并行 SIMD/DSP 运算的 GE（Greater than or Equal）标志。具体置位条件由指令定义：每个通道可记录有符号“大于或等于”、无符号进位，或无符号减法“无借位”的结果；SEL 等指令按通道读取这些标志来选择结果。"
             - name: "ISR"
               bits: "8:0"
-              desc: "CMSIS ISR 位域"
+              desc: "当前异常号。0 表示线程模式；非 0 值按照当前内核实现的异常号表标识正在处理的异常。"
     - name: "ICB"
       access: "内存映射内核外设访问"
       desc: "来自 ICB_Type 的 ICB 寄存器"
       registers:
         - name: "ICTR"
           desc: "中断控制器类型寄存器"
-          fields:
-            - name: "INTLINESNUM"
-              bits: "3:0"
-              desc: "CMSIS INTLINESNUM 位域"
+          fields: []
         - name: "ACTLR"
           desc: "辅助控制寄存器"
           fields:
             - name: "DISCRITAXIRUW"
               bits: "27"
-              desc: "CMSIS DISCRITAXIRUW 位域"
-            - name: "DISDI"
-              bits: "17:16"
-              desc: "CMSIS DISDI 位域"
+              desc: "ICB ACTLR.DISCRITAXIRUW 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISCRITAXIRUR"
               bits: "15"
-              desc: "CMSIS DISCRITAXIRUR 位域"
+              desc: "ICB ACTLR.DISCRITAXIRUR 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "EVENTBUSEN"
               bits: "14"
-              desc: "CMSIS EVENTBUSEN 位域"
-            - name: "EVENTBUSEN_S"
-              bits: "13"
-              desc: "CMSIS EVENTBUSEN_S 位域"
+              desc: "ICB ACTLR.EVENTBUSEN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "ICB ACTLR EVENTBUSEN 已禁用。"
+                - value: 1
+                  desc: "ICB ACTLR EVENTBUSEN 已启用。"
             - name: "DISITMATBFLUSH"
               bits: "12"
-              desc: "CMSIS DISITMATBFLUSH 位域"
+              desc: "ICB ACTLR.DISITMATBFLUSH 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISNWAMODE"
               bits: "11"
-              desc: "CMSIS DISNWAMODE 位域"
-            - name: "FPEXCODIS"
-              bits: "10"
-              desc: "CMSIS FPEXCODIS 位域"
+              desc: "ICB ACTLR.DISNWAMODE 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISOLAP"
               bits: "7"
-              desc: "CMSIS DISOLAP 位域"
+              desc: "ICB ACTLR.DISOLAP 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISOLAPS"
               bits: "6"
-              desc: "CMSIS DISOLAPS 位域"
+              desc: "ICB ACTLR.DISOLAPS 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISLOBR"
               bits: "5"
-              desc: "CMSIS DISLOBR 位域"
+              desc: "ICB ACTLR.DISLOBR 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISLO"
               bits: "4"
-              desc: "CMSIS DISLO 位域"
+              desc: "ICB ACTLR.DISLO 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISLOLEP"
               bits: "3"
-              desc: "CMSIS DISLOLEP 位域"
+              desc: "ICB ACTLR.DISLOLEP 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISFOLD"
               bits: "2"
-              desc: "CMSIS DISFOLD 位域"
+              desc: "ICB ACTLR.DISFOLD 禁用控制。0 表示不禁用，1 表示禁用。"
         - name: "CPPWR"
           desc: "协处理器电源控制寄存器"
-          fields:
-            - name: "SUS11"
-              bits: "23"
-              desc: "CMSIS SUS11 位域"
-            - name: "SU11"
-              bits: "22"
-              desc: "CMSIS SU11 位域"
-            - name: "SUS10"
-              bits: "21"
-              desc: "CMSIS SUS10 位域"
-            - name: "SU10"
-              bits: "20"
-              desc: "CMSIS SU10 位域"
+          fields: []
     - name: "SCB"
       title: "系统控制块（SCB）"
       access: "内存映射内核外设访问"
@@ -283,155 +374,100 @@ translations:
       registers:
         - name: "CPUID"
           desc: "CPUID 基址寄存器"
-          fields:
-            - name: "IMPLEMENTER"
-              bits: "31:24"
-              desc: "CMSIS IMPLEMENTER 位域"
-            - name: "VARIANT"
-              bits: "23:20"
-              desc: "CMSIS VARIANT 位域"
-            - name: "ARCHITECTURE"
-              bits: "19:16"
-              desc: "CMSIS ARCHITECTURE 位域"
-            - name: "PARTNO"
-              bits: "15:4"
-              desc: "CMSIS PARTNO 位域"
-            - name: "REVISION"
-              bits: "3:0"
-              desc: "CMSIS REVISION 位域"
+          fields: []
         - name: "ICSR"
           desc: "中断控制和状态寄存器"
           fields:
-            - name: "PENDNMISET"
-              bits: "31"
-              desc: "CMSIS PENDNMISET 位域"
             - name: "PENDNMICLR"
               bits: "30"
-              desc: "CMSIS PENDNMICLR 位域"
-            - name: "PENDSVSET"
-              bits: "28"
-              desc: "CMSIS PENDSVSET 位域"
+              values:
+                - value: 0
+                  desc: "不发出清除请求。"
+                - value: 1
+                  desc: "写入 1 清除对应的挂起或状态位；读取时可能返回 0。"
             - name: "PENDSVCLR"
               bits: "27"
-              desc: "CMSIS PENDSVCLR 位域"
-            - name: "PENDSTSET"
-              bits: "26"
-              desc: "CMSIS PENDSTSET 位域"
+              values:
+                - value: 0
+                  desc: "不发出清除请求。"
+                - value: 1
+                  desc: "写入 1 清除对应的挂起或状态位；读取时可能返回 0。"
             - name: "PENDSTCLR"
               bits: "25"
-              desc: "CMSIS PENDSTCLR 位域"
+              values:
+                - value: 0
+                  desc: "不发出清除请求。"
+                - value: 1
+                  desc: "写入 1 清除对应的挂起或状态位；读取时可能返回 0。"
             - name: "STTNS"
               bits: "24"
               desc: "位置（安全扩展）"
             - name: "ISRPREEMPT"
               bits: "23"
-              desc: "CMSIS ISRPREEMPT 位域"
+              desc: "SCB ICSR.ISRPREEMPT 挂起状态。0 表示未挂起，1 表示挂起。"
+              values:
+                - value: 0
+                  desc: "No interrupt preemption 已挂起。"
+                - value: 1
+                  desc: "Interrupt preemption 已挂起。"
             - name: "ISRPENDING"
               bits: "22"
-              desc: "CMSIS ISRPENDING 位域"
-            - name: "VECTPENDING"
-              bits: "20:12"
-              desc: "CMSIS VECTPENDING 位域"
-            - name: "RETTOBASE"
-              bits: "11"
-              desc: "CMSIS RETTOBASE 位域"
-            - name: "VECTACTIVE"
-              bits: "8:0"
-              desc: "CMSIS VECTACTIVE 位域"
+              desc: "SCB ICSR.ISRPENDING 挂起状态。0 表示未挂起，1 表示挂起。"
+              values:
+                - value: 0
+                  desc: "No external interrupt 已挂起。"
+                - value: 1
+                  desc: "At least one external interrupt 已挂起。"
         - name: "VTOR"
           desc: "向量表偏移寄存器"
-          fields:
-            - name: "TBLOFF"
-              bits: "31:7"
-              desc: "CMSIS TBLOFF 位域"
+          fields: []
         - name: "AIRCR"
           desc: "应用中断和复位控制寄存器"
           fields:
             - name: "VECTKEY"
               bits: "31:16"
               source_condition: "Field view: VECTKEY"
-              desc: "CMSIS VECTKEY 位域"
               condition: "位域视图：VECTKEY"
             - name: "VECTKEYSTAT"
               bits: "31:16"
               source_condition: "Field view: VECTKEYSTAT"
-              desc: "CMSIS VECTKEYSTAT 位域"
               condition: "位域视图：VECTKEYSTAT"
-            - name: "ENDIANNESS"
-              bits: "15"
-              desc: "CMSIS ENDIANNESS 位域"
-            - name: "PRIS"
-              bits: "14"
-              desc: "CMSIS PRIS 位域"
-            - name: "BFHFNMINS"
-              bits: "13"
-              desc: "CMSIS BFHFNMINS 位域"
-            - name: "PRIGROUP"
-              bits: "10:8"
-              desc: "CMSIS PRIGROUP 位域"
             - name: "IESB"
               bits: "5"
               desc: "SCB AIRCR：隐式 ESB 使能"
             - name: "DIT"
               bits: "4"
               desc: "SCB AIRCR：数据独立时序"
-            - name: "SYSRESETREQS"
-              bits: "3"
-              desc: "CMSIS SYSRESETREQS 位域"
-            - name: "SYSRESETREQ"
-              bits: "2"
-              desc: "CMSIS SYSRESETREQ 位域"
-            - name: "VECTCLRACTIVE"
-              bits: "1"
-              desc: "CMSIS VECTCLRACTIVE 位域"
         - name: "SCR"
           desc: "系统控制寄存器"
-          fields:
-            - name: "SEVONPEND"
-              bits: "4"
-              desc: "CMSIS SEVONPEND 位域"
-            - name: "SLEEPDEEPS"
-              bits: "3"
-              desc: "CMSIS SLEEPDEEPS 位域"
-            - name: "SLEEPDEEP"
-              bits: "2"
-              desc: "CMSIS SLEEPDEEP 位域"
-            - name: "SLEEPONEXIT"
-              bits: "1"
-              desc: "CMSIS SLEEPONEXIT 位域"
+          fields: []
         - name: "CCR"
           desc: "配置控制寄存器"
           fields:
-            - name: "TRD"
-              bits: "20"
-              desc: "CMSIS TRD 位域"
-            - name: "LOB"
-              bits: "19"
-              desc: "CMSIS LOB 位域"
             - name: "BP"
               bits: "18"
-              desc: "CMSIS BP 位域"
+              desc: "SCB CCR.BP 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "Branch prediction 已禁用。"
+                - value: 1
+                  desc: "Branch prediction 已启用。"
             - name: "IC"
               bits: "17"
-              desc: "CMSIS IC 位域"
+              desc: "SCB CCR.IC 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "The instruction cache 已禁用。"
+                - value: 1
+                  desc: "The instruction cache 已启用。"
             - name: "DC"
               bits: "16"
-              desc: "CMSIS DC 位域"
-            - name: "STKOFHFNMIGN"
-              bits: "10"
-              desc: "CMSIS STKOFHFNMIGN 位域"
-            - name: "BFHFNMIGN"
-              bits: "8"
-              desc: "CMSIS BFHFNMIGN 位域"
-            - name: "DIV_0_TRP"
-              bits: "4"
-              desc: "CMSIS DIV_0_TRP 位域"
-            - name: "UNALIGN_TRP"
-              bits: "3"
-              desc: "CMSIS UNALIGN_TRP 位域"
-            - name: "USERSETMPEND"
-              bits: "1"
-              desc: "CMSIS USERSETMPEND 位域"
+              desc: "SCB CCR.DC 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "The data cache 已禁用。"
+                - value: 1
+                  desc: "The data cache 已启用。"
         - name: "SHPR[0]"
           desc: "系统处理程序优先级寄存器（4-7、8-11、12-15）（元素 0）"
         - name: "SHPR[1]"
@@ -461,64 +497,134 @@ translations:
           fields:
             - name: "HARDFAULTPENDED"
               bits: "21"
-              desc: "CMSIS HARDFAULTPENDED 位域"
+              desc: "HARDFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "SECUREFAULTPENDED"
               bits: "20"
-              desc: "CMSIS SECUREFAULTPENDED 位域"
+              desc: "SECUREFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "SECUREFAULTENA"
               bits: "19"
-              desc: "CMSIS SECUREFAULTENA 位域"
+              desc: "SECUREFAULT 可配置故障处理使能。0 表示该故障不能独立激活并会升级处理，1 表示允许激活对应故障处理程序。"
+              values:
+                - value: 0
+                  desc: "SECUREFAULT fault handling 已禁用。"
+                - value: 1
+                  desc: "SECUREFAULT fault handling 已启用。"
             - name: "USGFAULTENA"
               bits: "18"
-              desc: "CMSIS USGFAULTENA 位域"
+              desc: "USGFAULT 可配置故障处理使能。0 表示该故障不能独立激活并会升级处理，1 表示允许激活对应故障处理程序。"
+              values:
+                - value: 0
+                  desc: "USGFAULT fault handling 已禁用。"
+                - value: 1
+                  desc: "USGFAULT fault handling 已启用。"
             - name: "BUSFAULTENA"
               bits: "17"
-              desc: "CMSIS BUSFAULTENA 位域"
+              desc: "BUSFAULT 可配置故障处理使能。0 表示该故障不能独立激活并会升级处理，1 表示允许激活对应故障处理程序。"
+              values:
+                - value: 0
+                  desc: "BUSFAULT fault handling 已禁用。"
+                - value: 1
+                  desc: "BUSFAULT fault handling 已启用。"
             - name: "MEMFAULTENA"
               bits: "16"
-              desc: "CMSIS MEMFAULTENA 位域"
+              desc: "MEMFAULT 可配置故障处理使能。0 表示该故障不能独立激活并会升级处理，1 表示允许激活对应故障处理程序。"
+              values:
+                - value: 0
+                  desc: "MEMFAULT fault handling 已禁用。"
+                - value: 1
+                  desc: "MEMFAULT fault handling 已启用。"
             - name: "SVCALLPENDED"
               bits: "15"
-              desc: "CMSIS SVCALLPENDED 位域"
+              desc: "SVCALL 异常挂起状态。1 表示对应异常已挂起。"
             - name: "BUSFAULTPENDED"
               bits: "14"
-              desc: "CMSIS BUSFAULTPENDED 位域"
+              desc: "BUSFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "MEMFAULTPENDED"
               bits: "13"
-              desc: "CMSIS MEMFAULTPENDED 位域"
+              desc: "MEMFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "USGFAULTPENDED"
               bits: "12"
-              desc: "CMSIS USGFAULTPENDED 位域"
+              desc: "USGFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "SYSTICKACT"
               bits: "11"
-              desc: "CMSIS SYSTICKACT 位域"
+              desc: "SYSTICK 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "SYSTICK exception 未活动。"
+                - value: 1
+                  desc: "SYSTICK exception 处于活动状态。"
             - name: "PENDSVACT"
               bits: "10"
-              desc: "CMSIS PENDSVACT 位域"
+              desc: "PENDSV 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "PENDSV exception 未活动。"
+                - value: 1
+                  desc: "PENDSV exception 处于活动状态。"
             - name: "MONITORACT"
               bits: "8"
-              desc: "CMSIS MONITORACT 位域"
+              desc: "MONITOR 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "MONITOR exception 未活动。"
+                - value: 1
+                  desc: "MONITOR exception 处于活动状态。"
             - name: "SVCALLACT"
               bits: "7"
-              desc: "CMSIS SVCALLACT 位域"
+              desc: "SVCALL 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "SVCALL exception 未活动。"
+                - value: 1
+                  desc: "SVCALL exception 处于活动状态。"
             - name: "NMIACT"
               bits: "5"
-              desc: "CMSIS NMIACT 位域"
+              desc: "NMI 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "NMI exception 未活动。"
+                - value: 1
+                  desc: "NMI exception 处于活动状态。"
             - name: "SECUREFAULTACT"
               bits: "4"
-              desc: "CMSIS SECUREFAULTACT 位域"
+              desc: "SECUREFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "SECUREFAULT exception 未活动。"
+                - value: 1
+                  desc: "SECUREFAULT exception 处于活动状态。"
             - name: "USGFAULTACT"
               bits: "3"
-              desc: "CMSIS USGFAULTACT 位域"
+              desc: "USGFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "USGFAULT exception 未活动。"
+                - value: 1
+                  desc: "USGFAULT exception 处于活动状态。"
             - name: "HARDFAULTACT"
               bits: "2"
-              desc: "CMSIS HARDFAULTACT 位域"
+              desc: "HARDFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "HARDFAULT exception 未活动。"
+                - value: 1
+                  desc: "HARDFAULT exception 处于活动状态。"
             - name: "BUSFAULTACT"
               bits: "1"
-              desc: "CMSIS BUSFAULTACT 位域"
+              desc: "BUSFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "BUSFAULT exception 未活动。"
+                - value: 1
+                  desc: "BUSFAULT exception 处于活动状态。"
             - name: "MEMFAULTACT"
               bits: "0"
-              desc: "CMSIS MEMFAULTACT 位域"
+              desc: "MEMFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "MEMFAULT exception 未活动。"
+                - value: 1
+                  desc: "MEMFAULT exception 处于活动状态。"
         - name: "CFSR"
           desc: "可配置的故障状态寄存器"
           fields:
@@ -530,43 +636,83 @@ translations:
             - name: "DIVBYZERO"
               bits: "25"
               source_condition: "Field view: DIVBYZERO"
-              desc: "CMSIS DIVBYZERO 位域"
+              desc: "启用除零陷阱后，整数除零导致的 UsageFault。"
               condition: "位域视图：DIVBYZERO"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "UNALIGNED"
               bits: "24"
               source_condition: "Field view: UNALIGNED"
-              desc: "CMSIS UNALIGNED 位域"
+              desc: "启用非对齐陷阱后，非对齐内存访问导致的 UsageFault。"
               condition: "位域视图：UNALIGNED"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "STKOF"
               bits: "20"
               source_condition: "Field view: STKOF"
-              desc: "CMSIS STKOF 位域"
+              desc: "实现堆栈限制检查时检测到的堆栈溢出 UsageFault。"
               condition: "位域视图：STKOF"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "NOCP"
               bits: "19"
               source_condition: "Field view: NOCP"
-              desc: "CMSIS NOCP 位域"
+              desc: "执行了未实现或未使能的协处理器/浮点指令导致的 UsageFault。"
               condition: "位域视图：NOCP"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "INVPC"
               bits: "18"
               source_condition: "Field view: INVPC"
-              desc: "CMSIS INVPC 位域"
+              desc: "异常返回期间装载无效 PC 导致的 UsageFault。"
               condition: "位域视图：INVPC"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "INVSTATE"
               bits: "17"
               source_condition: "Field view: INVSTATE"
-              desc: "CMSIS INVSTATE 位域"
+              desc: "无效执行状态导致的 UsageFault，例如无效的 EPSR/Thumb 状态。"
               condition: "位域视图：INVSTATE"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "UNDEFINSTR"
               bits: "16"
               source_condition: "Field view: UNDEFINSTR"
-              desc: "CMSIS UNDEFINSTR 位域"
+              desc: "执行未定义指令导致的 UsageFault。"
               condition: "位域视图：UNDEFINSTR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "BFARVALID"
               bits: "15"
               source_condition: "Field view: BFARVALID"
-              desc: "CMSIS BFARVALID 位域"
+              desc: "BFAR 是否包含本次 BusFault 地址的有效性标志。"
               condition: "位域视图：BFARVALID"
+              values:
+                - value: 0
+                  desc: "对应的故障地址/状态寄存器无效。"
+                - value: 1
+                  desc: "对应的故障地址/状态寄存器有效。"
             - name: "BUSFAULTSR"
               bits: "15:8"
               source_condition: "Field view: BUSFAULTSR"
@@ -575,33 +721,63 @@ translations:
             - name: "LSPERR"
               bits: "13"
               source_condition: "Field view: LSPERR"
-              desc: "CMSIS LSPERR 位域"
+              desc: "惰性保存浮点状态时发生的 BusFault。"
               condition: "位域视图：LSPERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "STKERR"
               bits: "12"
               source_condition: "Field view: STKERR"
-              desc: "CMSIS STKERR 位域"
+              desc: "异常进入执行寄存器入栈时发生的 BusFault。"
               condition: "位域视图：STKERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "UNSTKERR"
               bits: "11"
               source_condition: "Field view: UNSTKERR"
-              desc: "CMSIS UNSTKERR 位域"
+              desc: "异常返回执行寄存器出栈时发生的 BusFault。"
               condition: "位域视图：UNSTKERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "IMPRECISERR"
               bits: "10"
               source_condition: "Field view: IMPRECISERR"
-              desc: "CMSIS IMPRECISERR 位域"
+              desc: "非精确数据总线错误；异常栈帧中的 PC 不一定能定位故障指令。"
               condition: "位域视图：IMPRECISERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "PRECISERR"
               bits: "9"
               source_condition: "Field view: PRECISERR"
-              desc: "CMSIS PRECISERR 位域"
+              desc: "精确数据总线错误；异常栈帧中的 PC 可以定位故障指令。"
               condition: "位域视图：PRECISERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "IBUSERR"
               bits: "8"
               source_condition: "Field view: IBUSERR"
-              desc: "CMSIS IBUSERR 位域"
+              desc: "取指总线错误状态。"
               condition: "位域视图：IBUSERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "MEMFAULTSR"
               bits: "7:0"
               source_condition: "Field view: MEMFAULTSR"
@@ -610,66 +786,117 @@ translations:
             - name: "MMARVALID"
               bits: "7"
               source_condition: "Field view: MMARVALID"
-              desc: "CMSIS MMARVALID 位域"
+              desc: "MMFAR 是否包含本次 MemManage 故障地址的有效性标志。"
               condition: "位域视图：MMARVALID"
+              values:
+                - value: 0
+                  desc: "对应的故障地址/状态寄存器无效。"
+                - value: 1
+                  desc: "对应的故障地址/状态寄存器有效。"
             - name: "MLSPERR"
               bits: "5"
               source_condition: "Field view: MLSPERR"
-              desc: "CMSIS MLSPERR 位域"
+              desc: "惰性保存浮点状态时发生的 MemManage 故障。"
               condition: "位域视图：MLSPERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "MSTKERR"
               bits: "4"
               source_condition: "Field view: MSTKERR"
-              desc: "CMSIS MSTKERR 位域"
+              desc: "异常进入执行寄存器入栈时发生的 MemManage 故障。"
               condition: "位域视图：MSTKERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "MUNSTKERR"
               bits: "3"
               source_condition: "Field view: MUNSTKERR"
-              desc: "CMSIS MUNSTKERR 位域"
+              desc: "异常返回执行寄存器出栈时发生的 MemManage 故障。"
               condition: "位域视图：MUNSTKERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "DACCVIOL"
               bits: "1"
               source_condition: "Field view: DACCVIOL"
-              desc: "CMSIS DACCVIOL 位域"
+              desc: "数据访问违反 MPU 权限导致的 MemManage 故障状态。"
               condition: "位域视图：DACCVIOL"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "IACCVIOL"
               bits: "0"
               source_condition: "Field view: IACCVIOL"
-              desc: "CMSIS IACCVIOL 位域"
+              desc: "指令访问违反 MPU 权限导致的 MemManage 故障状态。"
               condition: "位域视图：IACCVIOL"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
         - name: "HFSR"
           desc: "HardFault Status 寄存器"
-          fields:
-            - name: "DEBUGEVT"
-              bits: "31"
-              desc: "CMSIS DEBUGEVT 位域"
-            - name: "FORCED"
-              bits: "30"
-              desc: "CMSIS FORCED 位域"
-            - name: "VECTTBL"
-              bits: "1"
-              desc: "CMSIS VECTTBL 位域"
+          fields: []
         - name: "DFSR"
           desc: "调试故障状态寄存器"
           fields:
             - name: "PMU"
               bits: "5"
-              desc: "CMSIS PMU 位域"
+              desc: "PMU 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "EXTERNAL"
               bits: "4"
-              desc: "CMSIS EXTERNAL 位域"
+              desc: "EXTERNAL 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "VCATCH"
               bits: "3"
-              desc: "CMSIS VCATCH 位域"
+              desc: "VCATCH 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "DWTTRAP"
               bits: "2"
-              desc: "CMSIS DWTTRAP 位域"
+              desc: "DWTTRAP 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "BKPT"
               bits: "1"
-              desc: "CMSIS BKPT 位域"
+              desc: "BKPT 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "HALTED"
               bits: "0"
-              desc: "CMSIS HALTED 位域"
+              desc: "HALTED 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
         - name: "MMFAR"
           desc: "MemManage Fault Address 寄存器"
         - name: "BFAR"
@@ -682,13 +909,7 @@ translations:
           desc: "处理器功能寄存器（元素 1）"
         - name: "ID_DFR"
           desc: "调试功能寄存器"
-          fields:
-            - name: "UDE"
-              bits: "31:28"
-              desc: "CMSIS UDE 位域"
-            - name: "MProfDbg"
-              bits: "23:20"
-              desc: "CMSIS MProfDbg 位域"
+          fields: []
         - name: "ID_AFR"
           desc: "辅助功能寄存器"
         - name: "ID_MMFR[0]"
@@ -713,121 +934,31 @@ translations:
           desc: "指令集属性寄存器（元素 5）"
         - name: "CLIDR"
           desc: "缓存级别 ID 寄存器"
-          fields:
-            - name: "LOUU"
-              bits: "29:27"
-              desc: "CMSIS LOUU 位域"
-            - name: "LOC"
-              bits: "26:24"
-              desc: "CMSIS LOC 位域"
+          fields: []
         - name: "CTR"
           desc: "缓存类型寄存器"
-          fields:
-            - name: "FORMAT"
-              bits: "31:29"
-              desc: "CMSIS FORMAT 位域"
-            - name: "CWG"
-              bits: "27:24"
-              desc: "CMSIS CWG 位域"
-            - name: "ERG"
-              bits: "23:20"
-              desc: "CMSIS ERG 位域"
-            - name: "DMINLINE"
-              bits: "19:16"
-              desc: "CMSIS DMINLINE 位域"
-            - name: "IMINLINE"
-              bits: "3:0"
-              desc: "CMSIS IMINLINE 位域"
+          fields: []
         - name: "CCSIDR"
           desc: "缓存大小 ID 寄存器"
-          fields:
-            - name: "WT"
-              bits: "31"
-              desc: "CMSIS WT 位域"
-            - name: "WB"
-              bits: "30"
-              desc: "CMSIS WB 位域"
-            - name: "RA"
-              bits: "29"
-              desc: "CMSIS RA 位域"
-            - name: "WA"
-              bits: "28"
-              desc: "CMSIS WA 位域"
-            - name: "NUMSETS"
-              bits: "27:13"
-              desc: "CMSIS NUMSETS 位域"
-            - name: "ASSOCIATIVITY"
-              bits: "12:3"
-              desc: "CMSIS ASSOCIATIVITY 位域"
-            - name: "LINESIZE"
-              bits: "2:0"
-              desc: "CMSIS LINESIZE 位域"
+          fields: []
         - name: "CSSELR"
           desc: "缓存大小选择寄存器"
-          fields:
-            - name: "LEVEL"
-              bits: "3:1"
-              desc: "CMSIS LEVEL 位域"
-            - name: "IND"
-              bits: "0"
-              desc: "CMSIS IND 位域"
+          fields: []
         - name: "CPACR"
           desc: "协处理器访问控制寄存器"
         - name: "NSACR"
           desc: "非安全访问控制寄存器"
-          fields:
-            - name: "CP11"
-              bits: "11"
-              desc: "CMSIS CP11 位域"
-            - name: "CP10"
-              bits: "10"
-              desc: "CMSIS CP10 位域"
-            - name: "CP7"
-              bits: "7"
-              desc: "CMSIS CP7 位域"
-            - name: "CP6"
-              bits: "6"
-              desc: "CMSIS CP6 位域"
-            - name: "CP5"
-              bits: "5"
-              desc: "CMSIS CP5 位域"
-            - name: "CP4"
-              bits: "4"
-              desc: "CMSIS CP4 位域"
-            - name: "CP3"
-              bits: "3"
-              desc: "CMSIS CP3 位域"
-            - name: "CP2"
-              bits: "2"
-              desc: "CMSIS CP2 位域"
-            - name: "CP1"
-              bits: "1"
-              desc: "CMSIS CP1 位域"
-            - name: "CP0"
-              bits: "0"
-              desc: "CMSIS CP0 位域"
+          fields: []
         - name: "SFSR"
           desc: "安全故障状态寄存器"
         - name: "SFAR"
           desc: "安全故障地址寄存器"
         - name: "STIR"
           desc: "软件触发中断寄存器"
-          fields:
-            - name: "INTID"
-              bits: "8:0"
-              desc: "CMSIS INTID 位域"
+          fields: []
         - name: "RFSR"
           desc: "RAS 故障状态寄存器"
-          fields:
-            - name: "V"
-              bits: "31"
-              desc: "CMSIS V 位域"
-            - name: "IS"
-              bits: "30:16"
-              desc: "CMSIS IS 位域"
-            - name: "UET"
-              bits: "1:0"
-              desc: "CMSIS UET 位域"
+          fields: []
         - name: "MVFR0"
           desc: "媒体和 VFP 功能寄存器 0"
         - name: "MVFR1"
@@ -842,37 +973,19 @@ translations:
           desc: "D-Cache 由 MVA 至 PoC 无效"
         - name: "DCISW"
           desc: "通过 Set-way 使 D-Cache 无效"
-          fields:
-            - name: "WAY"
-              bits: "31:30"
-              desc: "CMSIS WAY 位域"
-            - name: "SET"
-              bits: "13:5"
-              desc: "CMSIS SET 位域"
+          fields: []
         - name: "DCCMVAU"
           desc: "D 缓存清理由 MVA 至 PoU"
         - name: "DCCMVAC"
           desc: "D 缓存清理由 MVA 至 PoC"
         - name: "DCCSW"
           desc: "通过 Set-way 清理 D 缓存"
-          fields:
-            - name: "WAY"
-              bits: "31:30"
-              desc: "CMSIS WAY 位域"
-            - name: "SET"
-              bits: "13:5"
-              desc: "CMSIS SET 位域"
+          fields: []
         - name: "DCCIMVAC"
           desc: "D-Cache 通过 MVA 到 PoC 进行清理和无效"
         - name: "DCCISW"
           desc: "通过 Set-way 清除和无效 D-Cache"
-          fields:
-            - name: "WAY"
-              bits: "31:30"
-              desc: "CMSIS WAY 位域"
-            - name: "SET"
-              bits: "13:5"
-              desc: "CMSIS SET 位域"
+          fields: []
         - name: "BPIALL"
           desc: "分支预测器使全部无效"
     - name: "SysTick"
@@ -885,40 +998,70 @@ translations:
           fields:
             - name: "COUNTFLAG"
               bits: "16"
-              desc: "CMSIS COUNTFLAG 位域"
+              desc: "计数器回卷状态。SysTick 从 1 递减到 0 时置 1；读取 SysTick CTRL 会清除该粘滞状态。"
+              values:
+                - value: 0
+                  desc: "自上次读取 CTRL 后，计数器尚未回卷到 0。"
+                - value: 1
+                  desc: "自上次读取 CTRL 后，计数器至少回卷到 0 一次。"
             - name: "CLKSOURCE"
               bits: "2"
-              desc: "CMSIS CLKSOURCE 位域"
+              desc: "SysTick 时钟源选择。0 选择外部/参考时钟，1 选择处理器时钟。"
+              values:
+                - value: 0
+                  desc: "SysTick 使用外部/参考时钟。"
+                - value: 1
+                  desc: "SysTick 使用处理器时钟。"
             - name: "TICKINT"
               bits: "1"
-              desc: "CMSIS TICKINT 位域"
+              desc: "SysTick 异常请求控制。置 1 后，计数器回卷到 0 时请求 SysTick 异常。"
+              values:
+                - value: 0
+                  desc: "计数器回卷时不请求 SysTick 异常。"
+                - value: 1
+                  desc: "计数器回卷时请求 SysTick 异常。"
             - name: "ENABLE"
               bits: "0"
-              desc: "CMSIS ENABLE 位域"
+              desc: "SysTick 计数器使能控制。0 停止计数，1 从 LOAD 装载值开始递减计数。"
+              values:
+                - value: 0
+                  desc: "SysTick 计数器停止。"
+                - value: 1
+                  desc: "SysTick 计数器从 LOAD 装载值开始递减。"
         - name: "LOAD"
           desc: "SysTick 重载值寄存器"
           fields:
             - name: "RELOAD"
               bits: "23:0"
-              desc: "CMSIS RELOAD 位域"
+              desc: "SysTick 计数器递减到 0 后重新装载的值。"
         - name: "VAL"
           desc: "SysTick 当前值寄存器"
           fields:
             - name: "CURRENT"
               bits: "23:0"
-              desc: "CMSIS CURRENT 位域"
+              desc: "SysTick 当前计数值；向该字段写入任意值都会把当前计数器清零。"
         - name: "CALIB"
           desc: "SysTick 校准寄存器"
           fields:
             - name: "NOREF"
               bits: "31"
-              desc: "CMSIS NOREF 位域"
+              desc: "校准参考时钟指示。0 表示存在独立参考时钟，1 表示没有独立参考时钟。"
+              values:
+                - value: 0
+                  desc: "存在可用于校准的独立参考时钟。"
+                - value: 1
+                  desc: "不存在独立参考时钟。"
             - name: "SKEW"
               bits: "30"
-              desc: "CMSIS SKEW 位域"
+              desc: "校准偏差指示。1 表示 TENMS 校准值不能保证满足实现规定的精度。"
+              values:
+                - value: 0
+                  desc: "TENMS 校准值满足实现规定的精度。"
+                - value: 1
+                  desc: "TENMS 校准值不能保证满足实现规定的精度。"
             - name: "TENMS"
               bits: "23:0"
-              desc: "CMSIS TENMS 位域"
+              desc: "参考时钟下对应 10 ms 时间间隔的重装校准值。"
     - name: "NVIC"
       title: "嵌套向量中断控制器（NVIC）"
       access: "内存映射内核外设访问"
@@ -2189,37 +2332,53 @@ translations:
           desc: "跟踪使能寄存器"
         - name: "TPR"
           desc: "跟踪权限寄存器"
-          fields:
-            - name: "PRIVMASK"
-              bits: "3:0"
-              desc: "CMSIS PRIVMASK 位域"
+          fields: []
         - name: "TCR"
           desc: "跟踪控制寄存器"
           fields:
-            - name: "BUSY"
-              bits: "23"
-              desc: "CMSIS BUSY 位域"
             - name: "GTSFREQ"
               bits: "11:10"
               desc: "ITM TCR：全局时间戳频率"
-            - name: "TSPRESCALE"
-              bits: "9:8"
-              desc: "CMSIS TSPRESCALE 位域"
             - name: "STALLENA"
               bits: "5"
-              desc: "CMSIS STALLENA 位域"
+              desc: "ITM TCR.STALLENA 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "ITM TCR STALLENA 已禁用。"
+                - value: 1
+                  desc: "ITM TCR STALLENA 已启用。"
             - name: "SWOENA"
               bits: "4"
-              desc: "CMSIS SWOENA 位域"
+              desc: "ITM TCR.SWOENA 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "ITM TCR SWOENA 已禁用。"
+                - value: 1
+                  desc: "ITM TCR SWOENA 已启用。"
             - name: "DWTENA"
               bits: "3"
-              desc: "CMSIS DWTENA 位域"
+              desc: "ITM TCR.DWTENA 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "ITM TCR DWTENA 已禁用。"
+                - value: 1
+                  desc: "ITM TCR DWTENA 已启用。"
             - name: "SYNCENA"
               bits: "2"
-              desc: "CMSIS SYNCENA 位域"
+              desc: "ITM TCR.SYNCENA 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "ITM TCR SYNCENA 已禁用。"
+                - value: 1
+                  desc: "ITM TCR SYNCENA 已启用。"
             - name: "TSENA"
               bits: "1"
-              desc: "CMSIS TSENA 位域"
+              desc: "ITM TCR.TSENA 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "ITM TCR TSENA 已禁用。"
+                - value: 1
+                  desc: "ITM TCR TSENA 已启用。"
             - name: "ITMENA"
               bits: "0"
               desc: "ITM TCR：ITM 使能位"
@@ -2228,25 +2387,42 @@ translations:
           fields:
             - name: "AFVALID"
               bits: "1"
-              desc: "CMSIS AFVALID 位域"
+              desc: "ITM ITREAD.AFVALID 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "ITM ITREAD AFVALID 无效或不存在。"
+                - value: 1
+                  desc: "ITM ITREAD AFVALID 有效或存在。"
             - name: "ATREADY"
               bits: "0"
-              desc: "CMSIS ATREADY 位域"
+              desc: "ITM ITREAD.ATREADY 就绪状态。0 表示未就绪，1 表示就绪。"
+              values:
+                - value: 0
+                  desc: "ITM ITREAD ATREADY 未就绪。"
+                - value: 1
+                  desc: "ITM ITREAD ATREADY 已就绪。"
         - name: "ITWRITE"
           desc: "集成写寄存器"
           fields:
             - name: "AFVALID"
               bits: "1"
-              desc: "CMSIS AFVALID 位域"
+              desc: "ITM ITWRITE.AFVALID 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "ITM ITWRITE AFVALID 无效或不存在。"
+                - value: 1
+                  desc: "ITM ITWRITE AFVALID 有效或存在。"
             - name: "ATREADY"
               bits: "0"
-              desc: "CMSIS ATREADY 位域"
+              desc: "ITM ITWRITE.ATREADY 就绪状态。0 表示未就绪，1 表示就绪。"
+              values:
+                - value: 0
+                  desc: "ITM ITWRITE ATREADY 未就绪。"
+                - value: 1
+                  desc: "ITM ITWRITE ATREADY 已就绪。"
         - name: "ITCTRL"
           desc: "积分模式控制寄存器"
-          fields:
-            - name: "IME"
-              bits: "0"
-              desc: "CMSIS IME 位域"
+          fields: []
         - name: "DEVARCH"
           desc: "设备架构寄存器"
         - name: "DEVTYPE"
@@ -2259,63 +2435,110 @@ translations:
         - name: "CTRL"
           desc: "控制寄存器"
           fields:
-            - name: "NUMCOMP"
-              bits: "31:28"
-              desc: "CMSIS NUMCOMP 位域"
             - name: "NOTRCPKT"
               bits: "27"
-              desc: "CMSIS NOTRCPKT 位域"
+              desc: "DWT 跟踪数据包生成实现状态。该位只报告硬件能力，不是禁用控制位。"
+              values:
+                - value: 0
+                  desc: "实现了跟踪数据包生成。"
+                - value: 1
+                  desc: "未实现跟踪数据包生成。"
             - name: "NOEXTTRIG"
               bits: "26"
-              desc: "CMSIS NOEXTTRIG 位域"
+              desc: "DWT 外部匹配触发实现状态。该位只报告硬件能力，不是禁用控制位。"
+              values:
+                - value: 0
+                  desc: "实现了外部匹配触发。"
+                - value: 1
+                  desc: "未实现外部匹配触发。"
             - name: "NOCYCCNT"
               bits: "25"
-              desc: "CMSIS NOCYCCNT 位域"
+              desc: "DWT 周期计数器实现状态。该位只报告硬件能力，不是禁用控制位。"
+              values:
+                - value: 0
+                  desc: "实现了周期计数器。"
+                - value: 1
+                  desc: "未实现周期计数器。"
             - name: "NOPRFCNT"
               bits: "24"
-              desc: "CMSIS NOPRFCNT 位域"
-            - name: "CYCDISS"
-              bits: "23"
-              desc: "CMSIS CYCDISS 位域"
+              desc: "DWT 性能分析计数器实现状态。该位只报告硬件能力，不是禁用控制位。"
+              values:
+                - value: 0
+                  desc: "实现了性能分析计数器。"
+                - value: 1
+                  desc: "未实现性能分析计数器。"
             - name: "CYCEVTENA"
               bits: "22"
-              desc: "CMSIS CYCEVTENA 位域"
+              desc: "DWT 周期计数事件生成控制。置 1 后启用周期计数事件。"
+              values:
+                - value: 0
+                  desc: "Cycle-count event generation 已禁用。"
+                - value: 1
+                  desc: "Cycle-count event generation 已启用。"
             - name: "FOLDEVTENA"
               bits: "21"
-              desc: "CMSIS FOLDEVTENA 位域"
+              desc: "DWT 折叠指令事件生成控制。置 1 后启用折叠指令事件。"
+              values:
+                - value: 0
+                  desc: "Folded-instruction event generation 已禁用。"
+                - value: 1
+                  desc: "Folded-instruction event generation 已启用。"
             - name: "LSUEVTENA"
               bits: "20"
-              desc: "CMSIS LSUEVTENA 位域"
+              desc: "DWT 装载/存储单元事件生成控制。置 1 后启用 LSU 事件。"
+              values:
+                - value: 0
+                  desc: "Load/store-unit event generation 已禁用。"
+                - value: 1
+                  desc: "Load/store-unit event generation 已启用。"
             - name: "SLEEPEVTENA"
               bits: "19"
-              desc: "CMSIS SLEEPEVTENA 位域"
+              desc: "DWT 休眠事件生成控制。置 1 后启用休眠事件。"
+              values:
+                - value: 0
+                  desc: "Sleep event generation 已禁用。"
+                - value: 1
+                  desc: "Sleep event generation 已启用。"
             - name: "EXCEVTENA"
               bits: "18"
-              desc: "CMSIS EXCEVTENA 位域"
+              desc: "DWT 异常事件生成控制。置 1 后启用异常事件。"
+              values:
+                - value: 0
+                  desc: "Exception event generation 已禁用。"
+                - value: 1
+                  desc: "Exception event generation 已启用。"
             - name: "CPIEVTENA"
               bits: "17"
-              desc: "CMSIS CPIEVTENA 位域"
+              desc: "DWT CPI 事件生成控制。置 1 后启用 CPI 事件。"
+              values:
+                - value: 0
+                  desc: "CPI event generation 已禁用。"
+                - value: 1
+                  desc: "CPI event generation 已启用。"
             - name: "EXCTRCENA"
               bits: "16"
-              desc: "CMSIS EXCTRCENA 位域"
+              desc: "DWT 异常跟踪生成控制。置 1 后启用异常跟踪。"
+              values:
+                - value: 0
+                  desc: "Exception tracing 已禁用。"
+                - value: 1
+                  desc: "Exception tracing 已启用。"
             - name: "PCSAMPLENA"
               bits: "12"
-              desc: "CMSIS PCSAMPLENA 位域"
-            - name: "SYNCTAP"
-              bits: "11:10"
-              desc: "CMSIS SYNCTAP 位域"
-            - name: "CYCTAP"
-              bits: "9"
-              desc: "CMSIS CYCTAP 位域"
-            - name: "POSTINIT"
-              bits: "8:5"
-              desc: "CMSIS POSTINIT 位域"
-            - name: "POSTPRESET"
-              bits: "4:1"
-              desc: "CMSIS POSTPRESET 位域"
+              desc: "DWT 程序计数器采样控制。置 1 后启用 PC 采样。"
+              values:
+                - value: 0
+                  desc: "Program-counter sampling 已禁用。"
+                - value: 1
+                  desc: "Program-counter sampling 已启用。"
             - name: "CYCCNTENA"
               bits: "0"
-              desc: "CMSIS CYCCNTENA 位域"
+              desc: "DWT 周期计数器使能控制。0 禁用 CYCCNT，1 启用 CYCCNT。"
+              values:
+                - value: 0
+                  desc: "DWT 周期计数器已禁用。"
+                - value: 1
+                  desc: "DWT 周期计数器已启用。"
         - name: "CYCCNT"
           desc: "周期计数寄存器"
         - name: "CPICNT"
@@ -2335,41 +2558,25 @@ translations:
         - name: "FUNCTION0"
           desc: "功能寄存器0"
           fields:
-            - name: "ID"
-              bits: "31:27"
-              desc: "CMSIS ID 位域"
             - name: "MATCHED"
               bits: "24"
-              desc: "CMSIS MATCHED 位域"
-            - name: "DATAVSIZE"
-              bits: "11:10"
-              desc: "CMSIS DATAVSIZE 位域"
-            - name: "ACTION"
-              bits: "5:4"
-              desc: "CMSIS ACTION 位域"
-            - name: "MATCH"
-              bits: "3:0"
-              desc: "CMSIS MATCH 位域"
+              values:
+                - value: 0
+                  desc: "DWT 比较器尚未匹配。"
+                - value: 1
+                  desc: "DWT 比较器已经匹配。"
         - name: "COMP1"
           desc: "比较器寄存器1"
         - name: "FUNCTION1"
           desc: "功能寄存器1"
           fields:
-            - name: "ID"
-              bits: "31:27"
-              desc: "CMSIS ID 位域"
             - name: "MATCHED"
               bits: "24"
-              desc: "CMSIS MATCHED 位域"
-            - name: "DATAVSIZE"
-              bits: "11:10"
-              desc: "CMSIS DATAVSIZE 位域"
-            - name: "ACTION"
-              bits: "5:4"
-              desc: "CMSIS ACTION 位域"
-            - name: "MATCH"
-              bits: "3:0"
-              desc: "CMSIS MATCH 位域"
+              values:
+                - value: 0
+                  desc: "DWT 比较器尚未匹配。"
+                - value: 1
+                  desc: "DWT 比较器已经匹配。"
         - name: "VMASK1"
           desc: "比较器值掩码 1"
         - name: "COMP2"
@@ -2377,41 +2584,25 @@ translations:
         - name: "FUNCTION2"
           desc: "功能寄存器2"
           fields:
-            - name: "ID"
-              bits: "31:27"
-              desc: "CMSIS ID 位域"
             - name: "MATCHED"
               bits: "24"
-              desc: "CMSIS MATCHED 位域"
-            - name: "DATAVSIZE"
-              bits: "11:10"
-              desc: "CMSIS DATAVSIZE 位域"
-            - name: "ACTION"
-              bits: "5:4"
-              desc: "CMSIS ACTION 位域"
-            - name: "MATCH"
-              bits: "3:0"
-              desc: "CMSIS MATCH 位域"
+              values:
+                - value: 0
+                  desc: "DWT 比较器尚未匹配。"
+                - value: 1
+                  desc: "DWT 比较器已经匹配。"
         - name: "COMP3"
           desc: "比较器寄存器3"
         - name: "FUNCTION3"
           desc: "功能寄存器3"
           fields:
-            - name: "ID"
-              bits: "31:27"
-              desc: "CMSIS ID 位域"
             - name: "MATCHED"
               bits: "24"
-              desc: "CMSIS MATCHED 位域"
-            - name: "DATAVSIZE"
-              bits: "11:10"
-              desc: "CMSIS DATAVSIZE 位域"
-            - name: "ACTION"
-              bits: "5:4"
-              desc: "CMSIS ACTION 位域"
-            - name: "MATCH"
-              bits: "3:0"
-              desc: "CMSIS MATCH 位域"
+              values:
+                - value: 0
+                  desc: "DWT 比较器尚未匹配。"
+                - value: 1
+                  desc: "DWT 比较器已经匹配。"
         - name: "VMASK3"
           desc: "比较器值掩码 3"
         - name: "COMP4"
@@ -2419,81 +2610,49 @@ translations:
         - name: "FUNCTION4"
           desc: "功能寄存器4"
           fields:
-            - name: "ID"
-              bits: "31:27"
-              desc: "CMSIS ID 位域"
             - name: "MATCHED"
               bits: "24"
-              desc: "CMSIS MATCHED 位域"
-            - name: "DATAVSIZE"
-              bits: "11:10"
-              desc: "CMSIS DATAVSIZE 位域"
-            - name: "ACTION"
-              bits: "5:4"
-              desc: "CMSIS ACTION 位域"
-            - name: "MATCH"
-              bits: "3:0"
-              desc: "CMSIS MATCH 位域"
+              values:
+                - value: 0
+                  desc: "DWT 比较器尚未匹配。"
+                - value: 1
+                  desc: "DWT 比较器已经匹配。"
         - name: "COMP5"
           desc: "比较器寄存器5"
         - name: "FUNCTION5"
           desc: "功能寄存器5"
           fields:
-            - name: "ID"
-              bits: "31:27"
-              desc: "CMSIS ID 位域"
             - name: "MATCHED"
               bits: "24"
-              desc: "CMSIS MATCHED 位域"
-            - name: "DATAVSIZE"
-              bits: "11:10"
-              desc: "CMSIS DATAVSIZE 位域"
-            - name: "ACTION"
-              bits: "5:4"
-              desc: "CMSIS ACTION 位域"
-            - name: "MATCH"
-              bits: "3:0"
-              desc: "CMSIS MATCH 位域"
+              values:
+                - value: 0
+                  desc: "DWT 比较器尚未匹配。"
+                - value: 1
+                  desc: "DWT 比较器已经匹配。"
         - name: "COMP6"
           desc: "比较器寄存器6"
         - name: "FUNCTION6"
           desc: "功能寄存器6"
           fields:
-            - name: "ID"
-              bits: "31:27"
-              desc: "CMSIS ID 位域"
             - name: "MATCHED"
               bits: "24"
-              desc: "CMSIS MATCHED 位域"
-            - name: "DATAVSIZE"
-              bits: "11:10"
-              desc: "CMSIS DATAVSIZE 位域"
-            - name: "ACTION"
-              bits: "5:4"
-              desc: "CMSIS ACTION 位域"
-            - name: "MATCH"
-              bits: "3:0"
-              desc: "CMSIS MATCH 位域"
+              values:
+                - value: 0
+                  desc: "DWT 比较器尚未匹配。"
+                - value: 1
+                  desc: "DWT 比较器已经匹配。"
         - name: "COMP7"
           desc: "比较器寄存器7"
         - name: "FUNCTION7"
           desc: "功能寄存器7"
           fields:
-            - name: "ID"
-              bits: "31:27"
-              desc: "CMSIS ID 位域"
             - name: "MATCHED"
               bits: "24"
-              desc: "CMSIS MATCHED 位域"
-            - name: "DATAVSIZE"
-              bits: "11:10"
-              desc: "CMSIS DATAVSIZE 位域"
-            - name: "ACTION"
-              bits: "5:4"
-              desc: "CMSIS ACTION 位域"
-            - name: "MATCH"
-              bits: "3:0"
-              desc: "CMSIS MATCH 位域"
+              values:
+                - value: 0
+                  desc: "DWT 比较器尚未匹配。"
+                - value: 1
+                  desc: "DWT 比较器已经匹配。"
         - name: "DEVARCH"
           desc: "设备类型架构寄存器"
         - name: "DEVTYPE"
@@ -2509,49 +2668,27 @@ translations:
           desc: "当前并行端口大小寄存器"
         - name: "ACPR"
           desc: "异步时钟预分频寄存器"
-          fields:
-            - name: "PRESCALER"
-              bits: "12:0"
-              desc: "CMSIS PRESCALER 位域"
+          fields: []
         - name: "SPPR"
           desc: "选定的引脚协议寄存器"
-          fields:
-            - name: "TXMODE"
-              bits: "1:0"
-              desc: "CMSIS TXMODE 位域"
+          fields: []
         - name: "FFSR"
           desc: "格式化器和刷新状态寄存器"
           fields:
-            - name: "FtNonStop"
-              bits: "3"
-              desc: "CMSIS FtNonStop 位域"
             - name: "TCPresent"
               bits: "2"
-              desc: "CMSIS TCPresent 位域"
-            - name: "FtStopped"
-              bits: "1"
-              desc: "CMSIS FtStopped 位域"
-            - name: "FlInProg"
-              bits: "0"
-              desc: "CMSIS FlInProg 位域"
+              desc: "TPIU FFSR.TCPresent 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "TPIU FFSR TCPresent 无效或不存在。"
+                - value: 1
+                  desc: "TPIU FFSR TCPresent 有效或存在。"
         - name: "FFCR"
           desc: "格式化器和刷新控制寄存器"
-          fields:
-            - name: "TrigIn"
-              bits: "8"
-              desc: "CMSIS TrigIn 位域"
-            - name: "FOnMan"
-              bits: "6"
-              desc: "CMSIS FOnMan 位域"
-            - name: "EnFCont"
-              bits: "1"
-              desc: "CMSIS EnFCont 位域"
+          fields: []
         - name: "PSCR"
           desc: "周期同步控制寄存器"
-          fields:
-            - name: "PSCount"
-              bits: "4:0"
-              desc: "CMSIS PSCount 位域"
+          fields: []
         - name: "TRIGGER"
           desc: "TRIGGER 寄存器"
         - name: "ITFTTD0"
@@ -2592,22 +2729,18 @@ translations:
             - name: "AFVALID1S"
               bits: "1"
               source_condition: "Field view: AFVALID1S"
-              desc: "CMSIS AFVALID1S 位域"
               condition: "位域视图：AFVALID1S"
             - name: "AFVALID2S"
               bits: "1"
               source_condition: "Field view: AFVALID2S"
-              desc: "CMSIS AFVALID2S 位域"
               condition: "位域视图：AFVALID2S"
             - name: "ATREADY1S"
               bits: "0"
               source_condition: "Field view: ATREADY1S"
-              desc: "CMSIS ATREADY1S 位域"
               condition: "位域视图：ATREADY1S"
             - name: "ATREADY2S"
               bits: "0"
               source_condition: "Field view: ATREADY2S"
-              desc: "CMSIS ATREADY2S 位域"
               condition: "位域视图：ATREADY2S"
         - name: "ITATBCTR0"
           desc: "集成测试 ATB 控制寄存器 0"
@@ -2615,22 +2748,18 @@ translations:
             - name: "AFVALID1S"
               bits: "1"
               source_condition: "Field view: AFVALID1S"
-              desc: "CMSIS AFVALID1S 位域"
               condition: "位域视图：AFVALID1S"
             - name: "AFVALID2S"
               bits: "1"
               source_condition: "Field view: AFVALID2S"
-              desc: "CMSIS AFVALID2S 位域"
               condition: "位域视图：AFVALID2S"
             - name: "ATREADY1S"
               bits: "0"
               source_condition: "Field view: ATREADY1S"
-              desc: "CMSIS ATREADY1S 位域"
               condition: "位域视图：ATREADY1S"
             - name: "ATREADY2S"
               bits: "0"
               source_condition: "Field view: ATREADY2S"
-              desc: "CMSIS ATREADY2S 位域"
               condition: "位域视图：ATREADY2S"
         - name: "ITFTTD1"
           desc: "集成测试 FIFO 测试数据 1 寄存器"
@@ -2666,10 +2795,7 @@ translations:
               desc: "TPIU ITFTTD1：ATB 接口 2 data0"
         - name: "ITCTRL"
           desc: "积分模式控制"
-          fields:
-            - name: "Mode"
-              bits: "1:0"
-              desc: "CMSIS Mode 位域"
+          fields: []
         - name: "CLAIMSET"
           desc: "声明标签集"
         - name: "CLAIMCLR"
@@ -2679,31 +2805,38 @@ translations:
           fields:
             - name: "NRZVALID"
               bits: "11"
-              desc: "CMSIS NRZVALID 位域"
+              desc: "TPIU DEVID.NRZVALID 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "TPIU DEVID NRZVALID 无效或不存在。"
+                - value: 1
+                  desc: "TPIU DEVID NRZVALID 有效或存在。"
             - name: "MANCVALID"
               bits: "10"
-              desc: "CMSIS MANCVALID 位域"
+              desc: "TPIU DEVID.MANCVALID 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "TPIU DEVID MANCVALID 无效或不存在。"
+                - value: 1
+                  desc: "TPIU DEVID MANCVALID 有效或存在。"
             - name: "PTINVALID"
               bits: "9"
-              desc: "CMSIS PTINVALID 位域"
-            - name: "FIFOSZ"
-              bits: "8:6"
-              desc: "CMSIS FIFOSZ 位域"
-            - name: "NrTraceInput"
-              bits: "5:0"
-              desc: "CMSIS NrTraceInput 位域"
+              desc: "TPIU DEVID.PTINVALID 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "TPIU DEVID PTINVALID 无效或不存在。"
+                - value: 1
+                  desc: "TPIU DEVID PTINVALID 有效或存在。"
         - name: "DEVTYPE"
           desc: "设备类型标识符寄存器"
           fields:
             - name: "MajorType"
               bits: "3:0"
               source_condition: "Field view: MajorType"
-              desc: "CMSIS MajorType 位域"
               condition: "位域视图：MajorType"
             - name: "SubType"
               bits: "3:0"
               source_condition: "Field view: SubType"
-              desc: "CMSIS SubType 位域"
               condition: "位域视图：SubType"
     - name: "MEMSYSCTL"
       access: "内存映射内核外设访问"
@@ -2712,93 +2845,107 @@ translations:
         - name: "MSCR"
           desc: "内存系统控制寄存器"
           fields:
-            - name: "CPWRDN"
-              bits: "17"
-              desc: "CMSIS CPWRDN 位域"
-            - name: "DCCLEAN"
-              bits: "16"
-              desc: "CMSIS DCCLEAN 位域"
             - name: "ICACTIVE"
               bits: "13"
-              desc: "CMSIS ICACTIVE 位域"
+              desc: "MEMSYSCTL MSCR.ICACTIVE 活动状态。0 表示未活动，1 表示活动。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL MSCR ICACTIVE 未活动。"
+                - value: 1
+                  desc: "MEMSYSCTL MSCR ICACTIVE 处于活动状态。"
             - name: "DCACTIVE"
               bits: "12"
-              desc: "CMSIS DCACTIVE 位域"
-            - name: "TECCCHKDIS"
-              bits: "4"
-              desc: "CMSIS TECCCHKDIS 位域"
+              desc: "MEMSYSCTL MSCR.DCACTIVE 活动状态。0 表示未活动，1 表示活动。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL MSCR DCACTIVE 未活动。"
+                - value: 1
+                  desc: "MEMSYSCTL MSCR DCACTIVE 处于活动状态。"
             - name: "EVECCFAULT"
               bits: "3"
-              desc: "CMSIS EVECCFAULT 位域"
-            - name: "FORCEWT"
-              bits: "2"
-              desc: "CMSIS FORCEWT 位域"
+              desc: "MEMSYSCTL MSCR.EVECCFAULT 错误/故障状态。0 表示未记录对应条件，1 表示已记录对应条件。"
             - name: "ECCEN"
               bits: "1"
-              desc: "CMSIS ECCEN 位域"
+              desc: "MEMSYSCTL MSCR.ECCEN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL MSCR ECCEN 已禁用。"
+                - value: 1
+                  desc: "MEMSYSCTL MSCR ECCEN 已启用。"
         - name: "PFCR"
           desc: "预取器控制寄存器"
           fields:
-            - name: "MAX_OS"
-              bits: "9:7"
-              desc: "CMSIS MAX_OS 位域"
-            - name: "MAX_LA"
-              bits: "6:4"
-              desc: "CMSIS MAX_LA 位域"
-            - name: "MIN_LA"
-              bits: "3:1"
-              desc: "CMSIS MIN_LA 位域"
             - name: "ENABLE"
               bits: "0"
-              desc: "CMSIS ENABLE 位域"
+              desc: "MEMSYSCTL PFCR.ENABLE 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL PFCR ENABLE 已禁用。"
+                - value: 1
+                  desc: "MEMSYSCTL PFCR ENABLE 已启用。"
         - name: "ITCMCR"
           desc: "ITCM 控制寄存器"
           fields:
-            - name: "SZ"
-              bits: "6:3"
-              desc: "CMSIS SZ 位域"
             - name: "EN"
               bits: "0"
-              desc: "CMSIS EN 位域"
+              desc: "MEMSYSCTL ITCMCR.EN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL ITCMCR EN 已禁用。"
+                - value: 1
+                  desc: "MEMSYSCTL ITCMCR EN 已启用。"
         - name: "DTCMCR"
           desc: "DTCM 控制寄存器"
           fields:
-            - name: "SZ"
-              bits: "6:3"
-              desc: "CMSIS SZ 位域"
             - name: "EN"
               bits: "0"
-              desc: "CMSIS EN 位域"
+              desc: "MEMSYSCTL DTCMCR.EN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL DTCMCR EN 已禁用。"
+                - value: 1
+                  desc: "MEMSYSCTL DTCMCR EN 已启用。"
         - name: "PAHBCR"
           desc: "P-AHB 控制寄存器"
           fields:
-            - name: "SZ"
-              bits: "3:1"
-              desc: "CMSIS SZ 位域"
             - name: "EN"
               bits: "0"
-              desc: "CMSIS EN 位域"
+              desc: "MEMSYSCTL PAHBCR.EN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL PAHBCR EN 已禁用。"
+                - value: 1
+                  desc: "MEMSYSCTL PAHBCR EN 已启用。"
         - name: "ITGU_CTRL"
           desc: "ITGU 控制寄存器"
           fields:
             - name: "DEREN"
               bits: "1"
-              desc: "CMSIS DEREN 位域"
+              desc: "MEMSYSCTL ITGU_CTRL.DEREN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL ITGU_CTRL DEREN 已禁用。"
+                - value: 1
+                  desc: "MEMSYSCTL ITGU_CTRL DEREN 已启用。"
             - name: "DBFEN"
               bits: "0"
-              desc: "CMSIS DBFEN 位域"
+              desc: "MEMSYSCTL ITGU_CTRL.DBFEN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL ITGU_CTRL DBFEN 已禁用。"
+                - value: 1
+                  desc: "MEMSYSCTL ITGU_CTRL DBFEN 已启用。"
         - name: "ITGU_CFG"
           desc: "ITGU 配置寄存器"
           fields:
             - name: "PRESENT"
               bits: "31"
-              desc: "CMSIS PRESENT 位域"
-            - name: "NUMBLKS"
-              bits: "11:8"
-              desc: "CMSIS NUMBLKS 位域"
-            - name: "BLKSZ"
-              bits: "3:0"
-              desc: "CMSIS BLKSZ 位域"
+              desc: "MEMSYSCTL ITGU_CFG.PRESENT 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL ITGU_CFG PRESENT 无效或不存在。"
+                - value: 1
+                  desc: "MEMSYSCTL ITGU_CFG PRESENT 有效或存在。"
         - name: "ITGU_LUT[0]"
           desc: "ITGU 查找表寄存器（元素 0）"
         - name: "ITGU_LUT[1]"
@@ -2836,22 +2983,31 @@ translations:
           fields:
             - name: "DEREN"
               bits: "1"
-              desc: "CMSIS DEREN 位域"
+              desc: "MEMSYSCTL DTGU_CTRL.DEREN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL DTGU_CTRL DEREN 已禁用。"
+                - value: 1
+                  desc: "MEMSYSCTL DTGU_CTRL DEREN 已启用。"
             - name: "DBFEN"
               bits: "0"
-              desc: "CMSIS DBFEN 位域"
+              desc: "MEMSYSCTL DTGU_CTRL.DBFEN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL DTGU_CTRL DBFEN 已禁用。"
+                - value: 1
+                  desc: "MEMSYSCTL DTGU_CTRL DBFEN 已启用。"
         - name: "DTGU_CFG"
           desc: "DTGU 配置寄存器"
           fields:
             - name: "PRESENT"
               bits: "31"
-              desc: "CMSIS PRESENT 位域"
-            - name: "NUMBLKS"
-              bits: "11:8"
-              desc: "CMSIS NUMBLKS 位域"
-            - name: "BLKSZ"
-              bits: "3:0"
-              desc: "CMSIS BLKSZ 位域"
+              desc: "MEMSYSCTL DTGU_CFG.PRESENT 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "MEMSYSCTL DTGU_CFG PRESENT 无效或不存在。"
+                - value: 1
+                  desc: "MEMSYSCTL DTGU_CFG PRESENT 有效或存在。"
         - name: "DTGU_LUT[0]"
           desc: "DTGU 查找表寄存器（元素 0）"
         - name: "DTGU_LUT[1]"
@@ -2890,128 +3046,29 @@ translations:
       registers:
         - name: "IEBR0"
           desc: "指令缓存错误组寄存器 0"
-          fields:
-            - name: "SWDEF"
-              bits: "31:30"
-              desc: "CMSIS SWDEF 位域"
-            - name: "BANK"
-              bits: "16"
-              desc: "CMSIS BANK 位域"
-            - name: "LOCATION"
-              bits: "15:2"
-              desc: "CMSIS LOCATION 位域"
-            - name: "LOCKED"
-              bits: "1"
-              desc: "CMSIS LOCKED 位域"
+          fields: []
         - name: "IEBR1"
           desc: "指令缓存错误组寄存器 1"
-          fields:
-            - name: "SWDEF"
-              bits: "31:30"
-              desc: "CMSIS SWDEF 位域"
-            - name: "BANK"
-              bits: "16"
-              desc: "CMSIS BANK 位域"
-            - name: "LOCATION"
-              bits: "15:2"
-              desc: "CMSIS LOCATION 位域"
-            - name: "LOCKED"
-              bits: "1"
-              desc: "CMSIS LOCKED 位域"
+          fields: []
         - name: "DEBR0"
           desc: "数据缓存错误组寄存器 0"
-          fields:
-            - name: "SWDEF"
-              bits: "31:30"
-              desc: "CMSIS SWDEF 位域"
-            - name: "TYPE"
-              bits: "17"
-              desc: "CMSIS TYPE 位域"
-            - name: "BANK"
-              bits: "16"
-              desc: "CMSIS BANK 位域"
-            - name: "LOCATION"
-              bits: "15:2"
-              desc: "CMSIS LOCATION 位域"
-            - name: "LOCKED"
-              bits: "1"
-              desc: "CMSIS LOCKED 位域"
+          fields: []
         - name: "DEBR1"
           desc: "数据缓存错误组寄存器 1"
-          fields:
-            - name: "SWDEF"
-              bits: "31:30"
-              desc: "CMSIS SWDEF 位域"
-            - name: "TYPE"
-              bits: "17"
-              desc: "CMSIS TYPE 位域"
-            - name: "BANK"
-              bits: "16"
-              desc: "CMSIS BANK 位域"
-            - name: "LOCATION"
-              bits: "15:2"
-              desc: "CMSIS LOCATION 位域"
-            - name: "LOCKED"
-              bits: "1"
-              desc: "CMSIS LOCKED 位域"
+          fields: []
         - name: "TEBR0"
           desc: "TCM错误组寄存器 0"
-          fields:
-            - name: "SWDEF"
-              bits: "31:30"
-              desc: "CMSIS SWDEF 位域"
-            - name: "POISON"
-              bits: "28"
-              desc: "CMSIS POISON 位域"
-            - name: "TYPE"
-              bits: "27"
-              desc: "CMSIS TYPE 位域"
-            - name: "BANK"
-              bits: "26:24"
-              desc: "CMSIS BANK 位域"
-            - name: "LOCATION"
-              bits: "23:2"
-              desc: "CMSIS LOCATION 位域"
-            - name: "LOCKED"
-              bits: "1"
-              desc: "CMSIS LOCKED 位域"
+          fields: []
         - name: "TEBR1"
           desc: "TCM错误组寄存器 1"
-          fields:
-            - name: "SWDEF"
-              bits: "31:30"
-              desc: "CMSIS SWDEF 位域"
-            - name: "POISON"
-              bits: "28"
-              desc: "CMSIS POISON 位域"
-            - name: "TYPE"
-              bits: "27"
-              desc: "CMSIS TYPE 位域"
-            - name: "BANK"
-              bits: "26:24"
-              desc: "CMSIS BANK 位域"
-            - name: "LOCATION"
-              bits: "23:2"
-              desc: "CMSIS LOCATION 位域"
-            - name: "LOCKED"
-              bits: "1"
-              desc: "CMSIS LOCKED 位域"
+          fields: []
     - name: "PWRMODCTL"
       access: "内存映射内核外设访问"
       desc: "来自 PwrModCtl_Type 的 PWRMODCTL 寄存器"
       registers:
         - name: "CPDLPSTATE"
           desc: "核心电源域低功耗状态寄存器"
-          fields:
-            - name: "RLPSTATE"
-              bits: "9:8"
-              desc: "CMSIS RLPSTATE 位域"
-            - name: "ELPSTATE"
-              bits: "5:4"
-              desc: "CMSIS ELPSTATE 位域"
-            - name: "CLPSTATE"
-              bits: "1:0"
-              desc: "CMSIS CLPSTATE 位域"
+          fields: []
         - name: "DPDLPSTATE"
           desc: "调试电源域低功耗状态寄存器"
     - name: "EWIC_ISA"
@@ -3020,112 +3077,55 @@ translations:
       registers:
         - name: "EVENTSPR"
           desc: "事件设置挂起寄存器"
-          fields:
-            - name: "EDBGREQ"
-              bits: "2"
-              desc: "CMSIS EDBGREQ 位域"
-            - name: "NMI"
-              bits: "1"
-              desc: "CMSIS NMI 位域"
+          fields: []
         - name: "EVENTMASKA"
           desc: "事件掩码A寄存器"
-          fields:
-            - name: "EDBGREQ"
-              bits: "2"
-              desc: "CMSIS EDBGREQ 位域"
-            - name: "NMI"
-              bits: "1"
-              desc: "CMSIS NMI 位域"
+          fields: []
         - name: "EVENTMASKn[0]"
           desc: "事件屏蔽寄存器（元素 0）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[1]"
           desc: "事件掩码寄存器（元素 1）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[2]"
           desc: "事件掩码寄存器（元素 2）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[3]"
           desc: "事件掩码寄存器（元素 3）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[4]"
           desc: "事件掩码寄存器（元素 4）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[5]"
           desc: "事件掩码寄存器（元素 5）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[6]"
           desc: "事件掩码寄存器（元素 6）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[7]"
           desc: "事件掩码寄存器（元素 7）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[8]"
           desc: "事件掩码寄存器（元素 8）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[9]"
           desc: "事件掩码寄存器（元素 9）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[10]"
           desc: "事件掩码寄存器（元素 10）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[11]"
           desc: "事件掩码寄存器（元素 11）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[12]"
           desc: "事件掩码寄存器（元素 12）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[13]"
           desc: "事件掩码寄存器（元素 13）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EVENTMASKn[14]"
           desc: "事件掩码寄存器（元素 14）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
     - name: "EWIC"
       access: "内存映射内核外设访问"
       desc: "来自 EWIC_Type 的 EWIC 寄存器"
@@ -3135,237 +3135,119 @@ translations:
           fields:
             - name: "EN"
               bits: "0"
-              desc: "CMSIS EN 位域"
+              desc: "EWIC EWIC_CR.EN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "EWIC EWIC_CR EN 已禁用。"
+                - value: 1
+                  desc: "EWIC EWIC_CR EN 已启用。"
         - name: "EWIC_ASCR"
           desc: "EWIC 自动顺序控制寄存器"
-          fields:
-            - name: "ASPU"
-              bits: "1"
-              desc: "CMSIS ASPU 位域"
-            - name: "ASPD"
-              bits: "0"
-              desc: "CMSIS ASPD 位域"
+          fields: []
         - name: "EWIC_CLRMASK"
           desc: "EWIC 清除屏蔽寄存器"
         - name: "EWIC_NUMID"
           desc: "EWIC 事件编号 ID 寄存器"
-          fields:
-            - name: "NUMEVENT"
-              bits: "15:0"
-              desc: "CMSIS NUMEVENT 位域"
+          fields: []
         - name: "EWIC_MASKA"
           desc: "EWIC MaskA 寄存器"
-          fields:
-            - name: "EDBGREQ"
-              bits: "2"
-              desc: "CMSIS EDBGREQ 位域"
-            - name: "NMI"
-              bits: "1"
-              desc: "CMSIS NMI 位域"
-            - name: "EVENT"
-              bits: "0"
-              desc: "CMSIS EVENT 位域"
+          fields: []
         - name: "EWIC_MASKn[0]"
           desc: "EWIC Maskn 寄存器（元素 0）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[1]"
           desc: "EWIC Maskn 寄存器（元素 1）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[2]"
           desc: "EWIC Maskn 寄存器（元素 2）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[3]"
           desc: "EWIC Maskn 寄存器（元素 3）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[4]"
           desc: "EWIC Maskn 寄存器（元素 4）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[5]"
           desc: "EWIC Maskn 寄存器（元素 5）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[6]"
           desc: "EWIC Maskn 寄存器（元素 6）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[7]"
           desc: "EWIC Maskn 寄存器（元素 7）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[8]"
           desc: "EWIC Maskn 寄存器（元素 8）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[9]"
           desc: "EWIC Maskn 寄存器（元素 9）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[10]"
           desc: "EWIC Maskn 寄存器（元素 10）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[11]"
           desc: "EWIC Maskn 寄存器（元素 11）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[12]"
           desc: "EWIC Maskn 寄存器（元素 12）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[13]"
           desc: "EWIC Maskn 寄存器（元素 13）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_MASKn[14]"
           desc: "EWIC Maskn 寄存器（元素 14）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDA"
           desc: "EWIC PendA 事件寄存器"
-          fields:
-            - name: "EDBGREQ"
-              bits: "2"
-              desc: "CMSIS EDBGREQ 位域"
-            - name: "NMI"
-              bits: "1"
-              desc: "CMSIS NMI 位域"
-            - name: "EVENT"
-              bits: "0"
-              desc: "CMSIS EVENT 位域"
+          fields: []
         - name: "EWIC_PENDn[0]"
           desc: "EWIC Pendn 事件寄存器（元素 0）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[1]"
           desc: "EWIC Pendn 事件寄存器（元素 1）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[2]"
           desc: "EWIC Pendn 事件寄存器（元素 2）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[3]"
           desc: "EWIC Pendn 事件寄存器（元素 3）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[4]"
           desc: "EWIC Pendn 事件寄存器（元素 4）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[5]"
           desc: "EWIC Pendn 事件寄存器（元素 5）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[6]"
           desc: "EWIC Pendn 事件寄存器（元素 6）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[7]"
           desc: "EWIC Pendn 事件寄存器（元素 7）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[8]"
           desc: "EWIC Pendn 事件寄存器（元素 8）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[9]"
           desc: "EWIC Pendn 事件寄存器（元素 9）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[10]"
           desc: "EWIC Pendn 事件寄存器（元素 10）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[11]"
           desc: "EWIC Pendn 事件寄存器（元素 11）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[12]"
           desc: "EWIC Pendn 事件寄存器（元素 12）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[13]"
           desc: "EWIC Pendn 事件寄存器（元素 13）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PENDn[14]"
           desc: "EWIC Pendn 事件寄存器（元素 14）"
-          fields:
-            - name: "IRQ"
-              bits: "31:0"
-              desc: "CMSIS IRQ 位域"
+          fields: []
         - name: "EWIC_PSR"
           desc: "EWIC 挂起摘要寄存器"
-          fields:
-            - name: "NZ"
-              bits: "15:1"
-              desc: "CMSIS NZ 位域"
-            - name: "NZA"
-              bits: "0"
-              desc: "CMSIS NZA 位域"
+          fields: []
     - name: "PRCCFGINF"
       access: "内存映射内核外设访问"
       desc: "来自 PrcCfgInf_Type 的 PRCCFGINF 寄存器"
@@ -3383,70 +3265,35 @@ translations:
           fields:
             - name: "VALID"
               bits: "18"
-              desc: "CMSIS VALID 位域"
-            - name: "TARGET"
-              bits: "17"
-              desc: "CMSIS TARGET 位域"
-            - name: "PRIORITY"
-              bits: "16:9"
-              desc: "CMSIS PRIORITY 位域"
-            - name: "INTNUM"
-              bits: "8:0"
-              desc: "CMSIS INTNUM 位域"
+              desc: "STL STLNVICPENDOR.VALID 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "STL STLNVICPENDOR VALID 无效或不存在。"
+                - value: 1
+                  desc: "STL STLNVICPENDOR VALID 有效或存在。"
         - name: "STLNVICACTVOR"
           desc: "NVIC 主动优先级树寄存器"
           fields:
             - name: "VALID"
               bits: "18"
-              desc: "CMSIS VALID 位域"
-            - name: "TARGET"
-              bits: "17"
-              desc: "CMSIS TARGET 位域"
-            - name: "PRIORITY"
-              bits: "16:9"
-              desc: "CMSIS PRIORITY 位域"
-            - name: "INTNUM"
-              bits: "8:0"
-              desc: "CMSIS INTNUM 位域"
+              desc: "STL STLNVICACTVOR.VALID 有效性/存在状态。0 表示无效或不存在，1 表示有效或存在。"
+              values:
+                - value: 0
+                  desc: "STL STLNVICACTVOR VALID 无效或不存在。"
+                - value: 1
+                  desc: "STL STLNVICACTVOR VALID 有效或存在。"
         - name: "STLIDMPUSR"
           desc: "MPU 示例寄存器"
-          fields:
-            - name: "ADDR"
-              bits: "31:5"
-              desc: "CMSIS ADDR 位域"
-            - name: "INSTR"
-              bits: "2"
-              desc: "CMSIS INSTR 位域"
-            - name: "DATA"
-              bits: "1"
-              desc: "CMSIS DATA 位域"
+          fields: []
         - name: "STLIMPUOR"
           desc: "MPU 区域命中寄存器"
-          fields:
-            - name: "HITREGION"
-              bits: "16:9"
-              desc: "CMSIS HITREGION 位域"
-            - name: "ATTR"
-              bits: "8:0"
-              desc: "CMSIS ATTR 位域"
+          fields: []
         - name: "STLD0MPUOR"
           desc: "MPU 存储器属性寄存器0"
-          fields:
-            - name: "HITREGION"
-              bits: "16:9"
-              desc: "CMSIS HITREGION 位域"
-            - name: "ATTR"
-              bits: "8:0"
-              desc: "CMSIS ATTR 位域"
+          fields: []
         - name: "STLD1MPUOR"
           desc: "MPU 存储器属性寄存器 1"
-          fields:
-            - name: "HITREGION"
-              bits: "16:9"
-              desc: "CMSIS HITREGION 位域"
-            - name: "ATTR"
-              bits: "8:0"
-              desc: "CMSIS ATTR 位域"
+          fields: []
     - name: "DCB"
       title: "调试控制块（DCB）"
       access: "内存映射内核外设访问"
@@ -3694,16 +3541,11 @@ translations:
             - name: "ARCHITECT"
               bits: "31:21"
               source_condition: "Field view: ARCHITECT"
-              desc: "CMSIS ARCHITECT 位域"
               condition: "位域视图：ARCHITECT"
             - name: "PRESENT"
               bits: "24:20"
               source_condition: "Field view: PRESENT"
-              desc: "CMSIS PRESENT 位域"
               condition: "位域视图：PRESENT"
-            - name: "REVISION"
-              bits: "19:16"
-              desc: "CMSIS REVISION 位域"
             - name: "ARCHVER"
               bits: "15:12"
               desc: "DIB DDEVARCH：架构版本"
@@ -3728,195 +3570,89 @@ translations:
           desc: "MPU 类型寄存器"
           condition: "当 __MPU_PRESENT == 1 时"
           fields:
-            - name: "IREGION"
-              bits: "23:16"
-              desc: "CMSIS IREGION 位域"
-            - name: "DREGION"
-              bits: "15:8"
-              desc: "CMSIS DREGION 位域"
             - name: "SEPARATE"
               bits: "0"
-              desc: "CMSIS SEPARATE 位域"
+              desc: "指令区和数据区是否使用独立区域集合的实现指示。"
         - name: "CTRL"
           desc: "MPU 控制寄存器"
           condition: "当 __MPU_PRESENT == 1 时"
           fields:
             - name: "PRIVDEFENA"
               bits: "2"
-              desc: "CMSIS PRIVDEFENA 位域"
+              desc: "特权默认内存映射控制。置 1 后，特权访问在没有 MPU 区域匹配时可以使用默认内存映射。"
             - name: "HFNMIENA"
               bits: "1"
-              desc: "CMSIS HFNMIENA 位域"
+              desc: "HardFault/NMI 处理期间的 MPU 检查控制。置 1 后，在 HardFault 和 NMI 处理函数中仍执行 MPU 检查。"
             - name: "ENABLE"
               bits: "0"
-              desc: "CMSIS ENABLE 位域"
+              desc: "MPU 总使能控制。0 禁用 MPU，1 启用 MPU。"
+              values:
+                - value: 0
+                  desc: "MPU 已禁用。"
+                - value: 1
+                  desc: "MPU 已启用。"
         - name: "RNR"
           desc: "MPU 区域编号寄存器"
           condition: "当 __MPU_PRESENT == 1 时"
-          fields:
-            - name: "REGION"
-              bits: "7:0"
-              desc: "CMSIS REGION 位域"
+          fields: []
         - name: "RBAR"
           desc: "MPU 区域基地址寄存器"
           condition: "当 __MPU_PRESENT == 1 时"
           fields:
-            - name: "BASE"
-              bits: "31:5"
-              desc: "CMSIS BASE 位域"
-            - name: "SH"
-              bits: "4:3"
-              desc: "CMSIS SH 位域"
-            - name: "AP"
-              bits: "2:1"
-              desc: "CMSIS AP 位域"
             - name: "XN"
               bits: "0"
-              desc: "CMSIS XN 位域"
+              desc: "执行禁止（XN）控制。置 1 后禁止从该 MPU 区域取指执行。"
         - name: "RLAR"
           desc: "MPU 区域限制地址寄存器"
           condition: "当 __MPU_PRESENT == 1 时"
           fields:
-            - name: "LIMIT"
-              bits: "31:5"
-              desc: "CMSIS LIMIT 位域"
             - name: "PXN"
               bits: "4"
-              desc: "CMSIS PXN 位域"
-            - name: "AttrIndx"
-              bits: "3:1"
-              desc: "CMSIS AttrIndx 位域"
+              desc: "特权执行禁止（PXN）控制。置 1 后禁止特权软件从该 MPU 区域取指执行。"
             - name: "EN"
               bits: "0"
-              desc: "能位"
+              desc: "MPU 区域使能控制。0 禁用该区域，1 启用该区域。"
         - name: "RBAR_A1"
           desc: "MPU 区域基址寄存器别名 1"
           condition: "当 __MPU_PRESENT == 1 时"
-          fields:
-            - name: "BASE"
-              bits: "31:5"
-              desc: "CMSIS BASE 位域"
-            - name: "SH"
-              bits: "4:3"
-              desc: "CMSIS SH 位域"
-            - name: "AP"
-              bits: "2:1"
-              desc: "CMSIS AP 位域"
-            - name: "XN"
-              bits: "0"
-              desc: "CMSIS XN 位域"
+          fields: []
         - name: "RLAR_A1"
           desc: "MPU 区域限制地址寄存器别名 1"
           condition: "当 __MPU_PRESENT == 1 时"
           fields:
-            - name: "LIMIT"
-              bits: "31:5"
-              desc: "CMSIS LIMIT 位域"
-            - name: "PXN"
-              bits: "4"
-              desc: "CMSIS PXN 位域"
-            - name: "AttrIndx"
-              bits: "3:1"
-              desc: "CMSIS AttrIndx 位域"
             - name: "EN"
               bits: "0"
               desc: "能位"
         - name: "RBAR_A2"
           desc: "MPU 区域基址寄存器别名 2"
           condition: "当 __MPU_PRESENT == 1 时"
-          fields:
-            - name: "BASE"
-              bits: "31:5"
-              desc: "CMSIS BASE 位域"
-            - name: "SH"
-              bits: "4:3"
-              desc: "CMSIS SH 位域"
-            - name: "AP"
-              bits: "2:1"
-              desc: "CMSIS AP 位域"
-            - name: "XN"
-              bits: "0"
-              desc: "CMSIS XN 位域"
+          fields: []
         - name: "RLAR_A2"
           desc: "MPU 区域限制地址寄存器别名 2"
           condition: "当 __MPU_PRESENT == 1 时"
           fields:
-            - name: "LIMIT"
-              bits: "31:5"
-              desc: "CMSIS LIMIT 位域"
-            - name: "PXN"
-              bits: "4"
-              desc: "CMSIS PXN 位域"
-            - name: "AttrIndx"
-              bits: "3:1"
-              desc: "CMSIS AttrIndx 位域"
             - name: "EN"
               bits: "0"
               desc: "能位"
         - name: "RBAR_A3"
           desc: "MPU 区域基址寄存器别名 3"
           condition: "当 __MPU_PRESENT == 1 时"
-          fields:
-            - name: "BASE"
-              bits: "31:5"
-              desc: "CMSIS BASE 位域"
-            - name: "SH"
-              bits: "4:3"
-              desc: "CMSIS SH 位域"
-            - name: "AP"
-              bits: "2:1"
-              desc: "CMSIS AP 位域"
-            - name: "XN"
-              bits: "0"
-              desc: "CMSIS XN 位域"
+          fields: []
         - name: "RLAR_A3"
           desc: "MPU 区域限制地址寄存器别名 3"
           condition: "当 __MPU_PRESENT == 1 时"
           fields:
-            - name: "LIMIT"
-              bits: "31:5"
-              desc: "CMSIS LIMIT 位域"
-            - name: "PXN"
-              bits: "4"
-              desc: "CMSIS PXN 位域"
-            - name: "AttrIndx"
-              bits: "3:1"
-              desc: "CMSIS AttrIndx 位域"
             - name: "EN"
               bits: "0"
               desc: "能位"
         - name: "MAIR0"
           desc: "MPU 内存属性间接寄存器 0"
           condition: "当 __MPU_PRESENT == 1 时"
-          fields:
-            - name: "Attr3"
-              bits: "31:24"
-              desc: "CMSIS Attr3 位域"
-            - name: "Attr2"
-              bits: "23:16"
-              desc: "CMSIS Attr2 位域"
-            - name: "Attr1"
-              bits: "15:8"
-              desc: "CMSIS Attr1 位域"
-            - name: "Attr0"
-              bits: "7:0"
-              desc: "CMSIS Attr0 位域"
+          fields: []
         - name: "MAIR1"
           desc: "MPU 内存属性间接寄存器 1"
           condition: "当 __MPU_PRESENT == 1 时"
-          fields:
-            - name: "Attr7"
-              bits: "31:24"
-              desc: "CMSIS Attr7 位域"
-            - name: "Attr6"
-              bits: "23:16"
-              desc: "CMSIS Attr6 位域"
-            - name: "Attr5"
-              bits: "15:8"
-              desc: "CMSIS Attr5 位域"
-            - name: "Attr4"
-              bits: "7:0"
-              desc: "CMSIS Attr4 位域"
+          fields: []
     - name: "PMU"
       title: "性能监视单元（PMU）"
       access: "内存映射内核外设访问"
@@ -4643,7 +4379,12 @@ translations:
               desc: "PMU CTRL：事件计数器复位"
             - name: "ENABLE"
               bits: "0"
-              desc: "CMSIS ENABLE 位域"
+              desc: "PMU CTRL.ENABLE 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "PMU CTRL ENABLE 已禁用。"
+                - value: 1
+                  desc: "PMU CTRL ENABLE 已启用。"
         - name: "AUTHSTATUS"
           desc: "认证状态寄存器"
           fields:
@@ -4686,72 +4427,115 @@ translations:
           fields:
             - name: "ALLNS"
               bits: "1"
-              desc: "CMSIS ALLNS 位域"
+              desc: "未匹配地址的默认安全归属控制。置 1 后，未命中 SAU 区域的地址归属为非安全。"
             - name: "ENABLE"
               bits: "0"
-              desc: "CMSIS ENABLE 位域"
+              desc: "安全归属单元（SAU）总使能控制。0 禁用 SAU，1 启用 SAU。"
+              values:
+                - value: 0
+                  desc: "SAU 已禁用。"
+                - value: 1
+                  desc: "SAU 已启用。"
         - name: "TYPE"
           desc: "SAU 类型寄存器"
           condition: "何时实现安全扩展"
-          fields:
-            - name: "SREGION"
-              bits: "7:0"
-              desc: "CMSIS SREGION 位域"
+          fields: []
         - name: "RNR"
           desc: "SAU 区域编号寄存器"
           condition: "何时实现安全扩展"
-          fields:
-            - name: "REGION"
-              bits: "7:0"
-              desc: "CMSIS REGION 位域"
+          fields: []
         - name: "RBAR"
           desc: "SAU 区域基地址寄存器"
           condition: "何时实现安全扩展"
-          fields:
-            - name: "BADDR"
-              bits: "31:5"
-              desc: "CMSIS BADDR 位域"
+          fields: []
         - name: "RLAR"
           desc: "SAU 区域限制地址寄存器"
           condition: "何时实现安全扩展"
           fields:
-            - name: "LADDR"
-              bits: "31:5"
-              desc: "CMSIS LADDR 位域"
             - name: "NSC"
               bits: "1"
-              desc: "CMSIS NSC 位域"
+              desc: "非安全可调用（NSC）属性控制。置 1 后，该 SAU 区域被标记为非安全可调用区域。"
+              values:
+                - value: 0
+                  desc: "该区域不是非安全可调用区域。"
+                - value: 1
+                  desc: "该区域是非安全可调用区域。"
             - name: "ENABLE"
               bits: "0"
-              desc: "CMSIS ENABLE 位域"
+              desc: "SAU 区域使能控制。0 禁用该区域，1 启用该区域。"
+              values:
+                - value: 0
+                  desc: "SAU 已禁用。"
+                - value: 1
+                  desc: "SAU 已启用。"
         - name: "SFSR"
           desc: "安全故障状态寄存器"
           condition: "何时实现安全扩展"
           fields:
             - name: "LSERR"
               bits: "7"
-              desc: "CMSIS LSERR 位域"
+              desc: "LSERR SecureFault 状态。1 表示已记录对应安全归属或安全状态故障。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应 SecureFault 条件。"
+                - value: 1
+                  desc: "已记录对应 SecureFault 条件。"
             - name: "SFARVALID"
               bits: "6"
-              desc: "CMSIS SFARVALID 位域"
+              desc: "SFARVALID SecureFault 状态。1 表示已记录对应安全归属或安全状态故障。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应 SecureFault 条件。"
+                - value: 1
+                  desc: "已记录对应 SecureFault 条件。"
             - name: "LSPERR"
               bits: "5"
-              desc: "CMSIS LSPERR 位域"
+              desc: "LSPERR SecureFault 状态。1 表示已记录对应安全归属或安全状态故障。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应 SecureFault 条件。"
+                - value: 1
+                  desc: "已记录对应 SecureFault 条件。"
             - name: "INVTRAN"
               bits: "4"
-              desc: "CMSIS INVTRAN 位域"
+              desc: "INVTRAN SecureFault 状态。1 表示已记录对应安全归属或安全状态故障。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应 SecureFault 条件。"
+                - value: 1
+                  desc: "已记录对应 SecureFault 条件。"
             - name: "AUVIOL"
               bits: "3"
-              desc: "CMSIS AUVIOL 位域"
+              desc: "AUVIOL SecureFault 状态。1 表示已记录对应安全归属或安全状态故障。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应 SecureFault 条件。"
+                - value: 1
+                  desc: "已记录对应 SecureFault 条件。"
             - name: "INVER"
               bits: "2"
-              desc: "CMSIS INVER 位域"
+              desc: "INVER SecureFault 状态。1 表示已记录对应安全归属或安全状态故障。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应 SecureFault 条件。"
+                - value: 1
+                  desc: "已记录对应 SecureFault 条件。"
             - name: "INVIS"
               bits: "1"
-              desc: "CMSIS INVIS 位域"
+              desc: "INVIS SecureFault 状态。1 表示已记录对应安全归属或安全状态故障。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应 SecureFault 条件。"
+                - value: 1
+                  desc: "已记录对应 SecureFault 条件。"
             - name: "INVEP"
               bits: "0"
-              desc: "CMSIS INVEP 位域"
+              desc: "INVEP SecureFault 状态。1 表示已记录对应安全归属或安全状态故障。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应 SecureFault 条件。"
+                - value: 1
+                  desc: "已记录对应 SecureFault 条件。"
         - name: "SFAR"
           desc: "安全故障地址寄存器"
           condition: "何时实现安全扩展"
@@ -4766,55 +4550,78 @@ translations:
           fields:
             - name: "ASPEN"
               bits: "31"
-              desc: "位"
+              desc: "自动浮点状态保存控制。置 1 后，异常进入时启用浮点上下文的自动保存机制。"
             - name: "LSPEN"
               bits: "30"
-              desc: "CMSIS LSPEN 位域"
-            - name: "LSPENS"
-              bits: "29"
-              desc: "CMSIS LSPENS 位域"
-            - name: "CLRONRET"
-              bits: "28"
-              desc: "CMSIS CLRONRET 位域"
-            - name: "CLRONRETS"
-              bits: "27"
-              desc: "CMSIS CLRONRETS 位域"
-            - name: "TS"
-              bits: "26"
-              desc: "CMSIS TS 位域"
+              desc: "惰性浮点状态保存控制。置 1 后，只有异常处理程序实际使用浮点功能时才完成浮点上下文保存。"
             - name: "UFRDY"
               bits: "10"
-              desc: "CMSIS UFRDY 位域"
+              desc: "UFRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "SPLIMVIOL"
               bits: "9"
-              desc: "CMSIS SPLIMVIOL 位域"
+              desc: "FPU FPCCR.SPLIMVIOL 错误/故障状态。0 表示未记录对应条件，1 表示已记录对应条件。"
             - name: "MONRDY"
               bits: "8"
-              desc: "CMSIS MONRDY 位域"
+              desc: "MONRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "SFRDY"
               bits: "7"
-              desc: "CMSIS SFRDY 位域"
+              desc: "SFRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "BFRDY"
               bits: "6"
-              desc: "CMSIS BFRDY 位域"
+              desc: "BFRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "MMRDY"
               bits: "5"
-              desc: "CMSIS MMRDY 位域"
+              desc: "MMRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "HFRDY"
               bits: "4"
-              desc: "CMSIS HFRDY 位域"
+              desc: "HFRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "THREAD"
               bits: "3"
-              desc: "FPCCR：处理器模式位"
+              desc: "浮点上下文处理器模式状态。0 表示处理模式，1 表示线程模式。"
             - name: "S"
               bits: "2"
-              desc: "FP 上下文位的安全状态"
+              desc: "延迟浮点状态保存所记录的浮点上下文安全状态。该位在激活延迟保存时记录上下文所属的安全状态。"
+              values:
+                - value: 0
+                  desc: "该浮点上下文属于非安全状态。"
+                - value: 1
+                  desc: "该浮点上下文属于安全状态。"
             - name: "USER"
               bits: "1"
-              desc: "FPCCR：特权级别位"
+              desc: "浮点上下文特权级状态。0 表示特权上下文，1 表示非特权上下文。"
             - name: "LSPACT"
               bits: "0"
-              desc: "FPCCR：惰性状态保存有效位"
+              desc: "惰性浮点状态保存活动状态。1 表示当前存在尚未完成的惰性浮点上下文保存。"
         - name: "FPCAR"
           desc: "浮点上下文地址寄存器"
           condition: "当__FPU_PRESENT==1时"
@@ -4902,72 +4709,53 @@ translations:
         - name: "ICTR"
           desc: "中断控制器类型寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "INTLINESNUM"
-              bits: "3:0"
-              desc: "CMSIS INTLINESNUM 位域"
+          fields: []
         - name: "ACTLR"
           desc: "辅助控制寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
             - name: "DISCRITAXIRUW"
               bits: "27"
-              desc: "CMSIS DISCRITAXIRUW 位域"
-            - name: "DISDI"
-              bits: "17:16"
-              desc: "CMSIS DISDI 位域"
+              desc: "ICB_NS ACTLR.DISCRITAXIRUW 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISCRITAXIRUR"
               bits: "15"
-              desc: "CMSIS DISCRITAXIRUR 位域"
+              desc: "ICB_NS ACTLR.DISCRITAXIRUR 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "EVENTBUSEN"
               bits: "14"
-              desc: "CMSIS EVENTBUSEN 位域"
-            - name: "EVENTBUSEN_S"
-              bits: "13"
-              desc: "CMSIS EVENTBUSEN_S 位域"
+              desc: "ICB_NS ACTLR.EVENTBUSEN 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "ICB ACTLR EVENTBUSEN 已禁用。"
+                - value: 1
+                  desc: "ICB ACTLR EVENTBUSEN 已启用。"
             - name: "DISITMATBFLUSH"
               bits: "12"
-              desc: "CMSIS DISITMATBFLUSH 位域"
+              desc: "ICB_NS ACTLR.DISITMATBFLUSH 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISNWAMODE"
               bits: "11"
-              desc: "CMSIS DISNWAMODE 位域"
-            - name: "FPEXCODIS"
-              bits: "10"
-              desc: "CMSIS FPEXCODIS 位域"
+              desc: "ICB_NS ACTLR.DISNWAMODE 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISOLAP"
               bits: "7"
-              desc: "CMSIS DISOLAP 位域"
+              desc: "ICB_NS ACTLR.DISOLAP 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISOLAPS"
               bits: "6"
-              desc: "CMSIS DISOLAPS 位域"
+              desc: "ICB_NS ACTLR.DISOLAPS 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISLOBR"
               bits: "5"
-              desc: "CMSIS DISLOBR 位域"
+              desc: "ICB_NS ACTLR.DISLOBR 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISLO"
               bits: "4"
-              desc: "CMSIS DISLO 位域"
+              desc: "ICB_NS ACTLR.DISLO 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISLOLEP"
               bits: "3"
-              desc: "CMSIS DISLOLEP 位域"
+              desc: "ICB_NS ACTLR.DISLOLEP 禁用控制。0 表示不禁用，1 表示禁用。"
             - name: "DISFOLD"
               bits: "2"
-              desc: "CMSIS DISFOLD 位域"
+              desc: "ICB_NS ACTLR.DISFOLD 禁用控制。0 表示不禁用，1 表示禁用。"
         - name: "CPPWR"
           desc: "协处理器电源控制寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "SUS11"
-              bits: "23"
-              desc: "CMSIS SUS11 位域"
-            - name: "SU11"
-              bits: "22"
-              desc: "CMSIS SU11 位域"
-            - name: "SUS10"
-              bits: "21"
-              desc: "CMSIS SUS10 位域"
-            - name: "SU10"
-              bits: "20"
-              desc: "CMSIS SU10 位域"
+          fields: []
     - name: "SCB_NS"
       title: "系统控制块（SCB）（非安全）"
       access: "内存映射内核外设访问"
@@ -4976,69 +4764,55 @@ translations:
         - name: "CPUID"
           desc: "CPUID 基址寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "IMPLEMENTER"
-              bits: "31:24"
-              desc: "CMSIS IMPLEMENTER 位域"
-            - name: "VARIANT"
-              bits: "23:20"
-              desc: "CMSIS VARIANT 位域"
-            - name: "ARCHITECTURE"
-              bits: "19:16"
-              desc: "CMSIS ARCHITECTURE 位域"
-            - name: "PARTNO"
-              bits: "15:4"
-              desc: "CMSIS PARTNO 位域"
-            - name: "REVISION"
-              bits: "3:0"
-              desc: "CMSIS REVISION 位域"
+          fields: []
         - name: "ICSR"
           desc: "中断控制和状态寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
-            - name: "PENDNMISET"
-              bits: "31"
-              desc: "CMSIS PENDNMISET 位域"
             - name: "PENDNMICLR"
               bits: "30"
-              desc: "CMSIS PENDNMICLR 位域"
-            - name: "PENDSVSET"
-              bits: "28"
-              desc: "CMSIS PENDSVSET 位域"
+              values:
+                - value: 0
+                  desc: "不发出清除请求。"
+                - value: 1
+                  desc: "写入 1 清除对应的挂起或状态位；读取时可能返回 0。"
             - name: "PENDSVCLR"
               bits: "27"
-              desc: "CMSIS PENDSVCLR 位域"
-            - name: "PENDSTSET"
-              bits: "26"
-              desc: "CMSIS PENDSTSET 位域"
+              values:
+                - value: 0
+                  desc: "不发出清除请求。"
+                - value: 1
+                  desc: "写入 1 清除对应的挂起或状态位；读取时可能返回 0。"
             - name: "PENDSTCLR"
               bits: "25"
-              desc: "CMSIS PENDSTCLR 位域"
+              values:
+                - value: 0
+                  desc: "不发出清除请求。"
+                - value: 1
+                  desc: "写入 1 清除对应的挂起或状态位；读取时可能返回 0。"
             - name: "STTNS"
               bits: "24"
               desc: "位置（安全扩展）"
             - name: "ISRPREEMPT"
               bits: "23"
-              desc: "CMSIS ISRPREEMPT 位域"
+              desc: "SCB_NS ICSR.ISRPREEMPT 挂起状态。0 表示未挂起，1 表示挂起。"
+              values:
+                - value: 0
+                  desc: "No interrupt preemption 已挂起。"
+                - value: 1
+                  desc: "Interrupt preemption 已挂起。"
             - name: "ISRPENDING"
               bits: "22"
-              desc: "CMSIS ISRPENDING 位域"
-            - name: "VECTPENDING"
-              bits: "20:12"
-              desc: "CMSIS VECTPENDING 位域"
-            - name: "RETTOBASE"
-              bits: "11"
-              desc: "CMSIS RETTOBASE 位域"
-            - name: "VECTACTIVE"
-              bits: "8:0"
-              desc: "CMSIS VECTACTIVE 位域"
+              desc: "SCB_NS ICSR.ISRPENDING 挂起状态。0 表示未挂起，1 表示挂起。"
+              values:
+                - value: 0
+                  desc: "No external interrupt 已挂起。"
+                - value: 1
+                  desc: "At least one external interrupt 已挂起。"
         - name: "VTOR"
           desc: "向量表偏移寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "TBLOFF"
-              bits: "31:7"
-              desc: "CMSIS TBLOFF 位域"
+          fields: []
         - name: "AIRCR"
           desc: "应用中断和复位控制寄存器"
           condition: "当安全扩展公开非安全别名时"
@@ -5046,90 +4820,49 @@ translations:
             - name: "VECTKEY"
               bits: "31:16"
               source_condition: "Field view: VECTKEY"
-              desc: "CMSIS VECTKEY 位域"
               condition: "位域视图：VECTKEY"
             - name: "VECTKEYSTAT"
               bits: "31:16"
               source_condition: "Field view: VECTKEYSTAT"
-              desc: "CMSIS VECTKEYSTAT 位域"
               condition: "位域视图：VECTKEYSTAT"
-            - name: "ENDIANNESS"
-              bits: "15"
-              desc: "CMSIS ENDIANNESS 位域"
-            - name: "PRIS"
-              bits: "14"
-              desc: "CMSIS PRIS 位域"
-            - name: "BFHFNMINS"
-              bits: "13"
-              desc: "CMSIS BFHFNMINS 位域"
-            - name: "PRIGROUP"
-              bits: "10:8"
-              desc: "CMSIS PRIGROUP 位域"
             - name: "IESB"
               bits: "5"
               desc: "SCB AIRCR：隐式 ESB 使能"
             - name: "DIT"
               bits: "4"
               desc: "SCB AIRCR：数据独立时序"
-            - name: "SYSRESETREQS"
-              bits: "3"
-              desc: "CMSIS SYSRESETREQS 位域"
-            - name: "SYSRESETREQ"
-              bits: "2"
-              desc: "CMSIS SYSRESETREQ 位域"
-            - name: "VECTCLRACTIVE"
-              bits: "1"
-              desc: "CMSIS VECTCLRACTIVE 位域"
         - name: "SCR"
           desc: "系统控制寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "SEVONPEND"
-              bits: "4"
-              desc: "CMSIS SEVONPEND 位域"
-            - name: "SLEEPDEEPS"
-              bits: "3"
-              desc: "CMSIS SLEEPDEEPS 位域"
-            - name: "SLEEPDEEP"
-              bits: "2"
-              desc: "CMSIS SLEEPDEEP 位域"
-            - name: "SLEEPONEXIT"
-              bits: "1"
-              desc: "CMSIS SLEEPONEXIT 位域"
+          fields: []
         - name: "CCR"
           desc: "配置控制寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
-            - name: "TRD"
-              bits: "20"
-              desc: "CMSIS TRD 位域"
-            - name: "LOB"
-              bits: "19"
-              desc: "CMSIS LOB 位域"
             - name: "BP"
               bits: "18"
-              desc: "CMSIS BP 位域"
+              desc: "SCB_NS CCR.BP 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "Branch prediction 已禁用。"
+                - value: 1
+                  desc: "Branch prediction 已启用。"
             - name: "IC"
               bits: "17"
-              desc: "CMSIS IC 位域"
+              desc: "SCB_NS CCR.IC 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "The instruction cache 已禁用。"
+                - value: 1
+                  desc: "The instruction cache 已启用。"
             - name: "DC"
               bits: "16"
-              desc: "CMSIS DC 位域"
-            - name: "STKOFHFNMIGN"
-              bits: "10"
-              desc: "CMSIS STKOFHFNMIGN 位域"
-            - name: "BFHFNMIGN"
-              bits: "8"
-              desc: "CMSIS BFHFNMIGN 位域"
-            - name: "DIV_0_TRP"
-              bits: "4"
-              desc: "CMSIS DIV_0_TRP 位域"
-            - name: "UNALIGN_TRP"
-              bits: "3"
-              desc: "CMSIS UNALIGN_TRP 位域"
-            - name: "USERSETMPEND"
-              bits: "1"
-              desc: "CMSIS USERSETMPEND 位域"
+              desc: "SCB_NS CCR.DC 使能控制。0 表示禁用，1 表示启用。"
+              values:
+                - value: 0
+                  desc: "The data cache 已禁用。"
+                - value: 1
+                  desc: "The data cache 已启用。"
         - name: "SHPR[0]"
           desc: "系统处理程序优先级寄存器（4-7、8-11、12-15）（元素 0）"
           condition: "当安全扩展公开非安全别名时"
@@ -5172,64 +4905,134 @@ translations:
           fields:
             - name: "HARDFAULTPENDED"
               bits: "21"
-              desc: "CMSIS HARDFAULTPENDED 位域"
+              desc: "HARDFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "SECUREFAULTPENDED"
               bits: "20"
-              desc: "CMSIS SECUREFAULTPENDED 位域"
+              desc: "SECUREFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "SECUREFAULTENA"
               bits: "19"
-              desc: "CMSIS SECUREFAULTENA 位域"
+              desc: "SECUREFAULT 可配置故障处理使能。0 表示该故障不能独立激活并会升级处理，1 表示允许激活对应故障处理程序。"
+              values:
+                - value: 0
+                  desc: "SECUREFAULT fault handling 已禁用。"
+                - value: 1
+                  desc: "SECUREFAULT fault handling 已启用。"
             - name: "USGFAULTENA"
               bits: "18"
-              desc: "CMSIS USGFAULTENA 位域"
+              desc: "USGFAULT 可配置故障处理使能。0 表示该故障不能独立激活并会升级处理，1 表示允许激活对应故障处理程序。"
+              values:
+                - value: 0
+                  desc: "USGFAULT fault handling 已禁用。"
+                - value: 1
+                  desc: "USGFAULT fault handling 已启用。"
             - name: "BUSFAULTENA"
               bits: "17"
-              desc: "CMSIS BUSFAULTENA 位域"
+              desc: "BUSFAULT 可配置故障处理使能。0 表示该故障不能独立激活并会升级处理，1 表示允许激活对应故障处理程序。"
+              values:
+                - value: 0
+                  desc: "BUSFAULT fault handling 已禁用。"
+                - value: 1
+                  desc: "BUSFAULT fault handling 已启用。"
             - name: "MEMFAULTENA"
               bits: "16"
-              desc: "CMSIS MEMFAULTENA 位域"
+              desc: "MEMFAULT 可配置故障处理使能。0 表示该故障不能独立激活并会升级处理，1 表示允许激活对应故障处理程序。"
+              values:
+                - value: 0
+                  desc: "MEMFAULT fault handling 已禁用。"
+                - value: 1
+                  desc: "MEMFAULT fault handling 已启用。"
             - name: "SVCALLPENDED"
               bits: "15"
-              desc: "CMSIS SVCALLPENDED 位域"
+              desc: "SVCALL 异常挂起状态。1 表示对应异常已挂起。"
             - name: "BUSFAULTPENDED"
               bits: "14"
-              desc: "CMSIS BUSFAULTPENDED 位域"
+              desc: "BUSFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "MEMFAULTPENDED"
               bits: "13"
-              desc: "CMSIS MEMFAULTPENDED 位域"
+              desc: "MEMFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "USGFAULTPENDED"
               bits: "12"
-              desc: "CMSIS USGFAULTPENDED 位域"
+              desc: "USGFAULT 异常挂起状态。1 表示对应异常已挂起。"
             - name: "SYSTICKACT"
               bits: "11"
-              desc: "CMSIS SYSTICKACT 位域"
+              desc: "SYSTICK 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "SYSTICK exception 未活动。"
+                - value: 1
+                  desc: "SYSTICK exception 处于活动状态。"
             - name: "PENDSVACT"
               bits: "10"
-              desc: "CMSIS PENDSVACT 位域"
+              desc: "PENDSV 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "PENDSV exception 未活动。"
+                - value: 1
+                  desc: "PENDSV exception 处于活动状态。"
             - name: "MONITORACT"
               bits: "8"
-              desc: "CMSIS MONITORACT 位域"
+              desc: "MONITOR 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "MONITOR exception 未活动。"
+                - value: 1
+                  desc: "MONITOR exception 处于活动状态。"
             - name: "SVCALLACT"
               bits: "7"
-              desc: "CMSIS SVCALLACT 位域"
+              desc: "SVCALL 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "SVCALL exception 未活动。"
+                - value: 1
+                  desc: "SVCALL exception 处于活动状态。"
             - name: "NMIACT"
               bits: "5"
-              desc: "CMSIS NMIACT 位域"
+              desc: "NMI 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "NMI exception 未活动。"
+                - value: 1
+                  desc: "NMI exception 处于活动状态。"
             - name: "SECUREFAULTACT"
               bits: "4"
-              desc: "CMSIS SECUREFAULTACT 位域"
+              desc: "SECUREFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "SECUREFAULT exception 未活动。"
+                - value: 1
+                  desc: "SECUREFAULT exception 处于活动状态。"
             - name: "USGFAULTACT"
               bits: "3"
-              desc: "CMSIS USGFAULTACT 位域"
+              desc: "USGFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "USGFAULT exception 未活动。"
+                - value: 1
+                  desc: "USGFAULT exception 处于活动状态。"
             - name: "HARDFAULTACT"
               bits: "2"
-              desc: "CMSIS HARDFAULTACT 位域"
+              desc: "HARDFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "HARDFAULT exception 未活动。"
+                - value: 1
+                  desc: "HARDFAULT exception 处于活动状态。"
             - name: "BUSFAULTACT"
               bits: "1"
-              desc: "CMSIS BUSFAULTACT 位域"
+              desc: "BUSFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "BUSFAULT exception 未活动。"
+                - value: 1
+                  desc: "BUSFAULT exception 处于活动状态。"
             - name: "MEMFAULTACT"
               bits: "0"
-              desc: "CMSIS MEMFAULTACT 位域"
+              desc: "MEMFAULT 异常活动状态。1 表示对应异常当前处于活动状态。"
+              values:
+                - value: 0
+                  desc: "MEMFAULT exception 未活动。"
+                - value: 1
+                  desc: "MEMFAULT exception 处于活动状态。"
         - name: "CFSR"
           desc: "可配置的故障状态寄存器"
           condition: "当安全扩展公开非安全别名时"
@@ -5242,43 +5045,83 @@ translations:
             - name: "DIVBYZERO"
               bits: "25"
               source_condition: "Field view: DIVBYZERO"
-              desc: "CMSIS DIVBYZERO 位域"
+              desc: "启用除零陷阱后，整数除零导致的 UsageFault。"
               condition: "位域视图：DIVBYZERO"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "UNALIGNED"
               bits: "24"
               source_condition: "Field view: UNALIGNED"
-              desc: "CMSIS UNALIGNED 位域"
+              desc: "启用非对齐陷阱后，非对齐内存访问导致的 UsageFault。"
               condition: "位域视图：UNALIGNED"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "STKOF"
               bits: "20"
               source_condition: "Field view: STKOF"
-              desc: "CMSIS STKOF 位域"
+              desc: "实现堆栈限制检查时检测到的堆栈溢出 UsageFault。"
               condition: "位域视图：STKOF"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "NOCP"
               bits: "19"
               source_condition: "Field view: NOCP"
-              desc: "CMSIS NOCP 位域"
+              desc: "执行了未实现或未使能的协处理器/浮点指令导致的 UsageFault。"
               condition: "位域视图：NOCP"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "INVPC"
               bits: "18"
               source_condition: "Field view: INVPC"
-              desc: "CMSIS INVPC 位域"
+              desc: "异常返回期间装载无效 PC 导致的 UsageFault。"
               condition: "位域视图：INVPC"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "INVSTATE"
               bits: "17"
               source_condition: "Field view: INVSTATE"
-              desc: "CMSIS INVSTATE 位域"
+              desc: "无效执行状态导致的 UsageFault，例如无效的 EPSR/Thumb 状态。"
               condition: "位域视图：INVSTATE"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "UNDEFINSTR"
               bits: "16"
               source_condition: "Field view: UNDEFINSTR"
-              desc: "CMSIS UNDEFINSTR 位域"
+              desc: "执行未定义指令导致的 UsageFault。"
               condition: "位域视图：UNDEFINSTR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "BFARVALID"
               bits: "15"
               source_condition: "Field view: BFARVALID"
-              desc: "CMSIS BFARVALID 位域"
+              desc: "BFAR 是否包含本次 BusFault 地址的有效性标志。"
               condition: "位域视图：BFARVALID"
+              values:
+                - value: 0
+                  desc: "对应的故障地址/状态寄存器无效。"
+                - value: 1
+                  desc: "对应的故障地址/状态寄存器有效。"
             - name: "BUSFAULTSR"
               bits: "15:8"
               source_condition: "Field view: BUSFAULTSR"
@@ -5287,33 +5130,63 @@ translations:
             - name: "LSPERR"
               bits: "13"
               source_condition: "Field view: LSPERR"
-              desc: "CMSIS LSPERR 位域"
+              desc: "惰性保存浮点状态时发生的 BusFault。"
               condition: "位域视图：LSPERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "STKERR"
               bits: "12"
               source_condition: "Field view: STKERR"
-              desc: "CMSIS STKERR 位域"
+              desc: "异常进入执行寄存器入栈时发生的 BusFault。"
               condition: "位域视图：STKERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "UNSTKERR"
               bits: "11"
               source_condition: "Field view: UNSTKERR"
-              desc: "CMSIS UNSTKERR 位域"
+              desc: "异常返回执行寄存器出栈时发生的 BusFault。"
               condition: "位域视图：UNSTKERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "IMPRECISERR"
               bits: "10"
               source_condition: "Field view: IMPRECISERR"
-              desc: "CMSIS IMPRECISERR 位域"
+              desc: "非精确数据总线错误；异常栈帧中的 PC 不一定能定位故障指令。"
               condition: "位域视图：IMPRECISERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "PRECISERR"
               bits: "9"
               source_condition: "Field view: PRECISERR"
-              desc: "CMSIS PRECISERR 位域"
+              desc: "精确数据总线错误；异常栈帧中的 PC 可以定位故障指令。"
               condition: "位域视图：PRECISERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "IBUSERR"
               bits: "8"
               source_condition: "Field view: IBUSERR"
-              desc: "CMSIS IBUSERR 位域"
+              desc: "取指总线错误状态。"
               condition: "位域视图：IBUSERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "MEMFAULTSR"
               bits: "7:0"
               source_condition: "Field view: MEMFAULTSR"
@@ -5322,68 +5195,119 @@ translations:
             - name: "MMARVALID"
               bits: "7"
               source_condition: "Field view: MMARVALID"
-              desc: "CMSIS MMARVALID 位域"
+              desc: "MMFAR 是否包含本次 MemManage 故障地址的有效性标志。"
               condition: "位域视图：MMARVALID"
+              values:
+                - value: 0
+                  desc: "对应的故障地址/状态寄存器无效。"
+                - value: 1
+                  desc: "对应的故障地址/状态寄存器有效。"
             - name: "MLSPERR"
               bits: "5"
               source_condition: "Field view: MLSPERR"
-              desc: "CMSIS MLSPERR 位域"
+              desc: "惰性保存浮点状态时发生的 MemManage 故障。"
               condition: "位域视图：MLSPERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "MSTKERR"
               bits: "4"
               source_condition: "Field view: MSTKERR"
-              desc: "CMSIS MSTKERR 位域"
+              desc: "异常进入执行寄存器入栈时发生的 MemManage 故障。"
               condition: "位域视图：MSTKERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "MUNSTKERR"
               bits: "3"
               source_condition: "Field view: MUNSTKERR"
-              desc: "CMSIS MUNSTKERR 位域"
+              desc: "异常返回执行寄存器出栈时发生的 MemManage 故障。"
               condition: "位域视图：MUNSTKERR"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "DACCVIOL"
               bits: "1"
               source_condition: "Field view: DACCVIOL"
-              desc: "CMSIS DACCVIOL 位域"
+              desc: "数据访问违反 MPU 权限导致的 MemManage 故障状态。"
               condition: "位域视图：DACCVIOL"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
             - name: "IACCVIOL"
               bits: "0"
               source_condition: "Field view: IACCVIOL"
-              desc: "CMSIS IACCVIOL 位域"
+              desc: "指令访问违反 MPU 权限导致的 MemManage 故障状态。"
               condition: "位域视图：IACCVIOL"
+              values:
+                - value: 0
+                  desc: "尚未记录对应故障。"
+                - value: 1
+                  desc: "已记录对应故障；大多数 CFSR 状态位通过写 1 清除。"
         - name: "HFSR"
           desc: "HardFault Status 寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "DEBUGEVT"
-              bits: "31"
-              desc: "CMSIS DEBUGEVT 位域"
-            - name: "FORCED"
-              bits: "30"
-              desc: "CMSIS FORCED 位域"
-            - name: "VECTTBL"
-              bits: "1"
-              desc: "CMSIS VECTTBL 位域"
+          fields: []
         - name: "DFSR"
           desc: "调试故障状态寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
             - name: "PMU"
               bits: "5"
-              desc: "CMSIS PMU 位域"
+              desc: "PMU 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "EXTERNAL"
               bits: "4"
-              desc: "CMSIS EXTERNAL 位域"
+              desc: "EXTERNAL 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "VCATCH"
               bits: "3"
-              desc: "CMSIS VCATCH 位域"
+              desc: "VCATCH 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "DWTTRAP"
               bits: "2"
-              desc: "CMSIS DWTTRAP 位域"
+              desc: "DWTTRAP 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "BKPT"
               bits: "1"
-              desc: "CMSIS BKPT 位域"
+              desc: "BKPT 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
             - name: "HALTED"
               bits: "0"
-              desc: "CMSIS HALTED 位域"
+              desc: "HALTED 调试故障粘滞状态。记录对应调试事件，直到软件按架构规定清除。"
+              values:
+                - value: 0
+                  desc: "尚未记录对应调试事件。"
+                - value: 1
+                  desc: "已记录对应调试事件。"
         - name: "MMFAR"
           desc: "MemManage Fault Address 寄存器"
           condition: "当安全扩展公开非安全别名时"
@@ -5402,13 +5326,7 @@ translations:
         - name: "ID_DFR"
           desc: "调试功能寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "UDE"
-              bits: "31:28"
-              desc: "CMSIS UDE 位域"
-            - name: "MProfDbg"
-              bits: "23:20"
-              desc: "CMSIS MProfDbg 位域"
+          fields: []
         - name: "ID_AFR"
           desc: "辅助功能寄存器"
           condition: "当安全扩展公开非安全别名时"
@@ -5445,104 +5363,26 @@ translations:
         - name: "CLIDR"
           desc: "缓存级别 ID 寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "LOUU"
-              bits: "29:27"
-              desc: "CMSIS LOUU 位域"
-            - name: "LOC"
-              bits: "26:24"
-              desc: "CMSIS LOC 位域"
+          fields: []
         - name: "CTR"
           desc: "缓存类型寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "FORMAT"
-              bits: "31:29"
-              desc: "CMSIS FORMAT 位域"
-            - name: "CWG"
-              bits: "27:24"
-              desc: "CMSIS CWG 位域"
-            - name: "ERG"
-              bits: "23:20"
-              desc: "CMSIS ERG 位域"
-            - name: "DMINLINE"
-              bits: "19:16"
-              desc: "CMSIS DMINLINE 位域"
-            - name: "IMINLINE"
-              bits: "3:0"
-              desc: "CMSIS IMINLINE 位域"
+          fields: []
         - name: "CCSIDR"
           desc: "缓存大小 ID 寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "WT"
-              bits: "31"
-              desc: "CMSIS WT 位域"
-            - name: "WB"
-              bits: "30"
-              desc: "CMSIS WB 位域"
-            - name: "RA"
-              bits: "29"
-              desc: "CMSIS RA 位域"
-            - name: "WA"
-              bits: "28"
-              desc: "CMSIS WA 位域"
-            - name: "NUMSETS"
-              bits: "27:13"
-              desc: "CMSIS NUMSETS 位域"
-            - name: "ASSOCIATIVITY"
-              bits: "12:3"
-              desc: "CMSIS ASSOCIATIVITY 位域"
-            - name: "LINESIZE"
-              bits: "2:0"
-              desc: "CMSIS LINESIZE 位域"
+          fields: []
         - name: "CSSELR"
           desc: "缓存大小选择寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "LEVEL"
-              bits: "3:1"
-              desc: "CMSIS LEVEL 位域"
-            - name: "IND"
-              bits: "0"
-              desc: "CMSIS IND 位域"
+          fields: []
         - name: "CPACR"
           desc: "协处理器访问控制寄存器"
           condition: "当安全扩展公开非安全别名时"
         - name: "NSACR"
           desc: "非安全访问控制寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "CP11"
-              bits: "11"
-              desc: "CMSIS CP11 位域"
-            - name: "CP10"
-              bits: "10"
-              desc: "CMSIS CP10 位域"
-            - name: "CP7"
-              bits: "7"
-              desc: "CMSIS CP7 位域"
-            - name: "CP6"
-              bits: "6"
-              desc: "CMSIS CP6 位域"
-            - name: "CP5"
-              bits: "5"
-              desc: "CMSIS CP5 位域"
-            - name: "CP4"
-              bits: "4"
-              desc: "CMSIS CP4 位域"
-            - name: "CP3"
-              bits: "3"
-              desc: "CMSIS CP3 位域"
-            - name: "CP2"
-              bits: "2"
-              desc: "CMSIS CP2 位域"
-            - name: "CP1"
-              bits: "1"
-              desc: "CMSIS CP1 位域"
-            - name: "CP0"
-              bits: "0"
-              desc: "CMSIS CP0 位域"
+          fields: []
         - name: "SFSR"
           desc: "安全故障状态寄存器"
           condition: "当安全扩展公开非安全别名时"
@@ -5552,23 +5392,11 @@ translations:
         - name: "STIR"
           desc: "软件触发中断寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "INTID"
-              bits: "8:0"
-              desc: "CMSIS INTID 位域"
+          fields: []
         - name: "RFSR"
           desc: "RAS 故障状态寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "V"
-              bits: "31"
-              desc: "CMSIS V 位域"
-            - name: "IS"
-              bits: "30:16"
-              desc: "CMSIS IS 位域"
-            - name: "UET"
-              bits: "1:0"
-              desc: "CMSIS UET 位域"
+          fields: []
         - name: "MVFR0"
           desc: "媒体和 VFP 功能寄存器 0"
           condition: "当安全扩展公开非安全别名时"
@@ -5590,13 +5418,7 @@ translations:
         - name: "DCISW"
           desc: "通过 Set-way 使 D-Cache 无效"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "WAY"
-              bits: "31:30"
-              desc: "CMSIS WAY 位域"
-            - name: "SET"
-              bits: "13:5"
-              desc: "CMSIS SET 位域"
+          fields: []
         - name: "DCCMVAU"
           desc: "D 缓存清理由 MVA 至 PoU"
           condition: "当安全扩展公开非安全别名时"
@@ -5606,26 +5428,14 @@ translations:
         - name: "DCCSW"
           desc: "通过 Set-way 清理 D 缓存"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "WAY"
-              bits: "31:30"
-              desc: "CMSIS WAY 位域"
-            - name: "SET"
-              bits: "13:5"
-              desc: "CMSIS SET 位域"
+          fields: []
         - name: "DCCIMVAC"
           desc: "D-Cache 通过 MVA 到 PoC 进行清理和无效"
           condition: "当安全扩展公开非安全别名时"
         - name: "DCCISW"
           desc: "通过 Set-way 清除和无效 D-Cache"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "WAY"
-              bits: "31:30"
-              desc: "CMSIS WAY 位域"
-            - name: "SET"
-              bits: "13:5"
-              desc: "CMSIS SET 位域"
+          fields: []
         - name: "BPIALL"
           desc: "分支预测器使全部无效"
           condition: "当安全扩展公开非安全别名时"
@@ -5640,43 +5450,73 @@ translations:
           fields:
             - name: "COUNTFLAG"
               bits: "16"
-              desc: "CMSIS COUNTFLAG 位域"
+              desc: "计数器回卷状态。SysTick 从 1 递减到 0 时置 1；读取 SysTick CTRL 会清除该粘滞状态。"
+              values:
+                - value: 0
+                  desc: "自上次读取 CTRL 后，计数器尚未回卷到 0。"
+                - value: 1
+                  desc: "自上次读取 CTRL 后，计数器至少回卷到 0 一次。"
             - name: "CLKSOURCE"
               bits: "2"
-              desc: "CMSIS CLKSOURCE 位域"
+              desc: "SysTick 时钟源选择。0 选择外部/参考时钟，1 选择处理器时钟。"
+              values:
+                - value: 0
+                  desc: "SysTick 使用外部/参考时钟。"
+                - value: 1
+                  desc: "SysTick 使用处理器时钟。"
             - name: "TICKINT"
               bits: "1"
-              desc: "CMSIS TICKINT 位域"
+              desc: "SysTick 异常请求控制。置 1 后，计数器回卷到 0 时请求 SysTick 异常。"
+              values:
+                - value: 0
+                  desc: "计数器回卷时不请求 SysTick 异常。"
+                - value: 1
+                  desc: "计数器回卷时请求 SysTick 异常。"
             - name: "ENABLE"
               bits: "0"
-              desc: "CMSIS ENABLE 位域"
+              desc: "SysTick 计数器使能控制。0 停止计数，1 从 LOAD 装载值开始递减计数。"
+              values:
+                - value: 0
+                  desc: "SysTick 计数器停止。"
+                - value: 1
+                  desc: "SysTick 计数器从 LOAD 装载值开始递减。"
         - name: "LOAD"
           desc: "SysTick 重载值寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
             - name: "RELOAD"
               bits: "23:0"
-              desc: "CMSIS RELOAD 位域"
+              desc: "SysTick 计数器递减到 0 后重新装载的值。"
         - name: "VAL"
           desc: "SysTick 当前值寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
             - name: "CURRENT"
               bits: "23:0"
-              desc: "CMSIS CURRENT 位域"
+              desc: "SysTick 当前计数值；向该字段写入任意值都会把当前计数器清零。"
         - name: "CALIB"
           desc: "SysTick 校准寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
             - name: "NOREF"
               bits: "31"
-              desc: "CMSIS NOREF 位域"
+              desc: "校准参考时钟指示。0 表示存在独立参考时钟，1 表示没有独立参考时钟。"
+              values:
+                - value: 0
+                  desc: "存在可用于校准的独立参考时钟。"
+                - value: 1
+                  desc: "不存在独立参考时钟。"
             - name: "SKEW"
               bits: "30"
-              desc: "CMSIS SKEW 位域"
+              desc: "校准偏差指示。1 表示 TENMS 校准值不能保证满足实现规定的精度。"
+              values:
+                - value: 0
+                  desc: "TENMS 校准值满足实现规定的精度。"
+                - value: 1
+                  desc: "TENMS 校准值不能保证满足实现规定的精度。"
             - name: "TENMS"
               bits: "23:0"
-              desc: "CMSIS TENMS 位域"
+              desc: "参考时钟下对应 10 ms 时间间隔的重装校准值。"
     - name: "NVIC_NS"
       title: "嵌套向量中断控制器（NVIC）（非安全）"
       access: "内存映射内核外设访问"
@@ -7717,16 +7557,11 @@ translations:
             - name: "ARCHITECT"
               bits: "31:21"
               source_condition: "Field view: ARCHITECT"
-              desc: "CMSIS ARCHITECT 位域"
               condition: "位域视图：ARCHITECT"
             - name: "PRESENT"
               bits: "24:20"
               source_condition: "Field view: PRESENT"
-              desc: "CMSIS PRESENT 位域"
               condition: "位域视图：PRESENT"
-            - name: "REVISION"
-              bits: "19:16"
-              desc: "CMSIS REVISION 位域"
             - name: "ARCHVER"
               bits: "15:12"
               desc: "DIB DDEVARCH：架构版本"
@@ -7752,195 +7587,89 @@ translations:
           desc: "MPU 类型寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
-            - name: "IREGION"
-              bits: "23:16"
-              desc: "CMSIS IREGION 位域"
-            - name: "DREGION"
-              bits: "15:8"
-              desc: "CMSIS DREGION 位域"
             - name: "SEPARATE"
               bits: "0"
-              desc: "CMSIS SEPARATE 位域"
+              desc: "指令区和数据区是否使用独立区域集合的实现指示。"
         - name: "CTRL"
           desc: "MPU 控制寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
             - name: "PRIVDEFENA"
               bits: "2"
-              desc: "CMSIS PRIVDEFENA 位域"
+              desc: "特权默认内存映射控制。置 1 后，特权访问在没有 MPU 区域匹配时可以使用默认内存映射。"
             - name: "HFNMIENA"
               bits: "1"
-              desc: "CMSIS HFNMIENA 位域"
+              desc: "HardFault/NMI 处理期间的 MPU 检查控制。置 1 后，在 HardFault 和 NMI 处理函数中仍执行 MPU 检查。"
             - name: "ENABLE"
               bits: "0"
-              desc: "CMSIS ENABLE 位域"
+              desc: "MPU 总使能控制。0 禁用 MPU，1 启用 MPU。"
+              values:
+                - value: 0
+                  desc: "MPU 已禁用。"
+                - value: 1
+                  desc: "MPU 已启用。"
         - name: "RNR"
           desc: "MPU 区域编号寄存器"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "REGION"
-              bits: "7:0"
-              desc: "CMSIS REGION 位域"
+          fields: []
         - name: "RBAR"
           desc: "MPU 区域基地址寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
-            - name: "BASE"
-              bits: "31:5"
-              desc: "CMSIS BASE 位域"
-            - name: "SH"
-              bits: "4:3"
-              desc: "CMSIS SH 位域"
-            - name: "AP"
-              bits: "2:1"
-              desc: "CMSIS AP 位域"
             - name: "XN"
               bits: "0"
-              desc: "CMSIS XN 位域"
+              desc: "执行禁止（XN）控制。置 1 后禁止从该 MPU 区域取指执行。"
         - name: "RLAR"
           desc: "MPU 区域限制地址寄存器"
           condition: "当安全扩展公开非安全别名时"
           fields:
-            - name: "LIMIT"
-              bits: "31:5"
-              desc: "CMSIS LIMIT 位域"
             - name: "PXN"
               bits: "4"
-              desc: "CMSIS PXN 位域"
-            - name: "AttrIndx"
-              bits: "3:1"
-              desc: "CMSIS AttrIndx 位域"
+              desc: "特权执行禁止（PXN）控制。置 1 后禁止特权软件从该 MPU 区域取指执行。"
             - name: "EN"
               bits: "0"
-              desc: "能位"
+              desc: "MPU 区域使能控制。0 禁用该区域，1 启用该区域。"
         - name: "RBAR_A1"
           desc: "MPU 区域基址寄存器别名 1"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "BASE"
-              bits: "31:5"
-              desc: "CMSIS BASE 位域"
-            - name: "SH"
-              bits: "4:3"
-              desc: "CMSIS SH 位域"
-            - name: "AP"
-              bits: "2:1"
-              desc: "CMSIS AP 位域"
-            - name: "XN"
-              bits: "0"
-              desc: "CMSIS XN 位域"
+          fields: []
         - name: "RLAR_A1"
           desc: "MPU 区域限制地址寄存器别名 1"
           condition: "当安全扩展公开非安全别名时"
           fields:
-            - name: "LIMIT"
-              bits: "31:5"
-              desc: "CMSIS LIMIT 位域"
-            - name: "PXN"
-              bits: "4"
-              desc: "CMSIS PXN 位域"
-            - name: "AttrIndx"
-              bits: "3:1"
-              desc: "CMSIS AttrIndx 位域"
             - name: "EN"
               bits: "0"
               desc: "能位"
         - name: "RBAR_A2"
           desc: "MPU 区域基址寄存器别名 2"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "BASE"
-              bits: "31:5"
-              desc: "CMSIS BASE 位域"
-            - name: "SH"
-              bits: "4:3"
-              desc: "CMSIS SH 位域"
-            - name: "AP"
-              bits: "2:1"
-              desc: "CMSIS AP 位域"
-            - name: "XN"
-              bits: "0"
-              desc: "CMSIS XN 位域"
+          fields: []
         - name: "RLAR_A2"
           desc: "MPU 区域限制地址寄存器别名 2"
           condition: "当安全扩展公开非安全别名时"
           fields:
-            - name: "LIMIT"
-              bits: "31:5"
-              desc: "CMSIS LIMIT 位域"
-            - name: "PXN"
-              bits: "4"
-              desc: "CMSIS PXN 位域"
-            - name: "AttrIndx"
-              bits: "3:1"
-              desc: "CMSIS AttrIndx 位域"
             - name: "EN"
               bits: "0"
               desc: "能位"
         - name: "RBAR_A3"
           desc: "MPU 区域基址寄存器别名 3"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "BASE"
-              bits: "31:5"
-              desc: "CMSIS BASE 位域"
-            - name: "SH"
-              bits: "4:3"
-              desc: "CMSIS SH 位域"
-            - name: "AP"
-              bits: "2:1"
-              desc: "CMSIS AP 位域"
-            - name: "XN"
-              bits: "0"
-              desc: "CMSIS XN 位域"
+          fields: []
         - name: "RLAR_A3"
           desc: "MPU 区域限制地址寄存器别名 3"
           condition: "当安全扩展公开非安全别名时"
           fields:
-            - name: "LIMIT"
-              bits: "31:5"
-              desc: "CMSIS LIMIT 位域"
-            - name: "PXN"
-              bits: "4"
-              desc: "CMSIS PXN 位域"
-            - name: "AttrIndx"
-              bits: "3:1"
-              desc: "CMSIS AttrIndx 位域"
             - name: "EN"
               bits: "0"
               desc: "能位"
         - name: "MAIR0"
           desc: "MPU 内存属性间接寄存器 0"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "Attr3"
-              bits: "31:24"
-              desc: "CMSIS Attr3 位域"
-            - name: "Attr2"
-              bits: "23:16"
-              desc: "CMSIS Attr2 位域"
-            - name: "Attr1"
-              bits: "15:8"
-              desc: "CMSIS Attr1 位域"
-            - name: "Attr0"
-              bits: "7:0"
-              desc: "CMSIS Attr0 位域"
+          fields: []
         - name: "MAIR1"
           desc: "MPU 内存属性间接寄存器 1"
           condition: "当安全扩展公开非安全别名时"
-          fields:
-            - name: "Attr7"
-              bits: "31:24"
-              desc: "CMSIS Attr7 位域"
-            - name: "Attr6"
-              bits: "23:16"
-              desc: "CMSIS Attr6 位域"
-            - name: "Attr5"
-              bits: "15:8"
-              desc: "CMSIS Attr5 位域"
-            - name: "Attr4"
-              bits: "7:0"
-              desc: "CMSIS Attr4 位域"
+          fields: []
     - name: "FPU_NS"
       title: "浮点单元（FPU）（非安全）"
       access: "内存映射内核外设访问"
@@ -7952,55 +7681,78 @@ translations:
           fields:
             - name: "ASPEN"
               bits: "31"
-              desc: "位"
+              desc: "自动浮点状态保存控制。置 1 后，异常进入时启用浮点上下文的自动保存机制。"
             - name: "LSPEN"
               bits: "30"
-              desc: "CMSIS LSPEN 位域"
-            - name: "LSPENS"
-              bits: "29"
-              desc: "CMSIS LSPENS 位域"
-            - name: "CLRONRET"
-              bits: "28"
-              desc: "CMSIS CLRONRET 位域"
-            - name: "CLRONRETS"
-              bits: "27"
-              desc: "CMSIS CLRONRETS 位域"
-            - name: "TS"
-              bits: "26"
-              desc: "CMSIS TS 位域"
+              desc: "惰性浮点状态保存控制。置 1 后，只有异常处理程序实际使用浮点功能时才完成浮点上下文保存。"
             - name: "UFRDY"
               bits: "10"
-              desc: "CMSIS UFRDY 位域"
+              desc: "UFRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "SPLIMVIOL"
               bits: "9"
-              desc: "CMSIS SPLIMVIOL 位域"
+              desc: "FPU_NS FPCCR.SPLIMVIOL 错误/故障状态。0 表示未记录对应条件，1 表示已记录对应条件。"
             - name: "MONRDY"
               bits: "8"
-              desc: "CMSIS MONRDY 位域"
+              desc: "MONRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "SFRDY"
               bits: "7"
-              desc: "CMSIS SFRDY 位域"
+              desc: "SFRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "BFRDY"
               bits: "6"
-              desc: "CMSIS BFRDY 位域"
+              desc: "BFRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "MMRDY"
               bits: "5"
-              desc: "CMSIS MMRDY 位域"
+              desc: "MMRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "HFRDY"
               bits: "4"
-              desc: "CMSIS HFRDY 位域"
+              desc: "HFRDY 浮点状态就绪标志。"
+              values:
+                - value: 0
+                  desc: "对应浮点状态尚未就绪。"
+                - value: 1
+                  desc: "对应浮点状态已经就绪。"
             - name: "THREAD"
               bits: "3"
-              desc: "FPCCR：处理器模式位"
+              desc: "浮点上下文处理器模式状态。0 表示处理模式，1 表示线程模式。"
             - name: "S"
               bits: "2"
-              desc: "FP 上下文位的安全状态"
+              desc: "延迟浮点状态保存所记录的浮点上下文安全状态。该位在激活延迟保存时记录上下文所属的安全状态。"
+              values:
+                - value: 0
+                  desc: "该浮点上下文属于非安全状态。"
+                - value: 1
+                  desc: "该浮点上下文属于安全状态。"
             - name: "USER"
               bits: "1"
-              desc: "FPCCR：特权级别位"
+              desc: "浮点上下文特权级状态。0 表示特权上下文，1 表示非特权上下文。"
             - name: "LSPACT"
               bits: "0"
-              desc: "FPCCR：惰性状态保存有效位"
+              desc: "惰性浮点状态保存活动状态。1 表示当前存在尚未完成的惰性浮点上下文保存。"
         - name: "FPCAR"
           desc: "浮点上下文地址寄存器"
           condition: "当安全扩展公开非安全别名时"

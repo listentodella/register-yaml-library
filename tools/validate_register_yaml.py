@@ -36,14 +36,14 @@ FIELD_KEYS = {
     "name", "bits", "access", "reset", "desc", "values", "roles", "event", "target",
     "action_hint", "ignore_by_default", "condition", "reserved", "reset_info", "access_rules", "variable_length",
 }
-ENCODING_KEYS = {"scheme", "op0", "op1", "crn", "crm", "crd", "op2", "coproc", "opc1", "opc2", "r", "m", "m1", "reg", "selector"}
+ENCODING_KEYS = {"scheme", "address", "op0", "op1", "crn", "crm", "crd", "op2", "coproc", "opc1", "opc2", "r", "m", "m1", "reg", "selector"}
 ACCESSOR_KEYS = {"name", "kind", "instruction", "condition", "encoding"}
 VARIABLE_KEYS = {"name", "min", "max", "values"}
 ACCESS_RULE_KEYS = {"access", "condition"}
 ENUM_VALUE_KEYS = {"value", "desc", "name", "condition"}
 SYSTEM_ENCODING_SCHEMES = {
     "aarch64_sysreg", "aarch64_special", "aarch32_cp15", "aarch32_coproc", "aarch32_special", "aarch32_vfp",
-    "m_profile_special",
+    "m_profile_special", "riscv_csr",
 }
 
 
@@ -204,6 +204,13 @@ def validate_encoding(report: Report, value: Any, location: str) -> None:
     for key, item in fields:
         if not ((is_integer(item) and item >= 0) or (isinstance(item, str) and item.strip())):
             report.error(f"{location}.{key}", "必须是非负整数或非空编码表达式")
+    if encoding.get("scheme") == "riscv_csr":
+        address = encoding.get("address")
+        if not is_integer(address) or address < 0 or address > 0xFFF:
+            report.error(f"{location}.address", "riscv_csr address 必须是 0x000 到 0xFFF 的整数")
+        for key, _item in fields:
+            if key != "address":
+                report.error(f"{location}.{key}", "riscv_csr 只能使用 address 编码字段")
 
 
 def validate_accessors(report: Report, value: Any, location: str) -> None:
@@ -356,7 +363,7 @@ def validate_register(
     is_system_mmio = is_system and allows_system_mmio and is_integer(addr) and addr >= 0
     if is_system:
         if "addr" in reg and not allows_system_mmio:
-            report.error(f"{location}.addr", "A-profile arm_system 寄存器不能使用 MMIO 地址")
+            report.error(f"{location}.addr", "非 MMIO 架构系统寄存器不能使用 addr")
         if "addr" in reg and allows_system_mmio and not is_system_mmio:
             report.error(f"{location}.addr", "M-profile MMIO 地址必须是非负整数")
         if not is_system_mmio:
@@ -396,12 +403,12 @@ def validate_register(
 
     address_span = reg.get("address_span", width)
     if is_system and not is_system_mmio and "address_span" in reg:
-        report.error(f"{location}.address_span", "非 MMIO arm_system 寄存器不能声明地址跨度")
+        report.error(f"{location}.address_span", "非 MMIO 架构系统寄存器不能声明地址跨度")
     elif not is_integer(address_span) or address_span < 1:
         report.error(f"{location}.address_span", "必须是正整数")
 
     if is_system and not is_system_mmio and "byte_order" in reg:
-        report.error(f"{location}.byte_order", "非 MMIO arm_system 寄存器不能声明字节序")
+        report.error(f"{location}.byte_order", "非 MMIO 架构系统寄存器不能声明字节序")
     if "byte_order" in reg and reg["byte_order"] not in {"little", "big"}:
         report.error(f"{location}.byte_order", "必须是 little 或 big")
     if "reset" in reg:
@@ -532,17 +539,17 @@ def validate_document(path: Path) -> Report:
         if register_space is not None:
             warn_unknown_keys(report, register_space, REGISTER_SPACE_KEYS, "register_space")
             kind_ok = require_string(report, register_space.get("kind"), "register_space.kind")
-            if kind_ok and register_space["kind"] not in {"mmio", "arm_system"}:
-                report.error("register_space.kind", "必须是 mmio 或 arm_system")
+            if kind_ok and register_space["kind"] not in {"mmio", "arm_system", "riscv_system"}:
+                report.error("register_space.kind", "必须是 mmio、arm_system 或 riscv_system")
             elif kind_ok:
                 register_space_kind = register_space["kind"]
             for key in ("architecture", "profile"):
                 if key in register_space:
                     require_string(report, register_space[key], f"register_space.{key}")
-    is_system = register_space_kind == "arm_system"
-    allows_system_mmio = is_system and isinstance(root.get("register_space"), dict) and root["register_space"].get("profile") == "M"
+    is_system = register_space_kind in {"arm_system", "riscv_system"}
+    allows_system_mmio = register_space_kind == "arm_system" and isinstance(root.get("register_space"), dict) and root["register_space"].get("profile") == "M"
     if is_system and (not is_integer(root.get("schema_version")) or root["schema_version"] < 2):
-        report.error("schema_version", "arm_system 需要 schema_version: 2 或更高版本")
+        report.error("schema_version", "架构系统寄存器需要 schema_version: 2 或更高版本")
     if "source" in root:
         source = require_mapping(report, root["source"], "source")
         if source is not None:
@@ -550,10 +557,10 @@ def validate_document(path: Path) -> Report:
             for key, value in source.items():
                 require_string(report, value, f"source.{key}")
     elif is_system:
-        report.error("source", "arm_system 数据必须记录官方来源和版本")
+        report.error("source", "架构系统寄存器数据必须记录官方来源和版本")
 
     if is_system and "who_am_i" in root:
-        report.error("who_am_i", "arm_system 数据不使用 MMIO WHO_AM_I")
+        report.error("who_am_i", "架构系统寄存器数据不使用 MMIO WHO_AM_I")
         who_reg = None
     elif not is_system and "who_am_i" not in root:
         report.warn("root", "缺少 who_am_i；未知时也建议显式写 reg: null 和 values: []")
@@ -583,7 +590,7 @@ def validate_document(path: Path) -> Report:
         warn_unknown_keys(report, page, PAGE_KEYS, page_location)
         page_id = page.get("page_id")
         if is_system and "page_id" in page:
-            report.error(f"{page_location}.page_id", "arm_system 分类页不能使用 MMIO page_id")
+            report.error(f"{page_location}.page_id", "架构系统寄存器分类页不能使用 MMIO page_id")
         elif not is_system and (not is_integer(page_id) or page_id < 0):
             report.error(f"{page_location}.page_id", "必须是非负整数")
         elif not is_system and page_id in page_ids:

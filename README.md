@@ -8,6 +8,8 @@
 architecture/
   arm/a-profile/          Arm AArch32/AArch64 架构系统寄存器
   arm/m-profile/          Arm Cortex-M 架构与系统寄存器
+  riscv/rv32/             RISC-V RV32 架构 CSR
+  riscv/rv64/             RISC-V RV64 架构 CSR
 controllers/
   usb/rockchip/           Rockchip SoC 中的 USB 控制器
 schema/                   YAML 格式说明
@@ -45,6 +47,15 @@ catalog.json              机器可读的全库索引
 | Armv8-M Mainline | [Cortex-M33](architecture/arm/m-profile/arm-cm33-system-registers.yaml)、[Cortex-M35P](architecture/arm/m-profile/arm-cm35p-system-registers.yaml) |
 | Armv8.1-M Mainline | [Cortex-M52](architecture/arm/m-profile/arm-cm52-system-registers.yaml)、[Cortex-M55](architecture/arm/m-profile/arm-cm55-system-registers.yaml)、[Cortex-M85](architecture/arm/m-profile/arm-cm85-system-registers.yaml) |
 
+### RISC-V 架构 CSR
+
+数据位于 [`architecture/riscv`](architecture/riscv)，由公开的 [RISC-V Unified Database](https://github.com/riscv-software-src/riscv-unified-db) `spec/std/isa/csr` 生成。RV32 与 RV64 分开提供，保留 CSR 编号、扩展条件、动态访问和复位表达式；CSR 编号使用 `encoding.scheme: riscv_csr` 与 `encoding.address` 表达，不是 MMIO 地址。
+
+| XLEN | 文件 |
+| --- | --- |
+| RV32 | [`riscv-rv32-csr.yaml`](architecture/riscv/rv32/riscv-rv32-csr.yaml) |
+| RV64 | [`riscv-rv64-csr.yaml`](architecture/riscv/rv64/riscv-rv64-csr.yaml) |
+
 ### USB 控制器
 
 | 厂商 / 平台 | 控制器 | 文件 |
@@ -78,4 +89,4 @@ npm test
 
 ## 许可
 
-本仓库采用按内容来源区分的许可方式。工具与仓库自有文档使用 MIT；CMSIS 派生数据遵循 Apache-2.0；其他寄存器数据保留其来源说明。详见 [`LICENSE`](LICENSE) 与 [`NOTICE.md`](NOTICE.md)。
+本仓库采用按内容来源区分的许可方式。工具与仓库自有文档使用 MIT；CMSIS 派生数据遵循 Apache-2.0；RISC-V Unified Database CSR 派生数据遵循 BSD-3-Clause-Clear；其他寄存器数据保留其来源说明。详见 [`LICENSE`](LICENSE)、[`LICENSES`](LICENSES) 与 [`NOTICE.md`](NOTICE.md)。

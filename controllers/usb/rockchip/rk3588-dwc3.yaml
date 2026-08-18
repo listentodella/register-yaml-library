@@ -362,7 +362,7 @@ pages:
             bits: "4:4"
             access: W1C
             reset: 0x0
-            desc: "us Error Address Valid\nIndicates that the GBUSERRADDR register is valid and reports the\nfirst bus address that encounters a bus error."
+            desc: "Bus Error Address Valid\nIndicates that the GBUSERRADDR register is valid and reports the\nfirst bus address that encounters a bus error."
           - name: reserved_3_2
             bits: "3:2"
             access: RO

@@ -13,6 +13,9 @@ Register Reference 已支持直接导入语言 sidecar，并提供 `中文 | 中
 ```text
 英文源文件：architecture/arm/m-profile/arm-cm33-system-registers.yaml
 简体中文：locales/zh-CN/architecture/arm/m-profile/arm-cm33-system-registers.yaml
+
+英文源文件：architecture/riscv/rv64/riscv-rv64-csr.yaml
+简体中文：locales/zh-CN/architecture/riscv/rv64/riscv-rv64-csr.yaml
 ```
 
 不要创建一份包含完整寄存器结构的中文版 YAML，也不要把中文直接写回英文源文件。
@@ -62,6 +65,7 @@ AI 生成的翻译必须保持 `status: draft`。只有完成独立人工或专�
 - 区分“保留”“忽略”“未知”“实现定义”“不可预测”，不得统一翻译成“无效”。
 - `Secure` / `Non-secure` 使用“安全”/“非安全”；`Exception level` 使用“异常级别”。
 - A-profile 中的 `translation regime` 使用“地址转换机制”，`Warm reset` / `Cold reset` 使用“温复位”/“冷复位”。
+- RISC-V 中的 `hart` 保留 `hart`，首次出现可解释为“硬件线程”；`privilege mode` 使用“特权模式”，`CSR`、扩展名和 `XLEN` 保留原标识。
 - `UNKNOWN`、`UNPREDICTABLE`、`CONSTRAINED UNPREDICTABLE`、`IMPLEMENTATION DEFINED` 等架构关键字保留英文标识符，中文句子负责解释其语义。
 - `read-clear` 使用“读后清零”，`write-one-to-clear` 使用“写 1 清零”，`memory-mapped` 使用“内存映射”。
 - 对可能有多种译法的术语，优先沿用同一芯片和同一架构文件中已经审校的表达。

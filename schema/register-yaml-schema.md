@@ -2,7 +2,7 @@
 
 ## 目录
 
-- 顶层结构（MMIO 与 ARM system register）
+- 顶层结构（MMIO、ARM 与 RISC-V system register）
 - 页面结构
 - 寄存器结构
 - 位域结构
@@ -47,7 +47,7 @@ pages:
 
 `who_am_i.values` 的每项包含数值 `value` 和文字 `desc`。不同 silicon revision 可列出多个值。不要把芯片版本寄存器值误写成 WHO_AM_I。
 
-### ARM 系统寄存器顶层结构（schema v2）
+### 架构系统寄存器顶层结构（schema v2）
 
 ARM 的 A-profile MRS/MSR 或 MRC/MCR 系统寄存器不是 MMIO 地址，不能把编码拼成伪 `addr`。M-profile 可以在同一份 YAML 中同时表达 CPU 特殊寄存器和真实的 System Control Space（SCS）MMIO 寄存器：前者使用 `m_profile_special`，后者使用真实 `addr`。
 
@@ -74,9 +74,9 @@ pages: {}
 
 | 字段 | 类型 | 要求 | 说明 |
 | --- | --- | --- | --- |
-| `register_space.kind` | string | 必填 | 当前支持 `mmio`、`arm_system` |
-| `register_space.architecture` | string | system 必填 | `AArch64`、`AArch32` 或 `Armv6-M`/`Armv7-M`/`Armv8-M` 等 |
-| `register_space.profile` | string | system 必填 | A-profile 使用 `A`；Cortex-M 使用 `M` |
+| `register_space.kind` | string | 必填 | 当前支持 `mmio`、`arm_system`、`riscv_system` |
+| `register_space.architecture` | string | system 必填 | `AArch64`、`AArch32`、`Armv6-M`/`Armv7-M`/`Armv8-M`、`RV32` 或 `RV64` |
+| `register_space.profile` | string | system 必填 | A-profile 使用 `A`；Cortex-M 使用 `M`；RISC-V 使用 `privileged` |
 | `source.title` | string | system 必填 | 数据源名称，不写成目标 SoC 手册 |
 | `source.version` | string | system 必填 | 机器可读包版本；不得只写“最新” |
 | `source.revision` | string | 建议 | 对应 Arm ARM revision |
@@ -85,13 +85,13 @@ pages: {}
 | `source.license` | string | system 必填 | 授权性质；Arm notice 不是 SPDX 开源许可证 |
 | `source.notice` | string | 建议 | 包内 notice 标识，例如 `LES-PRE-20349` |
 
-`arm_system` 不得包含 `who_am_i`。A-profile 完整 Arm XML 和从中生成的大型 YAML 受 Arm 包内专有条款约束，本项目只提供导入器，不默认再分发这些数据。CMSIS-Core(M) 头文件使用 Apache-2.0；生成的 M-profile YAML 应保留 Arm 版权、许可证和来源说明。
+`arm_system` 和 `riscv_system` 不得包含 `who_am_i`。A-profile 完整 Arm XML 和从中生成的大型 YAML 受 Arm 包内专有条款约束，本项目只提供导入器，不默认再分发这些数据。CMSIS-Core(M) 头文件使用 Apache-2.0；生成的 M-profile YAML 应保留 Arm 版权、许可证和来源说明。RISC-V CSR 使用 RISC-V Unified Database 的 BSD-3-Clause-Clear 数据和 `riscv_csr` 编码，不把 CSR 编号伪装成 MMIO 地址。
 
 ## 页面结构
 
 | 字段 | 类型 | 要求 | 说明 |
 | --- | --- | --- | --- |
-| `page_id` | integer | MMIO 必填 | 页编号；无分页芯片使用 `0x00`；`arm_system` 分类页不得填写 |
+| `page_id` | integer | MMIO 必填 | 页编号；无分页芯片使用 `0x00`；架构系统寄存器分类页不得填写 |
 | `address_unit_bits` | positive integer | 可选 | 一个地址单位的位数，默认 8 |
 | `access` | string | 必填 | 页面访问接口，例如 `"SPI / I2C / I3C"` |
 | `desc` | string | 必填 | 页用途、切页方式或资料版本说明 |
@@ -99,7 +99,7 @@ pages: {}
 
 不同页面可以使用相同寄存器地址。页面名和 `page_id` 应在芯片内唯一；如果 datasheet 使用 bank 概念，仍使用 `pages` 表示。
 
-对 `arm_system`，`pages` 是功能分类（如 `Identification Registers`、`Memory`），不是硬件分页；`access` 通常写 `MRS / MSR system-register interface`。
+对 `arm_system` 和 `riscv_system`，`pages` 是功能分类（如 `Identification Registers`、`Machine`），不是硬件分页；`access` 分别通常写 `MRS / MSR system-register interface` 或 `CSR instruction encoding space`。
 
 ## 寄存器结构
 
@@ -143,11 +143,11 @@ pages: {}
 | `action_hint` | string | 可选 | 下游建议动作；当前 UI 不渲染 |
 | `ignore_by_default` | boolean | 可选 | 下游默认忽略提示；当前 UI 不渲染 |
 
-对 `register_space.kind: arm_system` 且 `profile: M` 的条目，`addr` 表示真实 SCS/CoreSight MMIO 地址；这类条目不需要 `encoding` 或 `accessors`，但仍必须有 `access`、`width`、`desc`。A-profile 和 M-profile 特殊寄存器仍禁止填写 `addr`。
+对 `register_space.kind: arm_system` 且 `profile: M` 的条目，`addr` 表示真实 SCS/CoreSight MMIO 地址；这类条目不需要 `encoding` 或 `accessors`，但仍必须有 `access`、`width`、`desc`。A-profile、RISC-V CSR 和 M-profile CPU 特殊寄存器禁止填写 `addr`。
 
 `addr + address_span - 1` 是该条目覆盖的最后地址；省略 `address_span` 时使用 `width`。当前前端允许地址重叠，以便同时表达一个多字节逻辑视图和多个单字节物理寄存器；此时为相关条目填写 `alias_note`。
 
-### ARM system register 寄存器结构
+### 架构 system register 寄存器结构
 
 ```yaml
 - name: "SCTLR_EL1"
@@ -181,7 +181,8 @@ pages: {}
 | 字段 | 类型 | 要求 | 说明 |
 | --- | --- | --- | --- |
 | `encoding` | mapping | system 必填 | 规范编码，也是备注稳定身份的一部分 |
-| `encoding.scheme` | string | system 特殊寄存器必填 | AArch64 使用 `aarch64_sysreg`/`aarch64_special`；AArch32 使用 `aarch32_cp15`、`aarch32_coproc`、`aarch32_special` 或 `aarch32_vfp`；M-profile CPU 特殊寄存器使用 `m_profile_special` |
+| `encoding.scheme` | string | system 特殊寄存器必填 | AArch64 使用 `aarch64_sysreg`/`aarch64_special`；AArch32 使用 `aarch32_cp15`、`aarch32_coproc`、`aarch32_special` 或 `aarch32_vfp`；M-profile CPU 特殊寄存器使用 `m_profile_special`；RISC-V CSR 使用 `riscv_csr` |
+| `encoding.address` | integer | RISC-V CSR 必填 | 12-bit CSR 编号，范围 `0x000` 到 `0xfff`，不是 MMIO 地址 |
 | `encoding.op0/op1/crn/crm/op2` | integer/string | AArch64 | 固定编码用整数，参数化编码可保留表达式字符串 |
 | `encoding.coproc/opc1/crn/crm/crd/opc2` | integer/string | AArch32 coprocessor | MRC/MCR/MRRC/MCRR/LDC/STC 编码；CP15 之外的协处理器使用 `aarch32_coproc` |
 | `encoding.r/m/m1` | integer/string | AArch32 banked | banked MRS/MSR 编码 |
@@ -197,6 +198,31 @@ pages: {}
 | `source_ref` | string | 建议 | 原始 XML 文件名，便于追溯 |
 
 system register 仍使用 `width` 表示容纳值所需字节数，`bit_width` 可为 32、64、128 或资料定义的其他宽度。A-profile 和 M-profile CPU 特殊寄存器不得填写 `addr`、`address_span`、`byte_order`；M-profile SCS MMIO 条目可以使用真实 `addr`，也可以按需要使用 `address_span`。
+
+### RISC-V CSR 寄存器结构
+
+```yaml
+- name: "mstatus"
+  access: "RW"
+  width: 8
+  bit_width: 64
+  desc: "Machine Status"
+  execution_state: "RV64"
+  encoding:
+    scheme: "riscv_csr"
+    address: 0x300
+  accessors:
+    - name: "mstatus"
+      kind: "read"
+      instruction: "CSRRS rd, mstatus, x0"
+      encoding:
+        scheme: "riscv_csr"
+        address: 0x300
+```
+
+`encoding.address` 是 12-bit CSR 编号（`0x000` 到 `0xfff`），不是内存地址。RV32 与 RV64 应分别生成，不能在同一个文件中把不同 XLEN 的布局混在一起。RV32 对 64-bit 计数器等 CSR 只显示当前 XLEN 可见的低 32 bit；标准的 `mcycleh`、`minstreth` 等高半 CSR 作为独立条目保留。
+
+RISC-V Unified Database 中的 `type()`、`reset_value()`、`definedBy`、`affectedBy` 和 `sw_write(csr_value)` 可能依赖扩展、XLEN 或实现参数。无法静态求值时，生成器必须保留到 `access_rules`、`reset_info`、`condition` 或 `action_hint`，不能猜成固定访问属性或复位值。
 
 ### M-profile 混合示例
 

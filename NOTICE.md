@@ -22,6 +22,14 @@ Copyright (c) 2010-2026 Arm Limited (or its affiliates). All rights reserved.
 
 `controllers/usb/rockchip/rk3588-dwc3.yaml` 中的寄存器事实整理自 RK3588 TRM Part 2 Chapter 13 的 USB3 Controller 表格。仓库不分发原始手册，也不授予对 Rockchip 或 Synopsys 文档、商标及实现的额外权利。
 
+## RISC-V Unified Database CSR
+
+`architecture/riscv/rv32/riscv-rv32-csr.yaml` 和 `architecture/riscv/rv64/riscv-rv64-csr.yaml` 由 RISC-V Unified Database 的 `spec/std/isa/csr` 目录生成。
+
+来源：<https://github.com/riscv-software-src/riscv-unified-db>
+
+生成所依据的提交为 `22776b219c386d549e07b14ed0e781ae7956e11a`（2026-08-18）。全部 396 个 CSR 源 YAML 都标注 `BSD-3-Clause-Clear`。源文件中的版权声明包括 Qualcomm Technologies, Inc. and/or its subsidiaries、Katherine Hsu、Muhammad Abdullah - 10xEngineers、Salil Mittal 和 Syed Owais Ali Shah；生成文件通过 `source_ref` 保留逐条来源路径。本批数据不包含 `data/arch_overlay` 下的 CC-BY-4.0 文档导入内容。
+
 ## Repository Tools And Documentation
 
 `tools/`、仓库维护脚本及本仓库原创文档按 MIT 许可提供，全文位于 `LICENSES/MIT.txt`。该许可不覆盖具有独立来源声明的 YAML 数据。

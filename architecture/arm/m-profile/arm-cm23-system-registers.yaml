@@ -41,16 +41,36 @@ pages:
         fields:
           - name: "N"
             bits: "31"
-            desc: "CMSIS N field"
+            desc: "Negative condition code flag. After an instruction that updates the condition flags, N indicates the sign of the result when interpreted as a two's-complement value: N=1 means negative and N=0 means non-negative. It describes the most recent flag-setting result, not the current value of an arbitrary register."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting result was non-negative."
+              - value: 1
+                desc: "The most recent flag-setting result was negative."
           - name: "Z"
             bits: "30"
-            desc: "CMSIS Z field"
+            desc: "Zero condition code flag. Z=1 when the result of the most recent flag-setting instruction was zero; otherwise Z=0. Comparison instructions such as CMP update the flags as if they performed a subtraction without storing the result, so Z=1 usually means the compared operands were equal."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting result was not zero; a comparison was not equal."
+              - value: 1
+                desc: "The most recent flag-setting result was zero; a comparison was equal."
           - name: "C"
             bits: "29"
-            desc: "CMSIS C field"
+            desc: "Carry or borrow condition code flag. For addition, C=1 means an unsigned carry out. For subtraction or comparison, C=1 means no borrow and C=0 means a borrow, so C=1 commonly means the unsigned left operand was greater than or equal to the right operand. For flag-setting shifts, C records the last bit shifted out when the instruction defines it."
+            values:
+              - value: 0
+                desc: "Depending on the instruction: no unsigned carry from addition, a borrow occurred in subtraction or comparison, or the last bit shifted out was 0."
+              - value: 1
+                desc: "Depending on the instruction: an unsigned carry occurred in addition, no borrow occurred in subtraction or comparison, or the last bit shifted out was 1."
           - name: "V"
             bits: "28"
-            desc: "CMSIS V field"
+            desc: "Signed overflow condition code flag. V=1 when the mathematical result cannot be represented in the signed two's-complement range of the operation, for example when adding two values with the same sign produces a result with the opposite sign. V reports signed overflow; C reports unsigned carry or borrow."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting arithmetic result did not overflow its signed range."
+              - value: 1
+                desc: "The most recent flag-setting arithmetic result overflowed its signed range."
       - name: "CONTROL"
         access: "RW"
         width: 4
@@ -77,10 +97,20 @@ pages:
         fields:
           - name: "SPSEL"
             bits: "1"
-            desc: "CMSIS SPSEL field"
+            desc: "Thread-mode stack-pointer selection. Handler mode always uses MSP; this bit selects the stack pointer used by Thread mode."
+            values:
+              - value: 0
+                desc: "Thread mode uses MSP (Main Stack Pointer)."
+              - value: 1
+                desc: "Thread mode uses PSP (Process Stack Pointer)."
           - name: "nPRIV"
             bits: "0"
-            desc: "CMSIS nPRIV field"
+            desc: "Thread-mode privilege. This bit controls whether Thread mode executes with privileged or unprivileged access; Handler mode is always privileged."
+            values:
+              - value: 0
+                desc: "Thread mode is privileged."
+              - value: 1
+                desc: "Thread mode is unprivileged."
       - name: "CONTROL_NS"
         access: "RW"
         width: 4
@@ -108,10 +138,20 @@ pages:
         fields:
           - name: "SPSEL"
             bits: "1"
-            desc: "CMSIS SPSEL field"
+            desc: "Thread-mode stack-pointer selection. Handler mode always uses MSP; this bit selects the stack pointer used by Thread mode."
+            values:
+              - value: 0
+                desc: "Thread mode uses MSP (Main Stack Pointer)."
+              - value: 1
+                desc: "Thread mode uses PSP (Process Stack Pointer)."
           - name: "nPRIV"
             bits: "0"
-            desc: "CMSIS nPRIV field"
+            desc: "Thread-mode privilege. This bit controls whether Thread mode executes with privileged or unprivileged access; Handler mode is always privileged."
+            values:
+              - value: 0
+                desc: "Thread mode is privileged."
+              - value: 1
+                desc: "Thread mode is unprivileged."
       - name: "IPSR"
         access: "RO"
         width: 4
@@ -132,7 +172,7 @@ pages:
         fields:
           - name: "ISR"
             bits: "8:0"
-            desc: "CMSIS ISR field"
+            desc: "Current exception number. Zero means Thread mode; a non-zero value identifies the currently active exception according to the implemented exception-number table."
       - name: "MSP"
         access: "RW"
         width: 4
@@ -159,7 +199,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Main Stack Pointer value"
+            desc: "Main Stack Pointer value used by the processor in Handler mode and, when selected, Thread mode."
       - name: "MSP_NS"
         access: "RW"
         width: 4
@@ -187,7 +227,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Non-secure Main Stack Pointer value"
+            desc: "Non-secure Main Stack Pointer value accessed from Secure state."
       - name: "MSPLIM"
         access: "RW"
         width: 4
@@ -214,7 +254,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Main Stack Pointer limit"
+            desc: "Main Stack Pointer lower-bound limit. Stack accesses below this limit can raise a stack-limit fault when the feature is implemented."
       - name: "MSPLIM_NS"
         access: "RW"
         width: 4
@@ -242,7 +282,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Non-secure Main Stack Pointer limit"
+            desc: "Non-secure Main Stack Pointer lower-bound limit accessed from Secure state."
       - name: "PRIMASK"
         access: "RW"
         width: 4
@@ -269,7 +309,12 @@ pages:
         fields:
           - name: "PM"
             bits: "0"
-            desc: "Exception mask bit"
+            desc: "Priority-mask bit. When set, it prevents activation of exceptions with configurable priority; NMI and HardFault are not masked by PRIMASK."
+            values:
+              - value: 0
+                desc: "Configurable-priority exceptions are not masked by PRIMASK."
+              - value: 1
+                desc: "Configurable-priority exceptions are masked by PRIMASK; NMI and HardFault remain eligible."
       - name: "PRIMASK_NS"
         access: "RW"
         width: 4
@@ -297,7 +342,12 @@ pages:
         fields:
           - name: "PM"
             bits: "0"
-            desc: "Exception mask bit"
+            desc: "Priority-mask bit. When set, it prevents activation of exceptions with configurable priority; NMI and HardFault are not masked by PRIMASK."
+            values:
+              - value: 0
+                desc: "Configurable-priority exceptions are not masked by PRIMASK."
+              - value: 1
+                desc: "Configurable-priority exceptions are masked by PRIMASK; NMI and HardFault remain eligible."
       - name: "PSP"
         access: "RW"
         width: 4
@@ -324,7 +374,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Process Stack Pointer value"
+            desc: "Process Stack Pointer value used by Thread mode when CONTROL.SPSEL selects PSP."
       - name: "PSP_NS"
         access: "RW"
         width: 4
@@ -352,7 +402,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Non-secure Process Stack Pointer value"
+            desc: "Non-secure Process Stack Pointer value accessed from Secure state."
       - name: "PSPLIM"
         access: "RW"
         width: 4
@@ -379,7 +429,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Process Stack Pointer limit"
+            desc: "Process Stack Pointer lower-bound limit. Stack accesses below this limit can raise a stack-limit fault when the feature is implemented."
       - name: "PSPLIM_NS"
         access: "RW"
         width: 4
@@ -407,7 +457,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Non-secure Process Stack Pointer limit"
+            desc: "Non-secure Process Stack Pointer lower-bound limit accessed from Secure state."
       - name: "SP_NS"
         access: "RW"
         width: 4
@@ -435,7 +485,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Non-secure Stack Pointer value"
+            desc: "Non-secure Stack Pointer value accessed from Secure state."
       - name: "xPSR"
         access: "RO"
         width: 4
@@ -456,22 +506,42 @@ pages:
         fields:
           - name: "N"
             bits: "31"
-            desc: "CMSIS N field"
+            desc: "Negative condition code flag. After an instruction that updates the condition flags, N indicates the sign of the result when interpreted as a two's-complement value: N=1 means negative and N=0 means non-negative. It describes the most recent flag-setting result, not the current value of an arbitrary register."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting result was non-negative."
+              - value: 1
+                desc: "The most recent flag-setting result was negative."
           - name: "Z"
             bits: "30"
-            desc: "CMSIS Z field"
+            desc: "Zero condition code flag. Z=1 when the result of the most recent flag-setting instruction was zero; otherwise Z=0. Comparison instructions such as CMP update the flags as if they performed a subtraction without storing the result, so Z=1 usually means the compared operands were equal."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting result was not zero; a comparison was not equal."
+              - value: 1
+                desc: "The most recent flag-setting result was zero; a comparison was equal."
           - name: "C"
             bits: "29"
-            desc: "CMSIS C field"
+            desc: "Carry or borrow condition code flag. For addition, C=1 means an unsigned carry out. For subtraction or comparison, C=1 means no borrow and C=0 means a borrow, so C=1 commonly means the unsigned left operand was greater than or equal to the right operand. For flag-setting shifts, C records the last bit shifted out when the instruction defines it."
+            values:
+              - value: 0
+                desc: "Depending on the instruction: no unsigned carry from addition, a borrow occurred in subtraction or comparison, or the last bit shifted out was 0."
+              - value: 1
+                desc: "Depending on the instruction: an unsigned carry occurred in addition, no borrow occurred in subtraction or comparison, or the last bit shifted out was 1."
           - name: "V"
             bits: "28"
-            desc: "CMSIS V field"
+            desc: "Signed overflow condition code flag. V=1 when the mathematical result cannot be represented in the signed two's-complement range of the operation, for example when adding two values with the same sign produces a result with the opposite sign. V reports signed overflow; C reports unsigned carry or borrow."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting arithmetic result did not overflow its signed range."
+              - value: 1
+                desc: "The most recent flag-setting arithmetic result overflowed its signed range."
           - name: "T"
             bits: "24"
-            desc: "CMSIS T field"
+            desc: "Thumb-state indicator in the stacked/program status representation. CMSIS marks this field read-only; software must preserve the architecture-defined value when handling an exception frame."
           - name: "ISR"
             bits: "8:0"
-            desc: "CMSIS ISR field"
+            desc: "Exception number"
   SCB:
     access: "Memory-mapped Core Peripheral access"
     desc: "SCB registers from SCB_Type"
@@ -488,19 +558,19 @@ pages:
         fields:
           - name: "IMPLEMENTER"
             bits: "31:24"
-            desc: "CMSIS IMPLEMENTER field"
+            desc: "SCB CPUID IMPLEMENTER field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "VARIANT"
             bits: "23:20"
-            desc: "CMSIS VARIANT field"
+            desc: "SCB CPUID VARIANT field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "ARCHITECTURE"
             bits: "19:16"
-            desc: "CMSIS ARCHITECTURE field"
+            desc: "SCB CPUID ARCHITECTURE field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "PARTNO"
             bits: "15:4"
-            desc: "CMSIS PARTNO field"
+            desc: "SCB CPUID PARTNO field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "REVISION"
             bits: "3:0"
-            desc: "CMSIS REVISION field"
+            desc: "SCB CPUID REVISION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758157060
         name: "ICSR"
         access: "RW"
@@ -513,40 +583,85 @@ pages:
         fields:
           - name: "PENDNMISET"
             bits: "31"
-            desc: "CMSIS PENDNMISET field"
+            desc: "NMI pending-set request/status."
+            values:
+              - value: 0
+                desc: "NMI is not pending or no set request is issued."
+              - value: 1
+                desc: "NMI is pending or is requested to become pending by a write of 1."
           - name: "PENDNMICLR"
             bits: "30"
-            desc: "CMSIS PENDNMICLR field"
+            desc: "NMI pending-clear command."
+            values:
+              - value: 0
+                desc: "No clear request is issued."
+              - value: 1
+                desc: "Writing 1 clears the pending NMI state; reads may return 0."
           - name: "PENDSVSET"
             bits: "28"
-            desc: "CMSIS PENDSVSET field"
+            desc: "PendSV pending-set request/status."
+            values:
+              - value: 0
+                desc: "PendSV is not pending or no set request is issued."
+              - value: 1
+                desc: "PendSV is pending or is requested to become pending by a write of 1."
           - name: "PENDSVCLR"
             bits: "27"
-            desc: "CMSIS PENDSVCLR field"
+            desc: "PendSV pending-clear command."
+            values:
+              - value: 0
+                desc: "No clear request is issued."
+              - value: 1
+                desc: "Writing 1 clears the pending PendSV state; reads may return 0."
           - name: "PENDSTSET"
             bits: "26"
-            desc: "CMSIS PENDSTSET field"
+            desc: "SysTick pending-set request/status."
+            values:
+              - value: 0
+                desc: "SysTick is not pending or no set request is issued."
+              - value: 1
+                desc: "SysTick is pending or is requested to become pending by a write of 1."
           - name: "PENDSTCLR"
             bits: "25"
-            desc: "CMSIS PENDSTCLR field"
+            desc: "SysTick pending-clear command."
+            values:
+              - value: 0
+                desc: "No clear request is issued."
+              - value: 1
+                desc: "Writing 1 clears the pending SysTick state; reads may return 0."
           - name: "STTNS"
             bits: "24"
-            desc: "Position (Security Extension)"
+            desc: "STTNS Position (Security Extension)"
           - name: "ISRPREEMPT"
             bits: "23"
-            desc: "CMSIS ISRPREEMPT field"
+            desc: "Interrupt preemption pending status."
+            values:
+              - value: 0
+                desc: "No interrupt preemption is pending."
+              - value: 1
+                desc: "Interrupt preemption is pending."
           - name: "ISRPENDING"
             bits: "22"
-            desc: "CMSIS ISRPENDING field"
+            desc: "External interrupt pending status."
+            values:
+              - value: 0
+                desc: "No external interrupt is pending."
+              - value: 1
+                desc: "At least one external interrupt is pending."
           - name: "VECTPENDING"
             bits: "20:12"
-            desc: "CMSIS VECTPENDING field"
+            desc: "Highest-priority pending exception number. Zero means no exception is pending."
           - name: "RETTOBASE"
             bits: "11"
-            desc: "CMSIS RETTOBASE field"
+            desc: "Exception-return stack status."
+            values:
+              - value: 0
+                desc: "Another exception is active beneath the current exception."
+              - value: 1
+                desc: "The current exception is the only active exception; exception return will return to Thread mode."
           - name: "VECTACTIVE"
             bits: "8:0"
-            desc: "CMSIS VECTACTIVE field"
+            desc: "Active exception number. Zero means Thread mode; a non-zero value identifies the currently active exception."
       - addr: 3758157064
         name: "VTOR"
         access: "RW"
@@ -559,7 +674,7 @@ pages:
         fields:
           - name: "TBLOFF"
             bits: "31:7"
-            desc: "CMSIS TBLOFF field"
+            desc: "SCB VTOR TBLOFF field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758157068
         name: "AIRCR"
         access: "RW"
@@ -572,30 +687,45 @@ pages:
         fields:
           - name: "VECTKEY"
             bits: "31:16"
-            desc: "CMSIS VECTKEY field"
+            desc: "SCB AIRCR VECTKEY field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: VECTKEY"
           - name: "VECTKEYSTAT"
             bits: "31:16"
-            desc: "CMSIS VECTKEYSTAT field"
+            desc: "SCB AIRCR VECTKEYSTAT field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: VECTKEYSTAT"
           - name: "ENDIANNESS"
             bits: "15"
-            desc: "CMSIS ENDIANNESS field"
+            desc: "Data endianness indicator. This read-only field reports the processor's implemented data endianness."
           - name: "PRIS"
             bits: "14"
-            desc: "CMSIS PRIS field"
+            desc: "SCB AIRCR PRIS field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "BFHFNMINS"
             bits: "13"
-            desc: "CMSIS BFHFNMINS field"
+            desc: "SCB AIRCR BFHFNMINS field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "SYSRESETREQS"
             bits: "3"
-            desc: "CMSIS SYSRESETREQS field"
+            desc: "Secure system-reset request control."
+            values:
+              - value: 0
+                desc: "Secure state cannot request a system reset through this control."
+              - value: 1
+                desc: "Secure state may request a system reset through this control."
           - name: "SYSRESETREQ"
             bits: "2"
-            desc: "CMSIS SYSRESETREQ field"
+            desc: "System-reset request control. Writing 1 requests a system reset through the implementation's reset controller."
+            values:
+              - value: 0
+                desc: "No system-reset request is issued."
+              - value: 1
+                desc: "A system-reset request is issued when permitted."
           - name: "VECTCLRACTIVE"
             bits: "1"
-            desc: "CMSIS VECTCLRACTIVE field"
+            desc: "Active-exception clear control. Writing 1 clears active exception state where the architecture permits it; this is intended for debug/reset use and must be used with care."
+            values:
+              - value: 0
+                desc: "No active-exception clear request is issued."
+              - value: 1
+                desc: "An active-exception clear request is issued."
       - addr: 3758157072
         name: "SCR"
         access: "RW"
@@ -608,16 +738,36 @@ pages:
         fields:
           - name: "SEVONPEND"
             bits: "4"
-            desc: "CMSIS SEVONPEND field"
+            desc: "Send-event-on-pending control. If enabled, a pending interrupt can wake a processor waiting for an event."
+            values:
+              - value: 0
+                desc: "Pending interrupts do not generate an event."
+              - value: 1
+                desc: "A pending interrupt generates an event that can wake WFE."
           - name: "SLEEPDEEPS"
             bits: "3"
-            desc: "CMSIS SLEEPDEEPS field"
+            desc: "Secure deep-sleep request control."
+            values:
+              - value: 0
+                desc: "Deep sleep is not requested for Secure state."
+              - value: 1
+                desc: "Secure state requests deep sleep when the sleep instruction is executed."
           - name: "SLEEPDEEP"
             bits: "2"
-            desc: "CMSIS SLEEPDEEP field"
+            desc: "Deep-sleep request control."
+            values:
+              - value: 0
+                desc: "Sleep instructions request ordinary sleep."
+              - value: 1
+                desc: "Sleep instructions request deep sleep."
           - name: "SLEEPONEXIT"
             bits: "1"
-            desc: "CMSIS SLEEPONEXIT field"
+            desc: "Sleep-on-exception-return control."
+            values:
+              - value: 0
+                desc: "After an exception handler returns, normal Thread-mode execution resumes."
+              - value: 1
+                desc: "After an exception handler returns, the processor enters sleep instead of returning to Thread mode."
       - addr: 3758157076
         name: "CCR"
         access: "RW"
@@ -630,28 +780,68 @@ pages:
         fields:
           - name: "BP"
             bits: "18"
-            desc: "CMSIS BP field"
+            desc: "Branch-prediction enable control."
+            values:
+              - value: 0
+                desc: "Branch prediction is disabled."
+              - value: 1
+                desc: "Branch prediction is enabled."
           - name: "IC"
             bits: "17"
-            desc: "CMSIS IC field"
+            desc: "Instruction-cache enable control."
+            values:
+              - value: 0
+                desc: "The instruction cache is disabled."
+              - value: 1
+                desc: "The instruction cache is enabled."
           - name: "DC"
             bits: "16"
-            desc: "CMSIS DC field"
+            desc: "Data-cache enable control."
+            values:
+              - value: 0
+                desc: "The data cache is disabled."
+              - value: 1
+                desc: "The data cache is enabled."
           - name: "STKOFHFNMIGN"
             bits: "10"
-            desc: "CMSIS STKOFHFNMIGN field"
+            desc: "Stack-overflow handling in HardFault/NMI control."
+            values:
+              - value: 0
+                desc: "Stack-limit violations are not ignored during HardFault or NMI handling."
+              - value: 1
+                desc: "Stack-limit violations are ignored during HardFault or NMI handling."
           - name: "BFHFNMIGN"
             bits: "8"
-            desc: "CMSIS BFHFNMIGN field"
+            desc: "BusFault handling in HardFault/NMI control."
+            values:
+              - value: 0
+                desc: "BusFaults are not ignored during HardFault or NMI handling."
+              - value: 1
+                desc: "BusFaults are ignored during HardFault or NMI handling."
           - name: "DIV_0_TRP"
             bits: "4"
-            desc: "CMSIS DIV_0_TRP field"
+            desc: "Divide-by-zero trapping control."
+            values:
+              - value: 0
+                desc: "Integer division by zero does not generate a UsageFault through this control."
+              - value: 1
+                desc: "Integer division by zero generates a UsageFault."
           - name: "UNALIGN_TRP"
             bits: "3"
-            desc: "CMSIS UNALIGN_TRP field"
+            desc: "Unaligned-access trapping control."
+            values:
+              - value: 0
+                desc: "Unaligned accesses are permitted when the instruction supports them."
+              - value: 1
+                desc: "Unaligned accesses generate a UsageFault."
           - name: "USERSETMPEND"
             bits: "1"
-            desc: "CMSIS USERSETMPEND field"
+            desc: "User-settable pending interrupt control."
+            values:
+              - value: 0
+                desc: "Unprivileged software cannot set an interrupt pending state through the software-trigger mechanism."
+              - value: 1
+                desc: "Unprivileged software may set an interrupt pending state through the software-trigger mechanism."
       - addr: 3758157084
         name: "SHPR[0]"
         access: "RW"
@@ -682,25 +872,50 @@ pages:
         fields:
           - name: "HARDFAULTPENDED"
             bits: "21"
-            desc: "CMSIS HARDFAULTPENDED field"
+            desc: "SCB SHCSR HARDFAULTPENDED field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "SVCALLPENDED"
             bits: "15"
-            desc: "CMSIS SVCALLPENDED field"
+            desc: "SCB SHCSR SVCALLPENDED field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "SYSTICKACT"
             bits: "11"
-            desc: "CMSIS SYSTICKACT field"
+            desc: "SYSTICK exception active status."
+            values:
+              - value: 0
+                desc: "SYSTICK exception is inactive."
+              - value: 1
+                desc: "SYSTICK exception is active."
           - name: "PENDSVACT"
             bits: "10"
-            desc: "CMSIS PENDSVACT field"
+            desc: "PENDSV exception active status."
+            values:
+              - value: 0
+                desc: "PENDSV exception is inactive."
+              - value: 1
+                desc: "PENDSV exception is active."
           - name: "SVCALLACT"
             bits: "7"
-            desc: "CMSIS SVCALLACT field"
+            desc: "SVCALL exception active status."
+            values:
+              - value: 0
+                desc: "SVCALL exception is inactive."
+              - value: 1
+                desc: "SVCALL exception is active."
           - name: "NMIACT"
             bits: "5"
-            desc: "CMSIS NMIACT field"
+            desc: "NMI exception active status."
+            values:
+              - value: 0
+                desc: "NMI exception is inactive."
+              - value: 1
+                desc: "NMI exception is active."
           - name: "HARDFAULTACT"
             bits: "2"
-            desc: "CMSIS HARDFAULTACT field"
+            desc: "HARDFAULT exception active status."
+            values:
+              - value: 0
+                desc: "HARDFAULT exception is inactive."
+              - value: 1
+                desc: "HARDFAULT exception is active."
   SysTick:
     access: "Memory-mapped Core Peripheral access"
     desc: "SysTick registers from SysTick_Type"
@@ -717,16 +932,36 @@ pages:
         fields:
           - name: "COUNTFLAG"
             bits: "16"
-            desc: "CMSIS COUNTFLAG field"
+            desc: "Counter-wrap status. This sticky status bit is set when the counter reaches zero and is cleared by reading the SysTick CTRL register."
+            values:
+              - value: 0
+                desc: "The counter has not wrapped since the last CTRL read."
+              - value: 1
+                desc: "The counter has wrapped since the last CTRL read."
           - name: "CLKSOURCE"
             bits: "2"
-            desc: "CMSIS CLKSOURCE field"
+            desc: "SysTick clock-source selection."
+            values:
+              - value: 0
+                desc: "Use the external/reference clock supplied to SysTick."
+              - value: 1
+                desc: "Use the processor clock."
           - name: "TICKINT"
             bits: "1"
-            desc: "CMSIS TICKINT field"
+            desc: "SysTick exception request control."
+            values:
+              - value: 0
+                desc: "Counter wrap does not request the SysTick exception."
+              - value: 1
+                desc: "Counter wrap requests the SysTick exception."
           - name: "ENABLE"
             bits: "0"
-            desc: "CMSIS ENABLE field"
+            desc: "SysTick counter enable control."
+            values:
+              - value: 0
+                desc: "The SysTick counter is stopped."
+              - value: 1
+                desc: "The SysTick counter counts down from LOAD."
       - addr: 3758153748
         name: "LOAD"
         access: "RW"
@@ -739,7 +974,7 @@ pages:
         fields:
           - name: "RELOAD"
             bits: "23:0"
-            desc: "CMSIS RELOAD field"
+            desc: "Value loaded into the SysTick counter when it reaches zero."
       - addr: 3758153752
         name: "VAL"
         access: "RW"
@@ -752,7 +987,7 @@ pages:
         fields:
           - name: "CURRENT"
             bits: "23:0"
-            desc: "CMSIS CURRENT field"
+            desc: "Current SysTick counter value; writing any value clears the counter to zero."
       - addr: 3758153756
         name: "CALIB"
         access: "RO"
@@ -765,13 +1000,23 @@ pages:
         fields:
           - name: "NOREF"
             bits: "31"
-            desc: "CMSIS NOREF field"
+            desc: "Calibration reference-clock indicator."
+            values:
+              - value: 0
+                desc: "A separate reference clock is available for calibration."
+              - value: 1
+                desc: "No separate reference clock is available."
           - name: "SKEW"
             bits: "30"
-            desc: "CMSIS SKEW field"
+            desc: "Calibration skew indicator."
+            values:
+              - value: 0
+                desc: "The TENMS calibration value is accurate within the implementation's stated tolerance."
+              - value: 1
+                desc: "The TENMS calibration value is not guaranteed to be accurate."
           - name: "TENMS"
             bits: "23:0"
-            desc: "CMSIS TENMS field"
+            desc: "Reload value that calibrates a ten-millisecond interval for the available SysTick reference clock."
   NVIC:
     access: "Memory-mapped Core Peripheral access"
     desc: "NVIC registers from NVIC_Type"
@@ -2772,19 +3017,39 @@ pages:
         fields:
           - name: "NUMCOMP"
             bits: "31:28"
-            desc: "CMSIS NUMCOMP field"
+            desc: "DWT CTRL NUMCOMP field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "NOTRCPKT"
             bits: "27"
-            desc: "CMSIS NOTRCPKT field"
+            desc: "DWT trace-packet implementation status."
+            values:
+              - value: 0
+                desc: "Trace packet generation is implemented."
+              - value: 1
+                desc: "Trace packet generation is not implemented."
           - name: "NOEXTTRIG"
             bits: "26"
-            desc: "CMSIS NOEXTTRIG field"
+            desc: "DWT external-trigger implementation status."
+            values:
+              - value: 0
+                desc: "External match triggers are implemented."
+              - value: 1
+                desc: "External match triggers are not implemented."
           - name: "NOCYCCNT"
             bits: "25"
-            desc: "CMSIS NOCYCCNT field"
+            desc: "DWT cycle-counter implementation status."
+            values:
+              - value: 0
+                desc: "A cycle counter is implemented."
+              - value: 1
+                desc: "No cycle counter is implemented."
           - name: "NOPRFCNT"
             bits: "24"
-            desc: "CMSIS NOPRFCNT field"
+            desc: "DWT profiling-counter implementation status."
+            values:
+              - value: 0
+                desc: "Profiling counters are implemented."
+              - value: 1
+                desc: "Profiling counters are not implemented."
       - addr: 3758100484
         name: "CYCCNT"
         access: "RW"
@@ -2869,19 +3134,24 @@ pages:
         fields:
           - name: "ID"
             bits: "31:27"
-            desc: "CMSIS ID field"
+            desc: "DWT comparator/function capability identifier."
           - name: "MATCHED"
             bits: "24"
-            desc: "CMSIS MATCHED field"
+            desc: "DWT comparator-match status."
+            values:
+              - value: 0
+                desc: "The comparator has not matched."
+              - value: 1
+                desc: "The comparator has matched."
           - name: "DATAVSIZE"
             bits: "11:10"
-            desc: "CMSIS DATAVSIZE field"
+            desc: "Data value size watched by the DWT comparator."
           - name: "ACTION"
             bits: "5:4"
-            desc: "CMSIS ACTION field"
+            desc: "Action taken when the DWT comparator matches, encoded according to the implemented DWT architecture."
           - name: "MATCH"
             bits: "3:0"
-            desc: "CMSIS MATCH field"
+            desc: "DWT comparator match mode."
       - addr: 3758100528
         name: "COMP1"
         access: "RW"
@@ -2903,19 +3173,24 @@ pages:
         fields:
           - name: "ID"
             bits: "31:27"
-            desc: "CMSIS ID field"
+            desc: "DWT comparator/function capability identifier."
           - name: "MATCHED"
             bits: "24"
-            desc: "CMSIS MATCHED field"
+            desc: "DWT comparator-match status."
+            values:
+              - value: 0
+                desc: "The comparator has not matched."
+              - value: 1
+                desc: "The comparator has matched."
           - name: "DATAVSIZE"
             bits: "11:10"
-            desc: "CMSIS DATAVSIZE field"
+            desc: "Data value size watched by the DWT comparator."
           - name: "ACTION"
             bits: "5:4"
-            desc: "CMSIS ACTION field"
+            desc: "Action taken when the DWT comparator matches, encoded according to the implemented DWT architecture."
           - name: "MATCH"
             bits: "3:0"
-            desc: "CMSIS MATCH field"
+            desc: "DWT comparator match mode."
       - addr: 3758104508
         name: "DEVARCH"
         access: "RO"
@@ -2959,7 +3234,7 @@ pages:
         fields:
           - name: "PRESCALER"
             bits: "12:0"
-            desc: "CMSIS PRESCALER field"
+            desc: "TPIU ACPR PRESCALER field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758358768
         name: "SPPR"
         access: "RW"
@@ -2972,7 +3247,7 @@ pages:
         fields:
           - name: "TXMODE"
             bits: "1:0"
-            desc: "CMSIS TXMODE field"
+            desc: "TPIU SPPR TXMODE field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758359296
         name: "FFSR"
         access: "RO"
@@ -2985,16 +3260,21 @@ pages:
         fields:
           - name: "FtNonStop"
             bits: "3"
-            desc: "CMSIS FtNonStop field"
+            desc: "TPIU FFSR Ft Non Stop field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "TCPresent"
             bits: "2"
-            desc: "CMSIS TCPresent field"
+            desc: "TPIU FFSR TCPresent validity/presence indicator."
+            values:
+              - value: 0
+                desc: "TPIU FFSR TCPresent is invalid or absent."
+              - value: 1
+                desc: "TPIU FFSR TCPresent is valid or present."
           - name: "FtStopped"
             bits: "1"
-            desc: "CMSIS FtStopped field"
+            desc: "TPIU FFSR Ft Stopped field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "FlInProg"
             bits: "0"
-            desc: "CMSIS FlInProg field"
+            desc: "TPIU FFSR Fl In Prog field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758359300
         name: "FFCR"
         access: "RW"
@@ -3007,13 +3287,13 @@ pages:
         fields:
           - name: "TrigIn"
             bits: "8"
-            desc: "CMSIS TrigIn field"
+            desc: "TPIU FFCR Trig In field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "FOnMan"
             bits: "6"
-            desc: "CMSIS FOnMan field"
+            desc: "TPIU FFCR FOn Man field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "EnFCont"
             bits: "1"
-            desc: "CMSIS EnFCont field"
+            desc: "TPIU FFCR En FCont field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758359304
         name: "PSCR"
         access: "RW"
@@ -3026,7 +3306,7 @@ pages:
         fields:
           - name: "PSCount"
             bits: "4:0"
-            desc: "CMSIS PSCount field"
+            desc: "TPIU PSCR PSCount field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758362344
         name: "TRIGGER"
         access: "RO"
@@ -3039,7 +3319,7 @@ pages:
         fields:
           - name: "TRIGGER"
             bits: "0"
-            desc: "TRIGGER"
+            desc: "TPIU TRIGGER TRIGGER field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758362348
         name: "ITFTTD0"
         access: "RO"
@@ -3052,29 +3332,29 @@ pages:
         fields:
           - name: "ATB_IF2_ATVALID"
             bits: "30:29"
-            desc: "TPIU ITFTTD0: ATB Interface 2 ATVALIDPosition"
+            desc: "ATB Interface 2 ATVALIDPosition"
           - name: "ATB_IF2_bytecount"
             bits: "28:27"
-            desc: "TPIU ITFTTD0: ATB Interface 2 byte count"
+            desc: "ATB Interface 2 byte count"
             condition: "Field view: ATB_IF2_bytecount"
           - name: "ATB_IF1_ATVALID"
             bits: "27:26"
-            desc: "TPIU ITFTTD0: ATB Interface 1 ATVALID"
+            desc: "ATB Interface 1 ATVALID"
             condition: "Field view: ATB_IF1_ATVALID"
           - name: "ATB_IF1_bytecount"
             bits: "25:24"
-            desc: "TPIU ITFTTD0: ATB Interface 1 byte count"
+            desc: "ATB Interface 1 byte count"
           - name: "ATB_IF1_data1"
             bits: "15:8"
-            desc: "TPIU ITFTTD0: ATB Interface 1 data1"
+            desc: "ATB Interface 1 data1"
             condition: "Field view: ATB_IF1_data1"
           - name: "ATB_IF1_data2"
             bits: "15:8"
-            desc: "TPIU ITFTTD0: ATB Interface 1 data2"
+            desc: "ATB Interface 1 data2"
             condition: "Field view: ATB_IF1_data2"
           - name: "ATB_IF1_data0"
             bits: "7:0"
-            desc: "TPIU ITFTTD0: ATB Interface 1 data0"
+            desc: "ATB Interface 1 data0"
       - addr: 3758362352
         name: "ITATBCTR2"
         access: "RW"
@@ -3087,19 +3367,19 @@ pages:
         fields:
           - name: "AFVALID1S"
             bits: "1"
-            desc: "CMSIS AFVALID1S field"
+            desc: "TPIU ITATBCTR2 AFVALID1S field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: AFVALID1S"
           - name: "AFVALID2S"
             bits: "1"
-            desc: "CMSIS AFVALID2S field"
+            desc: "TPIU ITATBCTR2 AFVALID2S field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: AFVALID2S"
           - name: "ATREADY1S"
             bits: "0"
-            desc: "CMSIS ATREADY1S field"
+            desc: "TPIU ITATBCTR2 ATREADY1S field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: ATREADY1S"
           - name: "ATREADY2S"
             bits: "0"
-            desc: "CMSIS ATREADY2S field"
+            desc: "TPIU ITATBCTR2 ATREADY2S field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: ATREADY2S"
       - addr: 3758362360
         name: "ITATBCTR0"
@@ -3113,19 +3393,19 @@ pages:
         fields:
           - name: "AFVALID1S"
             bits: "1"
-            desc: "CMSIS AFVALID1S field"
+            desc: "TPIU ITATBCTR0 AFVALID1S field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: AFVALID1S"
           - name: "AFVALID2S"
             bits: "1"
-            desc: "CMSIS AFVALID2S field"
+            desc: "TPIU ITATBCTR0 AFVALID2S field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: AFVALID2S"
           - name: "ATREADY1S"
             bits: "0"
-            desc: "CMSIS ATREADY1S field"
+            desc: "TPIU ITATBCTR0 ATREADY1S field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: ATREADY1S"
           - name: "ATREADY2S"
             bits: "0"
-            desc: "CMSIS ATREADY2S field"
+            desc: "TPIU ITATBCTR0 ATREADY2S field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: ATREADY2S"
       - addr: 3758362364
         name: "ITFTTD1"
@@ -3139,29 +3419,29 @@ pages:
         fields:
           - name: "ATB_IF2_ATVALID"
             bits: "30:29"
-            desc: "TPIU ITFTTD1: ATB Interface 2 ATVALID"
+            desc: "ATB Interface 2 ATVALID"
           - name: "ATB_IF2_bytecount"
             bits: "28:27"
-            desc: "TPIU ITFTTD1: ATB Interface 2 byte count"
+            desc: "ATB Interface 2 byte count"
             condition: "Field view: ATB_IF2_bytecount"
           - name: "ATB_IF1_ATVALID"
             bits: "27:26"
-            desc: "TPIU ITFTTD1: ATB Interface 1 ATVALID"
+            desc: "ATB Interface 1 ATVALID"
             condition: "Field view: ATB_IF1_ATVALID"
           - name: "ATB_IF1_bytecount"
             bits: "25:24"
-            desc: "TPIU ITFTTD1: ATB Interface 1 byte count"
+            desc: "ATB Interface 1 byte count"
           - name: "ATB_IF2_data1"
             bits: "15:8"
-            desc: "TPIU ITFTTD1: ATB Interface 2 data1"
+            desc: "ATB Interface 2 data1"
             condition: "Field view: ATB_IF2_data1"
           - name: "ATB_IF2_data2"
             bits: "15:8"
-            desc: "TPIU ITFTTD1: ATB Interface 2 data2"
+            desc: "ATB Interface 2 data2"
             condition: "Field view: ATB_IF2_data2"
           - name: "ATB_IF2_data0"
             bits: "7:0"
-            desc: "TPIU ITFTTD1: ATB Interface 2 data0"
+            desc: "ATB Interface 2 data0"
       - addr: 3758362368
         name: "ITCTRL"
         access: "RW"
@@ -3174,7 +3454,7 @@ pages:
         fields:
           - name: "Mode"
             bits: "1:0"
-            desc: "CMSIS Mode field"
+            desc: "TPIU ITCTRL Mode field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758362528
         name: "CLAIMSET"
         access: "RW"
@@ -3205,19 +3485,34 @@ pages:
         fields:
           - name: "NRZVALID"
             bits: "11"
-            desc: "CMSIS NRZVALID field"
+            desc: "TPIU DEVID NRZVALID validity/presence indicator."
+            values:
+              - value: 0
+                desc: "TPIU DEVID NRZVALID is invalid or absent."
+              - value: 1
+                desc: "TPIU DEVID NRZVALID is valid or present."
           - name: "MANCVALID"
             bits: "10"
-            desc: "CMSIS MANCVALID field"
+            desc: "TPIU DEVID MANCVALID validity/presence indicator."
+            values:
+              - value: 0
+                desc: "TPIU DEVID MANCVALID is invalid or absent."
+              - value: 1
+                desc: "TPIU DEVID MANCVALID is valid or present."
           - name: "PTINVALID"
             bits: "9"
-            desc: "CMSIS PTINVALID field"
+            desc: "TPIU DEVID PTINVALID validity/presence indicator."
+            values:
+              - value: 0
+                desc: "TPIU DEVID PTINVALID is invalid or absent."
+              - value: 1
+                desc: "TPIU DEVID PTINVALID is valid or present."
           - name: "FIFOSZ"
             bits: "8:6"
-            desc: "CMSIS FIFOSZ field"
+            desc: "TPIU DEVID FIFOSZ field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "NrTraceInput"
             bits: "5:0"
-            desc: "CMSIS NrTraceInput field"
+            desc: "TPIU DEVID Nr Trace Input field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758362572
         name: "DEVTYPE"
         access: "RO"
@@ -3230,11 +3525,11 @@ pages:
         fields:
           - name: "MajorType"
             bits: "3:0"
-            desc: "CMSIS MajorType field"
+            desc: "TPIU DEVTYPE Major Type field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: MajorType"
           - name: "SubType"
             bits: "3:0"
-            desc: "CMSIS SubType field"
+            desc: "TPIU DEVTYPE Sub Type field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: SubType"
   DCB:
     access: "Memory-mapped Core Peripheral access"
@@ -3252,52 +3547,52 @@ pages:
         fields:
           - name: "DBGKEY"
             bits: "31:16"
-            desc: "DCB DHCSR: Debug key"
+            desc: "Debug key"
             condition: "Field view: DBGKEY"
           - name: "S_RESTART_ST"
             bits: "26"
-            desc: "DCB DHCSR: Restart sticky status"
+            desc: "Restart sticky status"
             condition: "Field view: S_RESTART_ST"
           - name: "S_RESET_ST"
             bits: "25"
-            desc: "DCB DHCSR: Reset sticky status"
+            desc: "Reset sticky status"
             condition: "Field view: S_RESET_ST"
           - name: "S_RETIRE_ST"
             bits: "24"
-            desc: "DCB DHCSR: Retire sticky status"
+            desc: "Retire sticky status"
             condition: "Field view: S_RETIRE_ST"
           - name: "S_SDE"
             bits: "20"
-            desc: "DCB DHCSR: Secure debug enabled"
+            desc: "Secure debug enabled"
             condition: "Field view: S_SDE"
           - name: "S_LOCKUP"
             bits: "19"
-            desc: "DCB DHCSR: Lockup status"
+            desc: "Lockup status"
             condition: "Field view: S_LOCKUP"
           - name: "S_SLEEP"
             bits: "18"
-            desc: "DCB DHCSR: Sleeping status"
+            desc: "Sleeping status"
             condition: "Field view: S_SLEEP"
           - name: "S_HALT"
             bits: "17"
-            desc: "DCB DHCSR: Halted status"
+            desc: "Halted status"
             condition: "Field view: S_HALT"
           - name: "S_REGRDY"
             bits: "16"
-            desc: "DCB DHCSR: Register ready status"
+            desc: "Register ready status"
             condition: "Field view: S_REGRDY"
           - name: "C_MASKINTS"
             bits: "3"
-            desc: "DCB DHCSR: Mask interrupts control"
+            desc: "Mask interrupts control"
           - name: "C_STEP"
             bits: "2"
-            desc: "DCB DHCSR: Step control"
+            desc: "Step control"
           - name: "C_HALT"
             bits: "1"
-            desc: "DCB DHCSR: Halt control"
+            desc: "Halt control"
           - name: "C_DEBUGEN"
             bits: "0"
-            desc: "DCB DHCSR: Debug enable control"
+            desc: "Debug enable control"
       - addr: 3758157300
         name: "DCRSR"
         access: "WO"
@@ -3310,10 +3605,10 @@ pages:
         fields:
           - name: "REGWnR"
             bits: "16"
-            desc: "DCB DCRSR: Register write/not-read"
+            desc: "Register write/not-read"
           - name: "REGSEL"
             bits: "6:0"
-            desc: "DCB DCRSR: Register selector"
+            desc: "Register selector"
       - addr: 3758157304
         name: "DCRDR"
         access: "RW"
@@ -3326,7 +3621,7 @@ pages:
         fields:
           - name: "DBGTMP"
             bits: "31:0"
-            desc: "DCB DCRDR: Data temporary buffer"
+            desc: "Data temporary buffer"
       - addr: 3758157308
         name: "DEMCR"
         access: "RW"
@@ -3339,13 +3634,13 @@ pages:
         fields:
           - name: "TRCENA"
             bits: "24"
-            desc: "DCB DEMCR: Trace enable"
+            desc: "Trace enable"
           - name: "VC_HARDERR"
             bits: "10"
-            desc: "DCB DEMCR: Vector Catch HardFault errors"
+            desc: "Vector Catch HardFault errors"
           - name: "VC_CORERESET"
             bits: "0"
-            desc: "DCB DEMCR: Vector Catch Core reset"
+            desc: "Vector Catch Core reset"
       - addr: 3758157316
         name: "DAUTHCTRL"
         access: "RW"
@@ -3358,16 +3653,16 @@ pages:
         fields:
           - name: "INTSPNIDEN"
             bits: "3"
-            desc: "DCB DAUTHCTRL: Internal Secure non-invasive debug enable"
+            desc: "Internal Secure non-invasive debug enable"
           - name: "SPNIDENSEL"
             bits: "2"
-            desc: "DCB DAUTHCTRL: Secure non-invasive debug enable select"
+            desc: "Secure non-invasive debug enable select"
           - name: "INTSPIDEN"
             bits: "1"
-            desc: "DCB DAUTHCTRL: Internal Secure invasive debug enable"
+            desc: "Internal Secure invasive debug enable"
           - name: "SPIDENSEL"
             bits: "0"
-            desc: "DCB DAUTHCTRL: Secure invasive debug enable select"
+            desc: "Secure invasive debug enable select"
       - addr: 3758157320
         name: "DSCSR"
         access: "RW"
@@ -3380,16 +3675,16 @@ pages:
         fields:
           - name: "CDSKEY"
             bits: "17"
-            desc: "DCB DSCSR: CDS write-enable key"
+            desc: "CDS write-enable key"
           - name: "CDS"
             bits: "16"
-            desc: "DCB DSCSR: Current domain Secure"
+            desc: "Current domain Secure"
           - name: "SBRSEL"
             bits: "1"
-            desc: "DCB DSCSR: Secure banked register select"
+            desc: "Secure banked register select"
           - name: "SBRSELEN"
             bits: "0"
-            desc: "DCB DSCSR: Secure banked register select enable"
+            desc: "Secure banked register select enable"
   DIB:
     access: "Memory-mapped Core Peripheral access"
     desc: "DIB registers from DIB_Type"
@@ -3406,7 +3701,7 @@ pages:
         fields:
           - name: "KEY"
             bits: "31:0"
-            desc: "CMSIS KEY field"
+            desc: "DIB DLAR KEY field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758157748
         name: "DLSR"
         access: "RO"
@@ -3419,13 +3714,13 @@ pages:
         fields:
           - name: "nTT"
             bits: "2"
-            desc: "DIB DLSR: Not thirty-two bit"
+            desc: "Not thirty-two bit"
           - name: "SLK"
             bits: "1"
-            desc: "DIB DLSR: Software Lock status"
+            desc: "Software Lock status"
           - name: "SLI"
             bits: "0"
-            desc: "DIB DLSR: Software Lock implemented"
+            desc: "Software Lock implemented"
       - addr: 3758157752
         name: "DAUTHSTATUS"
         access: "RO"
@@ -3438,16 +3733,16 @@ pages:
         fields:
           - name: "SNID"
             bits: "7:6"
-            desc: "DIB DAUTHSTATUS: Secure Non-invasive Debug"
+            desc: "Secure Non-invasive Debug"
           - name: "SID"
             bits: "5:4"
-            desc: "DIB DAUTHSTATUS: Secure Invasive Debug"
+            desc: "Secure Invasive Debug"
           - name: "NSNID"
             bits: "3:2"
-            desc: "DIB DAUTHSTATUS: Non-secure Non-invasive Debug"
+            desc: "Non-secure Non-invasive Debug"
           - name: "NSID"
             bits: "1:0"
-            desc: "DIB DAUTHSTATUS: Non-secure Invasive Debug"
+            desc: "Non-secure Invasive Debug"
       - addr: 3758157756
         name: "DDEVARCH"
         access: "RO"
@@ -3460,21 +3755,21 @@ pages:
         fields:
           - name: "ARCHITECT"
             bits: "31:21"
-            desc: "CMSIS ARCHITECT field"
+            desc: "DIB DDEVARCH ARCHITECT field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: ARCHITECT"
           - name: "PRESENT"
             bits: "24:20"
-            desc: "CMSIS PRESENT field"
+            desc: "DEVARCH Present"
             condition: "Field view: PRESENT"
           - name: "REVISION"
             bits: "19:16"
-            desc: "CMSIS REVISION field"
+            desc: "DIB DDEVARCH REVISION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "ARCHVER"
             bits: "15:12"
-            desc: "DIB DDEVARCH: Architecture Version"
+            desc: "Architecture Version"
           - name: "ARCHPART"
             bits: "11:0"
-            desc: "DIB DDEVARCH: Architecture Part"
+            desc: "Architecture Part"
       - addr: 3758157760
         name: "DDEVTYPE"
         access: "RO"
@@ -3487,10 +3782,10 @@ pages:
         fields:
           - name: "SUB"
             bits: "7:4"
-            desc: "-type"
+            desc: "Sub-type"
           - name: "MAJOR"
             bits: "3:0"
-            desc: "type"
+            desc: "Major type"
   MPU:
     access: "Memory-mapped Core Peripheral access"
     desc: "MPU registers from MPU_Type"
@@ -3508,13 +3803,18 @@ pages:
         fields:
           - name: "IREGION"
             bits: "23:16"
-            desc: "CMSIS IREGION field"
+            desc: "MPU TYPE IREGION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "DREGION"
             bits: "15:8"
-            desc: "CMSIS DREGION field"
+            desc: "MPU TYPE DREGION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "SEPARATE"
             bits: "0"
-            desc: "CMSIS SEPARATE field"
+            desc: "Separate instruction/data-region indicator."
+            values:
+              - value: 0
+                desc: "Instruction and data regions share one region set."
+              - value: 1
+                desc: "Separate instruction and data region sets are implemented."
       - addr: 3758157204
         name: "CTRL"
         access: "RW"
@@ -3528,13 +3828,28 @@ pages:
         fields:
           - name: "PRIVDEFENA"
             bits: "2"
-            desc: "CMSIS PRIVDEFENA field"
+            desc: "Privileged default-map control."
+            values:
+              - value: 0
+                desc: "Privileged software cannot use the default memory map when no MPU region matches."
+              - value: 1
+                desc: "Privileged software can use the default memory map when no MPU region matches."
           - name: "HFNMIENA"
             bits: "1"
-            desc: "CMSIS HFNMIENA field"
+            desc: "MPU fault handling in HardFault/NMI control."
+            values:
+              - value: 0
+                desc: "MPU checking is disabled during HardFault and NMI handlers."
+              - value: 1
+                desc: "MPU checking remains enabled during HardFault and NMI handlers."
           - name: "ENABLE"
             bits: "0"
-            desc: "CMSIS ENABLE field"
+            desc: "MPU enable control."
+            values:
+              - value: 0
+                desc: "The MPU is disabled."
+              - value: 1
+                desc: "The MPU is enabled."
       - addr: 3758157208
         name: "RNR"
         access: "RW"
@@ -3548,7 +3863,7 @@ pages:
         fields:
           - name: "REGION"
             bits: "7:0"
-            desc: "CMSIS REGION field"
+            desc: "MPU region number selected for the following region-register access."
       - addr: 3758157212
         name: "RBAR"
         access: "RW"
@@ -3562,16 +3877,21 @@ pages:
         fields:
           - name: "BASE"
             bits: "31:5"
-            desc: "CMSIS BASE field"
+            desc: "Base address of the MPU region, aligned according to the implemented region granularity."
           - name: "SH"
             bits: "4:3"
-            desc: "CMSIS SH field"
+            desc: "Shareability encoding for the MPU region."
           - name: "AP"
             bits: "2:1"
-            desc: "CMSIS AP field"
+            desc: "Access-permission encoding for the MPU region; the encoding determines privileged/unprivileged read/write permissions."
           - name: "XN"
             bits: "0"
-            desc: "CMSIS XN field"
+            desc: "Execute-never control."
+            values:
+              - value: 0
+                desc: "Instruction execution is permitted in this region when other permissions allow it."
+              - value: 1
+                desc: "Instruction execution is prohibited in this region."
       - addr: 3758157216
         name: "RLAR"
         access: "RW"
@@ -3585,13 +3905,13 @@ pages:
         fields:
           - name: "LIMIT"
             bits: "31:5"
-            desc: "CMSIS LIMIT field"
+            desc: "Limit address of the MPU region, aligned according to the implemented region granularity."
           - name: "AttrIndx"
             bits: "3:1"
-            desc: "CMSIS AttrIndx field"
+            desc: "Index into the MAIR attribute table used for this MPU region."
           - name: "EN"
             bits: "0"
-            desc: "able bit"
+            desc: "Region enable bit"
       - addr: 3758157248
         name: "MAIR0"
         access: "RW"
@@ -3605,16 +3925,16 @@ pages:
         fields:
           - name: "Attr3"
             bits: "31:24"
-            desc: "CMSIS Attr3 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr2"
             bits: "23:16"
-            desc: "CMSIS Attr2 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr1"
             bits: "15:8"
-            desc: "CMSIS Attr1 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr0"
             bits: "7:0"
-            desc: "CMSIS Attr0 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
       - addr: 3758157252
         name: "MAIR1"
         access: "RW"
@@ -3628,16 +3948,16 @@ pages:
         fields:
           - name: "Attr7"
             bits: "31:24"
-            desc: "CMSIS Attr7 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr6"
             bits: "23:16"
-            desc: "CMSIS Attr6 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr5"
             bits: "15:8"
-            desc: "CMSIS Attr5 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr4"
             bits: "7:0"
-            desc: "CMSIS Attr4 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
   SAU:
     access: "Memory-mapped Core Peripheral access"
     desc: "SAU registers from SAU_Type"
@@ -3655,10 +3975,20 @@ pages:
         fields:
           - name: "ALLNS"
             bits: "1"
-            desc: "CMSIS ALLNS field"
+            desc: "Default security attribution control."
+            values:
+              - value: 0
+                desc: "Unmatched addresses use the architecture-defined default security attribution."
+              - value: 1
+                desc: "Unmatched addresses are attributed as Non-secure."
           - name: "ENABLE"
             bits: "0"
-            desc: "CMSIS ENABLE field"
+            desc: "SAU enable control."
+            values:
+              - value: 0
+                desc: "The Security Attribution Unit is disabled."
+              - value: 1
+                desc: "The Security Attribution Unit is enabled."
       - addr: 3758157268
         name: "TYPE"
         access: "RO"
@@ -3672,7 +4002,7 @@ pages:
         fields:
           - name: "SREGION"
             bits: "7:0"
-            desc: "CMSIS SREGION field"
+            desc: "SAU TYPE SREGION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758157272
         name: "RNR"
         access: "RW"
@@ -3686,7 +4016,7 @@ pages:
         fields:
           - name: "REGION"
             bits: "7:0"
-            desc: "CMSIS REGION field"
+            desc: "Selected SAU region number."
       - addr: 3758157276
         name: "RBAR"
         access: "RW"
@@ -3700,7 +4030,7 @@ pages:
         fields:
           - name: "BADDR"
             bits: "31:5"
-            desc: "CMSIS BADDR field"
+            desc: "SAU region boundary address, aligned according to the implemented SAU granularity."
       - addr: 3758157280
         name: "RLAR"
         access: "RW"
@@ -3714,13 +4044,23 @@ pages:
         fields:
           - name: "LADDR"
             bits: "31:5"
-            desc: "CMSIS LADDR field"
+            desc: "SAU region boundary address, aligned according to the implemented SAU granularity."
           - name: "NSC"
             bits: "1"
-            desc: "CMSIS NSC field"
+            desc: "Non-secure Callable attribution control."
+            values:
+              - value: 0
+                desc: "The region is not Non-secure Callable."
+              - value: 1
+                desc: "The region is Non-secure Callable."
           - name: "ENABLE"
             bits: "0"
-            desc: "CMSIS ENABLE field"
+            desc: "SAU enable control."
+            values:
+              - value: 0
+                desc: "The Security Attribution Unit is disabled."
+              - value: 1
+                desc: "The Security Attribution Unit is enabled."
   SCB_NS:
     access: "Memory-mapped Core Peripheral access"
     desc: "SCB_NS registers from SCB_Type"
@@ -3738,19 +4078,19 @@ pages:
         fields:
           - name: "IMPLEMENTER"
             bits: "31:24"
-            desc: "CMSIS IMPLEMENTER field"
+            desc: "SCB CPUID IMPLEMENTER field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "VARIANT"
             bits: "23:20"
-            desc: "CMSIS VARIANT field"
+            desc: "SCB CPUID VARIANT field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "ARCHITECTURE"
             bits: "19:16"
-            desc: "CMSIS ARCHITECTURE field"
+            desc: "SCB CPUID ARCHITECTURE field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "PARTNO"
             bits: "15:4"
-            desc: "CMSIS PARTNO field"
+            desc: "SCB CPUID PARTNO field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "REVISION"
             bits: "3:0"
-            desc: "CMSIS REVISION field"
+            desc: "SCB CPUID REVISION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758288132
         name: "ICSR"
         access: "RW"
@@ -3764,40 +4104,85 @@ pages:
         fields:
           - name: "PENDNMISET"
             bits: "31"
-            desc: "CMSIS PENDNMISET field"
+            desc: "NMI pending-set request/status."
+            values:
+              - value: 0
+                desc: "NMI is not pending or no set request is issued."
+              - value: 1
+                desc: "NMI is pending or is requested to become pending by a write of 1."
           - name: "PENDNMICLR"
             bits: "30"
-            desc: "CMSIS PENDNMICLR field"
+            desc: "NMI pending-clear command."
+            values:
+              - value: 0
+                desc: "No clear request is issued."
+              - value: 1
+                desc: "Writing 1 clears the pending NMI state; reads may return 0."
           - name: "PENDSVSET"
             bits: "28"
-            desc: "CMSIS PENDSVSET field"
+            desc: "PendSV pending-set request/status."
+            values:
+              - value: 0
+                desc: "PendSV is not pending or no set request is issued."
+              - value: 1
+                desc: "PendSV is pending or is requested to become pending by a write of 1."
           - name: "PENDSVCLR"
             bits: "27"
-            desc: "CMSIS PENDSVCLR field"
+            desc: "PendSV pending-clear command."
+            values:
+              - value: 0
+                desc: "No clear request is issued."
+              - value: 1
+                desc: "Writing 1 clears the pending PendSV state; reads may return 0."
           - name: "PENDSTSET"
             bits: "26"
-            desc: "CMSIS PENDSTSET field"
+            desc: "SysTick pending-set request/status."
+            values:
+              - value: 0
+                desc: "SysTick is not pending or no set request is issued."
+              - value: 1
+                desc: "SysTick is pending or is requested to become pending by a write of 1."
           - name: "PENDSTCLR"
             bits: "25"
-            desc: "CMSIS PENDSTCLR field"
+            desc: "SysTick pending-clear command."
+            values:
+              - value: 0
+                desc: "No clear request is issued."
+              - value: 1
+                desc: "Writing 1 clears the pending SysTick state; reads may return 0."
           - name: "STTNS"
             bits: "24"
-            desc: "Position (Security Extension)"
+            desc: "STTNS Position (Security Extension)"
           - name: "ISRPREEMPT"
             bits: "23"
-            desc: "CMSIS ISRPREEMPT field"
+            desc: "Interrupt preemption pending status."
+            values:
+              - value: 0
+                desc: "No interrupt preemption is pending."
+              - value: 1
+                desc: "Interrupt preemption is pending."
           - name: "ISRPENDING"
             bits: "22"
-            desc: "CMSIS ISRPENDING field"
+            desc: "External interrupt pending status."
+            values:
+              - value: 0
+                desc: "No external interrupt is pending."
+              - value: 1
+                desc: "At least one external interrupt is pending."
           - name: "VECTPENDING"
             bits: "20:12"
-            desc: "CMSIS VECTPENDING field"
+            desc: "Highest-priority pending exception number. Zero means no exception is pending."
           - name: "RETTOBASE"
             bits: "11"
-            desc: "CMSIS RETTOBASE field"
+            desc: "Exception-return stack status."
+            values:
+              - value: 0
+                desc: "Another exception is active beneath the current exception."
+              - value: 1
+                desc: "The current exception is the only active exception; exception return will return to Thread mode."
           - name: "VECTACTIVE"
             bits: "8:0"
-            desc: "CMSIS VECTACTIVE field"
+            desc: "Active exception number. Zero means Thread mode; a non-zero value identifies the currently active exception."
       - addr: 3758288136
         name: "VTOR"
         access: "RW"
@@ -3811,7 +4196,7 @@ pages:
         fields:
           - name: "TBLOFF"
             bits: "31:7"
-            desc: "CMSIS TBLOFF field"
+            desc: "SCB VTOR TBLOFF field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758288140
         name: "AIRCR"
         access: "RW"
@@ -3825,30 +4210,45 @@ pages:
         fields:
           - name: "VECTKEY"
             bits: "31:16"
-            desc: "CMSIS VECTKEY field"
+            desc: "SCB AIRCR VECTKEY field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: VECTKEY"
           - name: "VECTKEYSTAT"
             bits: "31:16"
-            desc: "CMSIS VECTKEYSTAT field"
+            desc: "SCB AIRCR VECTKEYSTAT field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: VECTKEYSTAT"
           - name: "ENDIANNESS"
             bits: "15"
-            desc: "CMSIS ENDIANNESS field"
+            desc: "Data endianness indicator. This read-only field reports the processor's implemented data endianness."
           - name: "PRIS"
             bits: "14"
-            desc: "CMSIS PRIS field"
+            desc: "SCB AIRCR PRIS field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "BFHFNMINS"
             bits: "13"
-            desc: "CMSIS BFHFNMINS field"
+            desc: "SCB AIRCR BFHFNMINS field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "SYSRESETREQS"
             bits: "3"
-            desc: "CMSIS SYSRESETREQS field"
+            desc: "Secure system-reset request control."
+            values:
+              - value: 0
+                desc: "Secure state cannot request a system reset through this control."
+              - value: 1
+                desc: "Secure state may request a system reset through this control."
           - name: "SYSRESETREQ"
             bits: "2"
-            desc: "CMSIS SYSRESETREQ field"
+            desc: "System-reset request control. Writing 1 requests a system reset through the implementation's reset controller."
+            values:
+              - value: 0
+                desc: "No system-reset request is issued."
+              - value: 1
+                desc: "A system-reset request is issued when permitted."
           - name: "VECTCLRACTIVE"
             bits: "1"
-            desc: "CMSIS VECTCLRACTIVE field"
+            desc: "Active-exception clear control. Writing 1 clears active exception state where the architecture permits it; this is intended for debug/reset use and must be used with care."
+            values:
+              - value: 0
+                desc: "No active-exception clear request is issued."
+              - value: 1
+                desc: "An active-exception clear request is issued."
       - addr: 3758288144
         name: "SCR"
         access: "RW"
@@ -3862,16 +4262,36 @@ pages:
         fields:
           - name: "SEVONPEND"
             bits: "4"
-            desc: "CMSIS SEVONPEND field"
+            desc: "Send-event-on-pending control. If enabled, a pending interrupt can wake a processor waiting for an event."
+            values:
+              - value: 0
+                desc: "Pending interrupts do not generate an event."
+              - value: 1
+                desc: "A pending interrupt generates an event that can wake WFE."
           - name: "SLEEPDEEPS"
             bits: "3"
-            desc: "CMSIS SLEEPDEEPS field"
+            desc: "Secure deep-sleep request control."
+            values:
+              - value: 0
+                desc: "Deep sleep is not requested for Secure state."
+              - value: 1
+                desc: "Secure state requests deep sleep when the sleep instruction is executed."
           - name: "SLEEPDEEP"
             bits: "2"
-            desc: "CMSIS SLEEPDEEP field"
+            desc: "Deep-sleep request control."
+            values:
+              - value: 0
+                desc: "Sleep instructions request ordinary sleep."
+              - value: 1
+                desc: "Sleep instructions request deep sleep."
           - name: "SLEEPONEXIT"
             bits: "1"
-            desc: "CMSIS SLEEPONEXIT field"
+            desc: "Sleep-on-exception-return control."
+            values:
+              - value: 0
+                desc: "After an exception handler returns, normal Thread-mode execution resumes."
+              - value: 1
+                desc: "After an exception handler returns, the processor enters sleep instead of returning to Thread mode."
       - addr: 3758288148
         name: "CCR"
         access: "RW"
@@ -3885,28 +4305,68 @@ pages:
         fields:
           - name: "BP"
             bits: "18"
-            desc: "CMSIS BP field"
+            desc: "Branch-prediction enable control."
+            values:
+              - value: 0
+                desc: "Branch prediction is disabled."
+              - value: 1
+                desc: "Branch prediction is enabled."
           - name: "IC"
             bits: "17"
-            desc: "CMSIS IC field"
+            desc: "Instruction-cache enable control."
+            values:
+              - value: 0
+                desc: "The instruction cache is disabled."
+              - value: 1
+                desc: "The instruction cache is enabled."
           - name: "DC"
             bits: "16"
-            desc: "CMSIS DC field"
+            desc: "Data-cache enable control."
+            values:
+              - value: 0
+                desc: "The data cache is disabled."
+              - value: 1
+                desc: "The data cache is enabled."
           - name: "STKOFHFNMIGN"
             bits: "10"
-            desc: "CMSIS STKOFHFNMIGN field"
+            desc: "Stack-overflow handling in HardFault/NMI control."
+            values:
+              - value: 0
+                desc: "Stack-limit violations are not ignored during HardFault or NMI handling."
+              - value: 1
+                desc: "Stack-limit violations are ignored during HardFault or NMI handling."
           - name: "BFHFNMIGN"
             bits: "8"
-            desc: "CMSIS BFHFNMIGN field"
+            desc: "BusFault handling in HardFault/NMI control."
+            values:
+              - value: 0
+                desc: "BusFaults are not ignored during HardFault or NMI handling."
+              - value: 1
+                desc: "BusFaults are ignored during HardFault or NMI handling."
           - name: "DIV_0_TRP"
             bits: "4"
-            desc: "CMSIS DIV_0_TRP field"
+            desc: "Divide-by-zero trapping control."
+            values:
+              - value: 0
+                desc: "Integer division by zero does not generate a UsageFault through this control."
+              - value: 1
+                desc: "Integer division by zero generates a UsageFault."
           - name: "UNALIGN_TRP"
             bits: "3"
-            desc: "CMSIS UNALIGN_TRP field"
+            desc: "Unaligned-access trapping control."
+            values:
+              - value: 0
+                desc: "Unaligned accesses are permitted when the instruction supports them."
+              - value: 1
+                desc: "Unaligned accesses generate a UsageFault."
           - name: "USERSETMPEND"
             bits: "1"
-            desc: "CMSIS USERSETMPEND field"
+            desc: "User-settable pending interrupt control."
+            values:
+              - value: 0
+                desc: "Unprivileged software cannot set an interrupt pending state through the software-trigger mechanism."
+              - value: 1
+                desc: "Unprivileged software may set an interrupt pending state through the software-trigger mechanism."
       - addr: 3758288156
         name: "SHPR[0]"
         access: "RW"
@@ -3940,25 +4400,50 @@ pages:
         fields:
           - name: "HARDFAULTPENDED"
             bits: "21"
-            desc: "CMSIS HARDFAULTPENDED field"
+            desc: "SCB SHCSR HARDFAULTPENDED field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "SVCALLPENDED"
             bits: "15"
-            desc: "CMSIS SVCALLPENDED field"
+            desc: "SCB SHCSR SVCALLPENDED field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "SYSTICKACT"
             bits: "11"
-            desc: "CMSIS SYSTICKACT field"
+            desc: "SYSTICK exception active status."
+            values:
+              - value: 0
+                desc: "SYSTICK exception is inactive."
+              - value: 1
+                desc: "SYSTICK exception is active."
           - name: "PENDSVACT"
             bits: "10"
-            desc: "CMSIS PENDSVACT field"
+            desc: "PENDSV exception active status."
+            values:
+              - value: 0
+                desc: "PENDSV exception is inactive."
+              - value: 1
+                desc: "PENDSV exception is active."
           - name: "SVCALLACT"
             bits: "7"
-            desc: "CMSIS SVCALLACT field"
+            desc: "SVCALL exception active status."
+            values:
+              - value: 0
+                desc: "SVCALL exception is inactive."
+              - value: 1
+                desc: "SVCALL exception is active."
           - name: "NMIACT"
             bits: "5"
-            desc: "CMSIS NMIACT field"
+            desc: "NMI exception active status."
+            values:
+              - value: 0
+                desc: "NMI exception is inactive."
+              - value: 1
+                desc: "NMI exception is active."
           - name: "HARDFAULTACT"
             bits: "2"
-            desc: "CMSIS HARDFAULTACT field"
+            desc: "HARDFAULT exception active status."
+            values:
+              - value: 0
+                desc: "HARDFAULT exception is inactive."
+              - value: 1
+                desc: "HARDFAULT exception is active."
   SysTick_NS:
     access: "Memory-mapped Core Peripheral access"
     desc: "SysTick_NS registers from SysTick_Type"
@@ -3976,16 +4461,36 @@ pages:
         fields:
           - name: "COUNTFLAG"
             bits: "16"
-            desc: "CMSIS COUNTFLAG field"
+            desc: "Counter-wrap status. This sticky status bit is set when the counter reaches zero and is cleared by reading the SysTick CTRL register."
+            values:
+              - value: 0
+                desc: "The counter has not wrapped since the last CTRL read."
+              - value: 1
+                desc: "The counter has wrapped since the last CTRL read."
           - name: "CLKSOURCE"
             bits: "2"
-            desc: "CMSIS CLKSOURCE field"
+            desc: "SysTick clock-source selection."
+            values:
+              - value: 0
+                desc: "Use the external/reference clock supplied to SysTick."
+              - value: 1
+                desc: "Use the processor clock."
           - name: "TICKINT"
             bits: "1"
-            desc: "CMSIS TICKINT field"
+            desc: "SysTick exception request control."
+            values:
+              - value: 0
+                desc: "Counter wrap does not request the SysTick exception."
+              - value: 1
+                desc: "Counter wrap requests the SysTick exception."
           - name: "ENABLE"
             bits: "0"
-            desc: "CMSIS ENABLE field"
+            desc: "SysTick counter enable control."
+            values:
+              - value: 0
+                desc: "The SysTick counter is stopped."
+              - value: 1
+                desc: "The SysTick counter counts down from LOAD."
       - addr: 3758284820
         name: "LOAD"
         access: "RW"
@@ -3999,7 +4504,7 @@ pages:
         fields:
           - name: "RELOAD"
             bits: "23:0"
-            desc: "CMSIS RELOAD field"
+            desc: "Value loaded into the SysTick counter when it reaches zero."
       - addr: 3758284824
         name: "VAL"
         access: "RW"
@@ -4013,7 +4518,7 @@ pages:
         fields:
           - name: "CURRENT"
             bits: "23:0"
-            desc: "CMSIS CURRENT field"
+            desc: "Current SysTick counter value; writing any value clears the counter to zero."
       - addr: 3758284828
         name: "CALIB"
         access: "RO"
@@ -4027,13 +4532,23 @@ pages:
         fields:
           - name: "NOREF"
             bits: "31"
-            desc: "CMSIS NOREF field"
+            desc: "Calibration reference-clock indicator."
+            values:
+              - value: 0
+                desc: "A separate reference clock is available for calibration."
+              - value: 1
+                desc: "No separate reference clock is available."
           - name: "SKEW"
             bits: "30"
-            desc: "CMSIS SKEW field"
+            desc: "Calibration skew indicator."
+            values:
+              - value: 0
+                desc: "The TENMS calibration value is accurate within the implementation's stated tolerance."
+              - value: 1
+                desc: "The TENMS calibration value is not guaranteed to be accurate."
           - name: "TENMS"
             bits: "23:0"
-            desc: "CMSIS TENMS field"
+            desc: "Reload value that calibrates a ten-millisecond interval for the available SysTick reference clock."
   NVIC_NS:
     access: "Memory-mapped Core Peripheral access"
     desc: "NVIC_NS registers from NVIC_Type"
@@ -6255,52 +6770,52 @@ pages:
         fields:
           - name: "DBGKEY"
             bits: "31:16"
-            desc: "DCB DHCSR: Debug key"
+            desc: "Debug key"
             condition: "Field view: DBGKEY"
           - name: "S_RESTART_ST"
             bits: "26"
-            desc: "DCB DHCSR: Restart sticky status"
+            desc: "Restart sticky status"
             condition: "Field view: S_RESTART_ST"
           - name: "S_RESET_ST"
             bits: "25"
-            desc: "DCB DHCSR: Reset sticky status"
+            desc: "Reset sticky status"
             condition: "Field view: S_RESET_ST"
           - name: "S_RETIRE_ST"
             bits: "24"
-            desc: "DCB DHCSR: Retire sticky status"
+            desc: "Retire sticky status"
             condition: "Field view: S_RETIRE_ST"
           - name: "S_SDE"
             bits: "20"
-            desc: "DCB DHCSR: Secure debug enabled"
+            desc: "Secure debug enabled"
             condition: "Field view: S_SDE"
           - name: "S_LOCKUP"
             bits: "19"
-            desc: "DCB DHCSR: Lockup status"
+            desc: "Lockup status"
             condition: "Field view: S_LOCKUP"
           - name: "S_SLEEP"
             bits: "18"
-            desc: "DCB DHCSR: Sleeping status"
+            desc: "Sleeping status"
             condition: "Field view: S_SLEEP"
           - name: "S_HALT"
             bits: "17"
-            desc: "DCB DHCSR: Halted status"
+            desc: "Halted status"
             condition: "Field view: S_HALT"
           - name: "S_REGRDY"
             bits: "16"
-            desc: "DCB DHCSR: Register ready status"
+            desc: "Register ready status"
             condition: "Field view: S_REGRDY"
           - name: "C_MASKINTS"
             bits: "3"
-            desc: "DCB DHCSR: Mask interrupts control"
+            desc: "Mask interrupts control"
           - name: "C_STEP"
             bits: "2"
-            desc: "DCB DHCSR: Step control"
+            desc: "Step control"
           - name: "C_HALT"
             bits: "1"
-            desc: "DCB DHCSR: Halt control"
+            desc: "Halt control"
           - name: "C_DEBUGEN"
             bits: "0"
-            desc: "DCB DHCSR: Debug enable control"
+            desc: "Debug enable control"
       - addr: 3758288372
         name: "DCRSR"
         access: "WO"
@@ -6314,10 +6829,10 @@ pages:
         fields:
           - name: "REGWnR"
             bits: "16"
-            desc: "DCB DCRSR: Register write/not-read"
+            desc: "Register write/not-read"
           - name: "REGSEL"
             bits: "6:0"
-            desc: "DCB DCRSR: Register selector"
+            desc: "Register selector"
       - addr: 3758288376
         name: "DCRDR"
         access: "RW"
@@ -6331,7 +6846,7 @@ pages:
         fields:
           - name: "DBGTMP"
             bits: "31:0"
-            desc: "DCB DCRDR: Data temporary buffer"
+            desc: "Data temporary buffer"
       - addr: 3758288380
         name: "DEMCR"
         access: "RW"
@@ -6345,13 +6860,13 @@ pages:
         fields:
           - name: "TRCENA"
             bits: "24"
-            desc: "DCB DEMCR: Trace enable"
+            desc: "Trace enable"
           - name: "VC_HARDERR"
             bits: "10"
-            desc: "DCB DEMCR: Vector Catch HardFault errors"
+            desc: "Vector Catch HardFault errors"
           - name: "VC_CORERESET"
             bits: "0"
-            desc: "DCB DEMCR: Vector Catch Core reset"
+            desc: "Vector Catch Core reset"
       - addr: 3758288388
         name: "DAUTHCTRL"
         access: "RW"
@@ -6365,16 +6880,16 @@ pages:
         fields:
           - name: "INTSPNIDEN"
             bits: "3"
-            desc: "DCB DAUTHCTRL: Internal Secure non-invasive debug enable"
+            desc: "Internal Secure non-invasive debug enable"
           - name: "SPNIDENSEL"
             bits: "2"
-            desc: "DCB DAUTHCTRL: Secure non-invasive debug enable select"
+            desc: "Secure non-invasive debug enable select"
           - name: "INTSPIDEN"
             bits: "1"
-            desc: "DCB DAUTHCTRL: Internal Secure invasive debug enable"
+            desc: "Internal Secure invasive debug enable"
           - name: "SPIDENSEL"
             bits: "0"
-            desc: "DCB DAUTHCTRL: Secure invasive debug enable select"
+            desc: "Secure invasive debug enable select"
       - addr: 3758288392
         name: "DSCSR"
         access: "RW"
@@ -6388,16 +6903,16 @@ pages:
         fields:
           - name: "CDSKEY"
             bits: "17"
-            desc: "DCB DSCSR: CDS write-enable key"
+            desc: "CDS write-enable key"
           - name: "CDS"
             bits: "16"
-            desc: "DCB DSCSR: Current domain Secure"
+            desc: "Current domain Secure"
           - name: "SBRSEL"
             bits: "1"
-            desc: "DCB DSCSR: Secure banked register select"
+            desc: "Secure banked register select"
           - name: "SBRSELEN"
             bits: "0"
-            desc: "DCB DSCSR: Secure banked register select enable"
+            desc: "Secure banked register select enable"
   DIB_NS:
     access: "Memory-mapped Core Peripheral access"
     desc: "DIB_NS registers from DIB_Type"
@@ -6415,7 +6930,7 @@ pages:
         fields:
           - name: "KEY"
             bits: "31:0"
-            desc: "CMSIS KEY field"
+            desc: "DIB DLAR KEY field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758288820
         name: "DLSR"
         access: "RO"
@@ -6429,13 +6944,13 @@ pages:
         fields:
           - name: "nTT"
             bits: "2"
-            desc: "DIB DLSR: Not thirty-two bit"
+            desc: "Not thirty-two bit"
           - name: "SLK"
             bits: "1"
-            desc: "DIB DLSR: Software Lock status"
+            desc: "Software Lock status"
           - name: "SLI"
             bits: "0"
-            desc: "DIB DLSR: Software Lock implemented"
+            desc: "Software Lock implemented"
       - addr: 3758288824
         name: "DAUTHSTATUS"
         access: "RO"
@@ -6449,16 +6964,16 @@ pages:
         fields:
           - name: "SNID"
             bits: "7:6"
-            desc: "DIB DAUTHSTATUS: Secure Non-invasive Debug"
+            desc: "Secure Non-invasive Debug"
           - name: "SID"
             bits: "5:4"
-            desc: "DIB DAUTHSTATUS: Secure Invasive Debug"
+            desc: "Secure Invasive Debug"
           - name: "NSNID"
             bits: "3:2"
-            desc: "DIB DAUTHSTATUS: Non-secure Non-invasive Debug"
+            desc: "Non-secure Non-invasive Debug"
           - name: "NSID"
             bits: "1:0"
-            desc: "DIB DAUTHSTATUS: Non-secure Invasive Debug"
+            desc: "Non-secure Invasive Debug"
       - addr: 3758288828
         name: "DDEVARCH"
         access: "RO"
@@ -6472,21 +6987,21 @@ pages:
         fields:
           - name: "ARCHITECT"
             bits: "31:21"
-            desc: "CMSIS ARCHITECT field"
+            desc: "DIB DDEVARCH ARCHITECT field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: ARCHITECT"
           - name: "PRESENT"
             bits: "24:20"
-            desc: "CMSIS PRESENT field"
+            desc: "DEVARCH Present"
             condition: "Field view: PRESENT"
           - name: "REVISION"
             bits: "19:16"
-            desc: "CMSIS REVISION field"
+            desc: "DIB DDEVARCH REVISION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "ARCHVER"
             bits: "15:12"
-            desc: "DIB DDEVARCH: Architecture Version"
+            desc: "Architecture Version"
           - name: "ARCHPART"
             bits: "11:0"
-            desc: "DIB DDEVARCH: Architecture Part"
+            desc: "Architecture Part"
       - addr: 3758288832
         name: "DDEVTYPE"
         access: "RO"
@@ -6500,10 +7015,10 @@ pages:
         fields:
           - name: "SUB"
             bits: "7:4"
-            desc: "-type"
+            desc: "Sub-type"
           - name: "MAJOR"
             bits: "3:0"
-            desc: "type"
+            desc: "Major type"
   MPU_NS:
     access: "Memory-mapped Core Peripheral access"
     desc: "MPU_NS registers from MPU_Type"
@@ -6521,13 +7036,18 @@ pages:
         fields:
           - name: "IREGION"
             bits: "23:16"
-            desc: "CMSIS IREGION field"
+            desc: "MPU TYPE IREGION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "DREGION"
             bits: "15:8"
-            desc: "CMSIS DREGION field"
+            desc: "MPU TYPE DREGION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "SEPARATE"
             bits: "0"
-            desc: "CMSIS SEPARATE field"
+            desc: "Separate instruction/data-region indicator."
+            values:
+              - value: 0
+                desc: "Instruction and data regions share one region set."
+              - value: 1
+                desc: "Separate instruction and data region sets are implemented."
       - addr: 3758288276
         name: "CTRL"
         access: "RW"
@@ -6541,13 +7061,28 @@ pages:
         fields:
           - name: "PRIVDEFENA"
             bits: "2"
-            desc: "CMSIS PRIVDEFENA field"
+            desc: "Privileged default-map control."
+            values:
+              - value: 0
+                desc: "Privileged software cannot use the default memory map when no MPU region matches."
+              - value: 1
+                desc: "Privileged software can use the default memory map when no MPU region matches."
           - name: "HFNMIENA"
             bits: "1"
-            desc: "CMSIS HFNMIENA field"
+            desc: "MPU fault handling in HardFault/NMI control."
+            values:
+              - value: 0
+                desc: "MPU checking is disabled during HardFault and NMI handlers."
+              - value: 1
+                desc: "MPU checking remains enabled during HardFault and NMI handlers."
           - name: "ENABLE"
             bits: "0"
-            desc: "CMSIS ENABLE field"
+            desc: "MPU enable control."
+            values:
+              - value: 0
+                desc: "The MPU is disabled."
+              - value: 1
+                desc: "The MPU is enabled."
       - addr: 3758288280
         name: "RNR"
         access: "RW"
@@ -6561,7 +7096,7 @@ pages:
         fields:
           - name: "REGION"
             bits: "7:0"
-            desc: "CMSIS REGION field"
+            desc: "MPU region number selected for the following region-register access."
       - addr: 3758288284
         name: "RBAR"
         access: "RW"
@@ -6575,16 +7110,21 @@ pages:
         fields:
           - name: "BASE"
             bits: "31:5"
-            desc: "CMSIS BASE field"
+            desc: "Base address of the MPU region, aligned according to the implemented region granularity."
           - name: "SH"
             bits: "4:3"
-            desc: "CMSIS SH field"
+            desc: "Shareability encoding for the MPU region."
           - name: "AP"
             bits: "2:1"
-            desc: "CMSIS AP field"
+            desc: "Access-permission encoding for the MPU region; the encoding determines privileged/unprivileged read/write permissions."
           - name: "XN"
             bits: "0"
-            desc: "CMSIS XN field"
+            desc: "Execute-never control."
+            values:
+              - value: 0
+                desc: "Instruction execution is permitted in this region when other permissions allow it."
+              - value: 1
+                desc: "Instruction execution is prohibited in this region."
       - addr: 3758288288
         name: "RLAR"
         access: "RW"
@@ -6598,13 +7138,13 @@ pages:
         fields:
           - name: "LIMIT"
             bits: "31:5"
-            desc: "CMSIS LIMIT field"
+            desc: "Limit address of the MPU region, aligned according to the implemented region granularity."
           - name: "AttrIndx"
             bits: "3:1"
-            desc: "CMSIS AttrIndx field"
+            desc: "Index into the MAIR attribute table used for this MPU region."
           - name: "EN"
             bits: "0"
-            desc: "able bit"
+            desc: "Region enable bit"
       - addr: 3758288320
         name: "MAIR0"
         access: "RW"
@@ -6618,16 +7158,16 @@ pages:
         fields:
           - name: "Attr3"
             bits: "31:24"
-            desc: "CMSIS Attr3 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr2"
             bits: "23:16"
-            desc: "CMSIS Attr2 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr1"
             bits: "15:8"
-            desc: "CMSIS Attr1 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr0"
             bits: "7:0"
-            desc: "CMSIS Attr0 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
       - addr: 3758288324
         name: "MAIR1"
         access: "RW"
@@ -6641,13 +7181,13 @@ pages:
         fields:
           - name: "Attr7"
             bits: "31:24"
-            desc: "CMSIS Attr7 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr6"
             bits: "23:16"
-            desc: "CMSIS Attr6 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr5"
             bits: "15:8"
-            desc: "CMSIS Attr5 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."
           - name: "Attr4"
             bits: "7:0"
-            desc: "CMSIS Attr4 field"
+            desc: "Eight-bit memory-attribute encoding stored in the MAIR register."

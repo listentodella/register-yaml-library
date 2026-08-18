@@ -41,16 +41,36 @@ pages:
         fields:
           - name: "N"
             bits: "31"
-            desc: "CMSIS N field"
+            desc: "Negative condition code flag. After an instruction that updates the condition flags, N indicates the sign of the result when interpreted as a two's-complement value: N=1 means negative and N=0 means non-negative. It describes the most recent flag-setting result, not the current value of an arbitrary register."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting result was non-negative."
+              - value: 1
+                desc: "The most recent flag-setting result was negative."
           - name: "Z"
             bits: "30"
-            desc: "CMSIS Z field"
+            desc: "Zero condition code flag. Z=1 when the result of the most recent flag-setting instruction was zero; otherwise Z=0. Comparison instructions such as CMP update the flags as if they performed a subtraction without storing the result, so Z=1 usually means the compared operands were equal."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting result was not zero; a comparison was not equal."
+              - value: 1
+                desc: "The most recent flag-setting result was zero; a comparison was equal."
           - name: "C"
             bits: "29"
-            desc: "CMSIS C field"
+            desc: "Carry or borrow condition code flag. For addition, C=1 means an unsigned carry out. For subtraction or comparison, C=1 means no borrow and C=0 means a borrow, so C=1 commonly means the unsigned left operand was greater than or equal to the right operand. For flag-setting shifts, C records the last bit shifted out when the instruction defines it."
+            values:
+              - value: 0
+                desc: "Depending on the instruction: no unsigned carry from addition, a borrow occurred in subtraction or comparison, or the last bit shifted out was 0."
+              - value: 1
+                desc: "Depending on the instruction: an unsigned carry occurred in addition, no borrow occurred in subtraction or comparison, or the last bit shifted out was 1."
           - name: "V"
             bits: "28"
-            desc: "CMSIS V field"
+            desc: "Signed overflow condition code flag. V=1 when the mathematical result cannot be represented in the signed two's-complement range of the operation, for example when adding two values with the same sign produces a result with the opposite sign. V reports signed overflow; C reports unsigned carry or borrow."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting arithmetic result did not overflow its signed range."
+              - value: 1
+                desc: "The most recent flag-setting arithmetic result overflowed its signed range."
       - name: "CONTROL"
         access: "RW"
         width: 4
@@ -77,7 +97,12 @@ pages:
         fields:
           - name: "SPSEL"
             bits: "1"
-            desc: "CMSIS SPSEL field"
+            desc: "Thread-mode stack-pointer selection. Handler mode always uses MSP; this bit selects the stack pointer used by Thread mode."
+            values:
+              - value: 0
+                desc: "Thread mode uses MSP (Main Stack Pointer)."
+              - value: 1
+                desc: "Thread mode uses PSP (Process Stack Pointer)."
       - name: "IPSR"
         access: "RO"
         width: 4
@@ -98,7 +123,7 @@ pages:
         fields:
           - name: "ISR"
             bits: "8:0"
-            desc: "CMSIS ISR field"
+            desc: "Current exception number. Zero means Thread mode; a non-zero value identifies the currently active exception according to the implemented exception-number table."
       - name: "MSP"
         access: "RW"
         width: 4
@@ -125,7 +150,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Main Stack Pointer value"
+            desc: "Main Stack Pointer value used by the processor in Handler mode and, when selected, Thread mode."
       - name: "PRIMASK"
         access: "RW"
         width: 4
@@ -152,7 +177,12 @@ pages:
         fields:
           - name: "PM"
             bits: "0"
-            desc: "Exception mask bit"
+            desc: "Priority-mask bit. When set, it prevents activation of exceptions with configurable priority; NMI and HardFault are not masked by PRIMASK."
+            values:
+              - value: 0
+                desc: "Configurable-priority exceptions are not masked by PRIMASK."
+              - value: 1
+                desc: "Configurable-priority exceptions are masked by PRIMASK; NMI and HardFault remain eligible."
       - name: "PSP"
         access: "RW"
         width: 4
@@ -179,7 +209,7 @@ pages:
         fields:
           - name: "ADDRESS"
             bits: "31:0"
-            desc: "Process Stack Pointer value"
+            desc: "Process Stack Pointer value used by Thread mode when CONTROL.SPSEL selects PSP."
       - name: "xPSR"
         access: "RO"
         width: 4
@@ -200,22 +230,42 @@ pages:
         fields:
           - name: "N"
             bits: "31"
-            desc: "CMSIS N field"
+            desc: "Negative condition code flag. After an instruction that updates the condition flags, N indicates the sign of the result when interpreted as a two's-complement value: N=1 means negative and N=0 means non-negative. It describes the most recent flag-setting result, not the current value of an arbitrary register."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting result was non-negative."
+              - value: 1
+                desc: "The most recent flag-setting result was negative."
           - name: "Z"
             bits: "30"
-            desc: "CMSIS Z field"
+            desc: "Zero condition code flag. Z=1 when the result of the most recent flag-setting instruction was zero; otherwise Z=0. Comparison instructions such as CMP update the flags as if they performed a subtraction without storing the result, so Z=1 usually means the compared operands were equal."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting result was not zero; a comparison was not equal."
+              - value: 1
+                desc: "The most recent flag-setting result was zero; a comparison was equal."
           - name: "C"
             bits: "29"
-            desc: "CMSIS C field"
+            desc: "Carry or borrow condition code flag. For addition, C=1 means an unsigned carry out. For subtraction or comparison, C=1 means no borrow and C=0 means a borrow, so C=1 commonly means the unsigned left operand was greater than or equal to the right operand. For flag-setting shifts, C records the last bit shifted out when the instruction defines it."
+            values:
+              - value: 0
+                desc: "Depending on the instruction: no unsigned carry from addition, a borrow occurred in subtraction or comparison, or the last bit shifted out was 0."
+              - value: 1
+                desc: "Depending on the instruction: an unsigned carry occurred in addition, no borrow occurred in subtraction or comparison, or the last bit shifted out was 1."
           - name: "V"
             bits: "28"
-            desc: "CMSIS V field"
+            desc: "Signed overflow condition code flag. V=1 when the mathematical result cannot be represented in the signed two's-complement range of the operation, for example when adding two values with the same sign produces a result with the opposite sign. V reports signed overflow; C reports unsigned carry or borrow."
+            values:
+              - value: 0
+                desc: "The most recent flag-setting arithmetic result did not overflow its signed range."
+              - value: 1
+                desc: "The most recent flag-setting arithmetic result overflowed its signed range."
           - name: "T"
             bits: "24"
-            desc: "CMSIS T field"
+            desc: "Thumb-state indicator in the stacked/program status representation. CMSIS marks this field read-only; software must preserve the architecture-defined value when handling an exception frame."
           - name: "ISR"
             bits: "8:0"
-            desc: "CMSIS ISR field"
+            desc: "Exception number"
   SCnSCB:
     access: "Memory-mapped Core Peripheral access"
     desc: "SCnSCB registers from SCnSCB_Type"
@@ -232,10 +282,10 @@ pages:
         fields:
           - name: "ITCMUAEN"
             bits: "4"
-            desc: "ACTLR: Instruction TCM Upper Alias Enable"
+            desc: "Instruction TCM Upper Alias Enable"
           - name: "ITCMLAEN"
             bits: "3"
-            desc: "ACTLR: Instruction TCM Lower Alias Enable"
+            desc: "Instruction TCM Lower Alias Enable"
   SCB:
     access: "Memory-mapped Core Peripheral access"
     desc: "SCB registers from SCB_Type"
@@ -252,19 +302,19 @@ pages:
         fields:
           - name: "IMPLEMENTER"
             bits: "31:24"
-            desc: "CMSIS IMPLEMENTER field"
+            desc: "SCB CPUID IMPLEMENTER field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "VARIANT"
             bits: "23:20"
-            desc: "CMSIS VARIANT field"
+            desc: "SCB CPUID VARIANT field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "ARCHITECTURE"
             bits: "19:16"
-            desc: "CMSIS ARCHITECTURE field"
+            desc: "SCB CPUID ARCHITECTURE field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "PARTNO"
             bits: "15:4"
-            desc: "CMSIS PARTNO field"
+            desc: "SCB CPUID PARTNO field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
           - name: "REVISION"
             bits: "3:0"
-            desc: "CMSIS REVISION field"
+            desc: "SCB CPUID REVISION field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
       - addr: 3758157060
         name: "ICSR"
         access: "RW"
@@ -277,31 +327,66 @@ pages:
         fields:
           - name: "NMIPENDSET"
             bits: "31"
-            desc: "CMSIS NMIPENDSET field"
+            desc: "NMI pending-set request/status."
+            values:
+              - value: 0
+                desc: "NMI is not pending or no set request is issued."
+              - value: 1
+                desc: "NMI is pending or is requested to become pending by a write of 1."
           - name: "PENDSVSET"
             bits: "28"
-            desc: "CMSIS PENDSVSET field"
+            desc: "PendSV pending-set request/status."
+            values:
+              - value: 0
+                desc: "PendSV is not pending or no set request is issued."
+              - value: 1
+                desc: "PendSV is pending or is requested to become pending by a write of 1."
           - name: "PENDSVCLR"
             bits: "27"
-            desc: "CMSIS PENDSVCLR field"
+            desc: "PendSV pending-clear command."
+            values:
+              - value: 0
+                desc: "No clear request is issued."
+              - value: 1
+                desc: "Writing 1 clears the pending PendSV state; reads may return 0."
           - name: "PENDSTSET"
             bits: "26"
-            desc: "CMSIS PENDSTSET field"
+            desc: "SysTick pending-set request/status."
+            values:
+              - value: 0
+                desc: "SysTick is not pending or no set request is issued."
+              - value: 1
+                desc: "SysTick is pending or is requested to become pending by a write of 1."
           - name: "PENDSTCLR"
             bits: "25"
-            desc: "CMSIS PENDSTCLR field"
+            desc: "SysTick pending-clear command."
+            values:
+              - value: 0
+                desc: "No clear request is issued."
+              - value: 1
+                desc: "Writing 1 clears the pending SysTick state; reads may return 0."
           - name: "ISRPREEMPT"
             bits: "23"
-            desc: "CMSIS ISRPREEMPT field"
+            desc: "Interrupt preemption pending status."
+            values:
+              - value: 0
+                desc: "No interrupt preemption is pending."
+              - value: 1
+                desc: "Interrupt preemption is pending."
           - name: "ISRPENDING"
             bits: "22"
-            desc: "CMSIS ISRPENDING field"
+            desc: "External interrupt pending status."
+            values:
+              - value: 0
+                desc: "No external interrupt is pending."
+              - value: 1
+                desc: "At least one external interrupt is pending."
           - name: "VECTPENDING"
             bits: "20:12"
-            desc: "CMSIS VECTPENDING field"
+            desc: "Highest-priority pending exception number. Zero means no exception is pending."
           - name: "VECTACTIVE"
             bits: "8:0"
-            desc: "CMSIS VECTACTIVE field"
+            desc: "Active exception number. Zero means Thread mode; a non-zero value identifies the currently active exception."
       - addr: 3758157068
         name: "AIRCR"
         access: "RW"
@@ -314,21 +399,31 @@ pages:
         fields:
           - name: "VECTKEY"
             bits: "31:16"
-            desc: "CMSIS VECTKEY field"
+            desc: "SCB AIRCR VECTKEY field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: VECTKEY"
           - name: "VECTKEYSTAT"
             bits: "31:16"
-            desc: "CMSIS VECTKEYSTAT field"
+            desc: "SCB AIRCR VECTKEYSTAT field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
             condition: "Field view: VECTKEYSTAT"
           - name: "ENDIANNESS"
             bits: "15"
-            desc: "CMSIS ENDIANNESS field"
+            desc: "Data endianness indicator. This read-only field reports the processor's implemented data endianness."
           - name: "SYSRESETREQ"
             bits: "2"
-            desc: "CMSIS SYSRESETREQ field"
+            desc: "System-reset request control. Writing 1 requests a system reset through the implementation's reset controller."
+            values:
+              - value: 0
+                desc: "No system-reset request is issued."
+              - value: 1
+                desc: "A system-reset request is issued when permitted."
           - name: "VECTCLRACTIVE"
             bits: "1"
-            desc: "CMSIS VECTCLRACTIVE field"
+            desc: "Active-exception clear control. Writing 1 clears active exception state where the architecture permits it; this is intended for debug/reset use and must be used with care."
+            values:
+              - value: 0
+                desc: "No active-exception clear request is issued."
+              - value: 1
+                desc: "An active-exception clear request is issued."
       - addr: 3758157072
         name: "SCR"
         access: "RW"
@@ -341,13 +436,28 @@ pages:
         fields:
           - name: "SEVONPEND"
             bits: "4"
-            desc: "CMSIS SEVONPEND field"
+            desc: "Send-event-on-pending control. If enabled, a pending interrupt can wake a processor waiting for an event."
+            values:
+              - value: 0
+                desc: "Pending interrupts do not generate an event."
+              - value: 1
+                desc: "A pending interrupt generates an event that can wake WFE."
           - name: "SLEEPDEEP"
             bits: "2"
-            desc: "CMSIS SLEEPDEEP field"
+            desc: "Deep-sleep request control."
+            values:
+              - value: 0
+                desc: "Sleep instructions request ordinary sleep."
+              - value: 1
+                desc: "Sleep instructions request deep sleep."
           - name: "SLEEPONEXIT"
             bits: "1"
-            desc: "CMSIS SLEEPONEXIT field"
+            desc: "Sleep-on-exception-return control."
+            values:
+              - value: 0
+                desc: "After an exception handler returns, normal Thread-mode execution resumes."
+              - value: 1
+                desc: "After an exception handler returns, the processor enters sleep instead of returning to Thread mode."
       - addr: 3758157076
         name: "CCR"
         access: "RW"
@@ -360,10 +470,20 @@ pages:
         fields:
           - name: "STKALIGN"
             bits: "9"
-            desc: "CMSIS STKALIGN field"
+            desc: "Exception stack alignment control."
+            values:
+              - value: 0
+                desc: "Exception stack alignment follows the legacy alignment behavior."
+              - value: 1
+                desc: "Exception entry maintains the architecture-required stack alignment."
           - name: "UNALIGN_TRP"
             bits: "3"
-            desc: "CMSIS UNALIGN_TRP field"
+            desc: "Unaligned-access trapping control."
+            values:
+              - value: 0
+                desc: "Unaligned accesses are permitted when the instruction supports them."
+              - value: 1
+                desc: "Unaligned accesses generate a UsageFault."
       - addr: 3758157084
         name: "SHPR[0]"
         access: "RW"
@@ -394,7 +514,7 @@ pages:
         fields:
           - name: "SVCALLPENDED"
             bits: "15"
-            desc: "CMSIS SVCALLPENDED field"
+            desc: "SCB SHCSR SVCALLPENDED field. CMSIS defines the bit position, but this header does not provide detailed value semantics for the field."
   SysTick:
     access: "Memory-mapped Core Peripheral access"
     desc: "SysTick registers from SysTick_Type"
@@ -411,16 +531,36 @@ pages:
         fields:
           - name: "COUNTFLAG"
             bits: "16"
-            desc: "CMSIS COUNTFLAG field"
+            desc: "Counter-wrap status. This sticky status bit is set when the counter reaches zero and is cleared by reading the SysTick CTRL register."
+            values:
+              - value: 0
+                desc: "The counter has not wrapped since the last CTRL read."
+              - value: 1
+                desc: "The counter has wrapped since the last CTRL read."
           - name: "CLKSOURCE"
             bits: "2"
-            desc: "CMSIS CLKSOURCE field"
+            desc: "SysTick clock-source selection."
+            values:
+              - value: 0
+                desc: "Use the external/reference clock supplied to SysTick."
+              - value: 1
+                desc: "Use the processor clock."
           - name: "TICKINT"
             bits: "1"
-            desc: "CMSIS TICKINT field"
+            desc: "SysTick exception request control."
+            values:
+              - value: 0
+                desc: "Counter wrap does not request the SysTick exception."
+              - value: 1
+                desc: "Counter wrap requests the SysTick exception."
           - name: "ENABLE"
             bits: "0"
-            desc: "CMSIS ENABLE field"
+            desc: "SysTick counter enable control."
+            values:
+              - value: 0
+                desc: "The SysTick counter is stopped."
+              - value: 1
+                desc: "The SysTick counter counts down from LOAD."
       - addr: 3758153748
         name: "LOAD"
         access: "RW"
@@ -433,7 +573,7 @@ pages:
         fields:
           - name: "RELOAD"
             bits: "23:0"
-            desc: "CMSIS RELOAD field"
+            desc: "Value loaded into the SysTick counter when it reaches zero."
       - addr: 3758153752
         name: "VAL"
         access: "RW"
@@ -446,7 +586,7 @@ pages:
         fields:
           - name: "CURRENT"
             bits: "23:0"
-            desc: "CMSIS CURRENT field"
+            desc: "Current SysTick counter value; writing any value clears the counter to zero."
       - addr: 3758153756
         name: "CALIB"
         access: "RO"
@@ -459,13 +599,23 @@ pages:
         fields:
           - name: "NOREF"
             bits: "31"
-            desc: "CMSIS NOREF field"
+            desc: "Calibration reference-clock indicator."
+            values:
+              - value: 0
+                desc: "A separate reference clock is available for calibration."
+              - value: 1
+                desc: "No separate reference clock is available."
           - name: "SKEW"
             bits: "30"
-            desc: "CMSIS SKEW field"
+            desc: "Calibration skew indicator."
+            values:
+              - value: 0
+                desc: "The TENMS calibration value is accurate within the implementation's stated tolerance."
+              - value: 1
+                desc: "The TENMS calibration value is not guaranteed to be accurate."
           - name: "TENMS"
             bits: "23:0"
-            desc: "CMSIS TENMS field"
+            desc: "Reload value that calibrates a ten-millisecond interval for the available SysTick reference clock."
   NVIC:
     access: "Memory-mapped Core Peripheral access"
     desc: "NVIC registers from NVIC_Type"

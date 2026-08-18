@@ -93,7 +93,7 @@
         "registers": 31,
         "fields": 49
       },
-      "sha256": "acc9e3cbf6c294c83d13d34819dcd9437cf45b2865b49169e2be72cdd871d54b"
+      "sha256": "0ae4051283cb3db4fc0994ea60f6400b177eb5546e20f567311b0be8c1ef5075"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm0plus-system-registers",
@@ -124,7 +124,7 @@
         "registers": 37,
         "fields": 71
       },
-      "sha256": "b265a7ab043baa3bb28500fc2ac9b4ff9503cb8aee3ae3ef72f839beca472c77"
+      "sha256": "afe3e788b55d29eb7c8745c5fcc36281acaa6d725d38475295d79ba4580a7bc9"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm1-system-registers",
@@ -155,7 +155,7 @@
         "registers": 32,
         "fields": 51
       },
-      "sha256": "9077070c1c1f8e93280d84d9459e63f8478fd51ebae94fadc4e717fc697f48b1"
+      "sha256": "8e282bf0377f1ed1e1e9117cfc4027c1f7e59724cf0c5cf9457d018f50b7cf6e"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm23-system-registers",
@@ -186,7 +186,7 @@
         "registers": 553,
         "fields": 326
       },
-      "sha256": "2769e1b567f073ae19e44425c8608d463bf1a9876f97769b02287502421baa35"
+      "sha256": "1e7877e1bb83e8961414af5c4a98d39529860e15ffccb4426f7e5ea159246fe6"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm3-system-registers",
@@ -217,7 +217,7 @@
         "registers": 428,
         "fields": 312
       },
-      "sha256": "73021f9e448850601db9c47194944e5b9de332344d64f61239eabe0a21c435b6"
+      "sha256": "a5bfcbe0dc031bba8057cb10af5bf30cfe190bc481fadd13a111c61f046c1281"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm33-system-registers",
@@ -248,7 +248,7 @@
         "registers": 1487,
         "fields": 696
       },
-      "sha256": "ca985828be8e25e61fb690f9997d7e0d74e445bcd19e24da80f20623528c2e9b"
+      "sha256": "84ba688c8da62c2712029a5cfa11b5c351cde5f50c88a71e9dbe4d11dc21a067"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm35p-system-registers",
@@ -279,7 +279,7 @@
         "registers": 1487,
         "fields": 696
       },
-      "sha256": "42175f3ca9fb79c91d4c72705a4f41ac19eca4d6d7ced7becd6a717e447389c0"
+      "sha256": "4c7688768e7c044ce63b445b2c8ff4a6113a48cbdf97b5c280bf29935dd54b9d"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm4-system-registers",
@@ -310,7 +310,7 @@
         "registers": 434,
         "fields": 343
       },
-      "sha256": "8d83fe440a212f1c74fd657fc90422356cfe19cc6374feecd6883f75a6127c18"
+      "sha256": "4054acb0f9678420fcec5cc8998f90fd22b081767a1d7375585a07015719ef78"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm52-system-registers",
@@ -341,7 +341,7 @@
         "registers": 1626,
         "fields": 1201
       },
-      "sha256": "8085dc641e45b75613832863caebe23b5b939bd099b1354f104bfa6c8b8c48c5"
+      "sha256": "9b70587cf94551c3f977a12193bda44727a564428704595d6c132193c2571277"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm55-system-registers",
@@ -372,7 +372,7 @@
         "registers": 1622,
         "fields": 1185
       },
-      "sha256": "a9916dd62cfda60ac0b66862af48120bbae9862803fd795853bb5ccfa702a4e5"
+      "sha256": "de05aeeed86285bb9715902f0f5e8e8eed710c8754b11823aff05a4bc6df92f4"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm7-system-registers",
@@ -403,7 +403,7 @@
         "registers": 463,
         "fields": 429
       },
-      "sha256": "04e98bebb88b7f4b0ae266b098fa8ed34e9011d212bfa8979e431b37f94af1cf"
+      "sha256": "5126c6dbd5dfb2e71db941487da88bd8c0dee704421879955cd1b5a5ebe9ade6"
     },
     {
       "id": "architecture:arm:m-profile:arm-cm85-system-registers",
@@ -434,7 +434,69 @@
         "registers": 1626,
         "fields": 1186
       },
-      "sha256": "612a60c5eac801c0e7ec7aee2c0ceba5bc52ff44fc3627ccf8c1465be8d6c734"
+      "sha256": "217cd372bf58cad19659a1f3bdb8ec5959556d4fc6a8043eccb92ad3e006aea7"
+    },
+    {
+      "id": "architecture:riscv:rv32:riscv-rv32-csr",
+      "path": "architecture/riscv/rv32/riscv-rv32-csr.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "riscv",
+        "rv32"
+      ],
+      "sensor": "RISC-V RV32 architectural CSRs",
+      "vendor": "RISC-V International",
+      "family": "RISC-V Privileged ISA",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "riscv_system",
+      "architecture": "RV32",
+      "profile": "privileged",
+      "source": {
+        "title": "RISC-V Unified Database standard CSR definitions",
+        "version": "2026-08-18",
+        "revision": "22776b219c386d549e07b14ed0e781ae7956e11a",
+        "url": "https://github.com/riscv-software-src/riscv-unified-db",
+        "license": "BSD-3-Clause-Clear"
+      },
+      "stats": {
+        "pages": 9,
+        "registers": 396,
+        "fields": 1010
+      },
+      "sha256": "3e865095acf651f75534467d57adf4eb76ec1b1fc538c4b8729312ee9be458e0"
+    },
+    {
+      "id": "architecture:riscv:rv64:riscv-rv64-csr",
+      "path": "architecture/riscv/rv64/riscv-rv64-csr.yaml",
+      "category": "architecture",
+      "taxonomy": [
+        "architecture",
+        "riscv",
+        "rv64"
+      ],
+      "sensor": "RISC-V RV64 architectural CSRs",
+      "vendor": "RISC-V International",
+      "family": "RISC-V Privileged ISA",
+      "device_type": "architecture_registers",
+      "schema_version": 2,
+      "register_space": "riscv_system",
+      "architecture": "RV64",
+      "profile": "privileged",
+      "source": {
+        "title": "RISC-V Unified Database standard CSR definitions",
+        "version": "2026-08-18",
+        "revision": "22776b219c386d549e07b14ed0e781ae7956e11a",
+        "url": "https://github.com/riscv-software-src/riscv-unified-db",
+        "license": "BSD-3-Clause-Clear"
+      },
+      "stats": {
+        "pages": 9,
+        "registers": 281,
+        "fields": 974
+      },
+      "sha256": "d73f91d9def6ff199d71eb700e6a9f2a83d91f503a85ffc9f0e4958aee8a3e91"
     },
     {
       "id": "controllers:usb:rockchip:rk3588-dwc3",
@@ -459,7 +521,7 @@
         "registers": 57,
         "fields": 270
       },
-      "sha256": "118ef4d37d478e49985226ffa69f5bb63b87641880bda3211b11450c548acbf3"
+      "sha256": "f3cf6226ce93207e2a0042d275b9b9751d940464bb9ddc935871e1145e60c95b"
     }
   ]
 }
