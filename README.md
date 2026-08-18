@@ -15,6 +15,8 @@ controllers/
 sensors/
   imu/bosch/              Bosch BMI 系列惯性测量单元
   imu/qst/                QST QMA/QMI 系列运动传感器
+  imu/st/                 STMicroelectronics LSM6 系列惯性测量单元
+  imu/tdk/                TDK InvenSense ICM 系列惯性测量单元
 schema/                   YAML 格式说明
 templates/                新数据文件模板
 locales/                  按语言和源路径组织的翻译 sidecar
@@ -83,6 +85,22 @@ catalog.json              机器可读的全库索引
 | 六轴惯性测量单元 | BMI323 | [`bmi323.yaml`](sensors/imu/bosch/bmi323.yaml) |
 
 BMI323 使用 Bosch Sensortec BMI323 Datasheet BST-BMI323-DS000-11（文档修订 1.5，2025-03-27）。主寄存器页按 16 位字编址，扩展特性寄存器通过 `FEATURE_DATA_ADDR`、`FEATURE_DATA_TX` 和 `FEATURE_DATA_STATUS` 事务访问。来源与许可边界见 [`NOTICE.md`](NOTICE.md)。
+
+### TDK InvenSense 惯性测量单元
+
+| 类型 | 系列 | 文件 |
+| --- | --- | --- |
+| 六轴惯性测量单元 | ICM-42688-P | [`icm42688-p.yaml`](sensors/imu/tdk/icm42688-p.yaml) |
+
+ICM-42688-P 使用 TDK InvenSense Datasheet DS-000347（修订 1.2，2020-04-19）。寄存器按 `REG_BANK_SEL` 分为用户 Bank 0、1、2 和 4；用户原始型号文字 `ICM24688` 对应手册中的真实型号 ICM-42688-P。
+
+### STMicroelectronics 惯性测量单元
+
+| 类型 | 系列 | 文件 |
+| --- | --- | --- |
+| 六轴惯性测量单元 | LSM6DSV | [`lsm6dsv.yaml`](sensors/imu/st/lsm6dsv.yaml) |
+
+LSM6DSV 使用 STMicroelectronics Datasheet DS13476 Rev 5（2023-08），并用 ST 标准 C 驱动的位域定义交叉核对。文件分别建模主接口、辅助 SPI2、嵌入式功能、三个高级页和 Sensor Hub 寄存器页。
 
 完整统计、来源版本、许可证和 SHA-256 位于 [`catalog.json`](catalog.json)。
 

@@ -677,6 +677,68 @@
         "fields": 259
       },
       "sha256": "01f2231b2dba0845d4cd47b99ab947443ac0e64a87bda55d7d7d7bdfeb87fac4"
+    },
+    {
+      "id": "sensors:imu:st:lsm6dsv",
+      "path": "sensors/imu/st/lsm6dsv.yaml",
+      "category": "sensors",
+      "taxonomy": [
+        "sensors",
+        "imu",
+        "st"
+      ],
+      "sensor": "LSM6DSV",
+      "vendor": "STMicroelectronics",
+      "family": "LSM6DSV",
+      "device_type": "imu",
+      "schema_version": 1,
+      "register_space": "mmio",
+      "architecture": null,
+      "profile": null,
+      "source": {
+        "title": "LSM6DSV Datasheet",
+        "version": "DS13476",
+        "revision": "Rev 5 (August 2023)",
+        "url": "https://www.st.com/en/mems-and-sensors/lsm6dsv.html",
+        "license": "STMicroelectronics vendor documentation; redistribution terms not specified"
+      },
+      "stats": {
+        "pages": 7,
+        "registers": 234,
+        "fields": 643
+      },
+      "sha256": "054c897d779ef87ffdbc9288f9d280abcf84957255f6e0917254f241ea1cc347"
+    },
+    {
+      "id": "sensors:imu:tdk:icm42688-p",
+      "path": "sensors/imu/tdk/icm42688-p.yaml",
+      "category": "sensors",
+      "taxonomy": [
+        "sensors",
+        "imu",
+        "tdk"
+      ],
+      "sensor": "ICM-42688-P",
+      "vendor": "TDK InvenSense",
+      "family": "ICM-42688",
+      "device_type": "imu",
+      "schema_version": 1,
+      "register_space": "mmio",
+      "architecture": null,
+      "profile": null,
+      "source": {
+        "title": "ICM-42688-P Datasheet",
+        "version": "DS-000347",
+        "revision": "1.2 (April 19, 2020)",
+        "url": "https://invensense.tdk.com/products/motion-tracking/6-axis/icm-42688-p/",
+        "license": "TDK InvenSense vendor documentation; redistribution terms not specified"
+      },
+      "stats": {
+        "pages": 4,
+        "registers": 110,
+        "fields": 321
+      },
+      "sha256": "21824335a4f5b191a567b37a01200d5be97ff388650db01865fa15786790c481"
     }
   ]
 }

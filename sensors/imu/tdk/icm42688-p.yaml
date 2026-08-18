@@ -1,0 +1,2219 @@
+schema_version: 1
+sensor: "ICM-42688-P"
+vendor: "TDK InvenSense"
+family: "ICM-42688"
+device_type: imu
+source:
+  title: "ICM-42688-P Datasheet"
+  version: "DS-000347"
+  revision: "1.2 (April 19, 2020)"
+  document: "ICM-42688-P Datasheet, document DS-000347"
+  url: "https://invensense.tdk.com/products/motion-tracking/6-axis/icm-42688-p/"
+  license: "TDK InvenSense vendor documentation; redistribution terms not specified"
+  notice: "Register facts extracted from the user's Zotero PDF attachment; the PDF itself is not redistributed."
+who_am_i:
+  reg: 0x75
+  values:
+    - value: 0x47
+      desc: "ICM-42688-P device identifier"
+
+pages:
+  BANK0:
+    page_id: 0x00
+    access: "SPI / I2C / I3C"
+    desc: "Primary user bank. REG_BANK_SEL at 0x76 is accessible from every bank; write BANK_SEL=0 before accessing this page."
+    registers:
+      - addr: 0x11
+        name: DEVICE_CONFIG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Device config register."
+        fields:
+          - name: reserved_7_5
+            bits: "7:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SPI_MODE
+            bits: "4"
+            desc: "SPI_MODE field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "SPI modes 0 and 3"
+              0x01: "SPI modes 1 and 2"
+          - name: reserved_3_1
+            bits: "3:1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SOFT_RESET_CONFIG
+            bits: "0"
+            desc: "SOFT_RESET_CONFIG field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Normal operation"
+              0x01: "Initiate software reset; wait 1 ms before another register access"
+
+      - addr: 0x13
+        name: DRIVE_CONFIG
+        access: RW
+        width: 1
+        reset: 0x05
+        desc: "Drive config register."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: I2C_SLEW_RATE
+            bits: "5:3"
+            desc: "I2C_SLEW_RATE field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "20 ns to 60 ns"
+              0x01: "12 ns to 36 ns"
+              0x02: "6 ns to 18 ns"
+              0x03: "4 ns to 12 ns"
+              0x04: "2 ns to 6 ns"
+              0x05: "Less than 2 ns"
+              0x06: "Reserved"
+              0x07: "Reserved"
+          - name: SPI_SLEW_RATE
+            bits: "2:0"
+            desc: "SPI_SLEW_RATE field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "20 ns to 60 ns"
+              0x01: "12 ns to 36 ns"
+              0x02: "6 ns to 18 ns"
+              0x03: "4 ns to 12 ns"
+              0x04: "2 ns to 6 ns"
+              0x05: "Less than 2 ns"
+              0x06: "Reserved"
+              0x07: "Reserved"
+
+      - addr: 0x14
+        name: INT_CONFIG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Int config register."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: INT2_MODE
+            bits: "5"
+            desc: "INT2_MODE field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Pulsed mode"
+              0x01: "Latched mode"
+          - name: INT2_DRIVE_CIRCUIT
+            bits: "4"
+            desc: "INT2_DRIVE_CIRCUIT field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Open drain"
+              0x01: "Push-pull"
+          - name: INT2_POLARITY
+            bits: "3"
+            desc: "INT2_POLARITY field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Active low"
+              0x01: "Active high"
+          - name: INT1_MODE
+            bits: "2"
+            desc: "INT1_MODE field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Pulsed mode"
+              0x01: "Latched mode"
+          - name: INT1_DRIVE_CIRCUIT
+            bits: "1"
+            desc: "INT1_DRIVE_CIRCUIT field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Open drain"
+              0x01: "Push-pull"
+          - name: INT1_POLARITY
+            bits: "0"
+            desc: "INT1_POLARITY field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Active low"
+              0x01: "Active high"
+
+      - addr: 0x16
+        name: FIFO_CONFIG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fifo config register."
+        fields:
+          - name: FIFO_MODE
+            bits: "7:6"
+            desc: "FIFO_MODE field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Bypass mode"
+              0x01: "Stream-to-FIFO mode"
+              0x02: "Stop-on-full mode"
+              0x03: "Stop-on-full mode"
+          - name: reserved_5_0
+            bits: "5:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x1D
+        name: TEMP_DATA1
+        access: RO
+        width: 1
+        reset: 0x80
+        roles: [temp_data]
+        desc: "Upper byte of the signed temperature sample; temperature in deg C = TEMP_DATA / 132.48 + 25. The value is synchronized for host reads."
+        fields:
+          - name: TEMP_DATA[15:8]
+            bits: "7:0"
+            desc: "TEMP_DATA[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x1E
+        name: TEMP_DATA0
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [temp_data]
+        desc: "Lower byte of the signed temperature sample; temperature in deg C = TEMP_DATA / 132.48 + 25. The value is synchronized for host reads."
+        fields:
+          - name: TEMP_DATA[7:0]
+            bits: "7:0"
+            desc: "TEMP_DATA[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x1F
+        name: ACCEL_DATA_X1
+        access: RO
+        width: 1
+        reset: 0x80
+        roles: [accel_data]
+        desc: "accel data x1 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: ACCEL_DATA_X[15:8]
+            bits: "7:0"
+            desc: "ACCEL_DATA_X[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x20
+        name: ACCEL_DATA_X0
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [accel_data]
+        desc: "accel data x0 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: ACCEL_DATA_X[7:0]
+            bits: "7:0"
+            desc: "ACCEL_DATA_X[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x21
+        name: ACCEL_DATA_Y1
+        access: RO
+        width: 1
+        reset: 0x80
+        roles: [accel_data]
+        desc: "accel data y1 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: ACCEL_DATA_Y[15:8]
+            bits: "7:0"
+            desc: "ACCEL_DATA_Y[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x22
+        name: ACCEL_DATA_Y0
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [accel_data]
+        desc: "accel data y0 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: ACCEL_DATA_Y[7:0]
+            bits: "7:0"
+            desc: "ACCEL_DATA_Y[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x23
+        name: ACCEL_DATA_Z1
+        access: RO
+        width: 1
+        reset: 0x80
+        roles: [accel_data]
+        desc: "accel data z1 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: ACCEL_DATA_Z[15:8]
+            bits: "7:0"
+            desc: "ACCEL_DATA_Z[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x24
+        name: ACCEL_DATA_Z0
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [accel_data]
+        desc: "accel data z0 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: ACCEL_DATA_Z[7:0]
+            bits: "7:0"
+            desc: "ACCEL_DATA_Z[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x25
+        name: GYRO_DATA_X1
+        access: RO
+        width: 1
+        reset: 0x80
+        roles: [gyro_data]
+        desc: "gyro data x1 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: GYRO_DATA_X[15:8]
+            bits: "7:0"
+            desc: "GYRO_DATA_X[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x26
+        name: GYRO_DATA_X0
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [gyro_data]
+        desc: "gyro data x0 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: GYRO_DATA_X[7:0]
+            bits: "7:0"
+            desc: "GYRO_DATA_X[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x27
+        name: GYRO_DATA_Y1
+        access: RO
+        width: 1
+        reset: 0x80
+        roles: [gyro_data]
+        desc: "gyro data y1 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: GYRO_DATA_Y[15:8]
+            bits: "7:0"
+            desc: "GYRO_DATA_Y[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x28
+        name: GYRO_DATA_Y0
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [gyro_data]
+        desc: "gyro data y0 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: GYRO_DATA_Y[7:0]
+            bits: "7:0"
+            desc: "GYRO_DATA_Y[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x29
+        name: GYRO_DATA_Z1
+        access: RO
+        width: 1
+        reset: 0x80
+        roles: [gyro_data]
+        desc: "gyro data z1 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: GYRO_DATA_Z[15:8]
+            bits: "7:0"
+            desc: "GYRO_DATA_Z[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x2A
+        name: GYRO_DATA_Z0
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [gyro_data]
+        desc: "gyro data z0 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: GYRO_DATA_Z[7:0]
+            bits: "7:0"
+            desc: "GYRO_DATA_Z[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x2B
+        name: TMST_FSYNCH
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Tmst fsynch register. The value is synchronized for host reads."
+        fields:
+          - name: TMST_FSYNC_DATA_UI[15:8]
+            bits: "7:0"
+            desc: "TMST_FSYNC_DATA_UI[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x2C
+        name: TMST_FSYNCL
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Tmst fsyncl register. The value is synchronized for host reads."
+        fields:
+          - name: TMST_FSYNC_DATA_UI[7:0]
+            bits: "7:0"
+            desc: "TMST_FSYNC_DATA_UI[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x2D
+        name: INT_STATUS
+        access: RO
+        width: 1
+        reset: 0x10
+        read_clear: true
+        roles: [interrupt_status]
+        desc: "Interrupt status flags for int status."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: UI_FSYNC_INT
+            bits: "6"
+            desc: "UI_FSYNC_INT field as defined in the ICM-42688-P register map."
+          - name: PLL_RDY_INT
+            bits: "5"
+            desc: "PLL_RDY_INT field as defined in the ICM-42688-P register map."
+          - name: RESET_DONE_INT
+            bits: "4"
+            desc: "RESET_DONE_INT field as defined in the ICM-42688-P register map."
+          - name: DATA_RDY_INT
+            bits: "3"
+            desc: "DATA_RDY_INT field as defined in the ICM-42688-P register map."
+          - name: FIFO_THS_INT
+            bits: "2"
+            desc: "FIFO_THS_INT field as defined in the ICM-42688-P register map."
+          - name: FIFO_FULL_INT
+            bits: "1"
+            desc: "FIFO_FULL_INT field as defined in the ICM-42688-P register map."
+          - name: AGC_RDY_INT
+            bits: "0"
+            desc: "AGC_RDY_INT field as defined in the ICM-42688-P register map."
+
+      - addr: 0x2E
+        name: FIFO_COUNTH
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [fifo_status, fifo_count]
+        desc: "High byte of the FIFO record or byte count. Read FIFO_COUNTL to latch both count bytes."
+        fields:
+          - name: FIFO_COUNT[15:8]
+            bits: "7:0"
+            desc: "FIFO_COUNT[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x2F
+        name: FIFO_COUNTL
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [fifo_status, fifo_count]
+        desc: "Low byte of the FIFO record or byte count; reading it latches both count bytes."
+        fields:
+          - name: FIFO_COUNT[7:0]
+            bits: "7:0"
+            desc: "FIFO_COUNT[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x30
+        name: FIFO_DATA
+        access: RO
+        width: 1
+        reset: 0xFF
+        no_dump: true
+        no_dump_reason: "FIFO stream port; read only as part of a deliberate FIFO transaction."
+        roles: [fifo_data]
+        desc: "FIFO stream data port. Each read consumes FIFO data according to the configured packet format."
+        fields:
+          - name: FIFO_DATA
+            bits: "7:0"
+            desc: "FIFO byte stream; interpret using the configured FIFO packet format."
+
+      - addr: 0x31
+        name: APEX_DATA0
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "apex data0 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: STEP_CNT[7:0]
+            bits: "7:0"
+            desc: "STEP_CNT[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x32
+        name: APEX_DATA1
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "apex data1 byte from the synchronized sensor data path. The value is synchronized for host reads."
+        fields:
+          - name: STEP_CNT[15:8]
+            bits: "7:0"
+            desc: "STEP_CNT[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x33
+        name: APEX_DATA2
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Pedometer cadence output in unsigned 6.2 sample-count format."
+        fields:
+          - name: STEP_CADENCE
+            bits: "7:0"
+            desc: "Walk or run cadence in unsigned 6.2 sample-count format."
+
+      - addr: 0x34
+        name: APEX_DATA3
+        access: RO
+        width: 1
+        reset: 0x04
+        desc: "Apex data3 register."
+        fields:
+          - name: reserved_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: DMP_IDLE
+            bits: "2"
+            desc: "DMP_IDLE field as defined in the ICM-42688-P register map."
+          - name: ACTIVITY_CLASS
+            bits: "1:0"
+            desc: "ACTIVITY_CLASS field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Unknown"
+              0x01: "Walk"
+              0x02: "Run"
+              0x03: "Reserved"
+
+      - addr: 0x35
+        name: APEX_DATA4
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Apex data4 register."
+        fields:
+          - name: reserved_7_5
+            bits: "7:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: TAP_NUM
+            bits: "4:3"
+            desc: "TAP_NUM field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "No tap"
+              0x01: "Single tap"
+              0x02: "Double tap"
+              0x03: "Reserved"
+          - name: TAP_AXIS
+            bits: "2:1"
+            desc: "TAP_AXIS field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "X axis"
+              0x01: "Y axis"
+              0x02: "Z axis"
+              0x03: "Reserved"
+          - name: TAP_DIR
+            bits: "0"
+            desc: "TAP_DIR field as defined in the ICM-42688-P register map."
+
+      - addr: 0x36
+        name: APEX_DATA5
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Double-tap interval. Time in seconds = DOUBLE_TAP_TIMING * 16 / accelerometer ODR."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: DOUBLE_TAP_TIMING
+            bits: "5:0"
+            desc: "Double-tap interval in units of 16 accelerometer samples."
+
+      - addr: 0x37
+        name: INT_STATUS2
+        access: RO
+        width: 1
+        reset: 0x00
+        read_clear: true
+        roles: [interrupt_status]
+        desc: "Interrupt status flags for int status2."
+        fields:
+          - name: reserved_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SMD_INT
+            bits: "3"
+            desc: "SMD_INT field as defined in the ICM-42688-P register map."
+          - name: WOM_Z_INT
+            bits: "2"
+            desc: "WOM_Z_INT field as defined in the ICM-42688-P register map."
+          - name: WOM_Y_INT
+            bits: "1"
+            desc: "WOM_Y_INT field as defined in the ICM-42688-P register map."
+          - name: WOM_X_INT
+            bits: "0"
+            desc: "WOM_X_INT field as defined in the ICM-42688-P register map."
+
+      - addr: 0x38
+        name: INT_STATUS3
+        access: RO
+        width: 1
+        reset: 0x00
+        read_clear: true
+        roles: [interrupt_status]
+        desc: "Interrupt status flags for int status3."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: STEP_DET_INT
+            bits: "5"
+            desc: "STEP_DET_INT field as defined in the ICM-42688-P register map."
+          - name: STEP_CNT_OVF_INT
+            bits: "4"
+            desc: "STEP_CNT_OVF_INT field as defined in the ICM-42688-P register map."
+          - name: TILT_DET_INT
+            bits: "3"
+            desc: "TILT_DET_INT field as defined in the ICM-42688-P register map."
+          - name: WAKE_INT
+            bits: "2"
+            desc: "WAKE_INT field as defined in the ICM-42688-P register map."
+          - name: SLEEP_INT
+            bits: "1"
+            desc: "SLEEP_INT field as defined in the ICM-42688-P register map."
+          - name: TAP_DET_INT
+            bits: "0"
+            desc: "TAP_DET_INT field as defined in the ICM-42688-P register map."
+
+      - addr: 0x4B
+        name: SIGNAL_PATH_RESET
+        access: WO
+        width: 1
+        reset: 0x00
+        desc: "Signal path reset register."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: DMP_INIT_EN
+            bits: "6"
+            desc: "DMP_INIT_EN field as defined in the ICM-42688-P register map."
+          - name: DMP_MEM_RESET_EN
+            bits: "5"
+            desc: "DMP_MEM_RESET_EN field as defined in the ICM-42688-P register map."
+          - name: reserved_4
+            bits: "4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ABORT_AND_RESET
+            bits: "3"
+            desc: "ABORT_AND_RESET field as defined in the ICM-42688-P register map."
+          - name: TMST_STROBE
+            bits: "2"
+            desc: "TMST_STROBE field as defined in the ICM-42688-P register map."
+          - name: FIFO_FLUSH
+            bits: "1"
+            desc: "FIFO_FLUSH field as defined in the ICM-42688-P register map."
+          - name: reserved_0
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x4C
+        name: INTF_CONFIG0
+        access: RW
+        width: 1
+        reset: 0x30
+        desc: "Intf config0 register."
+        fields:
+          - name: FIFO_HOLD_LAST_DATA_EN
+            bits: "7"
+            desc: "FIFO_HOLD_LAST_DATA_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_COUNT_REC
+            bits: "6"
+            desc: "FIFO_COUNT_REC field as defined in the ICM-42688-P register map."
+          - name: FIFO_COUNT_ENDIAN
+            bits: "5"
+            desc: "FIFO_COUNT_ENDIAN field as defined in the ICM-42688-P register map."
+          - name: SENSOR_DATA_ENDIAN
+            bits: "4"
+            desc: "SENSOR_DATA_ENDIAN field as defined in the ICM-42688-P register map."
+          - name: reserved_3_2
+            bits: "3:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: UI_SIFS_CFG
+            bits: "1:0"
+            desc: "UI_SIFS_CFG field as defined in the ICM-42688-P register map."
+
+      - addr: 0x4D
+        name: INTF_CONFIG1
+        access: RW
+        width: 1
+        reset: 0x91
+        desc: "Intf config1 register."
+        fields:
+          - name: reserved_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ACCEL_LP_CLK_SEL
+            bits: "3"
+            desc: "ACCEL_LP_CLK_SEL field as defined in the ICM-42688-P register map."
+          - name: RTC_MODE
+            bits: "2"
+            desc: "RTC_MODE field as defined in the ICM-42688-P register map."
+          - name: CLKSEL
+            bits: "1:0"
+            desc: "CLKSEL field as defined in the ICM-42688-P register map."
+
+      - addr: 0x4E
+        name: PWR_MGMT0
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Pwr mgmt0 register."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: TEMP_DIS
+            bits: "5"
+            desc: "TEMP_DIS field as defined in the ICM-42688-P register map."
+          - name: IDLE
+            bits: "4"
+            desc: "IDLE field as defined in the ICM-42688-P register map."
+          - name: GYRO_MODE
+            bits: "3:2"
+            desc: "GYRO_MODE field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Gyroscope off"
+              0x01: "Standby mode"
+              0x02: "Reserved"
+              0x03: "Low-noise mode"
+          - name: ACCEL_MODE
+            bits: "1:0"
+            desc: "ACCEL_MODE field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Accelerometer off"
+              0x01: "Accelerometer off"
+              0x02: "Low-power mode"
+              0x03: "Low-noise mode"
+
+      - addr: 0x4F
+        name: GYRO_CONFIG0
+        access: RW
+        width: 1
+        reset: 0x06
+        desc: "Gyro config0 register."
+        fields:
+          - name: GYRO_FS_SEL
+            bits: "7:5"
+            desc: "GYRO_FS_SEL field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "+/-2000 dps"
+              0x01: "+/-1000 dps"
+              0x02: "+/-500 dps"
+              0x03: "+/-250 dps"
+              0x04: "+/-125 dps"
+              0x05: "+/-62.5 dps"
+              0x06: "+/-31.25 dps"
+              0x07: "+/-15.625 dps"
+          - name: reserved_4
+            bits: "4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: GYRO_ODR
+            bits: "3:0"
+            desc: "GYRO_ODR field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Reserved"
+              0x01: "32 kHz"
+              0x02: "16 kHz"
+              0x03: "8 kHz"
+              0x04: "4 kHz"
+              0x05: "2 kHz"
+              0x06: "1 kHz"
+              0x07: "200 Hz"
+              0x08: "100 Hz"
+              0x09: "50 Hz"
+              0x0A: "25 Hz"
+              0x0B: "12.5 Hz"
+              0x0C: "Reserved"
+              0x0D: "Reserved"
+              0x0E: "Reserved"
+              0x0F: "500 Hz"
+
+      - addr: 0x50
+        name: ACCEL_CONFIG0
+        access: RW
+        width: 1
+        reset: 0x06
+        desc: "Accel config0 register."
+        fields:
+          - name: ACCEL_FS_SEL
+            bits: "7:5"
+            desc: "ACCEL_FS_SEL field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "+/-16 g"
+              0x01: "+/-8 g"
+              0x02: "+/-4 g"
+              0x03: "+/-2 g"
+              0x04: "Reserved"
+              0x05: "Reserved"
+              0x06: "Reserved"
+              0x07: "Reserved"
+          - name: reserved_4
+            bits: "4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ACCEL_ODR
+            bits: "3:0"
+            desc: "ACCEL_ODR field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Reserved"
+              0x01: "32 kHz (low-noise mode)"
+              0x02: "16 kHz (low-noise mode)"
+              0x03: "8 kHz (low-noise mode)"
+              0x04: "4 kHz (low-noise mode)"
+              0x05: "2 kHz (low-noise mode)"
+              0x06: "1 kHz (low-noise mode)"
+              0x07: "200 Hz"
+              0x08: "100 Hz"
+              0x09: "50 Hz"
+              0x0A: "25 Hz"
+              0x0B: "12.5 Hz"
+              0x0C: "6.25 Hz (low-power mode)"
+              0x0D: "3.125 Hz (low-power mode)"
+              0x0E: "1.5625 Hz (low-power mode)"
+              0x0F: "500 Hz"
+
+      - addr: 0x51
+        name: GYRO_CONFIG1
+        access: RW
+        width: 1
+        reset: 0x16
+        desc: "Gyro config1 register."
+        fields:
+          - name: TEMP_FILT_BW
+            bits: "7:5"
+            desc: "TEMP_FILT_BW field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "4000 Hz bandwidth, 0.125 ms latency"
+              0x01: "170 Hz bandwidth, 1 ms latency"
+              0x02: "82 Hz bandwidth, 2 ms latency"
+              0x03: "40 Hz bandwidth, 4 ms latency"
+              0x04: "20 Hz bandwidth, 8 ms latency"
+              0x05: "10 Hz bandwidth, 16 ms latency"
+              0x06: "5 Hz bandwidth, 32 ms latency"
+              0x07: "5 Hz bandwidth, 32 ms latency"
+          - name: reserved_4
+            bits: "4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: GYRO_UI_FILT_ORD
+            bits: "3:2"
+            desc: "GYRO_UI_FILT_ORD field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "First order"
+              0x01: "Second order"
+              0x02: "Third order"
+              0x03: "Reserved"
+          - name: GYRO_DEC2_M2_ORD
+            bits: "1:0"
+            desc: "GYRO_DEC2_M2_ORD field as defined in the ICM-42688-P register map."
+
+      - addr: 0x52
+        name: GYRO_ACCEL_CONFIG0
+        access: RW
+        width: 1
+        reset: 0x11
+        desc: "Gyro accel config0 register."
+        fields:
+          - name: ACCEL_UI_FILT_BW
+            bits: "7:4"
+            desc: "ACCEL_UI_FILT_BW field as defined in the ICM-42688-P register map."
+          - name: GYRO_UI_FILT_BW
+            bits: "3:0"
+            desc: "GYRO_UI_FILT_BW field as defined in the ICM-42688-P register map."
+
+      - addr: 0x53
+        name: ACCEL_CONFIG1
+        access: RW
+        width: 1
+        reset: 0x0D
+        desc: "Accel config1 register."
+        fields:
+          - name: reserved_7_5
+            bits: "7:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ACCEL_UI_FILT_ORD
+            bits: "4:3"
+            desc: "ACCEL_UI_FILT_ORD field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "First order"
+              0x01: "Second order"
+              0x02: "Third order"
+              0x03: "Reserved"
+          - name: ACCEL_DEC2_M2_ORD
+            bits: "2:1"
+            desc: "ACCEL_DEC2_M2_ORD field as defined in the ICM-42688-P register map."
+          - name: reserved_0
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x54
+        name: TMST_CONFIG
+        access: RW
+        width: 1
+        reset: 0x23
+        desc: "Tmst config register."
+        fields:
+          - name: reserved_7_5
+            bits: "7:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: TMST_TO_REGS_EN
+            bits: "4"
+            desc: "TMST_TO_REGS_EN field as defined in the ICM-42688-P register map."
+          - name: TMST_RES
+            bits: "3"
+            desc: "TMST_RES field as defined in the ICM-42688-P register map."
+          - name: TMST_DELTA_EN
+            bits: "2"
+            desc: "TMST_DELTA_EN field as defined in the ICM-42688-P register map."
+          - name: TMST_FSYNC_EN
+            bits: "1"
+            desc: "TMST_FSYNC_EN field as defined in the ICM-42688-P register map."
+          - name: TMST_EN
+            bits: "0"
+            desc: "TMST_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x56
+        name: APEX_CONFIG0
+        access: RW
+        width: 1
+        reset: 0x82
+        desc: "Apex config0 register."
+        fields:
+          - name: DMP_POWER_SAVE
+            bits: "7"
+            desc: "DMP_POWER_SAVE field as defined in the ICM-42688-P register map."
+          - name: TAP_ENABLE
+            bits: "6"
+            desc: "TAP_ENABLE field as defined in the ICM-42688-P register map."
+          - name: PED_ENABLE
+            bits: "5"
+            desc: "PED_ENABLE field as defined in the ICM-42688-P register map."
+          - name: TILT_ENABLE
+            bits: "4"
+            desc: "TILT_ENABLE field as defined in the ICM-42688-P register map."
+          - name: R2W_EN
+            bits: "3"
+            desc: "R2W_EN field as defined in the ICM-42688-P register map."
+          - name: reserved_2
+            bits: "2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: DMP_ODR
+            bits: "1:0"
+            desc: "DMP_ODR field as defined in the ICM-42688-P register map."
+
+      - addr: 0x57
+        name: SMD_CONFIG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Smd config register."
+        fields:
+          - name: reserved_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: WOM_INT_MODE
+            bits: "3"
+            desc: "WOM_INT_MODE field as defined in the ICM-42688-P register map."
+          - name: WOM_MODE
+            bits: "2"
+            desc: "WOM_MODE field as defined in the ICM-42688-P register map."
+          - name: SMD_MODE
+            bits: "1:0"
+            desc: "SMD_MODE field as defined in the ICM-42688-P register map."
+
+      - addr: 0x5F
+        name: FIFO_CONFIG1
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fifo config1 register."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FIFO_RESUME_PARTIAL_RD
+            bits: "6"
+            desc: "FIFO_RESUME_PARTIAL_RD field as defined in the ICM-42688-P register map."
+          - name: FIFO_WM_GT_TH
+            bits: "5"
+            desc: "FIFO_WM_GT_TH field as defined in the ICM-42688-P register map."
+          - name: FIFO_HIRES_EN
+            bits: "4"
+            desc: "FIFO_HIRES_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_TMST_FSYNC_EN
+            bits: "3"
+            desc: "FIFO_TMST_FSYNC_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_TEMP_EN
+            bits: "2"
+            desc: "FIFO_TEMP_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_GYRO_EN
+            bits: "1"
+            desc: "FIFO_GYRO_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_ACCEL_EN
+            bits: "0"
+            desc: "FIFO_ACCEL_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x60
+        name: FIFO_CONFIG2
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fifo config2 register."
+        fields:
+          - name: FIFO_WM[7:0]
+            bits: "7:0"
+            desc: "FIFO_WM[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x61
+        name: FIFO_CONFIG3
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fifo config3 register."
+        fields:
+          - name: reserved_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FIFO_WM[11:8]
+            bits: "3:0"
+            desc: "FIFO_WM[11:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x62
+        name: FSYNC_CONFIG
+        access: RW
+        width: 1
+        reset: 0x10
+        desc: "Fsync config register."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FSYNC_UI_SEL
+            bits: "6:4"
+            desc: "FSYNC_UI_SEL field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "Do not tag a UI sensor data register"
+              0x01: "Tag temperature output LSB"
+              0x02: "Tag gyroscope X output LSB"
+              0x03: "Tag gyroscope Y output LSB"
+              0x04: "Tag gyroscope Z output LSB"
+              0x05: "Tag accelerometer X output LSB"
+              0x06: "Tag accelerometer Y output LSB"
+              0x07: "Tag accelerometer Z output LSB"
+          - name: reserved_3_2
+            bits: "3:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FSYNC_UI_FLAG_CLEAR_SEL
+            bits: "1"
+            desc: "FSYNC_UI_FLAG_CLEAR_SEL field as defined in the ICM-42688-P register map."
+          - name: FSYNC_POLARITY
+            bits: "0"
+            desc: "FSYNC_POLARITY field as defined in the ICM-42688-P register map."
+
+      - addr: 0x63
+        name: INT_CONFIG0
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Int config0 register."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: UI_DRDY_INT_CLEAR
+            bits: "5:4"
+            desc: "UI_DRDY_INT_CLEAR field as defined in the ICM-42688-P register map."
+          - name: FIFO_THS_INT_CLEAR
+            bits: "3:2"
+            desc: "FIFO_THS_INT_CLEAR field as defined in the ICM-42688-P register map."
+          - name: FIFO_FULL_INT_CLEAR
+            bits: "1:0"
+            desc: "FIFO_FULL_INT_CLEAR field as defined in the ICM-42688-P register map."
+
+      - addr: 0x64
+        name: INT_CONFIG1
+        access: RW
+        width: 1
+        reset: 0x10
+        desc: "Int config1 register."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: INT_TPULSE_DURATION
+            bits: "6"
+            desc: "INT_TPULSE_DURATION field as defined in the ICM-42688-P register map."
+          - name: INT_TDEASSERT_DISABLE
+            bits: "5"
+            desc: "INT_TDEASSERT_DISABLE field as defined in the ICM-42688-P register map."
+          - name: INT_ASYNC_RESET
+            bits: "4"
+            desc: "INT_ASYNC_RESET field as defined in the ICM-42688-P register map."
+          - name: reserved_3_0
+            bits: "3:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x65
+        name: INT_SOURCE0
+        access: RW
+        width: 1
+        reset: 0x10
+        roles: [interrupt_enable]
+        desc: "Interrupt routing controls for int source0."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: UI_FSYNC_INT1_EN
+            bits: "6"
+            desc: "UI_FSYNC_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: PLL_RDY_INT1_EN
+            bits: "5"
+            desc: "PLL_RDY_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: RESET_DONE_INT1_EN
+            bits: "4"
+            desc: "RESET_DONE_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: UI_DRDY_INT1_EN
+            bits: "3"
+            desc: "UI_DRDY_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_THS_INT1_EN
+            bits: "2"
+            desc: "FIFO_THS_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_FULL_INT1_EN
+            bits: "1"
+            desc: "FIFO_FULL_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: UI_AGC_RDY_INT1_EN
+            bits: "0"
+            desc: "UI_AGC_RDY_INT1_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x66
+        name: INT_SOURCE1
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Interrupt routing controls for int source1."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: I3C_PROTOCOL_ERROR_INT1_EN
+            bits: "6"
+            desc: "I3C_PROTOCOL_ERROR_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: reserved_5_4
+            bits: "5:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SMD_INT1_EN
+            bits: "3"
+            desc: "SMD_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: WOM_Z_INT1_EN
+            bits: "2"
+            desc: "WOM_Z_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: WOM_Y_INT1_EN
+            bits: "1"
+            desc: "WOM_Y_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: WOM_X_INT1_EN
+            bits: "0"
+            desc: "WOM_X_INT1_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x68
+        name: INT_SOURCE3
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Interrupt routing controls for int source3."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: UI_FSYNC_INT2_EN
+            bits: "6"
+            desc: "UI_FSYNC_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: PLL_RDY_INT2_EN
+            bits: "5"
+            desc: "PLL_RDY_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: RESET_DONE_INT2_EN
+            bits: "4"
+            desc: "RESET_DONE_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: UI_DRDY_INT2_EN
+            bits: "3"
+            desc: "UI_DRDY_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_THS_INT2_EN
+            bits: "2"
+            desc: "FIFO_THS_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_FULL_INT2_EN
+            bits: "1"
+            desc: "FIFO_FULL_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: UI_AGC_RDY_INT2_EN
+            bits: "0"
+            desc: "UI_AGC_RDY_INT2_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x69
+        name: INT_SOURCE4
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Interrupt routing controls for int source4."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: I3C_PROTOCOL_ERROR_INT2_EN
+            bits: "6"
+            desc: "I3C_PROTOCOL_ERROR_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: reserved_5_4
+            bits: "5:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SMD_INT2_EN
+            bits: "3"
+            desc: "SMD_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: WOM_Z_INT2_EN
+            bits: "2"
+            desc: "WOM_Z_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: WOM_Y_INT2_EN
+            bits: "1"
+            desc: "WOM_Y_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: WOM_X_INT2_EN
+            bits: "0"
+            desc: "WOM_X_INT2_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x6C
+        name: FIFO_LOST_PKT0
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Fifo lost pkt0 register."
+        fields:
+          - name: FIFO_LOST_PKT_CNT[7:0]
+            bits: "7:0"
+            desc: "FIFO_LOST_PKT_CNT[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x6D
+        name: FIFO_LOST_PKT1
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Fifo lost pkt1 register."
+        fields:
+          - name: FIFO_LOST_PKT_CNT[15:8]
+            bits: "7:0"
+            desc: "FIFO_LOST_PKT_CNT[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x70
+        name: SELF_TEST_CONFIG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Self test config register."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ACCEL_ST_POWER
+            bits: "6"
+            desc: "ACCEL_ST_POWER field as defined in the ICM-42688-P register map."
+          - name: EN_AZ_ST
+            bits: "5"
+            desc: "EN_AZ_ST field as defined in the ICM-42688-P register map."
+          - name: EN_AY_ST
+            bits: "4"
+            desc: "EN_AY_ST field as defined in the ICM-42688-P register map."
+          - name: EN_AX_ST
+            bits: "3"
+            desc: "EN_AX_ST field as defined in the ICM-42688-P register map."
+          - name: EN_GZ_ST
+            bits: "2"
+            desc: "EN_GZ_ST field as defined in the ICM-42688-P register map."
+          - name: EN_GY_ST
+            bits: "1"
+            desc: "EN_GY_ST field as defined in the ICM-42688-P register map."
+          - name: EN_GX_ST
+            bits: "0"
+            desc: "EN_GX_ST field as defined in the ICM-42688-P register map."
+
+      - addr: 0x75
+        name: WHO_AM_I
+        access: RO
+        width: 1
+        reset: 0x47
+        roles: [identity]
+        desc: "Device identity register with the fixed ICM-42688-P value 0x47."
+        fields:
+          - name: WHOAMI
+            bits: "7:0"
+            desc: "WHOAMI field as defined in the ICM-42688-P register map."
+
+      - addr: 0x76
+        name: REG_BANK_SEL
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Global register-bank selector, accessible from every user bank."
+        fields:
+          - name: reserved_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: BANK_SEL
+            bits: "2:0"
+            desc: "BANK_SEL field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "User Bank 0"
+              0x01: "User Bank 1"
+              0x02: "User Bank 2"
+              0x03: "User Bank 3"
+              0x04: "User Bank 4"
+              0x05: "Reserved"
+              0x06: "Reserved"
+              0x07: "Reserved"
+  BANK1:
+    page_id: 0x01
+    access: "SPI / I2C / I3C via REG_BANK_SEL"
+    desc: "Gyroscope static configuration and interface bank; select BANK_SEL=1 in the global REG_BANK_SEL register."
+    registers:
+      - addr: 0x03
+        name: SENSOR_CONFIG0
+        access: RW
+        width: 1
+        reset: 0x80
+        desc: "Sensor config0 register."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ZG_DISABLE
+            bits: "5"
+            desc: "ZG_DISABLE field as defined in the ICM-42688-P register map."
+          - name: YG_DISABLE
+            bits: "4"
+            desc: "YG_DISABLE field as defined in the ICM-42688-P register map."
+          - name: XG_DISABLE
+            bits: "3"
+            desc: "XG_DISABLE field as defined in the ICM-42688-P register map."
+          - name: ZA_DISABLE
+            bits: "2"
+            desc: "ZA_DISABLE field as defined in the ICM-42688-P register map."
+          - name: YA_DISABLE
+            bits: "1"
+            desc: "YA_DISABLE field as defined in the ICM-42688-P register map."
+          - name: XA_DISABLE
+            bits: "0"
+            desc: "XA_DISABLE field as defined in the ICM-42688-P register map."
+
+      - addr: 0x0B
+        name: GYRO_CONFIG_STATIC2
+        access: RW
+        width: 1
+        reset: 0xA0
+        desc: "Gyro config static2 register."
+        fields:
+          - name: reserved_7_2
+            bits: "7:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: GYRO_AAF_DIS
+            bits: "1"
+            desc: "GYRO_AAF_DIS field as defined in the ICM-42688-P register map."
+          - name: GYRO_NF_DIS
+            bits: "0"
+            desc: "GYRO_NF_DIS field as defined in the ICM-42688-P register map."
+
+      - addr: 0x0C
+        name: GYRO_CONFIG_STATIC3
+        access: RW
+        width: 1
+        reset: 0x0D
+        desc: "Gyro config static3 register."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: GYRO_AAF_DELT
+            bits: "5:0"
+            desc: "GYRO_AAF_DELT field as defined in the ICM-42688-P register map."
+
+      - addr: 0x0D
+        name: GYRO_CONFIG_STATIC4
+        access: RW
+        width: 1
+        reset: 0xAA
+        desc: "Gyro config static4 register."
+        fields:
+          - name: GYRO_AAF_DELTSQR[7:0]
+            bits: "7:0"
+            desc: "GYRO_AAF_DELTSQR[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x0E
+        name: GYRO_CONFIG_STATIC5
+        access: RW
+        width: 1
+        reset: 0x80
+        desc: "Gyro config static5 register."
+        fields:
+          - name: GYRO_AAF_BITSHIFT
+            bits: "7:4"
+            desc: "GYRO_AAF_BITSHIFT field as defined in the ICM-42688-P register map."
+          - name: GYRO_AAF_DELTSQR[11:8]
+            bits: "3:0"
+            desc: "GYRO_AAF_DELTSQR[11:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x0F
+        name: GYRO_CONFIG_STATIC6
+        access: RW
+        width: 1
+        desc: "Gyro config static6 register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: GYRO_X_NF_COSWZ[7:0]
+            bits: "7:0"
+            desc: "GYRO_X_NF_COSWZ[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x10
+        name: GYRO_CONFIG_STATIC7
+        access: RW
+        width: 1
+        desc: "Gyro config static7 register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: GYRO_Y_NF_COSWZ[7:0]
+            bits: "7:0"
+            desc: "GYRO_Y_NF_COSWZ[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x11
+        name: GYRO_CONFIG_STATIC8
+        access: RW
+        width: 1
+        desc: "Gyro config static8 register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: GYRO_Z_NF_COSWZ[7:0]
+            bits: "7:0"
+            desc: "GYRO_Z_NF_COSWZ[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x12
+        name: GYRO_CONFIG_STATIC9
+        access: RW
+        width: 1
+        desc: "Gyro config static9 register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: GYRO_Z_NF_COSWZ_SEL[0]
+            bits: "5"
+            desc: "GYRO_Z_NF_COSWZ_SEL[0] field as defined in the ICM-42688-P register map."
+          - name: GYRO_Y_NF_COSWZ_SEL[0]
+            bits: "4"
+            desc: "GYRO_Y_NF_COSWZ_SEL[0] field as defined in the ICM-42688-P register map."
+          - name: GYRO_X_NF_COSWZ_SEL[0]
+            bits: "3"
+            desc: "GYRO_X_NF_COSWZ_SEL[0] field as defined in the ICM-42688-P register map."
+          - name: GYRO_Z_NF_COSWZ[8]
+            bits: "2"
+            desc: "GYRO_Z_NF_COSWZ[8] field as defined in the ICM-42688-P register map."
+          - name: GYRO_Y_NF_COSWZ[8]
+            bits: "1"
+            desc: "GYRO_Y_NF_COSWZ[8] field as defined in the ICM-42688-P register map."
+          - name: GYRO_X_NF_COSWZ[8]
+            bits: "0"
+            desc: "GYRO_X_NF_COSWZ[8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x13
+        name: GYRO_CONFIG_STATIC10
+        access: RW
+        width: 1
+        reset: 0x11
+        desc: "Gyro config static10 register."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: GYRO_NF_BW_SEL
+            bits: "6:4"
+            desc: "GYRO_NF_BW_SEL field as defined in the ICM-42688-P register map."
+          - name: reserved_3_0
+            bits: "3:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x5F
+        name: XG_ST_DATA
+        access: RW
+        width: 1
+        desc: "Xg st data register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: XG_ST_DATA
+            bits: "7:0"
+            desc: "XG_ST_DATA field as defined in the ICM-42688-P register map."
+
+      - addr: 0x60
+        name: YG_ST_DATA
+        access: RW
+        width: 1
+        desc: "Yg st data register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: YG_ST_DATA
+            bits: "7:0"
+            desc: "YG_ST_DATA field as defined in the ICM-42688-P register map."
+
+      - addr: 0x61
+        name: ZG_ST_DATA
+        access: RW
+        width: 1
+        desc: "Zg st data register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: ZG_ST_DATA
+            bits: "7:0"
+            desc: "ZG_ST_DATA field as defined in the ICM-42688-P register map."
+
+      - addr: 0x62
+        name: TMSTVAL0
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Tmstval0 register."
+        fields:
+          - name: TMST_VALUE[7:0]
+            bits: "7:0"
+            desc: "TMST_VALUE[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x63
+        name: TMSTVAL1
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Tmstval1 register."
+        fields:
+          - name: TMST_VALUE[15:8]
+            bits: "7:0"
+            desc: "TMST_VALUE[15:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x64
+        name: TMSTVAL2
+        access: RO
+        width: 1
+        reset: 0x00
+        desc: "Tmstval2 register."
+        fields:
+          - name: reserved_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: TMST_VALUE[19:16]
+            bits: "3:0"
+            desc: "TMST_VALUE[19:16] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x7A
+        name: INTF_CONFIG4
+        access: RW
+        width: 1
+        reset: 0x83
+        desc: "Interface configuration register 4. The datasheet table prints bits 7:2 as reserved while also defining I3C_BUS_MODE at bit 6 and bits 5:2 as reserved; this map uses bit 7 as the upper reserved field, consistent with the named bit layout and the cross-checked driver header."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: I3C_BUS_MODE
+            bits: "6"
+            desc: "I3C_BUS_MODE field as defined in the ICM-42688-P register map."
+          - name: reserved_5_2
+            bits: "5:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SPI_AP_4WIRE
+            bits: "1"
+            desc: "SPI_AP_4WIRE field as defined in the ICM-42688-P register map."
+          - name: reserved_0
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x7B
+        name: INTF_CONFIG5
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Intf config5 register."
+        fields:
+          - name: reserved_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: PIN9_FUNCTION
+            bits: "2:1"
+            desc: "PIN9_FUNCTION field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "INT2"
+              0x01: "FSYNC"
+              0x02: "CLKIN"
+              0x03: "Reserved"
+          - name: reserved_0
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x7C
+        name: INTF_CONFIG6
+        access: RW
+        width: 1
+        reset: 0x5F
+        desc: "Intf config6 register."
+        fields:
+          - name: reserved_7_5
+            bits: "7:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: I3C_EN
+            bits: "4"
+            desc: "I3C_EN field as defined in the ICM-42688-P register map."
+          - name: I3C_IBI_BYTE_EN
+            bits: "3"
+            desc: "I3C_IBI_BYTE_EN field as defined in the ICM-42688-P register map."
+          - name: I3C_IBI_EN
+            bits: "2"
+            desc: "I3C_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: I3C_DDR_EN
+            bits: "1"
+            desc: "I3C_DDR_EN field as defined in the ICM-42688-P register map."
+          - name: I3C_SDR_EN
+            bits: "0"
+            desc: "I3C_SDR_EN field as defined in the ICM-42688-P register map."
+  BANK2:
+    page_id: 0x02
+    access: "SPI / I2C / I3C via REG_BANK_SEL"
+    desc: "Accelerometer static configuration bank; select BANK_SEL=2 in the global REG_BANK_SEL register."
+    registers:
+      - addr: 0x03
+        name: ACCEL_CONFIG_STATIC2
+        access: RW
+        width: 1
+        reset: 0x30
+        desc: "Accel config static2 register."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ACCEL_AAF_DELT
+            bits: "6:1"
+            desc: "ACCEL_AAF_DELT field as defined in the ICM-42688-P register map."
+          - name: ACCEL_AAF_DIS
+            bits: "0"
+            desc: "ACCEL_AAF_DIS field as defined in the ICM-42688-P register map."
+
+      - addr: 0x04
+        name: ACCEL_CONFIG_STATIC3
+        access: RW
+        width: 1
+        reset: 0x40
+        desc: "Accel config static3 register."
+        fields:
+          - name: ACCEL_AAF_DELTSQR[7:0]
+            bits: "7:0"
+            desc: "ACCEL_AAF_DELTSQR[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x05
+        name: ACCEL_CONFIG_STATIC4
+        access: RW
+        width: 1
+        reset: 0x62
+        desc: "Accel config static4 register."
+        fields:
+          - name: ACCEL_AAF_BITSHIFT
+            bits: "7:4"
+            desc: "ACCEL_AAF_BITSHIFT field as defined in the ICM-42688-P register map."
+          - name: ACCEL_AAF_DELTSQR[11:8]
+            bits: "3:0"
+            desc: "ACCEL_AAF_DELTSQR[11:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x3B
+        name: XA_ST_DATA
+        access: RW
+        width: 1
+        desc: "Xa st data register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: XA_ST_DATA
+            bits: "7:0"
+            desc: "XA_ST_DATA field as defined in the ICM-42688-P register map."
+
+      - addr: 0x3C
+        name: YA_ST_DATA
+        access: RW
+        width: 1
+        desc: "Ya st data register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: YA_ST_DATA
+            bits: "7:0"
+            desc: "YA_ST_DATA field as defined in the ICM-42688-P register map."
+
+      - addr: 0x3D
+        name: ZA_ST_DATA
+        access: RW
+        width: 1
+        desc: "Za st data register. The reset value is factory trimmed and varies by device."
+        fields:
+          - name: ZA_ST_DATA
+            bits: "7:0"
+            desc: "ZA_ST_DATA field as defined in the ICM-42688-P register map."
+  BANK4:
+    page_id: 0x04
+    access: "SPI / I2C / I3C via REG_BANK_SEL"
+    desc: "APEX, wake-on-motion, interrupt and user-offset bank; select BANK_SEL=4 in the global REG_BANK_SEL register."
+    registers:
+      - addr: 0x40
+        name: APEX_CONFIG1
+        access: RW
+        width: 1
+        reset: 0xA2
+        desc: "Apex config1 register."
+        fields:
+          - name: LOW_ENERGY_AMP_TH_SEL
+            bits: "7:4"
+            desc: "LOW_ENERGY_AMP_TH_SEL field as defined in the ICM-42688-P register map."
+          - name: DMP_POWER_SAVE_TIME_SEL
+            bits: "3:0"
+            desc: "DMP_POWER_SAVE_TIME_SEL field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "0 seconds"
+              0x01: "4 seconds"
+              0x02: "8 seconds"
+              0x03: "12 seconds"
+              0x04: "16 seconds"
+              0x05: "20 seconds"
+              0x06: "24 seconds"
+              0x07: "28 seconds"
+              0x08: "32 seconds"
+              0x09: "36 seconds"
+              0x0A: "40 seconds"
+              0x0B: "44 seconds"
+              0x0C: "48 seconds"
+              0x0D: "52 seconds"
+              0x0E: "56 seconds"
+              0x0F: "60 seconds"
+
+      - addr: 0x41
+        name: APEX_CONFIG2
+        access: RW
+        width: 1
+        reset: 0x85
+        desc: "Apex config2 register."
+        fields:
+          - name: PED_AMP_TH_SEL
+            bits: "7:4"
+            desc: "PED_AMP_TH_SEL field as defined in the ICM-42688-P register map."
+          - name: PED_STEP_CNT_TH_SEL
+            bits: "3:0"
+            desc: "PED_STEP_CNT_TH_SEL field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "0 steps"
+              0x01: "1 steps"
+              0x02: "2 steps"
+              0x03: "3 steps"
+              0x04: "4 steps"
+              0x05: "5 steps"
+              0x06: "6 steps"
+              0x07: "7 steps"
+              0x08: "8 steps"
+              0x09: "9 steps"
+              0x0A: "10 steps"
+              0x0B: "11 steps"
+              0x0C: "12 steps"
+              0x0D: "13 steps"
+              0x0E: "14 steps"
+              0x0F: "15 steps"
+
+      - addr: 0x42
+        name: APEX_CONFIG3
+        access: RW
+        width: 1
+        reset: 0x51
+        desc: "Apex config3 register."
+        fields:
+          - name: PED_STEP_DET_TH_SEL
+            bits: "7:5"
+            desc: "PED_STEP_DET_TH_SEL field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "0 steps"
+              0x01: "1 steps"
+              0x02: "2 steps"
+              0x03: "3 steps"
+              0x04: "4 steps"
+              0x05: "5 steps"
+              0x06: "6 steps"
+              0x07: "7 steps"
+          - name: PED_SB_TIMER_TH_SEL
+            bits: "4:2"
+            desc: "PED_SB_TIMER_TH_SEL field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "0 samples"
+              0x01: "1 samples"
+              0x02: "2 samples"
+              0x03: "3 samples"
+              0x04: "4 samples"
+              0x05: "5 samples"
+              0x06: "6 samples"
+              0x07: "7 samples"
+          - name: PED_HI_EN_TH_SEL
+            bits: "1:0"
+            desc: "PED_HI_EN_TH_SEL field as defined in the ICM-42688-P register map."
+
+      - addr: 0x43
+        name: APEX_CONFIG4
+        access: RW
+        width: 1
+        reset: 0xA4
+        desc: "Apex config4 register."
+        fields:
+          - name: TILT_WAIT_TIME_SEL
+            bits: "7:6"
+            desc: "TILT_WAIT_TIME_SEL field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "0 seconds"
+              0x01: "2 seconds"
+              0x02: "4 seconds"
+              0x03: "6 seconds"
+          - name: SLEEP_TIME_OUT
+            bits: "5:3"
+            desc: "SLEEP_TIME_OUT field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "1.28 seconds"
+              0x01: "2.56 seconds"
+              0x02: "3.84 seconds"
+              0x03: "5.12 seconds"
+              0x04: "6.40 seconds"
+              0x05: "7.68 seconds"
+              0x06: "8.96 seconds"
+              0x07: "10.24 seconds"
+          - name: reserved_2_0
+            bits: "2:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x44
+        name: APEX_CONFIG5
+        access: RW
+        width: 1
+        reset: 0x8C
+        desc: "Apex config5 register."
+        fields:
+          - name: reserved_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: MOUNTING_MATRIX
+            bits: "2:0"
+            desc: "MOUNTING_MATRIX field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "[1 0 0; 0 1 0; 0 0 1]"
+              0x01: "[1 0 0; 0 -1 0; 0 0 -1]"
+              0x02: "[-1 0 0; 0 1 0; 0 0 -1]"
+              0x03: "[-1 0 0; 0 -1 0; 0 0 1]"
+              0x04: "[0 1 0; 1 0 0; 0 0 -1]"
+              0x05: "[0 1 0; -1 0 0; 0 0 1]"
+              0x06: "[0 -1 0; 1 0 0; 0 0 1]"
+              0x07: "[0 -1 0; -1 0 0; 0 0 -1]"
+
+      - addr: 0x45
+        name: APEX_CONFIG6
+        access: RW
+        width: 1
+        reset: 0x5C
+        desc: "Apex config6 register."
+        fields:
+          - name: reserved_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SLEEP_GESTURE_DELAY
+            bits: "2:0"
+            desc: "SLEEP_GESTURE_DELAY field as defined in the ICM-42688-P register map."
+            values:
+              0x00: "0.32 seconds"
+              0x01: "0.64 seconds"
+              0x02: "0.96 seconds"
+              0x03: "1.28 seconds"
+              0x04: "1.60 seconds"
+              0x05: "1.92 seconds"
+              0x06: "2.24 seconds"
+              0x07: "2.56 seconds"
+
+      - addr: 0x46
+        name: APEX_CONFIG7
+        access: RW
+        width: 1
+        reset: 0x45
+        desc: "Apex config7 register."
+        fields:
+          - name: TAP_MIN_JERK_THR
+            bits: "7:2"
+            desc: "TAP_MIN_JERK_THR field as defined in the ICM-42688-P register map."
+          - name: TAP_MAX_PEAK_TOL
+            bits: "1:0"
+            desc: "TAP_MAX_PEAK_TOL field as defined in the ICM-42688-P register map."
+
+      - addr: 0x47
+        name: APEX_CONFIG8
+        access: RW
+        width: 1
+        reset: 0x5B
+        desc: "Apex config8 register."
+        fields:
+          - name: reserved_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: TAP_TMAX
+            bits: "6:5"
+            desc: "TAP_TMAX field as defined in the ICM-42688-P register map."
+          - name: TAP_TAVG
+            bits: "4:3"
+            desc: "TAP_TAVG field as defined in the ICM-42688-P register map."
+          - name: TAP_TMIN
+            bits: "2:0"
+            desc: "TAP_TMIN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x48
+        name: APEX_CONFIG9
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Apex config9 register."
+        fields:
+          - name: reserved_7_1
+            bits: "7:1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SENSITIVITY_MODE
+            bits: "0"
+            desc: "SENSITIVITY_MODE field as defined in the ICM-42688-P register map."
+
+      - addr: 0x4A
+        name: ACCEL_WOM_X_THR
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Accel wom x thr register."
+        fields:
+          - name: WOM_X_TH
+            bits: "7:0"
+            desc: "X-axis wake-on-motion threshold, 1 g / 256 per LSB (about 3.9 mg)."
+
+      - addr: 0x4B
+        name: ACCEL_WOM_Y_THR
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Accel wom y thr register."
+        fields:
+          - name: WOM_Y_TH
+            bits: "7:0"
+            desc: "Y-axis wake-on-motion threshold, 1 g / 256 per LSB (about 3.9 mg)."
+
+      - addr: 0x4C
+        name: ACCEL_WOM_Z_THR
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Accel wom z thr register."
+        fields:
+          - name: WOM_Z_TH
+            bits: "7:0"
+            desc: "Z-axis wake-on-motion threshold, 1 g / 256 per LSB (about 3.9 mg)."
+
+      - addr: 0x4D
+        name: INT_SOURCE6
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Interrupt routing controls for int source6."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: STEP_DET_INT1_EN
+            bits: "5"
+            desc: "STEP_DET_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: STEP_CNT_OFL_INT1_EN
+            bits: "4"
+            desc: "STEP_CNT_OFL_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: TILT_DET_INT1_EN
+            bits: "3"
+            desc: "TILT_DET_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: WAKE_DET_INT1_EN
+            bits: "2"
+            desc: "WAKE_DET_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: SLEEP_DET_INT1_EN
+            bits: "1"
+            desc: "SLEEP_DET_INT1_EN field as defined in the ICM-42688-P register map."
+          - name: TAP_DET_INT1_EN
+            bits: "0"
+            desc: "TAP_DET_INT1_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x4E
+        name: INT_SOURCE7
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Interrupt routing controls for int source7."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: STEP_DET_INT2_EN
+            bits: "5"
+            desc: "STEP_DET_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: STEP_CNT_OFL_INT2_EN
+            bits: "4"
+            desc: "STEP_CNT_OFL_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: TILT_DET_INT2_EN
+            bits: "3"
+            desc: "TILT_DET_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: WAKE_DET_INT2_EN
+            bits: "2"
+            desc: "WAKE_DET_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: SLEEP_DET_INT2_EN
+            bits: "1"
+            desc: "SLEEP_DET_INT2_EN field as defined in the ICM-42688-P register map."
+          - name: TAP_DET_INT2_EN
+            bits: "0"
+            desc: "TAP_DET_INT2_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x4F
+        name: INT_SOURCE8
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Interrupt routing controls for int source8."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FSYNC_IBI_EN
+            bits: "5"
+            desc: "FSYNC_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: PLL_RDY_IBI_EN
+            bits: "4"
+            desc: "PLL_RDY_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: UI_DRDY_IBI_EN
+            bits: "3"
+            desc: "UI_DRDY_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_THS_IBI_EN
+            bits: "2"
+            desc: "FIFO_THS_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: FIFO_FULL_IBI_EN
+            bits: "1"
+            desc: "FIFO_FULL_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: AGC_RDY_IBI_EN
+            bits: "0"
+            desc: "AGC_RDY_IBI_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x50
+        name: INT_SOURCE9
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Interrupt routing controls for int source9."
+        fields:
+          - name: I3C_PROTOCOL_ERROR_IBI_EN
+            bits: "7"
+            desc: "I3C_PROTOCOL_ERROR_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: reserved_6_5
+            bits: "6:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SMD_IBI_EN
+            bits: "4"
+            desc: "SMD_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: WOM_Z_IBI_EN
+            bits: "3"
+            desc: "WOM_Z_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: WOM_Y_IBI_EN
+            bits: "2"
+            desc: "WOM_Y_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: WOM_X_IBI_EN
+            bits: "1"
+            desc: "WOM_X_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: reserved_0
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x51
+        name: INT_SOURCE10
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Interrupt routing controls for int source10."
+        fields:
+          - name: reserved_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: STEP_DET_IBI_EN
+            bits: "5"
+            desc: "STEP_DET_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: STEP_CNT_OFL_IBI_EN
+            bits: "4"
+            desc: "STEP_CNT_OFL_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: TILT_DET_IBI_EN
+            bits: "3"
+            desc: "TILT_DET_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: WAKE_DET_IBI_EN
+            bits: "2"
+            desc: "WAKE_DET_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: SLEEP_DET_IBI_EN
+            bits: "1"
+            desc: "SLEEP_DET_IBI_EN field as defined in the ICM-42688-P register map."
+          - name: TAP_DET_IBI_EN
+            bits: "0"
+            desc: "TAP_DET_IBI_EN field as defined in the ICM-42688-P register map."
+
+      - addr: 0x77
+        name: OFFSET_USER0
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "User-programmable accelerometer or gyroscope offset byte 0."
+        fields:
+          - name: GYRO_X_OFFUSER[7:0]
+            bits: "7:0"
+            desc: "GYRO_X_OFFUSER[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x78
+        name: OFFSET_USER1
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "User-programmable accelerometer or gyroscope offset byte 1."
+        fields:
+          - name: GYRO_Y_OFFUSER[11:8]
+            bits: "7:4"
+            desc: "GYRO_Y_OFFUSER[11:8] field as defined in the ICM-42688-P register map."
+          - name: GYRO_X_OFFUSER[11:8]
+            bits: "3:0"
+            desc: "GYRO_X_OFFUSER[11:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x79
+        name: OFFSET_USER2
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "User-programmable accelerometer or gyroscope offset byte 2."
+        fields:
+          - name: GYRO_Y_OFFUSER[7:0]
+            bits: "7:0"
+            desc: "GYRO_Y_OFFUSER[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x7A
+        name: OFFSET_USER3
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "User-programmable accelerometer or gyroscope offset byte 3."
+        fields:
+          - name: GYRO_Z_OFFUSER[7:0]
+            bits: "7:0"
+            desc: "GYRO_Z_OFFUSER[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x7B
+        name: OFFSET_USER4
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "User-programmable accelerometer or gyroscope offset byte 4."
+        fields:
+          - name: ACCEL_X_OFFUSER[11:8]
+            bits: "7:4"
+            desc: "ACCEL_X_OFFUSER[11:8] field as defined in the ICM-42688-P register map."
+          - name: GYRO_Z_OFFUSER[11:8]
+            bits: "3:0"
+            desc: "GYRO_Z_OFFUSER[11:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x7C
+        name: OFFSET_USER5
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "User-programmable accelerometer or gyroscope offset byte 5."
+        fields:
+          - name: ACCEL_X_OFFUSER[7:0]
+            bits: "7:0"
+            desc: "ACCEL_X_OFFUSER[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x7D
+        name: OFFSET_USER6
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "User-programmable accelerometer or gyroscope offset byte 6."
+        fields:
+          - name: ACCEL_Y_OFFUSER[7:0]
+            bits: "7:0"
+            desc: "ACCEL_Y_OFFUSER[7:0] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x7E
+        name: OFFSET_USER7
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "User-programmable accelerometer or gyroscope offset byte 7."
+        fields:
+          - name: ACCEL_Z_OFFUSER[11:8]
+            bits: "7:4"
+            desc: "ACCEL_Z_OFFUSER[11:8] field as defined in the ICM-42688-P register map."
+          - name: ACCEL_Y_OFFUSER[11:8]
+            bits: "3:0"
+            desc: "ACCEL_Y_OFFUSER[11:8] field as defined in the ICM-42688-P register map."
+
+      - addr: 0x7F
+        name: OFFSET_USER8
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "User-programmable accelerometer or gyroscope offset byte 8."
+        fields:
+          - name: ACCEL_Z_OFFUSER[7:0]
+            bits: "7:0"
+            desc: "ACCEL_Z_OFFUSER[7:0] field as defined in the ICM-42688-P register map."

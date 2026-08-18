@@ -34,6 +34,18 @@ Copyright (c) 2010-2026 Arm Limited (or its affiliates). All rights reserved.
 
 本仓库不分发原始 PDF，只提供寄存器地址、访问属性、复位值和位域等事实的结构化整理。Bosch Sensortec 文档未在现有资料中声明开源许可证或明确的再分发条款，因此该 YAML 不按仓库的 MIT 许可授权；使用者应自行确认其使用和再分发符合原始文档条款。Bosch、Bosch Sensortec 和 BMI323 是其各自权利人的名称或商标。
 
+## TDK InvenSense ICM-42688-P Sensor
+
+`sensors/imu/tdk/icm42688-p.yaml` 整理自 ICM-42688-P Datasheet，文档号 `DS-000347`，修订 1.2，发布日期 2020-04-19。产品页：<https://invensense.tdk.com/products/motion-tracking/6-axis/icm-42688-p/>。
+
+寄存器地址和位域还使用 Zephyr 的 Apache-2.0 `icm4268x_reg.h` 做了交叉核对，但厂商手册仍是寄存器语义、复位值和访问属性的事实来源。本仓库不分发原始 PDF；TDK InvenSense 文档未在现有资料中声明开源许可证或明确的再分发条款，因此该 YAML 不按仓库的 MIT 许可授权。TDK、InvenSense 和 ICM-42688-P 是其各自权利人的名称或商标。
+
+## STMicroelectronics LSM6DSV Sensor
+
+`sensors/imu/st/lsm6dsv.yaml` 整理自 LSM6DSV Datasheet，文档号 `DS13476`，Rev 5，发布日期 2023-08。产品页：<https://www.st.com/en/mems-and-sensors/lsm6dsv.html>。
+
+地址、位域和分页结构使用 STMicroelectronics 标准 C 驱动 `lsm6dsv_reg.h` 交叉核对；该驱动随 ST MEMS 标准 C 驱动组件按 BSD-3-Clause 提供。厂商手册仍是访问属性、复位值和寄存器语义的事实来源。本仓库不分发原始 PDF；STMicroelectronics 文档未在现有资料中声明开源许可证或明确的再分发条款，因此该 YAML 不按仓库的 MIT 许可授权。STMicroelectronics 和 LSM6DSV 是其各自权利人的名称或商标。
+
 ## RISC-V Unified Database CSR
 
 `architecture/riscv/rv32/riscv-rv32-csr.yaml` 和 `architecture/riscv/rv64/riscv-rv64-csr.yaml` 由 RISC-V Unified Database 的 `spec/std/isa/csr` 目录生成。

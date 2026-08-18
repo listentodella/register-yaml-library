@@ -1,0 +1,4046 @@
+schema_version: 1
+sensor: "LSM6DSV"
+vendor: "STMicroelectronics"
+family: "LSM6DSV"
+device_type: imu
+source:
+  title: "LSM6DSV Datasheet"
+  version: "DS13476"
+  revision: "Rev 5 (August 2023)"
+  document: "LSM6DSV Datasheet, document DS13476"
+  url: "https://www.st.com/en/mems-and-sensors/lsm6dsv.html"
+  license: "STMicroelectronics vendor documentation; redistribution terms not specified"
+  notice: "Register facts extracted from the user's Zotero PDF attachment and cross-checked against the ST standard C driver; the PDF itself is not redistributed."
+who_am_i:
+  reg: 0x0F
+  values:
+    - value: 0x70
+      desc: "LSM6DSV device identifier"
+
+pages:
+  UI:
+    page_id: 0x00
+    access: "Primary SPI / I2C / I3C interface"
+    desc: "Main user-interface register map for configuration, status, sensor output, OIS/EIS data and FIFO access."
+    registers:
+      - addr: 0x01
+        name: FUNC_CFG_ACCESS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Enable embedded functions register (R/W)"
+        fields:
+          - name: OIS_CTRL_FROM_UI
+            bits: "0"
+            desc: "Ois ctrl from ui field as defined in the LSM6DSV register map."
+          - name: SPI2_RESET
+            bits: "1"
+            desc: "Spi2 reset field as defined in the LSM6DSV register map."
+          - name: SW_POR
+            bits: "2"
+            desc: "Sw por field as defined in the LSM6DSV register map."
+          - name: FSM_WR_CTRL_EN
+            bits: "3"
+            desc: "Enables fsm wr ctrl."
+          - name: RESERVED_5_4
+            bits: "5:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SHUB_REG_ACCESS
+            bits: "6"
+            desc: "Shub reg access field as defined in the LSM6DSV register map."
+          - name: EMB_FUNC_REG_ACCESS
+            bits: "7"
+            desc: "Emb func reg access field as defined in the LSM6DSV register map."
+
+      - addr: 0x02
+        name: PIN_CTRL
+        access: RW
+        width: 1
+        reset: 0x23
+        desc: "SDO, OCS_Aux, SDO_Aux pins pull-up register (R/W). This register is not reset during the software reset procedure (see bit 0 of the CTRL3 (12h) register)."
+        fields:
+          - name: RESERVED_4_0
+            bits: "4:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: IBHR_POR_EN
+            bits: "5"
+            desc: "Enables ibhr por."
+          - name: SDO_PU_EN
+            bits: "6"
+            desc: "Enables sdo pu."
+          - name: OIS_PU_DIS
+            bits: "7"
+            desc: "Ois pu dis field as defined in the LSM6DSV register map."
+
+      - addr: 0x03
+        name: IF_CFG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Interface configuration register (R/W). This register is not reset during the software reset procedure (see bit 0 of the CTRL3 (12h) register)."
+        fields:
+          - name: I2C_I3C_DISABLE
+            bits: "0"
+            desc: "I2c i3c disable field as defined in the LSM6DSV register map."
+          - name: RESERVED_1
+            bits: "1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SIM
+            bits: "2"
+            desc: "Sim field as defined in the LSM6DSV register map."
+          - name: PP_OD
+            bits: "3"
+            desc: "Pp od field as defined in the LSM6DSV register map."
+          - name: H_LACTIVE
+            bits: "4"
+            desc: "H lactive field as defined in the LSM6DSV register map."
+          - name: ASF_CTRL
+            bits: "5"
+            desc: "Asf ctrl field as defined in the LSM6DSV register map."
+          - name: SHUB_PU_EN
+            bits: "6"
+            desc: "Enables shub pu."
+          - name: SDA_PU_EN
+            bits: "7"
+            desc: "Enables sda pu."
+
+      - addr: 0x06
+        name: ODR_TRIG_CFG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "ODR-triggered mode configuration register (R/W)"
+        fields:
+          - name: ODR_TRIG_NODR
+            bits: "7:0"
+            desc: "Odr trig nodr field as defined in the LSM6DSV register map."
+
+      - addr: 0x07
+        name: FIFO_CTRL1
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "FIFO control register 1 (R/W)"
+        fields:
+          - name: WTM
+            bits: "7:0"
+            desc: "Wtm field as defined in the LSM6DSV register map."
+
+      - addr: 0x08
+        name: FIFO_CTRL2
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "FIFO control register 2 (R/W)"
+        fields:
+          - name: XL_DUALC_BATCH_FROM_FSM
+            bits: "0"
+            desc: "Xl dualc batch from fsm field as defined in the LSM6DSV register map."
+          - name: UNCOMPR_RATE
+            bits: "2:1"
+            desc: "Uncompr rate field as defined in the LSM6DSV register map."
+          - name: RESERVED_3
+            bits: "3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ODR_CHG_EN
+            bits: "4"
+            desc: "Enables odr chg."
+          - name: RESERVED_5
+            bits: "5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FIFO_COMPR_RT_EN
+            bits: "6"
+            desc: "Enables fifo compr rt."
+          - name: STOP_ON_WTM
+            bits: "7"
+            desc: "Stop on wtm field as defined in the LSM6DSV register map."
+
+      - addr: 0x09
+        name: FIFO_CTRL3
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "FIFO control register 3 (R/W)"
+        fields:
+          - name: BDR_XL
+            bits: "3:0"
+            desc: "Bdr xl field as defined in the LSM6DSV register map."
+            values:
+              0x00: "Power-down"
+              0x01: "1.875 Hz"
+              0x02: "7.5 Hz"
+              0x03: "15 Hz"
+              0x04: "30 Hz"
+              0x05: "60 Hz"
+              0x06: "120 Hz"
+              0x07: "240 Hz"
+              0x08: "480 Hz"
+              0x09: "960 Hz"
+              0x0A: "1.92 kHz"
+              0x0B: "3.84 kHz"
+              0x0C: "7.68 kHz"
+          - name: BDR_GY
+            bits: "7:4"
+            desc: "Bdr gy field as defined in the LSM6DSV register map."
+            values:
+              0x00: "Power-down"
+              0x01: "1.875 Hz"
+              0x02: "7.5 Hz"
+              0x03: "15 Hz"
+              0x04: "30 Hz"
+              0x05: "60 Hz"
+              0x06: "120 Hz"
+              0x07: "240 Hz"
+              0x08: "480 Hz"
+              0x09: "960 Hz"
+              0x0A: "1.92 kHz"
+              0x0B: "3.84 kHz"
+              0x0C: "7.68 kHz"
+
+      - addr: 0x0A
+        name: FIFO_CTRL4
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "FIFO control register 4 (R/W)"
+        fields:
+          - name: FIFO_MODE
+            bits: "2:0"
+            desc: "Fifo mode field as defined in the LSM6DSV register map."
+            values:
+              0x00: "Bypass mode"
+              0x01: "FIFO mode"
+              0x02: "Stream-to-full mode"
+              0x03: "Stream-to-FIFO mode"
+              0x04: "Bypass-to-stream mode"
+              0x06: "Stream mode"
+              0x07: "Bypass-to-FIFO mode"
+          - name: G_EIS_FIFO_EN
+            bits: "3"
+            desc: "Enables g eis fifo."
+          - name: ODR_T_BATCH
+            bits: "5:4"
+            desc: "Odr t batch field as defined in the LSM6DSV register map."
+            values:
+              0x00: "Not batched"
+              0x01: "1.875 Hz"
+              0x02: "15 Hz"
+              0x03: "60 Hz"
+          - name: DEC_TS_BATCH
+            bits: "7:6"
+            desc: "Dec ts batch field as defined in the LSM6DSV register map."
+            values:
+              0x00: "Not batched"
+              0x01: "No decimation"
+              0x02: "Decimate by 8"
+              0x03: "Decimate by 32"
+
+      - addr: 0x0B
+        name: COUNTER_BDR_REG1
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Counter batch data rate register 1 (R/W)"
+        fields:
+          - name: CNT_BDR_TH
+            bits: "1:0"
+            desc: "Cnt bdr th field as defined in the LSM6DSV register map."
+          - name: RESERVED_4_2
+            bits: "4:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: TRIG_COUNTER_BDR
+            bits: "6:5"
+            desc: "Trig counter bdr field as defined in the LSM6DSV register map."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x0C
+        name: COUNTER_BDR_REG2
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Counter batch data rate register 2 (R/W)"
+        fields:
+          - name: CNT_BDR_TH
+            bits: "7:0"
+            desc: "Cnt bdr th field as defined in the LSM6DSV register map."
+
+      - addr: 0x0D
+        name: INT1_CTRL
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "INT1 pin control register (R/W) Each bit in this register enables a signal to be carried over INT1 when the MIPI I3C\u00ae dynamic address is not assigned (I\u00b2C or SPI is used). Some bits can be also used to trigger an IBI (in-band interrupt) when the MIPI"
+        fields:
+          - name: INT1_DRDY_XL
+            bits: "0"
+            desc: "Interrupt control or status for int1 drdy xl."
+          - name: INT1_DRDY_G
+            bits: "1"
+            desc: "Interrupt control or status for int1 drdy g."
+          - name: RESERVED_2
+            bits: "2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: INT1_FIFO_TH
+            bits: "3"
+            desc: "Interrupt control or status for int1 fifo th."
+          - name: INT1_FIFO_OVR
+            bits: "4"
+            desc: "Interrupt control or status for int1 fifo ovr."
+          - name: INT1_FIFO_FULL
+            bits: "5"
+            desc: "Interrupt control or status for int1 fifo full."
+          - name: INT1_CNT_BDR
+            bits: "6"
+            desc: "Interrupt control or status for int1 cnt bdr."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x0E
+        name: INT2_CTRL
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "INT2 pin control register (R/W) Each bit in this register enables a signal to be carried over INT2 when the MIPI I3C\u00ae dynamic address is not assigned (I\u00b2C or SPI is used). Some bits can be also used to trigger an IBI when the MIPI I3C\u00ae interface is used."
+        fields:
+          - name: INT2_DRDY_XL
+            bits: "0"
+            desc: "Interrupt control or status for int2 drdy xl."
+          - name: INT2_DRDY_G
+            bits: "1"
+            desc: "Interrupt control or status for int2 drdy g."
+          - name: INT2_DRDY_G_EIS
+            bits: "2"
+            desc: "Interrupt control or status for int2 drdy g eis."
+          - name: INT2_FIFO_TH
+            bits: "3"
+            desc: "Interrupt control or status for int2 fifo th."
+          - name: INT2_FIFO_OVR
+            bits: "4"
+            desc: "Interrupt control or status for int2 fifo ovr."
+          - name: INT2_FIFO_FULL
+            bits: "5"
+            desc: "Interrupt control or status for int2 fifo full."
+          - name: INT2_CNT_BDR
+            bits: "6"
+            desc: "Interrupt control or status for int2 cnt bdr."
+          - name: INT2_EMB_FUNC_ENDOP
+            bits: "7"
+            desc: "Interrupt control or status for int2 emb func endop."
+
+      - addr: 0x0F
+        name: WHO_AM_I
+        access: RO
+        width: 1
+        reset: 0x70
+        roles: [identity]
+        desc: "WHO_AM_I register (R). This is a read-only register. Its value is fixed at 70h."
+        fields:
+          - name: ID
+            bits: "7:0"
+            desc: "Fixed LSM6DSV device identifier."
+            values:
+              0x70: "LSM6DSV device identifier"
+
+      - addr: 0x10
+        name: CTRL1
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Accelerometer control register 1 (R/W)"
+        fields:
+          - name: ODR_XL
+            bits: "3:0"
+            desc: "Accelerometer output data rate selection; valid rates also depend on OP_MODE_XL."
+            values:
+              0x00: "Power-down"
+              0x01: "1.875 Hz"
+              0x02: "7.5 Hz"
+              0x03: "15 Hz"
+              0x04: "30 Hz"
+              0x05: "60 Hz"
+              0x06: "120 Hz"
+              0x07: "240 Hz"
+              0x08: "480 Hz"
+              0x09: "960 Hz"
+              0x0A: "1.92 kHz"
+              0x0B: "3.84 kHz"
+              0x0C: "7.68 kHz"
+          - name: OP_MODE_XL
+            bits: "6:4"
+            desc: "Op mode xl field as defined in the LSM6DSV register map."
+            values:
+              0x00: "High-performance mode"
+              0x01: "High-accuracy ODR mode"
+              0x03: "ODR-triggered mode"
+              0x04: "Low-power mode with 2-sample averaging"
+              0x05: "Low-power mode with 4-sample averaging"
+              0x06: "Low-power mode with 8-sample averaging"
+              0x07: "Normal mode"
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x11
+        name: CTRL2
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Gyroscope control register 2 (R/W)"
+        fields:
+          - name: ODR_G
+            bits: "3:0"
+            desc: "Gyroscope output data rate selection; valid rates also depend on OP_MODE_G."
+            values:
+              0x00: "Power-down"
+              0x01: "1.875 Hz"
+              0x02: "7.5 Hz"
+              0x03: "15 Hz"
+              0x04: "30 Hz"
+              0x05: "60 Hz"
+              0x06: "120 Hz"
+              0x07: "240 Hz"
+              0x08: "480 Hz"
+              0x09: "960 Hz"
+              0x0A: "1.92 kHz"
+              0x0B: "3.84 kHz"
+              0x0C: "7.68 kHz"
+          - name: OP_MODE_G
+            bits: "6:4"
+            desc: "Op mode g field as defined in the LSM6DSV register map."
+            values:
+              0x00: "High-performance mode"
+              0x01: "High-accuracy ODR mode"
+              0x04: "Sleep mode"
+              0x05: "Low-power mode"
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x12
+        name: CTRL3
+        access: RW
+        width: 1
+        reset: 0x44
+        desc: "Control register 3 (R/W)"
+        fields:
+          - name: SW_RESET
+            bits: "0"
+            desc: "Sw reset field as defined in the LSM6DSV register map."
+          - name: RESERVED_1
+            bits: "1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: IF_INC
+            bits: "2"
+            desc: "If inc field as defined in the LSM6DSV register map."
+          - name: RESERVED_5_3
+            bits: "5:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: BDU
+            bits: "6"
+            desc: "Bdu field as defined in the LSM6DSV register map."
+          - name: BOOT
+            bits: "7"
+            desc: "Boot field as defined in the LSM6DSV register map."
+
+      - addr: 0x13
+        name: CTRL4
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Control register 4 (R/W)"
+        fields:
+          - name: INT2_IN_LH
+            bits: "0"
+            desc: "Interrupt control or status for int2 in lh."
+          - name: DRDY_PULSED
+            bits: "1"
+            desc: "Drdy pulsed field as defined in the LSM6DSV register map."
+          - name: INT2_DRDY_TEMP
+            bits: "2"
+            desc: "Interrupt control or status for int2 drdy temp."
+          - name: DRDY_MASK
+            bits: "3"
+            desc: "Drdy mask field as defined in the LSM6DSV register map."
+          - name: INT2_ON_INT1
+            bits: "4"
+            desc: "Interrupt control or status for int2 on int1."
+          - name: RESERVED_7_5
+            bits: "7:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x14
+        name: CTRL5
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Control register 5 (R/W)"
+        fields:
+          - name: INT_EN_I3C
+            bits: "0"
+            desc: "Interrupt control or status for int en i3c."
+          - name: BUS_ACT_SEL
+            bits: "2:1"
+            desc: "Bus act sel field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x15
+        name: CTRL6
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Control register 6 (R/W)"
+        fields:
+          - name: FS_G
+            bits: "3:0"
+            desc: "Gyroscope full-scale selection."
+            values:
+              0x00: "+/-125 dps"
+              0x01: "+/-250 dps"
+              0x02: "+/-500 dps"
+              0x03: "+/-1000 dps"
+              0x04: "+/-2000 dps"
+              0x0C: "+/-4000 dps"
+          - name: LPF1_G_BW
+            bits: "6:4"
+            desc: "Lpf1 g bw field as defined in the LSM6DSV register map."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x16
+        name: CTRL7
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Control register 7 (R/W)"
+        fields:
+          - name: LPF1_G_EN
+            bits: "0"
+            desc: "Enables lpf1 g."
+          - name: RESERVED_7_1
+            bits: "7:1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x17
+        name: CTRL8
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Control register 8 (R/W)"
+        fields:
+          - name: FS_XL
+            bits: "1:0"
+            desc: "Accelerometer full-scale selection."
+            values:
+              0x00: "+/-2 g"
+              0x01: "+/-4 g"
+              0x02: "+/-8 g"
+              0x03: "+/-16 g"
+          - name: RESERVED_2
+            bits: "2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: XL_DUALC_EN
+            bits: "3"
+            desc: "Enables xl dualc."
+          - name: RESERVED_4
+            bits: "4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: HP_LPF2_XL_BW
+            bits: "7:5"
+            desc: "Hp lpf2 xl bw field as defined in the LSM6DSV register map."
+
+      - addr: 0x18
+        name: CTRL9
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Control register 9 (R/W)"
+        fields:
+          - name: USR_OFF_ON_OUT
+            bits: "0"
+            desc: "Usr off on out field as defined in the LSM6DSV register map."
+          - name: USR_OFF_W
+            bits: "1"
+            desc: "Usr off w field as defined in the LSM6DSV register map."
+          - name: RESERVED_2
+            bits: "2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: LPF2_XL_EN
+            bits: "3"
+            desc: "Enables lpf2 xl."
+          - name: HP_SLOPE_XL_EN
+            bits: "4"
+            desc: "Enables hp slope xl."
+          - name: XL_FASTSETTL_MODE
+            bits: "5"
+            desc: "Xl fastsettl mode field as defined in the LSM6DSV register map."
+          - name: HP_REF_MODE_XL
+            bits: "6"
+            desc: "Hp ref mode xl field as defined in the LSM6DSV register map."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x19
+        name: CTRL10
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Control register 10 (R/W)"
+        fields:
+          - name: ST_XL
+            bits: "1:0"
+            desc: "St xl field as defined in the LSM6DSV register map."
+          - name: ST_G
+            bits: "3:2"
+            desc: "St g field as defined in the LSM6DSV register map."
+          - name: RESERVED_5_4
+            bits: "5:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: EMB_FUNC_DEBUG
+            bits: "6"
+            desc: "Emb func debug field as defined in the LSM6DSV register map."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x1A
+        name: CTRL_STATUS
+        access: RO
+        width: 1
+        desc: "(R)"
+        fields:
+          - name: RESERVED_1_0
+            bits: "1:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FSM_WR_CTRL_STATUS
+            bits: "2"
+            desc: "Fsm wr ctrl status field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x1B
+        name: FIFO_STATUS1
+        access: RO
+        width: 1
+        roles: [fifo_status]
+        desc: "FIFO status register 1 (R)"
+        fields:
+          - name: DIFF_FIFO
+            bits: "7:0"
+            desc: "Diff fifo field as defined in the LSM6DSV register map."
+
+      - addr: 0x1C
+        name: FIFO_STATUS2
+        access: RO
+        width: 1
+        roles: [fifo_status]
+        desc: "FIFO status register 2 (R)"
+        fields:
+          - name: DIFF_FIFO
+            bits: "0"
+            desc: "Diff fifo field as defined in the LSM6DSV register map."
+          - name: RESERVED_2_1
+            bits: "2:1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FIFO_OVR_LATCHED
+            bits: "3"
+            desc: "Fifo ovr latched field as defined in the LSM6DSV register map."
+          - name: COUNTER_BDR_IA
+            bits: "4"
+            desc: "Counter bdr ia field as defined in the LSM6DSV register map."
+          - name: FIFO_FULL_IA
+            bits: "5"
+            desc: "Fifo full ia field as defined in the LSM6DSV register map."
+          - name: FIFO_OVR_IA
+            bits: "6"
+            desc: "Fifo ovr ia field as defined in the LSM6DSV register map."
+          - name: FIFO_WTM_IA
+            bits: "7"
+            desc: "Fifo wtm ia field as defined in the LSM6DSV register map."
+
+      - addr: 0x1D
+        name: ALL_INT_SRC
+        access: RO
+        width: 1
+        desc: "Source register for all interrupts (R)"
+        fields:
+          - name: FF_IA
+            bits: "0"
+            desc: "Ff ia field as defined in the LSM6DSV register map."
+          - name: WU_IA
+            bits: "1"
+            desc: "Wu ia field as defined in the LSM6DSV register map."
+          - name: TAP_IA
+            bits: "2"
+            desc: "Tap ia field as defined in the LSM6DSV register map."
+          - name: RESERVED_3
+            bits: "3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: D6D_IA
+            bits: "4"
+            desc: "D6d ia field as defined in the LSM6DSV register map."
+          - name: SLEEP_CHANGE_IA
+            bits: "5"
+            desc: "Sleep change ia field as defined in the LSM6DSV register map."
+          - name: SHUB_IA
+            bits: "6"
+            desc: "Shub ia field as defined in the LSM6DSV register map."
+          - name: EMB_FUNC_IA
+            bits: "7"
+            desc: "Emb func ia field as defined in the LSM6DSV register map."
+
+      - addr: 0x1E
+        name: STATUS_REG
+        access: RO
+        width: 1
+        desc: "The STATUS_REG register is read by the primary interface SPI/I\u00b2C & MIPI I3C\u00ae (R)."
+        fields:
+          - name: XLDA
+            bits: "0"
+            desc: "Xlda field as defined in the LSM6DSV register map."
+          - name: GDA
+            bits: "1"
+            desc: "Gda field as defined in the LSM6DSV register map."
+          - name: TDA
+            bits: "2"
+            desc: "Tda field as defined in the LSM6DSV register map."
+          - name: RESERVED_3
+            bits: "3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: GDA_EIS
+            bits: "4"
+            desc: "Gda eis field as defined in the LSM6DSV register map."
+          - name: OIS_DRDY
+            bits: "5"
+            desc: "Ois drdy field as defined in the LSM6DSV register map."
+          - name: RESERVED_6
+            bits: "6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: TIMESTAMP_ENDCOUNT
+            bits: "7"
+            desc: "Timestamp endcount field as defined in the LSM6DSV register map."
+
+      - addr: 0x20
+        name: OUT_TEMP_L
+        access: RO
+        width: 1
+        roles: [temp_data]
+        desc: "Raw out temp l sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: TEMP
+            bits: "7:0"
+            desc: "Temp field as defined in the LSM6DSV register map."
+
+      - addr: 0x21
+        name: OUT_TEMP_H
+        access: RO
+        width: 1
+        roles: [temp_data]
+        desc: "Raw out temp h sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: TEMP
+            bits: "7:0"
+            desc: "Temp field as defined in the LSM6DSV register map."
+
+      - addr: 0x22
+        name: OUTX_L_G
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw outx l g sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTX_G
+            bits: "7:0"
+            desc: "Raw outx g data bits."
+
+      - addr: 0x23
+        name: OUTX_H_G
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw outx h g sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTX_G
+            bits: "7:0"
+            desc: "Raw outx g data bits."
+
+      - addr: 0x24
+        name: OUTY_L_G
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw outy l g sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTY_G
+            bits: "7:0"
+            desc: "Raw outy g data bits."
+
+      - addr: 0x25
+        name: OUTY_H_G
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw outy h g sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTY_G
+            bits: "7:0"
+            desc: "Raw outy g data bits."
+
+      - addr: 0x26
+        name: OUTZ_L_G
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw outz l g sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTZ_G
+            bits: "7:0"
+            desc: "Raw outz g data bits."
+
+      - addr: 0x27
+        name: OUTZ_H_G
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw outz h g sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTZ_G
+            bits: "7:0"
+            desc: "Raw outz g data bits."
+
+      - addr: 0x28
+        name: OUTX_L_A
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw outx l a sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTX_A
+            bits: "7:0"
+            desc: "Raw outx a data bits."
+
+      - addr: 0x29
+        name: OUTX_H_A
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw outx h a sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTX_A
+            bits: "7:0"
+            desc: "Raw outx a data bits."
+
+      - addr: 0x2A
+        name: OUTY_L_A
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw outy l a sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTY_A
+            bits: "7:0"
+            desc: "Raw outy a data bits."
+
+      - addr: 0x2B
+        name: OUTY_H_A
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw outy h a sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTY_A
+            bits: "7:0"
+            desc: "Raw outy a data bits."
+
+      - addr: 0x2C
+        name: OUTZ_L_A
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw outz l a sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTZ_A
+            bits: "7:0"
+            desc: "Raw outz a data bits."
+
+      - addr: 0x2D
+        name: OUTZ_H_A
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw outz h a sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: OUTZ_A
+            bits: "7:0"
+            desc: "Raw outz a data bits."
+
+      - addr: 0x2E
+        name: UI_OUTX_L_G_OIS_EIS
+        access: RO
+        width: 1
+        desc: "Raw ui outx l g ois eis sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTX_G_OIS_EIS
+            bits: "7:0"
+            desc: "Ui outx g ois eis field as defined in the LSM6DSV register map."
+
+      - addr: 0x2F
+        name: UI_OUTX_H_G_OIS_EIS
+        access: RO
+        width: 1
+        desc: "Raw ui outx h g ois eis sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTX_G_OIS_EIS
+            bits: "7:0"
+            desc: "Ui outx g ois eis field as defined in the LSM6DSV register map."
+
+      - addr: 0x30
+        name: UI_OUTY_L_G_OIS_EIS
+        access: RO
+        width: 1
+        desc: "Raw ui outy l g ois eis sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTY_G_OIS_EIS
+            bits: "7:0"
+            desc: "Ui outy g ois eis field as defined in the LSM6DSV register map."
+
+      - addr: 0x31
+        name: UI_OUTY_H_G_OIS_EIS
+        access: RO
+        width: 1
+        desc: "Raw ui outy h g ois eis sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTY_G_OIS_EIS
+            bits: "7:0"
+            desc: "Ui outy g ois eis field as defined in the LSM6DSV register map."
+
+      - addr: 0x32
+        name: UI_OUTZ_L_G_OIS_EIS
+        access: RO
+        width: 1
+        desc: "Raw ui outz l g ois eis sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTZ_G_OIS_EIS
+            bits: "7:0"
+            desc: "Ui outz g ois eis field as defined in the LSM6DSV register map."
+
+      - addr: 0x33
+        name: UI_OUTZ_H_G_OIS_EIS
+        access: RO
+        width: 1
+        desc: "Raw ui outz h g ois eis sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTZ_G_OIS_EIS
+            bits: "7:0"
+            desc: "Ui outz g ois eis field as defined in the LSM6DSV register map."
+
+      - addr: 0x34
+        name: UI_OUTX_L_A_OIS_DUALC
+        access: RO
+        width: 1
+        desc: "Raw ui outx l a ois dualc sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTX_A_OIS_DUALC
+            bits: "7:0"
+            desc: "Ui outx a ois dualc field as defined in the LSM6DSV register map."
+
+      - addr: 0x35
+        name: UI_OUTX_H_A_OIS_DUALC
+        access: RO
+        width: 1
+        desc: "Raw ui outx h a ois dualc sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTX_A_OIS_DUALC
+            bits: "7:0"
+            desc: "Ui outx a ois dualc field as defined in the LSM6DSV register map."
+
+      - addr: 0x36
+        name: UI_OUTY_L_A_OIS_DUALC
+        access: RO
+        width: 1
+        desc: "Raw ui outy l a ois dualc sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTY_A_OIS_DUALC
+            bits: "7:0"
+            desc: "Ui outy a ois dualc field as defined in the LSM6DSV register map."
+
+      - addr: 0x37
+        name: UI_OUTY_H_A_OIS_DUALC
+        access: RO
+        width: 1
+        desc: "Raw ui outy h a ois dualc sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTY_A_OIS_DUALC
+            bits: "7:0"
+            desc: "Ui outy a ois dualc field as defined in the LSM6DSV register map."
+
+      - addr: 0x38
+        name: UI_OUTZ_L_A_OIS_DUALC
+        access: RO
+        width: 1
+        desc: "Raw ui outz l a ois dualc sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTZ_A_OIS_DUALC
+            bits: "7:0"
+            desc: "Ui outz a ois dualc field as defined in the LSM6DSV register map."
+
+      - addr: 0x39
+        name: UI_OUTZ_H_A_OIS_DUALC
+        access: RO
+        width: 1
+        desc: "Raw ui outz h a ois dualc sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: UI_OUTZ_A_OIS_DUALC
+            bits: "7:0"
+            desc: "Ui outz a ois dualc field as defined in the LSM6DSV register map."
+
+      - addr: 0x40
+        name: TIMESTAMP0
+        access: RO
+        width: 1
+        desc: "Timestamp0 register on the ui page."
+        fields:
+          - name: TIMESTAMP
+            bits: "7:0"
+            desc: "Timestamp field as defined in the LSM6DSV register map."
+
+      - addr: 0x41
+        name: TIMESTAMP1
+        access: RO
+        width: 1
+        desc: "Timestamp1 register on the ui page."
+        fields:
+          - name: TIMESTAMP
+            bits: "7:0"
+            desc: "Timestamp field as defined in the LSM6DSV register map."
+
+      - addr: 0x42
+        name: TIMESTAMP2
+        access: RO
+        width: 1
+        desc: "Timestamp2 register on the ui page."
+        fields:
+          - name: TIMESTAMP
+            bits: "7:0"
+            desc: "Timestamp field as defined in the LSM6DSV register map."
+
+      - addr: 0x43
+        name: TIMESTAMP3
+        access: RO
+        width: 1
+        desc: "Timestamp3 register on the ui page."
+        fields:
+          - name: TIMESTAMP
+            bits: "7:0"
+            desc: "Timestamp field as defined in the LSM6DSV register map."
+
+      - addr: 0x44
+        name: UI_STATUS_REG_OIS
+        access: RO
+        width: 1
+        desc: "Ui status reg ois register on the ui page."
+        fields:
+          - name: XLDA_OIS
+            bits: "0"
+            desc: "Xlda ois field as defined in the LSM6DSV register map."
+          - name: GDA_OIS
+            bits: "1"
+            desc: "Gda ois field as defined in the LSM6DSV register map."
+          - name: GYRO_SETTLING
+            bits: "2"
+            desc: "Gyro settling field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x45
+        name: WAKE_UP_SRC
+        access: RO
+        width: 1
+        desc: "Wake-up interrupt source register (R)"
+        fields:
+          - name: Z_WU
+            bits: "0"
+            desc: "Z wu field as defined in the LSM6DSV register map."
+          - name: Y_WU
+            bits: "1"
+            desc: "Y wu field as defined in the LSM6DSV register map."
+          - name: X_WU
+            bits: "2"
+            desc: "X wu field as defined in the LSM6DSV register map."
+          - name: WU_IA
+            bits: "3"
+            desc: "Wu ia field as defined in the LSM6DSV register map."
+          - name: SLEEP_STATE
+            bits: "4"
+            desc: "Sleep state field as defined in the LSM6DSV register map."
+          - name: FF_IA
+            bits: "5"
+            desc: "Ff ia field as defined in the LSM6DSV register map."
+          - name: SLEEP_CHANGE_IA
+            bits: "6"
+            desc: "Sleep change ia field as defined in the LSM6DSV register map."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x46
+        name: TAP_SRC
+        access: RO
+        width: 1
+        desc: "Tap source register (R)"
+        fields:
+          - name: Z_TAP
+            bits: "0"
+            desc: "Z tap field as defined in the LSM6DSV register map."
+          - name: Y_TAP
+            bits: "1"
+            desc: "Y tap field as defined in the LSM6DSV register map."
+          - name: X_TAP
+            bits: "2"
+            desc: "X tap field as defined in the LSM6DSV register map."
+          - name: TAP_SIGN
+            bits: "3"
+            desc: "Tap sign field as defined in the LSM6DSV register map."
+          - name: DOUBLE_TAP
+            bits: "4"
+            desc: "Double tap field as defined in the LSM6DSV register map."
+          - name: SINGLE_TAP
+            bits: "5"
+            desc: "Single tap field as defined in the LSM6DSV register map."
+          - name: TAP_IA
+            bits: "6"
+            desc: "Tap ia field as defined in the LSM6DSV register map."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x47
+        name: D6D_SRC
+        access: RO
+        width: 1
+        desc: "Portrait, landscape, face-up and face-down source register (R)"
+        fields:
+          - name: XL
+            bits: "0"
+            desc: "Xl field as defined in the LSM6DSV register map."
+          - name: XH
+            bits: "1"
+            desc: "Xh field as defined in the LSM6DSV register map."
+          - name: YL
+            bits: "2"
+            desc: "Yl field as defined in the LSM6DSV register map."
+          - name: YH
+            bits: "3"
+            desc: "Yh field as defined in the LSM6DSV register map."
+          - name: ZL
+            bits: "4"
+            desc: "Zl field as defined in the LSM6DSV register map."
+          - name: ZH
+            bits: "5"
+            desc: "Zh field as defined in the LSM6DSV register map."
+          - name: D6D_IA
+            bits: "6"
+            desc: "D6d ia field as defined in the LSM6DSV register map."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x48
+        name: STATUS_MASTER_MAINPAGE
+        access: RO
+        width: 1
+        desc: "Status master mainpage register on the ui page."
+        fields:
+          - name: SENS_HUB_ENDOP
+            bits: "0"
+            desc: "Sens hub endop field as defined in the LSM6DSV register map."
+          - name: RESERVED_2_1
+            bits: "2:1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SLAVE0_NACK
+            bits: "3"
+            desc: "Slave0 nack field as defined in the LSM6DSV register map."
+          - name: SLAVE1_NACK
+            bits: "4"
+            desc: "Slave1 nack field as defined in the LSM6DSV register map."
+          - name: SLAVE2_NACK
+            bits: "5"
+            desc: "Slave2 nack field as defined in the LSM6DSV register map."
+          - name: SLAVE3_NACK
+            bits: "6"
+            desc: "Slave3 nack field as defined in the LSM6DSV register map."
+          - name: WR_ONCE_DONE
+            bits: "7"
+            desc: "Wr once done field as defined in the LSM6DSV register map."
+
+      - addr: 0x49
+        name: EMB_FUNC_STATUS_MAINPAGE
+        access: RO
+        width: 1
+        desc: "Embedded function status register (R)"
+        fields:
+          - name: RESERVED_2_0
+            bits: "2:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: IS_STEP_DET
+            bits: "3"
+            desc: "Status flag for step det."
+          - name: IS_TILT
+            bits: "4"
+            desc: "Status flag for tilt."
+          - name: IS_SIGMOT
+            bits: "5"
+            desc: "Status flag for sigmot."
+          - name: RESERVED_6
+            bits: "6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: IS_FSM_LC
+            bits: "7"
+            desc: "Status flag for fsm lc."
+
+      - addr: 0x4A
+        name: FSM_STATUS_MAINPAGE
+        access: RO
+        width: 1
+        desc: "Finite state machine status register (R)"
+        fields:
+          - name: IS_FSM1
+            bits: "0"
+            desc: "Status flag for fsm1."
+          - name: IS_FSM2
+            bits: "1"
+            desc: "Status flag for fsm2."
+          - name: IS_FSM3
+            bits: "2"
+            desc: "Status flag for fsm3."
+          - name: IS_FSM4
+            bits: "3"
+            desc: "Status flag for fsm4."
+          - name: IS_FSM5
+            bits: "4"
+            desc: "Status flag for fsm5."
+          - name: IS_FSM6
+            bits: "5"
+            desc: "Status flag for fsm6."
+          - name: IS_FSM7
+            bits: "6"
+            desc: "Status flag for fsm7."
+          - name: IS_FSM8
+            bits: "7"
+            desc: "Status flag for fsm8."
+
+      - addr: 0x4F
+        name: INTERNAL_FREQ_FINE
+        access: RO
+        width: 1
+        desc: "Internal frequency register (R)"
+        fields:
+          - name: FREQ_FINE
+            bits: "7:0"
+            desc: "Freq fine field as defined in the LSM6DSV register map."
+
+      - addr: 0x50
+        name: FUNCTIONS_ENABLE
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Enable interrupt functions register (R/W)"
+        fields:
+          - name: INACT_EN
+            bits: "1:0"
+            desc: "Enables inact."
+          - name: RESERVED_2
+            bits: "2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: DIS_RST_LIR_ALL_INT
+            bits: "3"
+            desc: "Interrupt control or status for dis rst lir all int."
+          - name: RESERVED_5_4
+            bits: "5:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: TIMESTAMP_EN
+            bits: "6"
+            desc: "Enables timestamp."
+          - name: INTERRUPTS_ENABLE
+            bits: "7"
+            desc: "Interrupt control or status for interrupts enable."
+
+      - addr: 0x51
+        name: DEN
+        access: RW
+        width: 1
+        reset: 0x0E
+        desc: "DEN configuration register (R/W)"
+        fields:
+          - name: DEN_XL_G
+            bits: "0"
+            desc: "Den xl g field as defined in the LSM6DSV register map."
+          - name: DEN_Z
+            bits: "1"
+            desc: "Den z field as defined in the LSM6DSV register map."
+          - name: DEN_Y
+            bits: "2"
+            desc: "Den y field as defined in the LSM6DSV register map."
+          - name: DEN_X
+            bits: "3"
+            desc: "Den x field as defined in the LSM6DSV register map."
+          - name: DEN_XL_EN
+            bits: "4"
+            desc: "Enables den xl."
+          - name: LVL2_EN
+            bits: "5"
+            desc: "Enables lvl2."
+          - name: LVL1_EN
+            bits: "6"
+            desc: "Enables lvl1."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x54
+        name: INACTIVITY_DUR
+        access: RW
+        width: 1
+        reset: 0x04
+        desc: "Activity/inactivity configuration register (R/W)"
+        fields:
+          - name: INACT_DUR
+            bits: "1:0"
+            desc: "Inact dur field as defined in the LSM6DSV register map."
+          - name: XL_INACT_ODR
+            bits: "3:2"
+            desc: "Xl inact odr field as defined in the LSM6DSV register map."
+          - name: WU_INACT_THS_W
+            bits: "6:4"
+            desc: "Wu inact ths w field as defined in the LSM6DSV register map."
+          - name: SLEEP_STATUS_ON_INT
+            bits: "7"
+            desc: "Interrupt control or status for sleep status on int."
+
+      - addr: 0x55
+        name: INACTIVITY_THS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Activity/inactivity threshold setting register (R/W)"
+        fields:
+          - name: INACT_THS
+            bits: "5:0"
+            desc: "Inact ths field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x56
+        name: TAP_CFG0
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Tap configuration register 0 (R/W)"
+        fields:
+          - name: LIR
+            bits: "0"
+            desc: "Lir field as defined in the LSM6DSV register map."
+          - name: TAP_Z_EN
+            bits: "1"
+            desc: "Enables tap z."
+          - name: TAP_Y_EN
+            bits: "2"
+            desc: "Enables tap y."
+          - name: TAP_X_EN
+            bits: "3"
+            desc: "Enables tap x."
+          - name: SLOPE_FDS
+            bits: "4"
+            desc: "Slope fds field as defined in the LSM6DSV register map."
+          - name: HW_FUNC_MASK_XL_SETTL
+            bits: "5"
+            desc: "Hw func mask xl settl field as defined in the LSM6DSV register map."
+          - name: LOW_PASS_ON_6D
+            bits: "6"
+            desc: "Low pass on 6d field as defined in the LSM6DSV register map."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x57
+        name: TAP_CFG1
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Tap configuration register 1 (R/W)"
+        fields:
+          - name: TAP_THS_X
+            bits: "4:0"
+            desc: "Tap ths x field as defined in the LSM6DSV register map."
+          - name: TAP_PRIORITY
+            bits: "7:5"
+            desc: "Tap priority field as defined in the LSM6DSV register map."
+
+      - addr: 0x58
+        name: TAP_CFG2
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Tap configuration register 2 (R/W)"
+        fields:
+          - name: TAP_THS_Y
+            bits: "4:0"
+            desc: "Tap ths y field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_5
+            bits: "7:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x59
+        name: TAP_THS_6D
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Portrait/landscape position and tap function threshold register (R/W)"
+        fields:
+          - name: TAP_THS_Z
+            bits: "4:0"
+            desc: "Tap ths z field as defined in the LSM6DSV register map."
+          - name: SIXD_THS
+            bits: "6:5"
+            desc: "Sixd ths field as defined in the LSM6DSV register map."
+          - name: D4D_EN
+            bits: "7"
+            desc: "Enables d4d."
+
+      - addr: 0x5A
+        name: TAP_DUR
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Tap recognition function setting register (R/W)"
+        fields:
+          - name: SHOCK
+            bits: "1:0"
+            desc: "Shock field as defined in the LSM6DSV register map."
+          - name: QUIET
+            bits: "3:2"
+            desc: "Quiet field as defined in the LSM6DSV register map."
+          - name: DUR
+            bits: "7:4"
+            desc: "Dur field as defined in the LSM6DSV register map."
+
+      - addr: 0x5B
+        name: WAKE_UP_THS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Single/double-tap selection and wake-up configuration (R/W)"
+        fields:
+          - name: WK_THS
+            bits: "5:0"
+            desc: "Wk ths field as defined in the LSM6DSV register map."
+          - name: USR_OFF_ON_WU
+            bits: "6"
+            desc: "Usr off on wu field as defined in the LSM6DSV register map."
+          - name: SINGLE_DOUBLE_TAP
+            bits: "7"
+            desc: "Single double tap field as defined in the LSM6DSV register map."
+
+      - addr: 0x5C
+        name: WAKE_UP_DUR
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Free-fall, wake-up, and sleep mode functions duration setting register (R/W)"
+        fields:
+          - name: SLEEP_DUR
+            bits: "3:0"
+            desc: "Sleep dur field as defined in the LSM6DSV register map."
+          - name: RESERVED_4
+            bits: "4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: WAKE_DUR
+            bits: "6:5"
+            desc: "Wake dur field as defined in the LSM6DSV register map."
+          - name: FF_DUR
+            bits: "7"
+            desc: "Ff dur field as defined in the LSM6DSV register map."
+
+      - addr: 0x5D
+        name: FREE_FALL
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Free-fall function duration setting register (R/W)"
+        fields:
+          - name: FF_THS
+            bits: "2:0"
+            desc: "Ff ths field as defined in the LSM6DSV register map."
+          - name: FF_DUR
+            bits: "7:3"
+            desc: "Ff dur field as defined in the LSM6DSV register map."
+
+      - addr: 0x5E
+        name: MD1_CFG
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Functions routing to INT1 pin register (R/W). Each bit in this register enables a signal to be carried over the INT1 pin. The output of the pin is the OR combination of the signals selected here and in the INT1_CTRL (0Dh) register."
+        fields:
+          - name: INT1_SHUB
+            bits: "0"
+            desc: "Interrupt control or status for int1 shub."
+          - name: INT1_EMB_FUNC
+            bits: "1"
+            desc: "Interrupt control or status for int1 emb func."
+          - name: INT1_6D
+            bits: "2"
+            desc: "Interrupt control or status for int1 6d."
+          - name: INT1_DOUBLE_TAP
+            bits: "3"
+            desc: "Interrupt control or status for int1 double tap."
+          - name: INT1_FF
+            bits: "4"
+            desc: "Interrupt control or status for int1 ff."
+          - name: INT1_WU
+            bits: "5"
+            desc: "Interrupt control or status for int1 wu."
+          - name: INT1_SINGLE_TAP
+            bits: "6"
+            desc: "Interrupt control or status for int1 single tap."
+          - name: INT1_SLEEP_CHANGE
+            bits: "7"
+            desc: "Interrupt control or status for int1 sleep change."
+
+      - addr: 0x5F
+        name: MD2_CFG
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_enable]
+        desc: "Functions routing to INT2 pin register (R/W). Each bit in this register enables a signal to be carried over the INT2 pin. The output of the pin is the OR combination of the signals selected here and in the INT2_CTRL (0Eh) register."
+        fields:
+          - name: INT2_TIMESTAMP
+            bits: "0"
+            desc: "Interrupt control or status for int2 timestamp."
+          - name: INT2_EMB_FUNC
+            bits: "1"
+            desc: "Interrupt control or status for int2 emb func."
+          - name: INT2_6D
+            bits: "2"
+            desc: "Interrupt control or status for int2 6d."
+          - name: INT2_DOUBLE_TAP
+            bits: "3"
+            desc: "Interrupt control or status for int2 double tap."
+          - name: INT2_FF
+            bits: "4"
+            desc: "Interrupt control or status for int2 ff."
+          - name: INT2_WU
+            bits: "5"
+            desc: "Interrupt control or status for int2 wu."
+          - name: INT2_SINGLE_TAP
+            bits: "6"
+            desc: "Interrupt control or status for int2 single tap."
+          - name: INT2_SLEEP_CHANGE
+            bits: "7"
+            desc: "Interrupt control or status for int2 sleep change."
+
+      - addr: 0x62
+        name: HAODR_CFG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "HAODR data rate configuration register (R/W)"
+        fields:
+          - name: HAODR_SEL
+            bits: "1:0"
+            desc: "Haodr sel field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_2
+            bits: "7:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x63
+        name: EMB_FUNC_CFG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Embedded functions configuration register (R/W)"
+        fields:
+          - name: RESERVED_2_0
+            bits: "2:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: EMB_FUNC_DISABLE
+            bits: "3"
+            desc: "Emb func disable field as defined in the LSM6DSV register map."
+          - name: EMB_FUNC_IRQ_MASK_XL_SETTL
+            bits: "4"
+            desc: "Emb func irq mask xl settl field as defined in the LSM6DSV register map."
+          - name: EMB_FUNC_IRQ_MASK_G_SETTL
+            bits: "5"
+            desc: "Emb func irq mask g settl field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x64
+        name: UI_HANDSHAKE_CTRL
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Control register (UI side) for UI / SPI2 shared registers (R/W)"
+        fields:
+          - name: UI_SHARED_REQ
+            bits: "0"
+            desc: "Ui shared req field as defined in the LSM6DSV register map."
+          - name: UI_SHARED_ACK
+            bits: "1"
+            desc: "Ui shared ack field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_2
+            bits: "7:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x65
+        name: UI_SPI2_SHARED_0
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "UI / SPI2 shared register 0 (R/W)"
+        fields:
+          - name: UI_SPI2_SHARED
+            bits: "7:0"
+            desc: "Ui spi2 shared field as defined in the LSM6DSV register map."
+
+      - addr: 0x66
+        name: UI_SPI2_SHARED_1
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "UI / SPI2 shared register 1 (R/W)"
+        fields:
+          - name: UI_SPI2_SHARED
+            bits: "7:0"
+            desc: "Ui spi2 shared field as defined in the LSM6DSV register map."
+
+      - addr: 0x67
+        name: UI_SPI2_SHARED_2
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "UI / SPI2 shared register 2 (R/W)"
+        fields:
+          - name: UI_SPI2_SHARED
+            bits: "7:0"
+            desc: "Ui spi2 shared field as defined in the LSM6DSV register map."
+
+      - addr: 0x68
+        name: UI_SPI2_SHARED_3
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "UI / SPI2 shared register 3 (R/W)"
+        fields:
+          - name: UI_SPI2_SHARED
+            bits: "7:0"
+            desc: "Ui spi2 shared field as defined in the LSM6DSV register map."
+
+      - addr: 0x69
+        name: UI_SPI2_SHARED_4
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "UI / SPI2 shared register 4 (R/W)"
+        fields:
+          - name: UI_SPI2_SHARED
+            bits: "7:0"
+            desc: "Ui spi2 shared field as defined in the LSM6DSV register map."
+
+      - addr: 0x6A
+        name: UI_SPI2_SHARED_5
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "UI / SPI2 shared register 5 (R/W)"
+        fields:
+          - name: UI_SPI2_SHARED
+            bits: "7:0"
+            desc: "Ui spi2 shared field as defined in the LSM6DSV register map."
+
+      - addr: 0x6B
+        name: CTRL_EIS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Gyroscope EIS channel control register (R/W)"
+        fields:
+          - name: FS_G_EIS
+            bits: "2:0"
+            desc: "Fs g eis field as defined in the LSM6DSV register map."
+          - name: G_EIS_ON_G_OIS_OUT_REG
+            bits: "3"
+            desc: "G eis on g ois out reg field as defined in the LSM6DSV register map."
+          - name: LPF_G_EIS_BW
+            bits: "4"
+            desc: "Lpf g eis bw field as defined in the LSM6DSV register map."
+          - name: RESERVED_5
+            bits: "5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ODR_G_EIS
+            bits: "7:6"
+            desc: "Odr g eis field as defined in the LSM6DSV register map."
+
+      - addr: 0x6F
+        name: UI_INT_OIS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "OIS interrupt configuration register The primary interface can write to this register when the OIS_CTRL_FROM_UI bit in the FUNC_CFG_ACCESS (01h) register is equal to 1 (primary IF full-control mode); this register is read-only when the"
+        fields:
+          - name: RESERVED_3_0
+            bits: "3:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: ST_OIS_CLAMPDIS
+            bits: "4"
+            desc: "St ois clampdis field as defined in the LSM6DSV register map."
+          - name: RESERVED_5
+            bits: "5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: DRDY_MASK_OIS
+            bits: "6"
+            desc: "Drdy mask ois field as defined in the LSM6DSV register map."
+          - name: INT2_DRDY_OIS
+            bits: "7"
+            desc: "Interrupt control or status for int2 drdy ois."
+
+      - addr: 0x70
+        name: UI_CTRL1_OIS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "OIS configuration register The primary interface can write this register when the OIS_CTRL_FROM_UI bit in the FUNC_CFG_ACCESS (01h) register is equal to 1 (primary IF full-control mode); this register is read-only when the"
+        fields:
+          - name: SPI2_READ_EN
+            bits: "0"
+            desc: "Enables spi2 read."
+          - name: OIS_G_EN
+            bits: "1"
+            desc: "Enables ois g."
+          - name: OIS_XL_EN
+            bits: "2"
+            desc: "Enables ois xl."
+          - name: RESERVED_4_3
+            bits: "4:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SIM_OIS
+            bits: "5"
+            desc: "Sim ois field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x71
+        name: UI_CTRL2_OIS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "OIS configuration register The primary interface can write this register when the OIS_CTRL_FROM_UI bit in the FUNC_CFG_ACCESS (01h) register is equal to 1 (primary IF full-control mode); this register is read-only when the"
+        fields:
+          - name: FS_G_OIS
+            bits: "2:0"
+            desc: "Fs g ois field as defined in the LSM6DSV register map."
+          - name: LPF1_G_OIS_BW
+            bits: "4:3"
+            desc: "Lpf1 g ois bw field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_5
+            bits: "7:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x72
+        name: UI_CTRL3_OIS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "OIS configuration register The primary interface can write this register when the OIS_CTRL_FROM_UI bit in the FUNC_CFG_ACCESS (01h) register is equal to 1 (primary IF full-control mode); this register is read-only when the"
+        fields:
+          - name: FS_XL_OIS
+            bits: "1:0"
+            desc: "Fs xl ois field as defined in the LSM6DSV register map."
+          - name: RESERVED_2
+            bits: "2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: LPF_XL_OIS_BW
+            bits: "5:3"
+            desc: "Lpf xl ois bw field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x73
+        name: X_OFS_USR
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Accelerometer X-axis user offset correction (R/W). The offset value set in the X_OFS_USR offset register is internally subtracted from the acceleration value measured on the X-axis."
+        fields:
+          - name: X_OFS_USR
+            bits: "7:0"
+            desc: "X ofs usr field as defined in the LSM6DSV register map."
+
+      - addr: 0x74
+        name: Y_OFS_USR
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Accelerometer Y-axis user offset correction (R/W). The offset value set in the Y_OFS_USR offset register is internally subtracted from the acceleration value measured on the Y-axis."
+        fields:
+          - name: Y_OFS_USR
+            bits: "7:0"
+            desc: "Y ofs usr field as defined in the LSM6DSV register map."
+
+      - addr: 0x75
+        name: Z_OFS_USR
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Accelerometer Z-axis user offset correction (R/W). The offset value set in the Z_OFS_USR offset register is internally subtracted from the acceleration value measured on the Z-axis."
+        fields:
+          - name: Z_OFS_USR
+            bits: "7:0"
+            desc: "Z ofs usr field as defined in the LSM6DSV register map."
+
+      - addr: 0x78
+        name: FIFO_DATA_OUT_TAG
+        access: RO
+        width: 1
+        no_dump: true
+        no_dump_reason: "FIFO stream output; read the tag and six data bytes as one deliberate FIFO transaction."
+        roles: [fifo_data]
+        desc: "FIFO tag register (R)"
+        fields:
+          - name: RESERVED_0
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: TAG_CNT
+            bits: "2:1"
+            desc: "Tag cnt field as defined in the LSM6DSV register map."
+          - name: TAG_SENSOR
+            bits: "7:3"
+            desc: "Identifies the sensor or event represented by the following six FIFO data bytes."
+            values:
+              0x00: "FIFO empty"
+              0x01: "Gyroscope non-compressed"
+              0x02: "Accelerometer non-compressed"
+              0x03: "Temperature"
+              0x04: "Timestamp"
+              0x05: "Configuration change"
+              0x06: "Accelerometer non-compressed T-2"
+              0x07: "Accelerometer non-compressed T-1"
+              0x08: "Accelerometer 2x compressed"
+              0x09: "Accelerometer 3x compressed"
+              0x0A: "Gyroscope non-compressed T-2"
+              0x0B: "Gyroscope non-compressed T-1"
+              0x0C: "Gyroscope 2x compressed"
+              0x0D: "Gyroscope 3x compressed"
+              0x0E: "Sensor-hub slave 0"
+              0x0F: "Sensor-hub slave 1"
+              0x10: "Sensor-hub slave 2"
+              0x11: "Sensor-hub slave 3"
+              0x12: "Step counter"
+              0x13: "SFLP game rotation vector"
+              0x16: "SFLP gyroscope bias"
+              0x17: "SFLP gravity vector"
+              0x19: "Sensor-hub NACK"
+              0x1D: "Accelerometer dual core"
+              0x1E: "Gyroscope enhanced EIS"
+
+      - addr: 0x79
+        name: FIFO_DATA_OUT_X_L
+        access: RO
+        width: 1
+        no_dump: true
+        no_dump_reason: "FIFO stream output; read the tag and six data bytes as one deliberate FIFO transaction."
+        roles: [fifo_data]
+        desc: "FIFO stream output register; read the tag and six data bytes as one FIFO record."
+        fields:
+          - name: FIFO_DATA_OUT
+            bits: "7:0"
+            desc: "Raw fifo data out data bits."
+
+      - addr: 0x7A
+        name: FIFO_DATA_OUT_X_H
+        access: RO
+        width: 1
+        no_dump: true
+        no_dump_reason: "FIFO stream output; read the tag and six data bytes as one deliberate FIFO transaction."
+        roles: [fifo_data]
+        desc: "FIFO stream output register; read the tag and six data bytes as one FIFO record."
+        fields:
+          - name: FIFO_DATA_OUT
+            bits: "7:0"
+            desc: "Raw fifo data out data bits."
+
+      - addr: 0x7B
+        name: FIFO_DATA_OUT_Y_L
+        access: RO
+        width: 1
+        no_dump: true
+        no_dump_reason: "FIFO stream output; read the tag and six data bytes as one deliberate FIFO transaction."
+        roles: [fifo_data]
+        desc: "FIFO stream output register; read the tag and six data bytes as one FIFO record."
+        fields:
+          - name: FIFO_DATA_OUT
+            bits: "7:0"
+            desc: "Raw fifo data out data bits."
+
+      - addr: 0x7C
+        name: FIFO_DATA_OUT_Y_H
+        access: RO
+        width: 1
+        no_dump: true
+        no_dump_reason: "FIFO stream output; read the tag and six data bytes as one deliberate FIFO transaction."
+        roles: [fifo_data]
+        desc: "FIFO stream output register; read the tag and six data bytes as one FIFO record."
+        fields:
+          - name: FIFO_DATA_OUT
+            bits: "7:0"
+            desc: "Raw fifo data out data bits."
+
+      - addr: 0x7D
+        name: FIFO_DATA_OUT_Z_L
+        access: RO
+        width: 1
+        no_dump: true
+        no_dump_reason: "FIFO stream output; read the tag and six data bytes as one deliberate FIFO transaction."
+        roles: [fifo_data]
+        desc: "FIFO stream output register; read the tag and six data bytes as one FIFO record."
+        fields:
+          - name: FIFO_DATA_OUT
+            bits: "7:0"
+            desc: "Raw fifo data out data bits."
+
+      - addr: 0x7E
+        name: FIFO_DATA_OUT_Z_H
+        access: RO
+        width: 1
+        no_dump: true
+        no_dump_reason: "FIFO stream output; read the tag and six data bytes as one deliberate FIFO transaction."
+        roles: [fifo_data]
+        desc: "FIFO stream output register; read the tag and six data bytes as one FIFO record."
+        fields:
+          - name: FIFO_DATA_OUT
+            bits: "7:0"
+            desc: "Raw fifo data out data bits."
+  SPI2:
+    page_id: 0x10
+    access: "Auxiliary SPI interface"
+    desc: "Auxiliary SPI register map for OIS control and dedicated accelerometer, gyroscope and temperature output."
+    registers:
+      - addr: 0x0F
+        name: SPI2_WHO_AM_I
+        access: RO
+        width: 1
+        reset: 0x70
+        roles: [identity]
+        desc: "WHO_AM_I register (R). This is a read-only register. Its value is fixed at 70h."
+        fields:
+          - name: ID
+            bits: "7:0"
+            desc: "Fixed LSM6DSV device identifier."
+            values:
+              0x70: "LSM6DSV device identifier on auxiliary SPI"
+
+      - addr: 0x1E
+        name: SPI2_STATUS_REG_OIS
+        access: RO
+        width: 1
+        desc: "The SPI2_STATUS_REG_OIS register is read by the auxiliary SPI (R)."
+        fields:
+          - name: XLDA
+            bits: "0"
+            desc: "Xlda field as defined in the LSM6DSV register map."
+          - name: GDA
+            bits: "1"
+            desc: "Gda field as defined in the LSM6DSV register map."
+          - name: GYRO_SETTLING
+            bits: "2"
+            desc: "Gyro settling field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x20
+        name: SPI2_OUT_TEMP_L
+        access: RO
+        width: 1
+        roles: [temp_data]
+        desc: "Raw spi2 out temp l sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: TEMP
+            bits: "7:0"
+            desc: "Temp field as defined in the LSM6DSV register map."
+
+      - addr: 0x21
+        name: SPI2_OUT_TEMP_H
+        access: RO
+        width: 1
+        roles: [temp_data]
+        desc: "Raw spi2 out temp h sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: TEMP
+            bits: "7:0"
+            desc: "Temp field as defined in the LSM6DSV register map."
+
+      - addr: 0x22
+        name: SPI2_OUTX_L_G_OIS
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw spi2 outx l g ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTX_G_OIS
+            bits: "7:0"
+            desc: "Spi2 outx g ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x23
+        name: SPI2_OUTX_H_G_OIS
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw spi2 outx h g ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTX_G_OIS
+            bits: "7:0"
+            desc: "Spi2 outx g ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x24
+        name: SPI2_OUTY_L_G_OIS
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw spi2 outy l g ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTY_G_OIS
+            bits: "7:0"
+            desc: "Spi2 outy g ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x25
+        name: SPI2_OUTY_H_G_OIS
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw spi2 outy h g ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTY_G_OIS
+            bits: "7:0"
+            desc: "Spi2 outy g ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x26
+        name: SPI2_OUTZ_L_G_OIS
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw spi2 outz l g ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTZ_G_OIS
+            bits: "7:0"
+            desc: "Spi2 outz g ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x27
+        name: SPI2_OUTZ_H_G_OIS
+        access: RO
+        width: 1
+        roles: [gyro_data]
+        desc: "Raw spi2 outz h g ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTZ_G_OIS
+            bits: "7:0"
+            desc: "Spi2 outz g ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x28
+        name: SPI2_OUTX_L_A_OIS
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw spi2 outx l a ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTX_A_OIS
+            bits: "7:0"
+            desc: "Spi2 outx a ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x29
+        name: SPI2_OUTX_H_A_OIS
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw spi2 outx h a ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTX_A_OIS
+            bits: "7:0"
+            desc: "Spi2 outx a ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x2A
+        name: SPI2_OUTY_L_A_OIS
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw spi2 outy l a ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTY_A_OIS
+            bits: "7:0"
+            desc: "Spi2 outy a ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x2B
+        name: SPI2_OUTY_H_A_OIS
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw spi2 outy h a ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTY_A_OIS
+            bits: "7:0"
+            desc: "Spi2 outy a ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x2C
+        name: SPI2_OUTZ_L_A_OIS
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw spi2 outz l a ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTZ_A_OIS
+            bits: "7:0"
+            desc: "Spi2 outz a ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x2D
+        name: SPI2_OUTZ_H_A_OIS
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Raw spi2 outz h a ois sensor output byte. Pair the low and high registers as a signed little-endian value."
+        fields:
+          - name: SPI2_OUTZ_A_OIS
+            bits: "7:0"
+            desc: "Spi2 outz a ois field as defined in the LSM6DSV register map."
+
+      - addr: 0x6E
+        name: SPI2_HANDSHAKE_CTRL
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Control register (SPI2 side) for UI / SPI2 shared registers (R/W)"
+        fields:
+          - name: SPI2_SHARED_ACK
+            bits: "0"
+            desc: "Spi2 shared ack field as defined in the LSM6DSV register map."
+          - name: SPI2_SHARED_REQ
+            bits: "1"
+            desc: "Spi2 shared req field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_2
+            bits: "7:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x6F
+        name: SPI2_INT_OIS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "OIS interrupt configuration register and self-test setting The auxiliary SPI interface can write this register when the OIS_CTRL_FROM_UI bit in the FUNC_CFG_ACCESS (01h) register is equal to 0 (SPI2 full-control mode); this register is read-only when the"
+        fields:
+          - name: ST_XL_OIS
+            bits: "1:0"
+            desc: "St xl ois field as defined in the LSM6DSV register map."
+          - name: ST_G_OIS
+            bits: "3:2"
+            desc: "St g ois field as defined in the LSM6DSV register map."
+          - name: ST_OIS_CLAMPDIS
+            bits: "4"
+            desc: "St ois clampdis field as defined in the LSM6DSV register map."
+          - name: RESERVED_5
+            bits: "5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: DRDY_MASK_OIS
+            bits: "6"
+            desc: "Drdy mask ois field as defined in the LSM6DSV register map."
+          - name: INT2_DRDY_OIS
+            bits: "7"
+            desc: "Interrupt control or status for int2 drdy ois."
+
+      - addr: 0x70
+        name: SPI2_CTRL1_OIS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "OIS configuration register The auxiliary SPI interface can write this register when the OIS_CTRL_FROM_UI bit in the FUNC_CFG_ACCESS (01h) register is equal to 0 (SPI2 full-control mode); this register is read-only when the"
+        fields:
+          - name: SPI2_READ_EN
+            bits: "0"
+            desc: "Enables spi2 read."
+          - name: OIS_G_EN
+            bits: "1"
+            desc: "Enables ois g."
+          - name: OIS_XL_EN
+            bits: "2"
+            desc: "Enables ois xl."
+          - name: RESERVED_4_3
+            bits: "4:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SIM_OIS
+            bits: "5"
+            desc: "Sim ois field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x71
+        name: SPI2_CTRL2_OIS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "OIS configuration register The auxiliary SPI interface can write this register when the OIS_CTRL_FROM_UI bit in the FUNC_CFG_ACCESS (01h) register is equal to 0 (SPI2 full-control mode); this register is read-only when the"
+        fields:
+          - name: FS_G_OIS
+            bits: "2:0"
+            desc: "Fs g ois field as defined in the LSM6DSV register map."
+          - name: LPF1_G_OIS_BW
+            bits: "4:3"
+            desc: "Lpf1 g ois bw field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_5
+            bits: "7:5"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x72
+        name: SPI2_CTRL3_OIS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "OIS configuration register The auxiliary SPI interface can write this register when the OIS_CTRL_FROM_UI bit in the FUNC_CFG_ACCESS (01h) register is equal to 0 (SPI2 full-control mode); this register is read-only when the"
+        fields:
+          - name: FS_XL_OIS
+            bits: "1:0"
+            desc: "Fs xl ois field as defined in the LSM6DSV register map."
+          - name: RESERVED_2
+            bits: "2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: LPF_XL_OIS_BW
+            bits: "5:3"
+            desc: "Lpf xl ois bw field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+  EMBEDDED:
+    page_id: 0x01
+    access: "Primary interface with FUNC_CFG_ACCESS.EMB_FUNC_REG_ACCESS=1"
+    desc: "Embedded-function bank selected through FUNC_CFG_ACCESS; PAGE_SEL, PAGE_ADDRESS, PAGE_VALUE and PAGE_RW access advanced pages."
+    registers:
+      - addr: 0x02
+        name: PAGE_SEL
+        access: RW
+        width: 1
+        reset: 0x01
+        desc: "Enable advanced features dedicated page (R/W)"
+        fields:
+          - name: RESERVED_3_0
+            bits: "3:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: PAGE_SEL
+            bits: "7:4"
+            desc: "Page sel field as defined in the LSM6DSV register map."
+            values:
+              0x00: "Embedded advanced page 0"
+              0x01: "Embedded advanced page 1"
+              0x02: "Embedded advanced page 2"
+
+      - addr: 0x04
+        name: EMB_FUNC_EN_A
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Enable embedded functions register (R/W)"
+        fields:
+          - name: RESERVED_0
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SFLP_GAME_EN
+            bits: "1"
+            desc: "Enables sflp game."
+          - name: RESERVED_2
+            bits: "2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: PEDO_EN
+            bits: "3"
+            desc: "Enables pedo."
+          - name: TILT_EN
+            bits: "4"
+            desc: "Enables tilt."
+          - name: SIGN_MOTION_EN
+            bits: "5"
+            desc: "Enables sign motion."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x05
+        name: EMB_FUNC_EN_B
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Enable embedded functions register (R/W)"
+        fields:
+          - name: FSM_EN
+            bits: "0"
+            desc: "Enables fsm."
+          - name: RESERVED_2_1
+            bits: "2:1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FIFO_COMPR_EN
+            bits: "3"
+            desc: "Enables fifo compr."
+          - name: RESERVED_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x07
+        name: EMB_FUNC_EXEC_STATUS
+        access: RO
+        width: 1
+        desc: "Embedded functions execution status register (R)"
+        fields:
+          - name: EMB_FUNC_ENDOP
+            bits: "0"
+            desc: "Emb func endop field as defined in the LSM6DSV register map."
+          - name: EMB_FUNC_EXEC_OVR
+            bits: "1"
+            desc: "Emb func exec ovr field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_2
+            bits: "7:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x08
+        name: PAGE_ADDRESS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Page address register (R/W)"
+        fields:
+          - name: PAGE_ADDR
+            bits: "7:0"
+            desc: "Page addr field as defined in the LSM6DSV register map."
+
+      - addr: 0x09
+        name: PAGE_VALUE
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Page value register (R/W)"
+        fields:
+          - name: PAGE_VALUE
+            bits: "7:0"
+            desc: "Page value field as defined in the LSM6DSV register map."
+
+      - addr: 0x0A
+        name: EMB_FUNC_INT1
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "INT1 pin control register (R/W) Each bit in this register enables a signal to be carried over INT1. The pin's output supplies the OR combination of the selected signals."
+        fields:
+          - name: RESERVED_2_0
+            bits: "2:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: INT1_STEP_DETECTOR
+            bits: "3"
+            desc: "Interrupt control or status for int1 step detector."
+          - name: INT1_TILT
+            bits: "4"
+            desc: "Interrupt control or status for int1 tilt."
+          - name: INT1_SIG_MOT
+            bits: "5"
+            desc: "Interrupt control or status for int1 sig mot."
+          - name: RESERVED_6
+            bits: "6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: INT1_FSM_LC
+            bits: "7"
+            desc: "Interrupt control or status for int1 fsm lc."
+
+      - addr: 0x0B
+        name: FSM_INT1
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "INT1 pin control register (R/W) Each bit in this register enables a signal to be carried over INT1. The pin's output supplies the OR combination of the selected signals."
+        fields:
+          - name: INT1_FSM1
+            bits: "0"
+            desc: "Interrupt control or status for int1 fsm1."
+          - name: INT1_FSM2
+            bits: "1"
+            desc: "Interrupt control or status for int1 fsm2."
+          - name: INT1_FSM3
+            bits: "2"
+            desc: "Interrupt control or status for int1 fsm3."
+          - name: INT1_FSM4
+            bits: "3"
+            desc: "Interrupt control or status for int1 fsm4."
+          - name: INT1_FSM5
+            bits: "4"
+            desc: "Interrupt control or status for int1 fsm5."
+          - name: INT1_FSM6
+            bits: "5"
+            desc: "Interrupt control or status for int1 fsm6."
+          - name: INT1_FSM7
+            bits: "6"
+            desc: "Interrupt control or status for int1 fsm7."
+          - name: INT1_FSM8
+            bits: "7"
+            desc: "Interrupt control or status for int1 fsm8."
+
+      - addr: 0x0E
+        name: EMB_FUNC_INT2
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "INT2 pin control register (R/W) Each bit in this register enables a signal to be carried over INT2. The pin's output supplies the OR combination of the selected signals."
+        fields:
+          - name: RESERVED_2_0
+            bits: "2:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: INT2_STEP_DETECTOR
+            bits: "3"
+            desc: "Interrupt control or status for int2 step detector."
+          - name: INT2_TILT
+            bits: "4"
+            desc: "Interrupt control or status for int2 tilt."
+          - name: INT2_SIG_MOT
+            bits: "5"
+            desc: "Interrupt control or status for int2 sig mot."
+          - name: RESERVED_6
+            bits: "6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: INT2_FSM_LC
+            bits: "7"
+            desc: "Interrupt control or status for int2 fsm lc."
+
+      - addr: 0x0F
+        name: FSM_INT2
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "INT2 pin control register (R/W) Each bit in this register enables a signal to be carried over INT2. The pin's output supplies the OR combination of the selected signals."
+        fields:
+          - name: INT2_FSM1
+            bits: "0"
+            desc: "Interrupt control or status for int2 fsm1."
+          - name: INT2_FSM2
+            bits: "1"
+            desc: "Interrupt control or status for int2 fsm2."
+          - name: INT2_FSM3
+            bits: "2"
+            desc: "Interrupt control or status for int2 fsm3."
+          - name: INT2_FSM4
+            bits: "3"
+            desc: "Interrupt control or status for int2 fsm4."
+          - name: INT2_FSM5
+            bits: "4"
+            desc: "Interrupt control or status for int2 fsm5."
+          - name: INT2_FSM6
+            bits: "5"
+            desc: "Interrupt control or status for int2 fsm6."
+          - name: INT2_FSM7
+            bits: "6"
+            desc: "Interrupt control or status for int2 fsm7."
+          - name: INT2_FSM8
+            bits: "7"
+            desc: "Interrupt control or status for int2 fsm8."
+
+      - addr: 0x12
+        name: EMB_FUNC_STATUS
+        access: RO
+        width: 1
+        desc: "Embedded function status register (R)"
+        fields:
+          - name: RESERVED_2_0
+            bits: "2:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: IS_STEP_DET
+            bits: "3"
+            desc: "Status flag for step det."
+          - name: IS_TILT
+            bits: "4"
+            desc: "Status flag for tilt."
+          - name: IS_SIGMOT
+            bits: "5"
+            desc: "Status flag for sigmot."
+          - name: RESERVED_6
+            bits: "6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: IS_FSM_LC
+            bits: "7"
+            desc: "Status flag for fsm lc."
+
+      - addr: 0x13
+        name: FSM_STATUS
+        access: RO
+        width: 1
+        desc: "Finite state machine status register (R)"
+        fields:
+          - name: IS_FSM1
+            bits: "0"
+            desc: "Status flag for fsm1."
+          - name: IS_FSM2
+            bits: "1"
+            desc: "Status flag for fsm2."
+          - name: IS_FSM3
+            bits: "2"
+            desc: "Status flag for fsm3."
+          - name: IS_FSM4
+            bits: "3"
+            desc: "Status flag for fsm4."
+          - name: IS_FSM5
+            bits: "4"
+            desc: "Status flag for fsm5."
+          - name: IS_FSM6
+            bits: "5"
+            desc: "Status flag for fsm6."
+          - name: IS_FSM7
+            bits: "6"
+            desc: "Status flag for fsm7."
+          - name: IS_FSM8
+            bits: "7"
+            desc: "Status flag for fsm8."
+
+      - addr: 0x17
+        name: PAGE_RW
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Enable read and write mode of advanced features dedicated page (R/W)"
+        fields:
+          - name: RESERVED_4_0
+            bits: "4:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: PAGE_READ
+            bits: "5"
+            desc: "Page read field as defined in the LSM6DSV register map."
+          - name: PAGE_WRITE
+            bits: "6"
+            desc: "Page write field as defined in the LSM6DSV register map."
+          - name: EMB_FUNC_LIR
+            bits: "7"
+            desc: "Emb func lir field as defined in the LSM6DSV register map."
+
+      - addr: 0x44
+        name: EMB_FUNC_FIFO_EN_A
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Embedded functions FIFO configuration register A (R/W)"
+        fields:
+          - name: RESERVED_0
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SFLP_GAME_FIFO_EN
+            bits: "1"
+            desc: "Enables sflp game fifo."
+          - name: RESERVED_3_2
+            bits: "3:2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SFLP_GRAVITY_FIFO_EN
+            bits: "4"
+            desc: "Enables sflp gravity fifo."
+          - name: SFLP_GBIAS_FIFO_EN
+            bits: "5"
+            desc: "Enables sflp gbias fifo."
+          - name: STEP_COUNTER_FIFO_EN
+            bits: "6"
+            desc: "Enables step counter fifo."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x46
+        name: FSM_ENABLE
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Enable FSM register (R/W)"
+        fields:
+          - name: FSM1_EN
+            bits: "0"
+            desc: "Enables fsm1."
+          - name: FSM2_EN
+            bits: "1"
+            desc: "Enables fsm2."
+          - name: FSM3_EN
+            bits: "2"
+            desc: "Enables fsm3."
+          - name: FSM4_EN
+            bits: "3"
+            desc: "Enables fsm4."
+          - name: FSM5_EN
+            bits: "4"
+            desc: "Enables fsm5."
+          - name: FSM6_EN
+            bits: "5"
+            desc: "Enables fsm6."
+          - name: FSM7_EN
+            bits: "6"
+            desc: "Enables fsm7."
+          - name: FSM8_EN
+            bits: "7"
+            desc: "Enables fsm8."
+
+      - addr: 0x48
+        name: FSM_LONG_COUNTER_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm long counter l register on the embedded page."
+        fields:
+          - name: FSM_LC
+            bits: "7:0"
+            desc: "Fsm lc field as defined in the LSM6DSV register map."
+
+      - addr: 0x49
+        name: FSM_LONG_COUNTER_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm long counter h register on the embedded page."
+        fields:
+          - name: FSM_LC
+            bits: "7:0"
+            desc: "Fsm lc field as defined in the LSM6DSV register map."
+
+      - addr: 0x4B
+        name: INT_ACK_MASK
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Reset status register (R/W)"
+        fields:
+          - name: IACK_MASK
+            bits: "7:0"
+            desc: "Iack mask field as defined in the LSM6DSV register map."
+
+      - addr: 0x4C
+        name: FSM_OUTS1
+        access: RO
+        width: 1
+        desc: "FSM1 output register (R)"
+        fields:
+          - name: FSM1_N_V
+            bits: "0"
+            desc: "Fsm1 n v field as defined in the LSM6DSV register map."
+          - name: FSM1_P_V
+            bits: "1"
+            desc: "Fsm1 p v field as defined in the LSM6DSV register map."
+          - name: FSM1_N_Z
+            bits: "2"
+            desc: "Fsm1 n z field as defined in the LSM6DSV register map."
+          - name: FSM1_P_Z
+            bits: "3"
+            desc: "Fsm1 p z field as defined in the LSM6DSV register map."
+          - name: FSM1_N_Y
+            bits: "4"
+            desc: "Fsm1 n y field as defined in the LSM6DSV register map."
+          - name: FSM1_P_Y
+            bits: "5"
+            desc: "Fsm1 p y field as defined in the LSM6DSV register map."
+          - name: FSM1_N_X
+            bits: "6"
+            desc: "Fsm1 n x field as defined in the LSM6DSV register map."
+          - name: FSM1_P_X
+            bits: "7"
+            desc: "Fsm1 p x field as defined in the LSM6DSV register map."
+
+      - addr: 0x4D
+        name: FSM_OUTS2
+        access: RO
+        width: 1
+        desc: "FSM2 output register (R)"
+        fields:
+          - name: FSM2_N_V
+            bits: "0"
+            desc: "Fsm2 n v field as defined in the LSM6DSV register map."
+          - name: FSM2_P_V
+            bits: "1"
+            desc: "Fsm2 p v field as defined in the LSM6DSV register map."
+          - name: FSM2_N_Z
+            bits: "2"
+            desc: "Fsm2 n z field as defined in the LSM6DSV register map."
+          - name: FSM2_P_Z
+            bits: "3"
+            desc: "Fsm2 p z field as defined in the LSM6DSV register map."
+          - name: FSM2_N_Y
+            bits: "4"
+            desc: "Fsm2 n y field as defined in the LSM6DSV register map."
+          - name: FSM2_P_Y
+            bits: "5"
+            desc: "Fsm2 p y field as defined in the LSM6DSV register map."
+          - name: FSM2_N_X
+            bits: "6"
+            desc: "Fsm2 n x field as defined in the LSM6DSV register map."
+          - name: FSM2_P_X
+            bits: "7"
+            desc: "Fsm2 p x field as defined in the LSM6DSV register map."
+
+      - addr: 0x4E
+        name: FSM_OUTS3
+        access: RO
+        width: 1
+        desc: "FSM3 output register (R)"
+        fields:
+          - name: FSM3_N_V
+            bits: "0"
+            desc: "Fsm3 n v field as defined in the LSM6DSV register map."
+          - name: FSM3_P_V
+            bits: "1"
+            desc: "Fsm3 p v field as defined in the LSM6DSV register map."
+          - name: FSM3_N_Z
+            bits: "2"
+            desc: "Fsm3 n z field as defined in the LSM6DSV register map."
+          - name: FSM3_P_Z
+            bits: "3"
+            desc: "Fsm3 p z field as defined in the LSM6DSV register map."
+          - name: FSM3_N_Y
+            bits: "4"
+            desc: "Fsm3 n y field as defined in the LSM6DSV register map."
+          - name: FSM3_P_Y
+            bits: "5"
+            desc: "Fsm3 p y field as defined in the LSM6DSV register map."
+          - name: FSM3_N_X
+            bits: "6"
+            desc: "Fsm3 n x field as defined in the LSM6DSV register map."
+          - name: FSM3_P_X
+            bits: "7"
+            desc: "Fsm3 p x field as defined in the LSM6DSV register map."
+
+      - addr: 0x4F
+        name: FSM_OUTS4
+        access: RO
+        width: 1
+        desc: "FSM4 output register (R)"
+        fields:
+          - name: FSM4_N_V
+            bits: "0"
+            desc: "Fsm4 n v field as defined in the LSM6DSV register map."
+          - name: FSM4_P_V
+            bits: "1"
+            desc: "Fsm4 p v field as defined in the LSM6DSV register map."
+          - name: FSM4_N_Z
+            bits: "2"
+            desc: "Fsm4 n z field as defined in the LSM6DSV register map."
+          - name: FSM4_P_Z
+            bits: "3"
+            desc: "Fsm4 p z field as defined in the LSM6DSV register map."
+          - name: FSM4_N_Y
+            bits: "4"
+            desc: "Fsm4 n y field as defined in the LSM6DSV register map."
+          - name: FSM4_P_Y
+            bits: "5"
+            desc: "Fsm4 p y field as defined in the LSM6DSV register map."
+          - name: FSM4_N_X
+            bits: "6"
+            desc: "Fsm4 n x field as defined in the LSM6DSV register map."
+          - name: FSM4_P_X
+            bits: "7"
+            desc: "Fsm4 p x field as defined in the LSM6DSV register map."
+
+      - addr: 0x50
+        name: FSM_OUTS5
+        access: RO
+        width: 1
+        desc: "FSM5 output register (R)"
+        fields:
+          - name: FSM5_N_V
+            bits: "0"
+            desc: "Fsm5 n v field as defined in the LSM6DSV register map."
+          - name: FSM5_P_V
+            bits: "1"
+            desc: "Fsm5 p v field as defined in the LSM6DSV register map."
+          - name: FSM5_N_Z
+            bits: "2"
+            desc: "Fsm5 n z field as defined in the LSM6DSV register map."
+          - name: FSM5_P_Z
+            bits: "3"
+            desc: "Fsm5 p z field as defined in the LSM6DSV register map."
+          - name: FSM5_N_Y
+            bits: "4"
+            desc: "Fsm5 n y field as defined in the LSM6DSV register map."
+          - name: FSM5_P_Y
+            bits: "5"
+            desc: "Fsm5 p y field as defined in the LSM6DSV register map."
+          - name: FSM5_N_X
+            bits: "6"
+            desc: "Fsm5 n x field as defined in the LSM6DSV register map."
+          - name: FSM5_P_X
+            bits: "7"
+            desc: "Fsm5 p x field as defined in the LSM6DSV register map."
+
+      - addr: 0x51
+        name: FSM_OUTS6
+        access: RO
+        width: 1
+        desc: "FSM6 output register (R)"
+        fields:
+          - name: FSM6_N_V
+            bits: "0"
+            desc: "Fsm6 n v field as defined in the LSM6DSV register map."
+          - name: FSM6_P_V
+            bits: "1"
+            desc: "Fsm6 p v field as defined in the LSM6DSV register map."
+          - name: FSM6_N_Z
+            bits: "2"
+            desc: "Fsm6 n z field as defined in the LSM6DSV register map."
+          - name: FSM6_P_Z
+            bits: "3"
+            desc: "Fsm6 p z field as defined in the LSM6DSV register map."
+          - name: FSM6_N_Y
+            bits: "4"
+            desc: "Fsm6 n y field as defined in the LSM6DSV register map."
+          - name: FSM6_P_Y
+            bits: "5"
+            desc: "Fsm6 p y field as defined in the LSM6DSV register map."
+          - name: FSM6_N_X
+            bits: "6"
+            desc: "Fsm6 n x field as defined in the LSM6DSV register map."
+          - name: FSM6_P_X
+            bits: "7"
+            desc: "Fsm6 p x field as defined in the LSM6DSV register map."
+
+      - addr: 0x52
+        name: FSM_OUTS7
+        access: RO
+        width: 1
+        desc: "FSM7 output register (R)"
+        fields:
+          - name: FSM7_N_V
+            bits: "0"
+            desc: "Fsm7 n v field as defined in the LSM6DSV register map."
+          - name: FSM7_P_V
+            bits: "1"
+            desc: "Fsm7 p v field as defined in the LSM6DSV register map."
+          - name: FSM7_N_Z
+            bits: "2"
+            desc: "Fsm7 n z field as defined in the LSM6DSV register map."
+          - name: FSM7_P_Z
+            bits: "3"
+            desc: "Fsm7 p z field as defined in the LSM6DSV register map."
+          - name: FSM7_N_Y
+            bits: "4"
+            desc: "Fsm7 n y field as defined in the LSM6DSV register map."
+          - name: FSM7_P_Y
+            bits: "5"
+            desc: "Fsm7 p y field as defined in the LSM6DSV register map."
+          - name: FSM7_N_X
+            bits: "6"
+            desc: "Fsm7 n x field as defined in the LSM6DSV register map."
+          - name: FSM7_P_X
+            bits: "7"
+            desc: "Fsm7 p x field as defined in the LSM6DSV register map."
+
+      - addr: 0x53
+        name: FSM_OUTS8
+        access: RO
+        width: 1
+        desc: "FSM8 output register (R)"
+        fields:
+          - name: FSM8_N_V
+            bits: "0"
+            desc: "Fsm8 n v field as defined in the LSM6DSV register map."
+          - name: FSM8_P_V
+            bits: "1"
+            desc: "Fsm8 p v field as defined in the LSM6DSV register map."
+          - name: FSM8_N_Z
+            bits: "2"
+            desc: "Fsm8 n z field as defined in the LSM6DSV register map."
+          - name: FSM8_P_Z
+            bits: "3"
+            desc: "Fsm8 p z field as defined in the LSM6DSV register map."
+          - name: FSM8_N_Y
+            bits: "4"
+            desc: "Fsm8 n y field as defined in the LSM6DSV register map."
+          - name: FSM8_P_Y
+            bits: "5"
+            desc: "Fsm8 p y field as defined in the LSM6DSV register map."
+          - name: FSM8_N_X
+            bits: "6"
+            desc: "Fsm8 n x field as defined in the LSM6DSV register map."
+          - name: FSM8_P_X
+            bits: "7"
+            desc: "Fsm8 p x field as defined in the LSM6DSV register map."
+
+      - addr: 0x5E
+        name: SFLP_ODR
+        access: RW
+        width: 1
+        reset: 0x5B
+        desc: "Sensor fusion low-power output data rate configuration register (R/W)"
+        fields:
+          - name: RESERVED_2_0
+            bits: "2:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SFLP_GAME_ODR
+            bits: "5:3"
+            desc: "Sflp game odr field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x5F
+        name: FSM_ODR
+        access: RW
+        width: 1
+        reset: 0x4B
+        desc: "Finite state machine output data rate configuration register (R/W)"
+        fields:
+          - name: RESERVED_2_0
+            bits: "2:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FSM_ODR
+            bits: "5:3"
+            desc: "Fsm odr field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x62
+        name: STEP_COUNTER_L
+        access: RO
+        width: 1
+        desc: "Step counter l register on the embedded page."
+        fields:
+          - name: STEP
+            bits: "7:0"
+            desc: "Step field as defined in the LSM6DSV register map."
+
+      - addr: 0x63
+        name: STEP_COUNTER_H
+        access: RO
+        width: 1
+        desc: "Step counter h register on the embedded page."
+        fields:
+          - name: STEP
+            bits: "7:0"
+            desc: "Step field as defined in the LSM6DSV register map."
+
+      - addr: 0x64
+        name: EMB_FUNC_SRC
+        access: RW
+        width: 1
+        desc: "Embedded function source register (R/W)"
+        fields:
+          - name: RESERVED_1_0
+            bits: "1:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: STEPCOUNTER_BIT_SET
+            bits: "2"
+            desc: "Stepcounter bit set field as defined in the LSM6DSV register map."
+          - name: STEP_OVERFLOW
+            bits: "3"
+            desc: "Step overflow field as defined in the LSM6DSV register map."
+          - name: STEP_COUNT_DELTA_IA
+            bits: "4"
+            desc: "Step count delta ia field as defined in the LSM6DSV register map."
+          - name: STEP_DETECTED
+            bits: "5"
+            desc: "Step detected field as defined in the LSM6DSV register map."
+          - name: RESERVED_6
+            bits: "6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: PEDO_RST_STEP
+            bits: "7"
+            desc: "Pedo rst step field as defined in the LSM6DSV register map."
+
+      - addr: 0x66
+        name: EMB_FUNC_INIT_A
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Embedded functions initialization register (R/W)"
+        fields:
+          - name: RESERVED_0
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SFLP_GAME_INIT
+            bits: "1"
+            desc: "Sflp game init field as defined in the LSM6DSV register map."
+          - name: RESERVED_2
+            bits: "2"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: STEP_DET_INIT
+            bits: "3"
+            desc: "Step det init field as defined in the LSM6DSV register map."
+          - name: TILT_INIT
+            bits: "4"
+            desc: "Tilt init field as defined in the LSM6DSV register map."
+          - name: SIG_MOT_INIT
+            bits: "5"
+            desc: "Sig mot init field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_6
+            bits: "7:6"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x67
+        name: EMB_FUNC_INIT_B
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Embedded functions initialization register (R/W)"
+        fields:
+          - name: FSM_INIT
+            bits: "0"
+            desc: "Fsm init field as defined in the LSM6DSV register map."
+          - name: RESERVED_2_1
+            bits: "2:1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: FIFO_COMPR_INIT
+            bits: "3"
+            desc: "Fifo compr init field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+  EMB_ADV_PAGE0:
+    page_id: 0x20
+    access: "Embedded page transaction with PAGE_SEL=0"
+    desc: "Advanced embedded page 0. Select PAGE_SEL=0, configure PAGE_ADDRESS and use PAGE_VALUE while PAGE_READ or PAGE_WRITE is active."
+    registers:
+      - addr: 0x6E
+        name: SFLP_GAME_GBIASX_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Sflp game gbiasx l register in emb adv page0."
+        fields:
+          - name: GBIASX
+            bits: "7:0"
+            desc: "Gbiasx field as defined in the LSM6DSV register map."
+
+      - addr: 0x6F
+        name: SFLP_GAME_GBIASX_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Sflp game gbiasx h register in emb adv page0."
+        fields:
+          - name: GBIASX
+            bits: "7:0"
+            desc: "Gbiasx field as defined in the LSM6DSV register map."
+
+      - addr: 0x70
+        name: SFLP_GAME_GBIASY_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Sflp game gbiasy l register in emb adv page0."
+        fields:
+          - name: GBIASY
+            bits: "7:0"
+            desc: "Gbiasy field as defined in the LSM6DSV register map."
+
+      - addr: 0x71
+        name: SFLP_GAME_GBIASY_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Sflp game gbiasy h register in emb adv page0."
+        fields:
+          - name: GBIASY
+            bits: "7:0"
+            desc: "Gbiasy field as defined in the LSM6DSV register map."
+
+      - addr: 0x72
+        name: SFLP_GAME_GBIASZ_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Sflp game gbiasz l register in emb adv page0."
+        fields:
+          - name: GBIASZ
+            bits: "7:0"
+            desc: "Gbiasz field as defined in the LSM6DSV register map."
+
+      - addr: 0x73
+        name: SFLP_GAME_GBIASZ_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Sflp game gbiasz h register in emb adv page0."
+        fields:
+          - name: GBIASZ
+            bits: "7:0"
+            desc: "Gbiasz field as defined in the LSM6DSV register map."
+
+      - addr: 0xBA
+        name: FSM_EXT_SENSITIVITY_L
+        access: RW
+        width: 1
+        reset: 0x24
+        desc: "Fsm ext sensitivity l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_S
+            bits: "7:0"
+            desc: "Fsm ext s field as defined in the LSM6DSV register map."
+
+      - addr: 0xBB
+        name: FSM_EXT_SENSITIVITY_H
+        access: RW
+        width: 1
+        reset: 0x16
+        desc: "Fsm ext sensitivity h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_S
+            bits: "7:0"
+            desc: "Fsm ext s field as defined in the LSM6DSV register map."
+
+      - addr: 0xC0
+        name: FSM_EXT_OFFX_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext offx l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_OFFX
+            bits: "7:0"
+            desc: "Fsm ext offx field as defined in the LSM6DSV register map."
+
+      - addr: 0xC1
+        name: FSM_EXT_OFFX_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext offx h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_OFFX
+            bits: "7:0"
+            desc: "Fsm ext offx field as defined in the LSM6DSV register map."
+
+      - addr: 0xC2
+        name: FSM_EXT_OFFY_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext offy l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_OFFY
+            bits: "7:0"
+            desc: "Fsm ext offy field as defined in the LSM6DSV register map."
+
+      - addr: 0xC3
+        name: FSM_EXT_OFFY_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext offy h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_OFFY
+            bits: "7:0"
+            desc: "Fsm ext offy field as defined in the LSM6DSV register map."
+
+      - addr: 0xC4
+        name: FSM_EXT_OFFZ_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext offz l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_OFFZ
+            bits: "7:0"
+            desc: "Fsm ext offz field as defined in the LSM6DSV register map."
+
+      - addr: 0xC5
+        name: FSM_EXT_OFFZ_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext offz h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_OFFZ
+            bits: "7:0"
+            desc: "Fsm ext offz field as defined in the LSM6DSV register map."
+
+      - addr: 0xC6
+        name: FSM_EXT_MATRIX_XX_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext matrix xx l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_XX
+            bits: "7:0"
+            desc: "Fsm ext mat xx field as defined in the LSM6DSV register map."
+
+      - addr: 0xC7
+        name: FSM_EXT_MATRIX_XX_H
+        access: RW
+        width: 1
+        reset: 0x3C
+        desc: "Fsm ext matrix xx h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_XX
+            bits: "7:0"
+            desc: "Fsm ext mat xx field as defined in the LSM6DSV register map."
+
+      - addr: 0xC8
+        name: FSM_EXT_MATRIX_XY_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext matrix xy l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_XY
+            bits: "7:0"
+            desc: "Fsm ext mat xy field as defined in the LSM6DSV register map."
+
+      - addr: 0xC9
+        name: FSM_EXT_MATRIX_XY_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext matrix xy h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_XY
+            bits: "7:0"
+            desc: "Fsm ext mat xy field as defined in the LSM6DSV register map."
+
+      - addr: 0xCA
+        name: FSM_EXT_MATRIX_XZ_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext matrix xz l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_XZ
+            bits: "7:0"
+            desc: "Fsm ext mat xz field as defined in the LSM6DSV register map."
+
+      - addr: 0xCB
+        name: FSM_EXT_MATRIX_XZ_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext matrix xz h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_XZ
+            bits: "7:0"
+            desc: "Fsm ext mat xz field as defined in the LSM6DSV register map."
+
+      - addr: 0xCC
+        name: FSM_EXT_MATRIX_YY_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext matrix yy l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_YY
+            bits: "7:0"
+            desc: "Fsm ext mat yy field as defined in the LSM6DSV register map."
+
+      - addr: 0xCD
+        name: FSM_EXT_MATRIX_YY_H
+        access: RW
+        width: 1
+        reset: 0x3C
+        desc: "Fsm ext matrix yy h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_YY
+            bits: "7:0"
+            desc: "Fsm ext mat yy field as defined in the LSM6DSV register map."
+
+      - addr: 0xCE
+        name: FSM_EXT_MATRIX_YZ_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext matrix yz l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_YZ
+            bits: "7:0"
+            desc: "Fsm ext mat yz field as defined in the LSM6DSV register map."
+
+      - addr: 0xCF
+        name: FSM_EXT_MATRIX_YZ_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext matrix yz h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_YZ
+            bits: "7:0"
+            desc: "Fsm ext mat yz field as defined in the LSM6DSV register map."
+
+      - addr: 0xD0
+        name: FSM_EXT_MATRIX_ZZ_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm ext matrix zz l register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_ZZ
+            bits: "7:0"
+            desc: "Fsm ext mat zz field as defined in the LSM6DSV register map."
+
+      - addr: 0xD1
+        name: FSM_EXT_MATRIX_ZZ_H
+        access: RW
+        width: 1
+        reset: 0x3C
+        desc: "Fsm ext matrix zz h register in emb adv page0."
+        fields:
+          - name: FSM_EXT_MAT_ZZ
+            bits: "7:0"
+            desc: "Fsm ext mat zz field as defined in the LSM6DSV register map."
+
+      - addr: 0xD4
+        name: EXT_CFG_A
+        access: RW
+        width: 1
+        reset: 0x05
+        desc: "Ext cfg a register in emb adv page0."
+        fields:
+          - name: EXT_Z_AXIS
+            bits: "2:0"
+            desc: "Ext z axis field as defined in the LSM6DSV register map."
+          - name: RESERVED_3
+            bits: "3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: EXT_Y_AXIS
+            bits: "6:4"
+            desc: "Ext y axis field as defined in the LSM6DSV register map."
+          - name: RESERVED_7
+            bits: "7"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0xD5
+        name: EXT_CFG_B
+        access: RW
+        width: 1
+        reset: 0x02
+        desc: "Ext cfg b register in emb adv page0."
+        fields:
+          - name: EXT_X_AXIS
+            bits: "2:0"
+            desc: "Ext x axis field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+  EMB_ADV_PAGE1:
+    page_id: 0x21
+    access: "Embedded page transaction with PAGE_SEL=1"
+    desc: "Advanced embedded page 1. Select PAGE_SEL=1, configure PAGE_ADDRESS and use PAGE_VALUE while PAGE_READ or PAGE_WRITE is active."
+    registers:
+      - addr: 0x7A
+        name: FSM_LC_TIMEOUT_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm lc timeout l register in emb adv page1."
+        fields:
+          - name: FSM_LC_TIMEOUT
+            bits: "7:0"
+            desc: "Fsm lc timeout field as defined in the LSM6DSV register map."
+
+      - addr: 0x7B
+        name: FSM_LC_TIMEOUT_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm lc timeout h register in emb adv page1."
+        fields:
+          - name: FSM_LC_TIMEOUT
+            bits: "7:0"
+            desc: "Fsm lc timeout field as defined in the LSM6DSV register map."
+
+      - addr: 0x7C
+        name: FSM_PROGRAMS
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm programs register in emb adv page1."
+        fields:
+          - name: FSM_N_PROG
+            bits: "7:0"
+            desc: "Fsm n prog field as defined in the LSM6DSV register map."
+
+      - addr: 0x7E
+        name: FSM_START_ADD_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm start add l register in emb adv page1."
+        fields:
+          - name: FSM_START
+            bits: "7:0"
+            desc: "Fsm start field as defined in the LSM6DSV register map."
+
+      - addr: 0x7F
+        name: FSM_START_ADD_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fsm start add h register in emb adv page1."
+        fields:
+          - name: FSM_START
+            bits: "7:0"
+            desc: "Fsm start field as defined in the LSM6DSV register map."
+
+      - addr: 0x83
+        name: PEDO_CMD_REG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Pedo cmd reg register in emb adv page1."
+        fields:
+          - name: RESERVED_2_0
+            bits: "2:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: CARRY_COUNT_EN
+            bits: "3"
+            desc: "Enables carry count."
+          - name: RESERVED_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x84
+        name: PEDO_DEB_STEPS_CONF
+        access: RW
+        width: 1
+        reset: 0x0A
+        desc: "Pedo deb steps conf register in emb adv page1."
+        fields:
+          - name: DEB_STEP
+            bits: "7:0"
+            desc: "Deb step field as defined in the LSM6DSV register map."
+
+      - addr: 0xD0
+        name: PEDO_SC_DELTAT_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Pedo sc deltat l register in emb adv page1."
+        fields:
+          - name: PD_SC
+            bits: "7:0"
+            desc: "Pd sc field as defined in the LSM6DSV register map."
+
+      - addr: 0xD1
+        name: PEDO_SC_DELTAT_H
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Pedo sc deltat h register in emb adv page1."
+        fields:
+          - name: PD_SC
+            bits: "7:0"
+            desc: "Pd sc field as defined in the LSM6DSV register map."
+  EMB_ADV_PAGE2:
+    page_id: 0x22
+    access: "Embedded page transaction with PAGE_SEL=2"
+    desc: "Advanced embedded page 2. Select PAGE_SEL=2, configure PAGE_ADDRESS and use PAGE_VALUE while PAGE_READ or PAGE_WRITE is active."
+    registers:
+      - addr: 0x00
+        name: EXT_FORMAT
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Ext format register in emb adv page2."
+        fields:
+          - name: RESERVED_1_0
+            bits: "1:0"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: EXT_FORMAT_SEL
+            bits: "2"
+            desc: "Ext format sel field as defined in the LSM6DSV register map."
+          - name: RESERVED_7_3
+            bits: "7:3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x02
+        name: EXT_3BYTE_SENSITIVITY_L
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Ext 3byte sensitivity l register in emb adv page2."
+        fields:
+          - name: EXT_3BYTE_S
+            bits: "7:0"
+            desc: "Ext 3byte s field as defined in the LSM6DSV register map."
+
+      - addr: 0x03
+        name: EXT_3BYTE_SENSITIVITY_H
+        access: RW
+        width: 1
+        reset: 0x0C
+        desc: "Ext 3byte sensitivity h register in emb adv page2."
+        fields:
+          - name: EXT_3BYTE_S
+            bits: "7:0"
+            desc: "Ext 3byte s field as defined in the LSM6DSV register map."
+
+      - addr: 0x06
+        name: EXT_3BYTE_OFFSET_XL
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Ext 3byte offset xl register in emb adv page2."
+        fields:
+          - name: EXT_3BYTE_OFF
+            bits: "7:0"
+            desc: "Ext 3byte off field as defined in the LSM6DSV register map."
+
+      - addr: 0x07
+        name: EXT_3BYTE_OFFSET_L
+        access: RW
+        width: 1
+        reset: 0x54
+        desc: "Ext 3byte offset l register in emb adv page2."
+        fields:
+          - name: EXT_3BYTE_OFF
+            bits: "7:0"
+            desc: "Ext 3byte off field as defined in the LSM6DSV register map."
+
+      - addr: 0x08
+        name: EXT_3BYTE_OFFSET_H
+        access: RW
+        width: 1
+        reset: 0x3F
+        desc: "Ext 3byte offset h register in emb adv page2."
+        fields:
+          - name: EXT_3BYTE_OFF
+            bits: "7:0"
+            desc: "Ext 3byte off field as defined in the LSM6DSV register map."
+  SENSOR_HUB:
+    page_id: 0x02
+    access: "Primary interface with FUNC_CFG_ACCESS.SHUB_REG_ACCESS=1"
+    desc: "Sensor-hub bank selected through FUNC_CFG_ACCESS.SHUB_REG_ACCESS for external-sensor output and I2C-master configuration."
+    registers:
+      - addr: 0x02
+        name: SENSOR_HUB_1
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) First byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB1
+            bits: "7:0"
+            desc: "Sensorhub1 field as defined in the LSM6DSV register map."
+
+      - addr: 0x03
+        name: SENSOR_HUB_2
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Second byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB2
+            bits: "7:0"
+            desc: "Sensorhub2 field as defined in the LSM6DSV register map."
+
+      - addr: 0x04
+        name: SENSOR_HUB_3
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Third byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB3
+            bits: "7:0"
+            desc: "Sensorhub3 field as defined in the LSM6DSV register map."
+
+      - addr: 0x05
+        name: SENSOR_HUB_4
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Fourth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB4
+            bits: "7:0"
+            desc: "Sensorhub4 field as defined in the LSM6DSV register map."
+
+      - addr: 0x06
+        name: SENSOR_HUB_5
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Fifth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB5
+            bits: "7:0"
+            desc: "Sensorhub5 field as defined in the LSM6DSV register map."
+
+      - addr: 0x07
+        name: SENSOR_HUB_6
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Sixth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB6
+            bits: "7:0"
+            desc: "Sensorhub6 field as defined in the LSM6DSV register map."
+
+      - addr: 0x08
+        name: SENSOR_HUB_7
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Seventh byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB7
+            bits: "7:0"
+            desc: "Sensorhub7 field as defined in the LSM6DSV register map."
+
+      - addr: 0x09
+        name: SENSOR_HUB_8
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Eighth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB8
+            bits: "7:0"
+            desc: "Sensorhub8 field as defined in the LSM6DSV register map."
+
+      - addr: 0x0A
+        name: SENSOR_HUB_9
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Ninth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB9
+            bits: "7:0"
+            desc: "Sensorhub9 field as defined in the LSM6DSV register map."
+
+      - addr: 0x0B
+        name: SENSOR_HUB_10
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Tenth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB10
+            bits: "7:0"
+            desc: "Sensorhub10 field as defined in the LSM6DSV register map."
+
+      - addr: 0x0C
+        name: SENSOR_HUB_11
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Eleventh byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB11
+            bits: "7:0"
+            desc: "Sensorhub11 field as defined in the LSM6DSV register map."
+
+      - addr: 0x0D
+        name: SENSOR_HUB_12
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Twelfth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB12
+            bits: "7:0"
+            desc: "Sensorhub12 field as defined in the LSM6DSV register map."
+
+      - addr: 0x0E
+        name: SENSOR_HUB_13
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Thirteenth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB13
+            bits: "7:0"
+            desc: "Sensorhub13 field as defined in the LSM6DSV register map."
+
+      - addr: 0x0F
+        name: SENSOR_HUB_14
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Fourteenth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB14
+            bits: "7:0"
+            desc: "Sensorhub14 field as defined in the LSM6DSV register map."
+
+      - addr: 0x10
+        name: SENSOR_HUB_15
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Fifteenth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB15
+            bits: "7:0"
+            desc: "Sensorhub15 field as defined in the LSM6DSV register map."
+
+      - addr: 0x11
+        name: SENSOR_HUB_16
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Sixteenth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB16
+            bits: "7:0"
+            desc: "Sensorhub16 field as defined in the LSM6DSV register map."
+
+      - addr: 0x12
+        name: SENSOR_HUB_17
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Seventeenth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB17
+            bits: "7:0"
+            desc: "Sensorhub17 field as defined in the LSM6DSV register map."
+
+      - addr: 0x13
+        name: SENSOR_HUB_18
+        access: RO
+        width: 1
+        desc: "Sensor hub output register (R) Eighteenth byte associated to external sensors. The content of the register is consistent with the SLVx_CONFIG number of read operation configurations (for external sensors from x = 0 to x = 3)."
+        fields:
+          - name: SENSORHUB18
+            bits: "7:0"
+            desc: "Sensorhub18 field as defined in the LSM6DSV register map."
+
+      - addr: 0x14
+        name: MASTER_CONFIG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Master configuration register (R/W)"
+        fields:
+          - name: AUX_SENS_ON
+            bits: "1:0"
+            desc: "Aux sens on field as defined in the LSM6DSV register map."
+          - name: MASTER_ON
+            bits: "2"
+            desc: "Master on field as defined in the LSM6DSV register map."
+          - name: RESERVED_3
+            bits: "3"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: PASS_THROUGH_MODE
+            bits: "4"
+            desc: "Pass through mode field as defined in the LSM6DSV register map."
+          - name: START_CONFIG
+            bits: "5"
+            desc: "Start config field as defined in the LSM6DSV register map."
+          - name: WRITE_ONCE
+            bits: "6"
+            desc: "Write once field as defined in the LSM6DSV register map."
+          - name: RST_MASTER_REGS
+            bits: "7"
+            desc: "Rst master regs field as defined in the LSM6DSV register map."
+
+      - addr: 0x15
+        name: SLV0_ADD
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "I\u00b2C slave address of the first external sensor (sensor 0) register (R/W)"
+        fields:
+          - name: RW_0
+            bits: "0"
+            desc: "Rw 0 field as defined in the LSM6DSV register map."
+          - name: SLAVE0_ADD
+            bits: "7:1"
+            desc: "Slave0 add field as defined in the LSM6DSV register map."
+
+      - addr: 0x16
+        name: SLV0_SUBADD
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Address of register on the first external sensor (sensor 0) register (R/W)"
+        fields:
+          - name: SLAVE0_REG
+            bits: "7:0"
+            desc: "Slave0 reg field as defined in the LSM6DSV register map."
+
+      - addr: 0x17
+        name: SLV0_CONFIG
+        access: RW
+        width: 1
+        reset: 0x80
+        desc: "First external sensor (sensor 0) configuration and sensor hub settings register (R/W)"
+        fields:
+          - name: SLAVE0_NUMOP
+            bits: "2:0"
+            desc: "Slave0 numop field as defined in the LSM6DSV register map."
+          - name: BATCH_EXT_SENS_0_EN
+            bits: "3"
+            desc: "Enables batch ext sens 0."
+          - name: RESERVED_4
+            bits: "4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SHUB_ODR
+            bits: "7:5"
+            desc: "Shub odr field as defined in the LSM6DSV register map."
+
+      - addr: 0x18
+        name: SLV1_ADD
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "I\u00b2C slave address of the second external sensor (sensor 1) register (R/W)"
+        fields:
+          - name: R_1
+            bits: "0"
+            desc: "R 1 field as defined in the LSM6DSV register map."
+          - name: SLAVE1_ADD
+            bits: "7:1"
+            desc: "Slave1 add field as defined in the LSM6DSV register map."
+
+      - addr: 0x19
+        name: SLV1_SUBADD
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Address of register on the second external sensor (sensor 1) register (R/W)"
+        fields:
+          - name: SLAVE1_REG
+            bits: "7:0"
+            desc: "Slave1 reg field as defined in the LSM6DSV register map."
+
+      - addr: 0x1A
+        name: SLV1_CONFIG
+        access: RW
+        width: 1
+        reset: 0x10
+        desc: "Second external sensor (sensor 2) configuration register (R/W)"
+        fields:
+          - name: SLAVE1_NUMOP
+            bits: "2:0"
+            desc: "Slave1 numop field as defined in the LSM6DSV register map."
+          - name: BATCH_EXT_SENS_1_EN
+            bits: "3"
+            desc: "Enables batch ext sens 1."
+          - name: RESERVED_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x1B
+        name: SLV2_ADD
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "I\u00b2C slave address of the third external sensor (sensor 2) register (R/W)"
+        fields:
+          - name: R_2
+            bits: "0"
+            desc: "R 2 field as defined in the LSM6DSV register map."
+          - name: SLAVE2_ADD
+            bits: "7:1"
+            desc: "Slave2 add field as defined in the LSM6DSV register map."
+
+      - addr: 0x1C
+        name: SLV2_SUBADD
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Address of register on the third external sensor (sensor 2) register (R/W)"
+        fields:
+          - name: SLAVE2_REG
+            bits: "7:0"
+            desc: "Slave2 reg field as defined in the LSM6DSV register map."
+
+      - addr: 0x1D
+        name: SLV2_CONFIG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Third external sensor (sensor 2) configuration register (R/W)"
+        fields:
+          - name: SLAVE2_NUMOP
+            bits: "2:0"
+            desc: "Slave2 numop field as defined in the LSM6DSV register map."
+          - name: BATCH_EXT_SENS_2_EN
+            bits: "3"
+            desc: "Enables batch ext sens 2."
+          - name: RESERVED_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x1E
+        name: SLV3_ADD
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "I\u00b2C slave address of the fourth external sensor (sensor 3) register (R/W)"
+        fields:
+          - name: R_3
+            bits: "0"
+            desc: "R 3 field as defined in the LSM6DSV register map."
+          - name: SLAVE3_ADD
+            bits: "7:1"
+            desc: "Slave3 add field as defined in the LSM6DSV register map."
+
+      - addr: 0x1F
+        name: SLV3_SUBADD
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Address of register on the fourth external sensor (sensor 3) register (R/W)"
+        fields:
+          - name: SLAVE3_REG
+            bits: "7:0"
+            desc: "Slave3 reg field as defined in the LSM6DSV register map."
+
+      - addr: 0x20
+        name: SLV3_CONFIG
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Fourth external sensor (sensor 3) configuration register (R/W)"
+        fields:
+          - name: SLAVE3_NUMOP
+            bits: "2:0"
+            desc: "Slave3 numop field as defined in the LSM6DSV register map."
+          - name: BATCH_EXT_SENS_3_EN
+            bits: "3"
+            desc: "Enables batch ext sens 3."
+          - name: RESERVED_7_4
+            bits: "7:4"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+
+      - addr: 0x21
+        name: DATAWRITE_SLV0
+        access: RW
+        width: 1
+        reset: 0x00
+        desc: "Data to be written into the slave device register (R/W)"
+        fields:
+          - name: SLAVE0_DATAW
+            bits: "7:0"
+            desc: "Raw slave0 dataw data bits."
+
+      - addr: 0x22
+        name: STATUS_MASTER
+        access: RO
+        width: 1
+        desc: "Sensor hub source register (R)"
+        fields:
+          - name: SENS_HUB_ENDOP
+            bits: "0"
+            desc: "Sens hub endop field as defined in the LSM6DSV register map."
+          - name: RESERVED_2_1
+            bits: "2:1"
+            reserved: "RESERVED"
+            desc: "Reserved; preserve the documented reset value."
+          - name: SLAVE0_NACK
+            bits: "3"
+            desc: "Slave0 nack field as defined in the LSM6DSV register map."
+          - name: SLAVE1_NACK
+            bits: "4"
+            desc: "Slave1 nack field as defined in the LSM6DSV register map."
+          - name: SLAVE2_NACK
+            bits: "5"
+            desc: "Slave2 nack field as defined in the LSM6DSV register map."
+          - name: SLAVE3_NACK
+            bits: "6"
+            desc: "Slave3 nack field as defined in the LSM6DSV register map."
+          - name: WR_ONCE_DONE
+            bits: "7"
+            desc: "Wr once done field as defined in the LSM6DSV register map."
