@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ext="http://exslt.org/common">
+  <head>
+    <title>ERR&lt;n>FR</title>
+    <link href="insn.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body><div align="center" class="htmldiff_header"><table><tbody><tr><td class="old">(old) </td><td class="explain">htmldiff from-</td><td class="new">(new) </td></tr></tbody></table></div><table style="margin: 0 auto;"><tr><td><div class="topbar"><a href="AArch32-regindex.html">AArch32 Registers</a></div></td><td><div class="topbar"><a href="AArch64-regindex.html">AArch64 Registers</a></div></td><td><div class="topbar"><a href="AArch32-sysindex.html">AArch32 Instructions</a></div></td><td><div class="topbar"><a href="AArch64-sysindex.html">AArch64 Instructions</a></div></td><td><div class="topbar"><a href="enc_index.html">Index by Encoding</a></div></td><td><div class="topbar"><a href="ext_alpha_index.html">External Registers</a></div></td><td><div class="topbar"><a href="ext_enc_index.html">External Registers by Offset</a></div></td><td><div class="topbar"><a href="func_index.html">Registers by Functional Group</a></div></td><td><div class="topbar"><a href="notice.html">Proprietary Notice</a></div></td></tr></table><hr/><h1 class="register-section">ERR&lt;n>FR, Error Record &lt;n> Feature Register, n = 0 - 65534</h1><p>The ERR&lt;n>FR characteristics are:</p><h2>Purpose</h2>
+        <p>Defines whether error record &lt;n> is the first record owned by a node:</p>
+
+      
+        <ul>
+<li>If error record &lt;n> is the first error record owned by a node, then ERR&lt;n>FR.ED is not <span class="binarynumber">0b00</span>.
+</li><li>If error record &lt;n> is not the first error record owned by a node, then ERR&lt;n>FR.ED is <span class="binarynumber">0b00</span>.
+</li></ul>
+
+      
+        <p>If error record &lt;n> is the first record owned by the node, defines which of the common architecturally-defined features are implemented by the node and, of the implemented features, which are software programmable.</p>
+      <h2>Configuration</h2><p>There are no configuration notes.</p><h2>Attributes</h2>
+        <p>ERR&lt;n>FR is a 64-bit register.</p>
+      <h2>Field descriptions</h2><h3>When error record n is not implemented or error record n is not the first error record in the node:</h3><table class="regdiagram" id="fieldset_0"><thead><tr><td>63</td><td>62</td><td>61</td><td>60</td><td>59</td><td>58</td><td>57</td><td>56</td><td>55</td><td>54</td><td>53</td><td>52</td><td>51</td><td>50</td><td>49</td><td>48</td><td>47</td><td>46</td><td>45</td><td>44</td><td>43</td><td>42</td><td>41</td><td>40</td><td>39</td><td>38</td><td>37</td><td>36</td><td>35</td><td>34</td><td>33</td><td>32</td></tr></thead><tfoot><tr><td>31</td><td>30</td><td>29</td><td>28</td><td>27</td><td>26</td><td>25</td><td>24</td><td>23</td><td>22</td><td>21</td><td>20</td><td>19</td><td>18</td><td>17</td><td>16</td><td>15</td><td>14</td><td>13</td><td>12</td><td>11</td><td>10</td><td>9</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr></tfoot><tbody><tr class="firstrow"><td class="lr" colspan="8"><a href="#fieldset_0-63_56">RES0</a></td><td class="lr" colspan="1"><a href="#fieldset_0-55_55-1">NCE</a></td><td class="lr" colspan="2"><a href="#fieldset_0-54_53-1">CE</a></td><td class="lr" colspan="1"><a href="#fieldset_0-52_52-1">DE</a></td><td class="lr" colspan="1"><a href="#fieldset_0-51_51-1">UEO</a></td><td class="lr" colspan="1"><a href="#fieldset_0-50_50-1">UER</a></td><td class="lr" colspan="1"><a href="#fieldset_0-49_49-1">UEU</a></td><td class="lr" colspan="1"><a href="#fieldset_0-48_48-1">UC</a></td><td class="lr" colspan="16"><a href="#fieldset_0-47_32">RES0</a></td></tr><tr class="firstrow"><td class="lr" colspan="1"><a href="#fieldset_0-31_31-1">FRX</a></td><td class="lr" colspan="27"><a href="#fieldset_0-30_4">RES0</a></td><td class="lr" colspan="2"><a href="#fieldset_0-3_2-1">ERT</a></td><td class="lr" colspan="2"><a href="#fieldset_0-1_0">ED</a></td></tr></tbody></table><h4 id="fieldset_0-63_56">Bits [63:56]</h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-55_55-1">NCE, bit [55]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1' and <ins>FEAT_RASSA_CEC</ins><del>ERRFR[FirstRecordOfNode(n)].CEC</del> <ins>is</ins><del>!=</del> <ins>implemented:</ins><del>'000':</del>
+                        </span></h4><div class="field">
+      <p>No countable errors. Describes whether this error record supports recording countable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>NCE</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Records countable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Does not record countable errors.</p>
+        </td></tr></table>
+      <p><ins>When FEAT_RASSA_CEC is implemented, at least one error record owned by the node records countable errors.</ins></p><p><del>When ERRFR[FirstRecordOfNode(n)].CEC != </del><span class="binarynumber"><del>0b000</del></span><del>, at least one error record owned by the node records countable errors.</del></p>
+    <p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-55_55-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-54_53-1">CE, bits [54:53]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Corrected Error recording. Describes the types of Corrected errors the error record can record, if any.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>CE</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not record Corrected errors.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td>
+          <p>Records only transient or persistent Corrected errors. That is, Corrected errors recorded by setting <a href="ext-errnstatus.html">ERR&lt;n>STATUS</a>.CE to either <span class="binarynumber">0b01</span> or <span class="binarynumber">0b11</span>.</p>
+        </td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>Records only non-specific Corrected errors. That is, Corrected errors recorded by setting <a href="ext-errnstatus.html">ERR&lt;n>STATUS</a>.CE to <span class="binarynumber">0b10</span>.</p>
+        </td></tr><tr><td class="bitfield">0b11</td><td>
+          <p>Records all types of Corrected error.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_CE implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b01</ins></span><ins>, </ins><span class="binarynumber"><ins>0b10</ins></span><ins> and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-54_53-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-52_52-1">DE, bit [52]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Deferred Error recording. Describes whether the error record supports recording Deferred errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>DE</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Deferred errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Deferred errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_DE implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-52_52-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-51_51-1">UEO, bit [51]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Latent or Restartable Error recording. Describes whether the error record supports recording Latent or Restartable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UEO</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Latent or Restartable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Latent or Restartable errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_UEO implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-51_51-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-50_50-1">UER, bit [50]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Signaled or Recoverable Error recording. Describes whether the error record supports recording Signaled or Recoverable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UER</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Signaled or Recoverable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Signaled or Recoverable errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_UER implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-50_50-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-49_49-1">UEU, bit [49]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Unrecoverable Error recording. Describes whether the error record supports recording Unrecoverable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UEU</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Unrecoverable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Unrecoverable errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_UEU implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-49_49-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-48_48-1">UC, bit [48]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Uncontainable Error recording. Describes whether the error record supports recording Uncontainable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UC</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Uncontainable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Uncontainable errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_UC implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-48_48-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-47_32">Bits [47:32]</h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-31_31-1">FRX, bit [31]<span class="condition"><br/>When <ins>RAS</ins><del>error</del> <ins>System</ins><del>record</del> <ins>Architecture</ins><del>n</del> <ins>v2 </ins>is implemented, <ins>error</ins><del>RAS</del> <ins>record</ins><del>System</del> <ins>n</ins><del>Architecture v2</del> is implemented, and ERR&lt;n>FR.ERT == '00':
+                        </span></h4><div class="field">
+      <p>Feature Register extension. Defines whether ERR&lt;n>FR[63:48] describe architecturally-defined properties of this error record, including the supported error types.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>FRX</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>ERR&lt;n>FR[63:48] are <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>ERR&lt;n>FR[63:48] are defined by the architecture.</p>
+        </td></tr></table>
+      <p>If ERR&lt;n>FR.FRX is 0, error record &lt;n> is implemented, and ERRFR[FirstRecordOfNode(n)].FRX is 1, then ERRFR[FirstRecordOfNode(n)][63:48] describe the architecturally-defined properties of all error records owned by the node.</p>
+    <p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-31_31-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-30_4">Bits [30:4]</h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-3_2-1">ERT, bits [3:2]<span class="condition"><br/>When RAS System Architecture v2 is implemented:
+                        </span></h4><div class="field">
+      <p>Error Record Type. Defines the type of error record.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>ERT</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Error record &lt;n> not implemented or is a normal record that is not the first error record of the node.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td>
+          <p>Error record &lt;n> is a continuation record of the previous error record, &lt;n-1>.</p>
+        </td></tr></table>
+      <p>All other values are reserved.</p>
+    <p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-3_2-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-1_0">ED, bits [1:0]</h4><div class="field">
+      <p>Error reporting and logging. Indicates error record &lt;n> is not the first error record owned the node.</p>
+    <table class="valuetable"><tr><th>ED</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Error record &lt;n> is not implemented or is not the first error record owned by the node.</p>
+        </td></tr></table><p>Access to this field is <span class="access_level">RO</span>.</p></div><h3>When error record n is the first error record in the node:</h3><table class="regdiagram" id="fieldset_1"><thead><tr><td>63</td><td>62</td><td>61</td><td>60</td><td>59</td><td>58</td><td>57</td><td>56</td><td>55</td><td>54</td><td>53</td><td>52</td><td>51</td><td>50</td><td>49</td><td>48</td><td>47</td><td>46</td><td>45</td><td>44</td><td>43</td><td>42</td><td>41</td><td>40</td><td>39</td><td>38</td><td>37</td><td>36</td><td>35</td><td>34</td><td>33</td><td>32</td></tr></thead><tfoot><tr><td>31</td><td>30</td><td>29</td><td>28</td><td>27</td><td>26</td><td>25</td><td>24</td><td>23</td><td>22</td><td>21</td><td>20</td><td>19</td><td>18</td><td>17</td><td>16</td><td>15</td><td>14</td><td>13</td><td>12</td><td>11</td><td>10</td><td>9</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr></tfoot><tbody><tr class="firstrow"><td class="lr" colspan="8"><a href="#fieldset_1-63_56-1">RES0</a></td><td class="lr" colspan="1"><a href="#fieldset_1-55_55-1">NCE</a></td><td class="lr" colspan="2"><a href="#fieldset_1-54_53-1">CE</a></td><td class="lr" colspan="1"><a href="#fieldset_1-52_52-1">DE</a></td><td class="lr" colspan="1"><a href="#fieldset_1-51_51-1">UEO</a></td><td class="lr" colspan="1"><a href="#fieldset_1-50_50-1">UER</a></td><td class="lr" colspan="1"><a href="#fieldset_1-49_49-1">UEU</a></td><td class="lr" colspan="1"><a href="#fieldset_1-48_48-1">UC</a></td><td class="lr" colspan="16"><a href="#fieldset_1-47_32">IMPLEMENTATION DEFINED</a></td></tr><tr class="firstrow"><td class="lr" colspan="1"><a href="#fieldset_1-31_31">FRX</a></td><td class="lr" colspan="1"><a href="#fieldset_1-30_30-1">CED</a></td><td class="lr" colspan="1"><a href="#fieldset_1-29_29">SRV</a></td><td class="lr" colspan="1"><a href="#fieldset_1-28_28">RV</a></td><td class="lr" colspan="2"><a href="#fieldset_1-27_26-1">DFI</a></td><td class="lr" colspan="2"><a href="#fieldset_1-25_24">TS</a></td><td class="lr" colspan="2"><a href="#fieldset_1-23_22">CI</a></td><td class="lr" colspan="2"><a href="#fieldset_1-21_20">INJ</a></td><td class="lr" colspan="2"><a href="#fieldset_1-19_18-1">CEO</a></td><td class="lr" colspan="2"><a href="#fieldset_1-17_16-1">DUI</a></td><td class="lr" colspan="1"><a href="#fieldset_1-15_15-1">RP</a></td><td class="lr" colspan="3"><a href="#fieldset_1-14_12">CEC</a></td><td class="lr" colspan="2"><a href="#fieldset_1-11_10-1">CFI</a></td><td class="lr" colspan="2"><a href="#fieldset_1-9_8">UE</a></td><td class="lr" colspan="2"><a href="#fieldset_1-7_6">FI</a></td><td class="lr" colspan="2"><a href="#fieldset_1-5_4">UI</a></td><td class="lr" colspan="2"><a href="#fieldset_1-3_2">IMPLEMENTATION DEFINED</a></td><td class="lr" colspan="2"><a href="#fieldset_1-1_0">ED</a></td></tr></tbody></table><h4 id="fieldset_1-63_56-1">Bits [63:56]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_1-63_56-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved for identifying <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> controls.</p>
+    </div><h4 id="fieldset_1-55_55-1">NCE, bit [55]<span class="condition"><br/>When RAS System Architecture v2 is implemented, ERR&lt;n>FR.FRX == '1', and <ins>FEAT_RASSA_CEC</ins><del>ERR&lt;n>FR.CEC</del> <ins>is</ins><del>!=</del> <ins>implemented:</ins><del>'000':</del>
+                        </span></h4><div class="field">
+      <p>No countable errors. Describes whether this error record supports recording countable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>NCE</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Records countable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Does not record countable errors.</p>
+        </td></tr></table>
+      <p><ins>When FEAT_RASSA_CEC is implemented, at least one error record owned by the node records countable errors.</ins></p><p><del>When ERR&lt;n>FR.CEC != </del><span class="binarynumber"><del>0b000</del></span><del>, at least one error record owned by the node records countable errors.</del></p>
+    <p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-55_55-2"><span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_1-55_55-3"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved for identifying <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> controls.</p>
+    </div><h4 id="fieldset_1-54_53-1">CE, bits [54:53]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Corrected Error recording. Describes the types of Corrected errors the node can record, if any.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>CE</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not record Corrected errors.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td>
+          <p>Records only transient or persistent Corrected errors. That is, Corrected errors recorded by setting <a href="ext-errnstatus.html">ERR&lt;n>STATUS</a>.CE to either <span class="binarynumber">0b01</span> or <span class="binarynumber">0b11</span>.</p>
+        </td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>Records only non-specific Corrected errors. That is, Corrected errors recorded by setting <a href="ext-errnstatus.html">ERR&lt;n>STATUS</a>.CE to <span class="binarynumber">0b10</span>.</p>
+        </td></tr><tr><td class="bitfield">0b11</td><td>
+          <p>Records all types of Corrected error.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_CE implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b01</ins></span><ins>, </ins><span class="binarynumber"><ins>0b10</ins></span><ins>, and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-54_53-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved for identifying <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> controls.</p>
+    </div><h4 id="fieldset_1-52_52-1">DE, bit [52]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Deferred Error recording. Describes whether the node supports recording Deferred errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>DE</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Deferred errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Deferred errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_DE implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-52_52-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved for identifying <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> controls.</p>
+    </div><h4 id="fieldset_1-51_51-1">UEO, bit [51]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Latent or Restartable Error recording. Describes whether the node supports recording Latent or Restartable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UEO</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Latent or Restartable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Latent or Restartable errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_UEO implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-51_51-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved for identifying <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> controls.</p>
+    </div><h4 id="fieldset_1-50_50-1">UER, bit [50]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Signaled or Recoverable Error recording. Describes whether the node supports recording Signaled or Recoverable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UER</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Signaled or Recoverable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Signaled or Recoverable errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_UER implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-50_50-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved for identifying <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> controls.</p>
+    </div><h4 id="fieldset_1-49_49-1">UEU, bit [49]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Unrecoverable Error recording. Describes whether the node supports recording Unrecoverable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UEU</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Unrecoverable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Unrecoverable errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_UEU implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-49_49-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved for identifying <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> controls.</p>
+    </div><h4 id="fieldset_1-48_48-1">UC, bit [48]<span class="condition"><br/>When ERR&lt;n>FR.FRX == '1':
+                        </span></h4><div class="field">
+      <p>Uncontainable Error recording. Describes whether the node supports recording Uncontainable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UC</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Does not record Uncontainable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Records Uncontainable errors.</p>
+        </td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_UC implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-48_48-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved for identifying <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> controls.</p>
+    </div><h4 id="fieldset_1-47_32">IMPLEMENTATION DEFINED, bits [47:32]</h4><div class="field">
+      <p>Reserved for identifying <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> controls.</p>
+    </div><h4 id="fieldset_1-31_31"><ins>FRX, bit [31]</ins></h4><h4 id="fieldset_1-31_31-1"><del>FRX, bit [31]</del><span class="condition"><br/><del>When RAS System Architecture v1p1 is implemented:
+                        </del></span></h4><div class="field"><p>Feature Register extension.</p>
+<p>Defines whether ERR&lt;n>FR[63:48] describe architecturally-defined properties of this error record or node, including the supported error types, or describe <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> properties.</p><p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>FRX</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>ERR&lt;n>FR[63:48] are <span class="arm-defined-word">IMPLEMENTATION DEFINED</span>.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>ERR&lt;n>FR[63:48] are defined by the architecture.</p>
+        </td></tr></table><p>When ERR&lt;n>FR.FRX is 1:</p>
+<ul>
+<li>
+<p>If RAS System Architecture v2 is implemented and ERR&lt;m>FR.FRX is 1 for other error records &lt;m> owned by the same node, then ERR&lt;n>FR[63:48] describe the architecturally-defined properties of error record &lt;n> only, and ERR&lt;m>FR[63:48] describe the properties for error record &lt;m>.</p>
+
+</li><li>
+<p>Otherwise, ERR&lt;n>FR[63:48] describe the architecturally-defined properties of all error records owned by the node.</p>
+
+</li></ul><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-30_30-1"><ins>CED, bit [30]</ins><span class="condition"><br/><ins>When FEAT_RASSA_CEC is implemented:
+                        </ins></span></h4><div class="field"><ins>
+      </ins><p><ins>Error counter disable. Indicates whether the node implements a control to disable any implemented Corrected error counters.</ins></p><ins>
+    </ins><p><ins> The value of this field is an </ins><span class="arm-defined-word"><ins>IMPLEMENTATION DEFINED</ins></span><ins> choice of:</ins></p><table class="valuetable"><tr><th><ins>CED</ins></th><th><ins>Meaning</ins></th></tr><tr><td class="bitfield"><ins>0b0</ins></td><td><ins>
+          </ins><p><ins>Error counter disable control is not implemented and the error counter(s) are always enabled. </ins><a href="ext-errnctlr.html"><ins>ERR&lt;n>CTLR</ins></a><ins>.CED is </ins><span class="arm-defined-word"><ins>RES0</ins></span><ins>.</ins></p><ins>
+        </ins></td></tr><tr><td class="bitfield"><ins>0b1</ins></td><td><ins>
+          </ins><p><ins>Enabling and disabling of error counter(s) is supported and controlled by </ins><a href="ext-errnctlr.html"><ins>ERR&lt;n>CTLR</ins></a><ins>.CED.</ins></p><ins>
+        </ins></td></tr></table><ins>
+      </ins><p><ins>FEAT_RASSA_CED implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><ins>
+    </ins><p><ins>Access to this field is </ins><span class="access_level"><ins>RO</ins></span><ins>.</ins></p></div><h4 id="fieldset_1-30_30-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_1-29_29"><ins>SRV, bit [29]</ins></h4><h4 id="fieldset_1-30_30-1"><del>CED, bit [30]</del><span class="condition"><br/><del>When RAS System Architecture v1p1 is implemented and ERR&lt;n>FR.CEC != '000':
+                        </del></span></h4><div class="field">
+      <p><ins>Status</ins><del>Error</del> <ins>Reset</ins><del>counter</del> <ins>Value.</ins><del>disable.</del> Indicates <ins>how</ins><del>whether</del> <del>the </del>node <ins>&lt;n></ins><del>implements</del> <ins>and</ins><del>a</del> <ins>each</ins><del>control</del> <ins>error</ins><del>to</del> <ins>record</ins><del>disable</del> <ins>&lt;m></ins><del>any</del> <ins>owned</ins><del>implemented</del> <ins>by</ins><del>Corrected</del> <ins>node</ins><del>error</del> <ins>&lt;n> is reset.</ins><del>counters.</del></p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th><ins>SRV</ins><del>CED</del></th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td><p><ins>Node &lt;n> and each error record &lt;m> owned by node &lt;n> are reset as follows:</ins></p>
+<p><del>Error counter disable control is not implemented and the error counter(s) are always enabled. </del><a href="ext-errnctlr.html"><del>ERR&lt;n>CTLR</del></a><del>.CED is </del><span class="arm-defined-word"><del>RES0</del></span><del>.</del></p><del>
+        </del><ul><ins>
+</ins><li><a href="ext-errnstatus.html"><ins>ERR&lt;m>STATUS</ins></a><ins>.{AV, V, MV} are set to {0, 0, 0} on a Cold reset and preserved on Error Recovery reset.
+</ins></li><li><a href="ext-errnctlr.html"><ins>ERR&lt;n>CTLR</ins></a><ins>.ED is set to an </ins><span class="arm-defined-word"><ins>IMPLEMENTATION DEFINED</ins></span><ins> value on a Cold reset and preserved on Error Recovery reset.
+</ins></li></ul></td></tr><tr><td class="bitfield">0b1</td><td><p><ins>Node &lt;n> and each error record &lt;m> owned by node &lt;n> are reset as follows:</ins></p>
+<p><del>Enabling and disabling of error counter(s) is supported and controlled by </del><a href="ext-errnctlr.html"><del>ERR&lt;n>CTLR</del></a><del>.CED.</del></p><del>
+        </del><ul><ins>
+</ins><li><a href="ext-errnstatus.html"><ins>ERR&lt;m>STATUS</ins></a><ins>.{AV, V, MV} are set to architecturally </ins><span class="arm-defined-word"><ins>UNKNOWN</ins></span><ins> values on a Cold reset and preserved on Error Recovery reset.
+</ins></li><li><a href="ext-errnctlr.html"><ins>ERR&lt;n>CTLR</ins></a><ins>.ED is set to 0 on both Cold reset and Error Recovery reset.
+</ins></li></ul></td></tr></table><p><ins>All other values are reserved.</ins></p><ins>
+</ins><p><ins>FEAT_RASSA_SRV implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-28_28"><ins>RV, bit [28]</ins></h4><div class="field"><ins>
+      </ins><p><ins>Reset Valid. Indicates whether each error record &lt;m> implemented by the node includes the Reset Valid flags, </ins><a href="ext-errnstatus.html"><ins>ERR&lt;m>STATUS</ins></a><ins>.{RV, RV2}.</ins></p><ins>
+    </ins><p><ins> The value of this field is an </ins><span class="arm-defined-word"><ins>IMPLEMENTATION DEFINED</ins></span><ins> choice of:</ins></p><table class="valuetable"><tr><th><ins>RV</ins></th><th><ins>Meaning</ins></th></tr><tr><td class="bitfield"><ins>0b0</ins></td><td><ins>
+          </ins><p><a href="ext-errnstatus.html"><ins>ERR&lt;m>STATUS</ins></a><ins>.{RV, RV2} are </ins><span class="arm-defined-word"><ins>RES0</ins></span><ins>.</ins></p><ins>
+        </ins></td></tr><tr><td class="bitfield"><ins>0b1</ins></td><td><ins>
+          </ins><p><a href="ext-errnstatus.html"><ins>ERR&lt;m>STATUS</ins></a><ins>.{RV, RV2} are R/W1C bits. See </ins><a href="ext-errnstatus.html"><ins>ERR&lt;m>STATUS</ins></a><ins>.{RV, RV2} for more information.</ins></p><ins>
+        </ins></td></tr></table><p><ins>All other values are reserved.</ins></p><ins>
+</ins><p><ins>FEAT_RASSA_RV implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><p><ins>Access to this field is </ins><span class="access_level"><ins>RO</ins></span><ins>.</ins></p></div><h4 id="fieldset_1-27_26-1"><ins>DFI, bits [27:26]</ins><span class="condition"><br/><ins>When FEAT_RASSA_FHI is implemented:
+                        </ins></span></h4><div class="field"><ins>
+      </ins><p><ins>Fault handling interrupt for deferred errors control. Indicates whether the enabling and disabling of fault handling interrupts on deferred errors is supported by the node.</ins></p><ins>
+    </ins><p><ins> The value of this field is an </ins><span class="arm-defined-word"><ins>IMPLEMENTATION DEFINED</ins></span><ins> choice of:</ins></p><table class="valuetable"><tr><th><ins>DFI</ins></th><th><ins>Meaning</ins></th></tr><tr><td class="bitfield"><ins>0b00</ins></td><td><ins>
+          </ins><p><ins>Does not support the enabling and disabling of fault handling interrupts on deferred errors. </ins><a href="ext-errnctlr.html"><ins>ERR&lt;n>CTLR</ins></a><ins>.DFI is </ins><span class="arm-defined-word"><ins>RES0</ins></span><ins>.</ins></p><ins>
+        </ins></td></tr><tr><td class="bitfield"><ins>0b10</ins></td><td><ins>
+          </ins><p><ins>Enabling and disabling of fault handling interrupts on deferred errors is supported and controllable using </ins><a href="ext-errnctlr.html"><ins>ERR&lt;n>CTLR</ins></a><ins>.DFI.</ins></p><ins>
+        </ins></td></tr><tr><td class="bitfield"><ins>0b11</ins></td><td><ins>
+          </ins><p><ins>Enabling and disabling of fault handling interrupts on deferred errors is supported, and controllable using </ins><a href="ext-errnctlr.html"><ins>ERR&lt;n>CTLR</ins></a><ins>.WDFI for writes and </ins><a href="ext-errnctlr.html"><ins>ERR&lt;n>CTLR</ins></a><ins>.RDFI for reads.</ins></p><ins>
+        </ins></td></tr></table><p><ins>All other values are reserved.</ins></p><ins>
+</ins><p><ins>FEAT_RASSA_DFI implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b10</ins></span><ins> and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><p><ins>Access to this field is </ins><span class="access_level"><ins>RO</ins></span><ins>.</ins></p></div><h4 id="fieldset_1-27_26-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_1-29_29-1"><del>SRV, bit [29]</del><span class="condition"><br/><del>When RAS System Architecture v2 is implemented:
+                        </del></span></h4><div class="field"><del>
+      </del><p><del>Status Reset Value. Indicates how node &lt;n> and each error record &lt;m> owned by node &lt;n> is reset.</del></p><del>
+    </del><p><del> The value of this field is an </del><span class="arm-defined-word"><del>IMPLEMENTATION DEFINED</del></span><del> choice of:</del></p><table class="valuetable"><tr><th><del>SRV</del></th><th><del>Meaning</del></th></tr><tr><td class="bitfield"><del>0b0</del></td><td><p><del>Node &lt;n> and each error record &lt;m> owned by node &lt;n> are reset as follows:</del></p><del>
+</del><ul><del>
+</del><li><a href="ext-errnstatus.html"><del>ERR&lt;m>STATUS</del></a><del>.{AV, V, MV} are set to {0, 0, 0} on a Cold reset and preserved on Error Recovery reset.
+</del></li><li><a href="ext-errnctlr.html"><del>ERR&lt;n>CTLR</del></a><del>.ED is set to an </del><span class="arm-defined-word"><del>IMPLEMENTATION DEFINED</del></span><del> value on a Cold reset and preserved on Error Recovery reset.
+</del></li></ul></td></tr><tr><td class="bitfield"><del>0b1</del></td><td><p><del>Node &lt;n> and each error record &lt;m> owned by node &lt;n> are reset as follows:</del></p><del>
+</del><ul><del>
+</del><li><a href="ext-errnstatus.html"><del>ERR&lt;m>STATUS</del></a><del>.{AV, V, MV} are set to architecturally </del><span class="arm-defined-word"><del>UNKNOWN</del></span><del> values on a Cold reset and preserved on Error Recovery reset.
+</del></li><li><a href="ext-errnctlr.html"><del>ERR&lt;n>CTLR</del></a><del>.ED is set to 0 on both Cold reset and Error Recovery reset.
+</del></li></ul></td></tr></table><del>
+      </del><p><del>All other values are reserved.</del></p><del>
+    </del><p><del>Access to this field is </del><span class="access_level"><del>RO</del></span><del>.</del></p></div><h4 id="fieldset_1-29_29-2"><span class="condition"><br/><del>Otherwise:
+                        </del></span></h4><div class="field"><del>
+      </del><p><del>Reserved, </del><span class="arm-defined-word"><del>RES0</del></span><del>.</del></p><del>
+    </del></div><h4 id="fieldset_1-28_28-1"><del>RV, bit [28]</del><span class="condition"><br/><del>When RAS System Architecture v1p1 is implemented:
+                        </del></span></h4><div class="field"><del>
+      </del><p><del>Reset Valid. Indicates whether each error record &lt;m> implemented by the node includes the Reset Valid flags, </del><a href="ext-errnstatus.html"><del>ERR&lt;m>STATUS</del></a><del>.{RV, RV2}.</del></p><del>
+    </del><p><del> The value of this field is an </del><span class="arm-defined-word"><del>IMPLEMENTATION DEFINED</del></span><del> choice of:</del></p><table class="valuetable"><tr><th><del>RV</del></th><th><del>Meaning</del></th></tr><tr><td class="bitfield"><del>0b0</del></td><td><del>
+          </del><p><a href="ext-errnstatus.html"><del>ERR&lt;m>STATUS</del></a><del>.{RV, RV2} are </del><span class="arm-defined-word"><del>RES0</del></span><del>.</del></p><del>
+        </del></td></tr><tr><td class="bitfield"><del>0b1</del></td><td><del>
+          </del><p><a href="ext-errnstatus.html"><del>ERR&lt;m>STATUS</del></a><del>.{RV, RV2} are R/W1C bits. See </del><a href="ext-errnstatus.html"><del>ERR&lt;m>STATUS</del></a><del>.{RV, RV2} for more information.</del></p><del>
+        </del></td></tr></table><del>
+      </del><p><del>All other values are reserved.</del></p><del>
+    </del><p><del>Access to this field is </del><span class="access_level"><del>RO</del></span><del>.</del></p></div><h4 id="fieldset_1-28_28-2"><span class="condition"><br/><del>Otherwise:
+                        </del></span></h4><div class="field"><del>
+      </del><p><del>Reserved, </del><span class="arm-defined-word"><del>RES0</del></span><del>.</del></p><del>
+    </del></div><h4 id="fieldset_1-27_26-1"><del>DFI, bits [27:26]</del><span class="condition"><br/><del>When RAS System Architecture v1p1 is implemented and !(ERR&lt;n>FR.FI IN {'0x'}):
+                        </del></span></h4><div class="field"><del>
+      </del><p><del>Fault handling interrupt for deferred errors control. Indicates whether the enabling and disabling of fault handling interrupts on deferred errors is supported by the node.</del></p><del>
+    </del><p><del> The value of this field is an </del><span class="arm-defined-word"><del>IMPLEMENTATION DEFINED</del></span><del> choice of:</del></p><table class="valuetable"><tr><th><del>DFI</del></th><th><del>Meaning</del></th></tr><tr><td class="bitfield"><del>0b00</del></td><td><del>
+          </del><p><del>Does not support the enabling and disabling of fault handling interrupts on deferred errors. </del><a href="ext-errnctlr.html"><del>ERR&lt;n>CTLR</del></a><del>.DFI is </del><span class="arm-defined-word"><del>RES0</del></span><del>.</del></p><del>
+        </del></td></tr><tr><td class="bitfield"><del>0b10</del></td><td><del>
+          </del><p><del>Enabling and disabling of fault handling interrupts on deferred errors is supported and controllable using </del><a href="ext-errnctlr.html"><del>ERR&lt;n>CTLR</del></a><del>.DFI.</del></p><del>
+        </del></td></tr><tr><td class="bitfield"><del>0b11</del></td><td><del>
+          </del><p><del>Enabling and disabling of fault handling interrupts on deferred errors is supported, and controllable using </del><a href="ext-errnctlr.html"><del>ERR&lt;n>CTLR</del></a><del>.WDFI for writes and </del><a href="ext-errnctlr.html"><del>ERR&lt;n>CTLR</del></a><del>.RDFI for reads.</del></p><del>
+        </del></td></tr></table><del>
+      </del><p><del>All other values are reserved.</del></p><del>
+    </del><p><del>Access to this field is </del><span class="access_level"><del>RO</del></span><del>.</del></p></div><h4 id="fieldset_1-27_26-2"><span class="condition"><br/><del>Otherwise:
+                        </del></span></h4><div class="field"><del>
+      </del><p><del>Reserved, </del><span class="arm-defined-word"><del>RES0</del></span><del>.</del></p><del>
+    </del></div><h4 id="fieldset_1-25_24">TS, bits [25:24]</h4><div class="field">
+      <p>Timestamp Extension. Indicates whether, for each error record &lt;m> owned by this node, <a href="ext-errnmisc3.html">ERR&lt;m>MISC3</a> is used as the timestamp register, and, if it is, the timebase used by the timestamp.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>TS</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not support a timestamp register.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td><p>Implements a timestamp register in <a href="ext-errnmisc3.html">ERR&lt;n>MISC3</a> for each error record &lt;m> owned by the node. The timestamp uses the same timebase as the system Generic Timer.</p>
+<div class="note"><span class="note-header">Note</span><p>For an error record that has an affinity to a PE, this is the same timer that is visible through <a href="AArch64-cntpct_el0.html">CNTPCT_EL0</a> at the highest Exception level on that PE.</p></div></td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>Implements a timestamp register in <a href="ext-errnmisc3.html">ERR&lt;m>MISC3</a> for each error record &lt;m> owned by the node. The timestamp uses an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> timebase.</p>
+        </td></tr></table><del>
+      </del><p>All other values are reserved.</p>
+<p><ins>FEAT_RASSA_TS implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b10</ins></span><ins> and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-23_22">CI, bits [23:22]</h4><div class="field">
+      <p>Critical error interrupt. Indicates whether the critical error interrupt and associated controls are implemented by the node.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>CI</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not support the critical error interrupt. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.CI is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td>
+          <p>Critical error interrupt is supported and always enabled. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.CI is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>Critical error interrupt is supported and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.CI.</p>
+        </td></tr></table><del>
+      </del><p>All other values are reserved.</p>
+<p><ins>FEAT_RASSA_CRI implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b01</ins></span><ins> and </ins><span class="binarynumber"><ins>0b10</ins></span><ins>.</ins></p><ins>
+</ins><p><ins>FEAT_RASSA_CI implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b10</ins></span><ins>.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-21_20">INJ, bits [21:20]</h4><div class="field">
+      <p>Fault Injection Extension. Indicates whether the Common Fault Injection Model Extension is implemented by the node.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>INJ</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not support the Common Fault Injection Model Extension.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td>
+          <p>Supports the Common Fault Injection Model Extension. See <a href="ext-errnpfgf.html">ERR&lt;n>PFGF</a> for more information.</p>
+        </td></tr></table><del>
+      </del><p>All other values are reserved.</p>
+<p><ins>FEAT_RASSA_PFG implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b01</ins></span><ins>.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-19_18-1">CEO, bits [19:18]<span class="condition"><br/>When <ins>FEAT_RASSA_CEC</ins><del>ERR&lt;n>FR.CEC</del> <ins>is</ins><del>!=</del> <ins>implemented:</ins><del>'000':</del>
+                        </span></h4><div class="field">
+      <p>Corrected Error overwrite. Indicates the behavior of the node when a second or subsequent Corrected error is recorded and a first Corrected error has previously been recorded by an error record &lt;m> owned by the node.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>CEO</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Keeps the previous error syndrome.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td>
+          <p>If <a href="ext-errnstatus.html">ERR&lt;m>STATUS</a>.OF is 1 before the Corrected error is counted, then the error record keeps the previous syndrome. Otherwise the previous syndrome is overwritten.</p>
+        </td></tr></table><p>All other values are reserved.</p>
+<p><ins>FEAT_RASSA_CEO implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b01</ins></span></p><ins>
+</ins><p>The second or subsequent Corrected error is counted by the Corrected error counter, regardless of the value of this field. If counting the error causes unsigned overflow of the counter, then <a href="ext-errnstatus.html">ERR&lt;m>STATUS</a>.OF is set to 1.</p>
+<p>This means that, if no other error is subsequently recorded that overwrites the syndrome:</p>
+<ul>
+<li>If ERR&lt;n>FR.CEO is <span class="binarynumber">0b00</span>, the error record holds the syndrome for the first recorded Corrected error.
+</li><li>If ERR&lt;n>FR.CEO is <span class="binarynumber">0b01</span>, the error record holds the syndrome for the most recently recorded Corrected error before the counter overflows.
+</li></ul><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-19_18-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_1-17_16-1">DUI, bits [17:16]<span class="condition"><br/>When <ins>FEAT_RASSA_ERI</ins><del>ERR&lt;n>FR.UI</del> <ins>is</ins><del>!=</del> <ins>implemented:</ins><del>'00':</del>
+                        </span></h4><div class="field">
+      <p>Error recovery interrupt for deferred errors control. Indicates whether the enabling and disabling of error recovery interrupts on deferred errors is supported by the node.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>DUI</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not support the enabling and disabling of error recovery interrupts on deferred errors. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.DUI is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>Enabling and disabling of error recovery interrupts on deferred errors is supported and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.DUI.</p>
+        </td></tr><tr><td class="bitfield">0b11</td><td>
+          <p>Enabling and disabling of error recovery interrupts on deferred errors is supported, and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.WDUI for writes and <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.RDUI for reads.</p>
+        </td></tr></table><del>
+      </del><p>All other values are reserved.</p>
+<p><ins>FEAT_RASSA_DUI implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b10</ins></span><ins> and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-17_16-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_1-15_15-1">RP, bit [15]<span class="condition"><br/>When <ins>FEAT_RASSA_CEC</ins><del>ERR&lt;n>FR.CEC</del> <ins>is</ins><del>!=</del> <ins>implemented:</ins><del>'000':</del>
+                        </span></h4><div class="field">
+      <p>Repeat counter. Indicates whether the node implements a second Corrected error counter in <a href="ext-errnmisc0.html">ERR&lt;m>MISC0</a> for each error record &lt;m> owned by the node that can record countable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>RP</th><th>Meaning</th></tr><tr><td class="bitfield">0b0</td><td>
+          <p>Implements a single Corrected error counter in <a href="ext-errnmisc0.html">ERR&lt;m>MISC0</a> for each error record &lt;m> owned by the node that can record countable errors.</p>
+        </td></tr><tr><td class="bitfield">0b1</td><td>
+          <p>Implements a first (repeat) counter and a second (other) counter in <a href="ext-errnmisc0.html">ERR&lt;m>MISC0</a> for each error record &lt;m> owned by the node that can record countable errors. The repeat counter is the same size as the primary error counter.</p>
+        </td></tr></table><p><ins>All other values are reserved.</ins></p><ins>
+</ins><p><ins>FEAT_RASSA_CECRP implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b1</ins></span><ins>.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-15_15-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_1-14_12">CEC, bits [14:12]</h4><div class="field">
+      <p>Corrected Error Counter. Indicates whether the node implements the standard format Corrected error counter mechanisms in <a href="ext-errnmisc0.html">ERR&lt;m>MISC0</a> for each error record &lt;m> owned by the node that can record countable errors.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>CEC</th><th>Meaning</th></tr><tr><td class="bitfield">0b000</td><td>
+          <p>Does not implement the standard format Corrected error counter model.</p>
+        </td></tr><tr><td class="bitfield">0b010</td><td>
+          <p>Implements an 8-bit Corrected error counter in <a href="ext-errnmisc0.html">ERR&lt;m>MISC0</a>[39:32] for each error record &lt;m> owned by the node that can record countable errors.</p>
+        </td></tr><tr><td class="bitfield">0b100</td><td>
+          <p>Implements a 16-bit Corrected error counter in <a href="ext-errnmisc0.html">ERR&lt;m>MISC0</a>[47:32] for each error record &lt;m> owned by the node that can record countable errors.</p>
+        </td></tr></table><p>All other values are reserved.</p>
+<p><ins>FEAT_RASSA_CEC implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b010</ins></span><ins> and </ins><span class="binarynumber"><ins>0b100</ins></span><ins>.</ins></p><ins>
+</ins><p><ins>FEAT_RASSA_CEC8 implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b010</ins></span><ins>.</ins></p><ins>
+</ins><p><ins>FEAT_RASSA_CEC16 implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b100</ins></span><ins>.</ins></p><ins>
+</ins><div class="note"><span class="note-header">Note</span><p>Implementations might include other error counter models, or might include the standard format model and not indicate this in ERR&lt;n>FR.</p></div><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-11_10-1">CFI, bits [11:10]<span class="condition"><br/>When <ins>FEAT_RASSA_FHI</ins><del>!(ERR&lt;n>FR.FI</del> <ins>is</ins><del>IN</del> <ins>implemented:</ins><del>{'0x'}):</del>
+                        </span></h4><div class="field">
+      <p>Fault handling interrupt for corrected errors control. Indicates whether the enabling and disabling of fault handling interrupts on corrected errors is supported by the node.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>CFI</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not support the enabling and disabling of fault handling interrupts on corrected errors. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.CFI is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>Enabling and disabling of fault handling interrupts on corrected errors is supported and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.CFI.</p>
+        </td></tr><tr><td class="bitfield">0b11</td><td>
+          <p>Enabling and disabling of fault handling interrupts on corrected errors is supported, and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.WCFI for writes and <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.RCFI for reads.</p>
+        </td></tr></table><del>
+      </del><p>All other values are reserved.</p>
+<p><ins>FEAT_RASSA_CFI implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b10</ins></span><ins> and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-11_10-2"><span class="condition"><br/>Otherwise:
+                        </span></h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_1-9_8">UE, bits [9:8]</h4><div class="field">
+      <p>In-band error response (External abort). Indicates whether the in-band error response and associated controls are implemented by the node.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UE</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not support the in-band error response. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.UE is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td>
+          <p>In-band error response is supported and always enabled. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.UE is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>In-band error response is supported and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.UE.</p>
+        </td></tr><tr><td class="bitfield">0b11</td><td>
+          <p>In-band error response is supported, and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.WUE for writes and <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.RUE for reads.</p>
+        </td></tr></table><p><ins>FEAT_RASSA_EA implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b01</ins></span><ins>, </ins><span class="binarynumber"><ins>0b10</ins></span><ins>, and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p>
+<p><ins>FEAT_RASSA_UE_CTRL</ins><del>It</del> <ins>implements the functionality identified by the values</ins><del>is</del> <span class="binarynumber"><ins>0b10</ins><del>IMPLEMENTATION DEFINED</del></span><ins> and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins><del>whether an uncorrected error that is deferred and recorded as Deferred error, but is not deferred to the Requester, will signal an in-band error response to the Requester.</del></p>
+<p><ins>It is </ins><span class="arm-defined-word"><ins>IMPLEMENTATION DEFINED</ins></span><ins> whether an uncorrected error that is deferred and recorded as Deferred error, but is not deferred to the Requester, will signal an in-band error response to the Requester.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-7_6">FI, bits [7:6]</h4><div class="field">
+      <p>Fault handling interrupt. Indicates whether the fault handling interrupt and associated controls are implemented by the node.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>FI</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not support the fault handling interrupt. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.FI is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td>
+          <p>Fault handling interrupt is supported and always enabled. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.FI is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>Fault handling interrupt is supported and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.FI.</p>
+        </td></tr><tr><td class="bitfield">0b11</td><td>
+          <p>Fault handling interrupt is supported, and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.WFI for writes and <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.RFI for reads.</p>
+        </td></tr></table><p><ins>FEAT_RASSA_FHI implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b01</ins></span><ins>, </ins><span class="binarynumber"><ins>0b10</ins></span><ins>, and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><ins>
+</ins><p><ins>FEAT_RASSA_FI implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b10</ins></span><ins> and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-5_4">UI, bits [5:4]</h4><div class="field">
+      <p>Error recovery interrupt for uncorrected errors. Indicates whether the error handling interrupt and associated controls are implemented by the node.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>UI</th><th>Meaning</th></tr><tr><td class="bitfield">0b00</td><td>
+          <p>Does not support the error handling interrupt. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.UI is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b01</td><td>
+          <p>Error handling interrupt is supported and always enabled. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.UI is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>Error handling interrupt is supported and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.UI.</p>
+        </td></tr><tr><td class="bitfield">0b11</td><td>
+          <p>Error handling interrupt is supported, and controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.WUI for writes and <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.RUI for reads.</p>
+        </td></tr></table><p><ins>FEAT_RASSA_ERI implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b01</ins></span><ins>, </ins><span class="binarynumber"><ins>0b10</ins></span><ins>, and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><ins>
+</ins><p><ins>FEAT_RASSA_UI implements the functionality identified by the values </ins><span class="binarynumber"><ins>0b10</ins></span><ins> and </ins><span class="binarynumber"><ins>0b11</ins></span><ins>.</ins></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_1-3_2">IMPLEMENTATION DEFINED, bits [3:2]</h4><div class="field">
+      <p><span class="arm-defined-word">IMPLEMENTATION DEFINED</span>.</p>
+    </div><h4 id="fieldset_1-1_0">ED, bits [1:0]</h4><div class="field">
+      <p>Error reporting and logging. Indicates error record &lt;n> is a normal record and the first record owned the node, and whether the node implements the controls for enabling and disabling error reporting and logging.</p>
+    <p> The value of this field is an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> choice of:</p><table class="valuetable"><tr><th>ED</th><th>Meaning</th></tr><tr><td class="bitfield">0b01</td><td>
+          <p>Error reporting and logging always enabled. <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.ED is <span class="arm-defined-word">RES0</span>.</p>
+        </td></tr><tr><td class="bitfield">0b10</td><td>
+          <p>Error reporting and logging is controllable using <a href="ext-errnctlr.html">ERR&lt;n>CTLR</a>.ED.</p>
+        </td></tr></table><del>
+      </del><p>All other values are reserved.</p>
+<p><ins>FEAT_RASSA_ED implements the functionality identified by the value </ins><span class="binarynumber"><ins>0b10</ins></span></p><p>Access to this field is <span class="access_level">RO</span>.</p></div><h3>When <del>RAS System Architecture v2 is implemented and </del>error record &lt;n> is a proxy for a RAS agent:</h3><table class="regdiagram" id="fieldset_2"><thead><tr><td>63</td><td>62</td><td>61</td><td>60</td><td>59</td><td>58</td><td>57</td><td>56</td><td>55</td><td>54</td><td>53</td><td>52</td><td>51</td><td>50</td><td>49</td><td>48</td><td>47</td><td>46</td><td>45</td><td>44</td><td>43</td><td>42</td><td>41</td><td>40</td><td>39</td><td>38</td><td>37</td><td>36</td><td>35</td><td>34</td><td>33</td><td>32</td></tr></thead><tfoot><tr><td>31</td><td>30</td><td>29</td><td>28</td><td>27</td><td>26</td><td>25</td><td>24</td><td>23</td><td>22</td><td>21</td><td>20</td><td>19</td><td>18</td><td>17</td><td>16</td><td>15</td><td>14</td><td>13</td><td>12</td><td>11</td><td>10</td><td>9</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr></tfoot><tbody><tr class="firstrow"><td class="lr" colspan="32"><a href="#fieldset_2-63_4">RES0</a></td></tr><tr class="firstrow"><td class="lr" colspan="28"><a href="#fieldset_2-63_4">RES0</a></td><td class="lr" colspan="2"><a href="#fieldset_2-3_2">ERT</a></td><td class="lr" colspan="2"><a href="#fieldset_2-1_0">ED</a></td></tr></tbody></table><h4 id="fieldset_2-63_4">Bits [63:4]</h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_2-3_2">ERT, bits [3:2]</h4><div class="field">
+      <p>Error Record Type. Defines the type of error record.</p>
+    <table class="valuetable"><tr><th>ERT</th><th>Meaning</th></tr><tr><td class="bitfield">0b01</td><td>
+          <p>Error record is a proxy for a RAS agent.</p>
+        </td></tr></table>
+      <p>All other values are reserved.</p>
+    <p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_2-1_0">ED, bits [1:0]</h4><div class="field">
+      <p>Error reporting and logging. Indicates error record &lt;n> is not a true error record.</p>
+    <table class="valuetable"><tr><th>ED</th><th>Meaning</th></tr><tr><td class="bitfield">0b11</td><td>
+          <p>Error record &lt;n> is not an error record.</p>
+        </td></tr></table><p>Access to this field is <span class="access_level">RO</span>.</p></div><h2>Accessing ERR&lt;n>FR</h2><h4>ERR&lt;n>FR can be accessed through the memory-mapped interfaces:</h4><table class="info"><tr><th>Component</th><th>Offset</th><th>Instance</th></tr><tr><td>RAS</td><td><span class="hexnumber">0x000</span> + (64 * n)</td><td>ERR&lt;n>FR</td></tr></table><p>Accesses to this register are <span class="access_level">RO</span>.</p><hr class="bottom_line"/><table style="margin: 0 auto;"><tr><td><div class="topbar"><a href="AArch32-regindex.html">AArch32 Registers</a></div></td><td><div class="topbar"><a href="AArch64-regindex.html">AArch64 Registers</a></div></td><td><div class="topbar"><a href="AArch32-sysindex.html">AArch32 Instructions</a></div></td><td><div class="topbar"><a href="AArch64-sysindex.html">AArch64 Instructions</a></div></td><td><div class="topbar"><a href="enc_index.html">Index by Encoding</a></div></td><td><div class="topbar"><a href="ext_alpha_index.html">External Registers</a></div></td><td><div class="topbar"><a href="ext_enc_index.html">External Registers by Offset</a></div></td><td><div class="topbar"><a href="func_index.html">Registers by Functional Group</a></div></td><td><div class="topbar"><a href="notice.html">Proprietary Notice</a></div></td></tr></table><p class="versions"><ins>2026-06-24</ins><del>2026-03-26</del> <ins>14</ins><del>20</del>:<ins>06</ins><del>27</del>:<ins>58</ins><del>25</del>, <ins>2026-06_rel</ins><del>2026-03_rel</del></p><p class="copyconf">Copyright © 2010-2026 Arm Limited or its affiliates. All rights reserved. This document is Non-Confidential.</p><div align="center" class="htmldiff_header"><table><tbody><tr><td class="old">(old) </td><td class="explain">htmldiff from-</td><td class="new">(new) </td></tr></tbody></table></div></body>
+</html>

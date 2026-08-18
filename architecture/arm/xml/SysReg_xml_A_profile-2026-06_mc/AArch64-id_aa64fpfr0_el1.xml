@@ -1,0 +1,493 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_page SYSTEM "registers.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+
+<register_page>
+  <registers>
+  
+    <register execution_state="AArch64" is_register="True" is_internal="True" is_stub_entry="False">
+      <reg_short_name>ID_AA64FPFR0_EL1</reg_short_name>
+        
+        <reg_long_name>AArch64 Floating-point Feature Register 0</reg_long_name>
+
+
+
+      
+            <reg_condition otherwise="UNDEFINED">when FEAT_AA64 is implemented</reg_condition>
+      
+
+
+
+
+          <reg_reset_value></reg_reset_value>
+
+      <reg_mappings>
+        
+
+
+
+
+      </reg_mappings>
+
+        <reg_purpose>
+          
+    
+      <purpose_text>
+        <para>Provides information about floating-point formats and instructions implemented in AArch64 state.</para>
+
+      </purpose_text>
+      <purpose_text>
+        <para>The fields in this register do not follow the standard ID scheme. See <xref linkend="#BABCEGGHG6">Alternative ID scheme used for ID_AA64SMFR0_EL1 and ID_AA64FPFR0_EL1</xref>.</para>
+      </purpose_text>
+
+        </reg_purpose>
+
+      <reg_groups>
+          <reg_group>Identification Registers</reg_group>
+      </reg_groups>
+      <reg_configuration>
+        
+    
+      <configuration_text>
+        <note><para>Prior to the introduction of the features described by this register, this register was unnamed and reserved, <arm-defined-word>RES0</arm-defined-word> from EL1, EL2, and EL3.</para></note>
+      </configuration_text>
+
+      </reg_configuration>
+      
+      
+        
+      <reg_attributes>
+          
+    
+      <attributes_text>
+        <para>ID_AA64FPFR0_EL1 is a 64-bit register.</para>
+      </attributes_text>
+
+      </reg_attributes>
+      <reg_fieldsets>
+        
+
+
+
+
+
+
+<fields id="fieldset_0" length="64">
+  <text_before_fields/>
+  <field id="fieldset_0-63_32" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>63</field_msb>
+    <field_lsb>32</field_lsb>
+    <rel_range>63:32</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-31_31" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8CVT</field_name>
+    <field_msb>31</field_msb>
+    <field_lsb>31</field_lsb>
+    <rel_range>31</rel_range>
+    <field_description order="before"><para>Indicates support for the following instructions:</para>
+<list type="unordered">
+<listitem><content>
+<para>The Advanced SIMD floating-point scaling instruction <instruction>FSCALE</instruction>.</para>
+</content>
+</listitem><listitem><content>
+<para>The Advanced SIMD FP8 convert instructions <instruction>BF1CVTL</instruction>, <instruction>BF1CVTL2</instruction>, <instruction>BF2CVTL</instruction>, <instruction>BF2CVTL2</instruction>, <instruction>F1CVTL</instruction>,  <instruction>F1CVTL2</instruction>, <instruction>F2CVTL</instruction>, <instruction>F2CVTL2</instruction>, <instruction>FCVTN</instruction>, and <instruction>FCVTN2</instruction>.</para>
+</content>
+</listitem><listitem><content>
+<para>When <xref linkend="#FEAT_SVE2">FEAT_SVE2</xref> or <xref linkend="#FEAT_SME2">FEAT_SME2</xref> is implemented, the SVE2 FP8 convert instructions <instruction>BF1CVT</instruction>,  <instruction>BF1CVTLT</instruction>, <instruction>BF2CVT</instruction>, <instruction>BF2CVTLT</instruction>, <instruction>F1CVT</instruction>, <instruction>F1CVTLT</instruction>, <instruction>F2CVT</instruction>, <instruction>F2CVTLT</instruction>, <instruction>BFCVTN</instruction>, <instruction>FCVTN</instruction>, <instruction>FCVTNB</instruction>, and <instruction>FCVTNT</instruction>.</para>
+</content>
+</listitem><listitem><content>
+<para>When <xref linkend="#FEAT_SME2">FEAT_SME2</xref> is implemented, the SME2 multi-vector floating-point scaling instruction <instruction>FSCALE</instruction> and the SME2 FP8 convert instructions <instruction>BF1CVT</instruction>, <instruction>BF1CVTL</instruction>, <instruction>BF2CVT</instruction>, <instruction>BF2CVTL</instruction>, <instruction>F1CVT</instruction>, <instruction>F1CVTL</instruction>, <instruction>F2CVT</instruction>, <instruction>F2CVTL</instruction>, <instruction>BFCVT</instruction>, <instruction>FCVT</instruction>, and <instruction>FCVTN</instruction>.</para>
+</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_FP8">FEAT_FP8</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-30_30" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8FMA</field_name>
+    <field_msb>30</field_msb>
+    <field_lsb>30</field_lsb>
+    <rel_range>30</rel_range>
+    <field_description order="before"><para>Indicates support for the following instructions:</para>
+<list type="unordered">
+<listitem><content>The Advanced SIMD FP8 to single-precision and half-precision multiply-accumulate instructions <instruction>FMLALB</instruction>, <instruction>FMLALT</instruction>, <instruction>FMLALLBB</instruction>, <instruction>FMLALLBT</instruction>, <instruction>FMLALLTB</instruction>, and <instruction>FMLALLTT</instruction>.</content>
+</listitem><listitem><content>When <xref linkend="#FEAT_SVE2">FEAT_SVE2</xref> is implemented and the PE is not in Streaming SVE mode, the SVE2 FP8 to single-precision and half-precision multiply-accumulate instructions <instruction>FMLALB</instruction>, <instruction>FMLALT</instruction>, <instruction>FMLALLBB</instruction>, <instruction>FMLALLBT</instruction>, <instruction>FMLALLTB</instruction>, and <instruction>FMLALLTT</instruction>.</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_FP8FMA">FEAT_FP8FMA</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-29_29" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8DP4</field_name>
+    <field_msb>29</field_msb>
+    <field_lsb>29</field_lsb>
+    <rel_range>29</rel_range>
+    <field_description order="before"><para>Indicates support for the following instructions:</para>
+<list type="unordered">
+<listitem><content>Advanced SIMD FP8 to single-precision 4-way dot product <instruction>FDOT</instruction> (4-way) instructions.</content>
+</listitem><listitem><content>When <xref linkend="#FEAT_SVE2">FEAT_SVE2</xref> is implemented and the PE is not in Streaming SVE mode, SVE FP8 to single-precision 4-way dot product <instruction>FDOT</instruction> (4-way) instructions.</content>
+</listitem></list></field_description>
+    <field_description order="after"><note><para>Other features may implement some of the specified instructions.</para></note><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_FP8DOT4">FEAT_FP8DOT4</xref> implements the functionality identified by the value 1.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this feature.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-28_28" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8DP2</field_name>
+    <field_msb>28</field_msb>
+    <field_lsb>28</field_lsb>
+    <rel_range>28</rel_range>
+    <field_description order="before"><para>Indicates support for the following instructions:</para>
+<list type="unordered">
+<listitem><content>Advanced SIMD FP8 to half-precision 2-way dot product <instruction>FDOT</instruction> (2-way) instructions.</content>
+</listitem><listitem><content>When <xref linkend="#FEAT_SVE2">FEAT_SVE2</xref> is implemented and the PE is not in Streaming SVE mode, SVE FP8 to half-precision 2-way dot product <instruction>FDOT</instruction> (2-way) instructions.</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <note>
+        <para>Other features may implement some of the specified instructions.</para>
+      </note>
+      <para><xref linkend="#FEAT_FP8DOT2">FEAT_FP8DOT2</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this feature.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-27_27" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8MM8</field_name>
+    <field_msb>27</field_msb>
+    <field_lsb>27</field_lsb>
+    <rel_range>27</rel_range>
+    <field_description order="before"><para>Indicates support for the following instructions:</para>
+<list type="unordered">
+<listitem><content>
+<para>Advanced SIMD FP8 to single-precision matrix multiply <instruction>FMMLA</instruction> (8-way, FP8 to FP32) instruction.</para>
+</content>
+</listitem><listitem><content>
+<para>If <xref linkend="#FEAT_SVE2">FEAT_SVE2</xref> is implemented, SVE FP8 to single-precision matrix multiply <instruction>FMMLA</instruction> (widening, FP8 to FP32) instruction is implemented when the PE is not in Streaming SVE mode.</para>
+</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_F8F32MM">FEAT_F8F32MM</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber></para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Advanced SIMD and SVE FP8 to single-precision matrix multiply instructions are not implemented by this feature.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified Advanced SIMD and SVE FP8 to single-precision matrix multiply instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-26_26" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8MM4</field_name>
+    <field_msb>26</field_msb>
+    <field_lsb>26</field_lsb>
+    <rel_range>26</rel_range>
+    <field_description order="before"><para>Indicates support for the following instructions:</para>
+<list type="unordered">
+<listitem><content>
+<para>Advanced SIMD FP8 to half-precision matrix multiply <instruction>FMMLA</instruction> (4-way, FP8 to FP16) instruction.</para>
+</content>
+</listitem><listitem><content>
+<para>If <xref linkend="#FEAT_SVE2">FEAT_SVE2</xref> is implemented, SVE FP8 to half-precision matrix multiply <instruction>FMMLA</instruction> (widening, FP8 to FP16) instruction is implemented when the PE is not in Streaming SVE mode.</para>
+</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_F8F16MM">FEAT_F8F16MM</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber></para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Advanced SIMD and SVE FP8 to half-precision matrix multiply instructions are not implemented by this feature.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified Advanced SIMD and SVE FP8 to half-precision matrix multiply instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-25_8" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>25</field_msb>
+    <field_lsb>8</field_lsb>
+    <rel_range>25:8</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-7_2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RAZ">
+    <field_msb>7</field_msb>
+    <field_lsb>2</field_lsb>
+    <rel_range>7:2</rel_range>
+    <field_description order="before">
+      <para>Reserved for data formats 2 to 7.</para>
+    </field_description>
+    <field_description order="before">
+      <para>Reserved, RAZ.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-1_1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8E4M3</field_name>
+    <field_msb>1</field_msb>
+    <field_lsb>1</field_lsb>
+    <rel_range>1</rel_range>
+    <field_description order="before">
+      <para>Indicates support for OFP8 E4M3 format and behavior for FP8 instructions.</para>
+    </field_description>
+    <field_description order="after"><para>If <xref linkend="#FEAT_FP8">FEAT_FP8</xref> is implemented, the only permitted value is 1.</para>
+<para>Otherwise, the only permitted value is 0.</para>
+<para>For more information on OFP8 formats, see the Open Compute Project, OCP 8-bit Floating Point Specification (OFP8).</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>OFP8 E4M3 format is not supported.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>OFP8 E4M3 format is supported.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-0_0" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8E5M2</field_name>
+    <field_msb>0</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for OFP8 E5M2 format and behavior for FP8 instructions.</para>
+    </field_description>
+    <field_description order="after"><para>If <xref linkend="#FEAT_FP8">FEAT_FP8</xref> is implemented, the only permitted value is 1.</para>
+<para>Otherwise, the only permitted value is 0.</para>
+<para>For more information on OFP8 formats, see the Open Compute Project, OCP 8-bit Floating Point Specification (OFP8).</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>OFP8 E5M2 format is not supported.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>OFP8 E5M2 format is supported.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <text_after_fields/>
+</fields>
+
+
+
+
+<reg_fieldset length="64">
+  <fieldat id="fieldset_0-63_32" msb="63" lsb="32"/>
+  <fieldat id="fieldset_0-31_31" msb="31" lsb="31"/>
+  <fieldat id="fieldset_0-30_30" msb="30" lsb="30"/>
+  <fieldat id="fieldset_0-29_29" msb="29" lsb="29"/>
+  <fieldat id="fieldset_0-28_28" msb="28" lsb="28"/>
+  <fieldat id="fieldset_0-27_27" msb="27" lsb="27"/>
+  <fieldat id="fieldset_0-26_26" msb="26" lsb="26"/>
+  <fieldat id="fieldset_0-25_8" msb="25" lsb="8"/>
+  <fieldat id="fieldset_0-7_2" msb="7" lsb="2"/>
+  <fieldat id="fieldset_0-1_1" msb="1" lsb="1"/>
+  <fieldat id="fieldset_0-0_0" msb="0" lsb="0"/>
+</reg_fieldset>
+
+
+      </reg_fieldsets>
+
+      <access_mechanisms>
+          
+
+
+
+
+
+
+    
+        
+        <access_mechanism accessor="MRS ID_AA64FPFR0_EL1" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MRS &lt;Xt&gt;, ID_AA64FPFR0_EL1</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b000"/>
+                
+                <enc n="CRn" v="0b0000"/>
+                
+                <enc n="CRm" v="0b0100"/>
+                
+                <enc n="op2" v="0b111"/>
+            </encoding>
+            <access_permission>
+                <ps name="MRS" sections="1" secttype="access_permission">
+                <pstext>
+if !IsFeatureImplemented(FEAT_AA64) then
+    UnimplementedIDRegister();
+elsif HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    if IsFeatureImplemented(FEAT_IDST) then
+        AArch64_SystemAccessTraptoEL1orEL2(0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; (IsFeatureImplemented(FEAT_FGT) || !IsZero(ID_AA64FPFR0_EL1()) || ImpDefBool("ID_AA64FPFR0_EL1 trapped by HCR_EL2.TID3")) &amp;&amp; HCR_EL2().TID3 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = ID_AA64FPFR0_EL1();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = ID_AA64FPFR0_EL1();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = ID_AA64FPFR0_EL1();
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+
+      </access_mechanisms>
+
+      <arch_variants>
+      </arch_variants>
+  </register>
+</registers>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_page>

@@ -1,0 +1,326 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_page SYSTEM "registers.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+
+<register_page>
+  <registers>
+  
+    <register is_register="True" is_internal="False" is_stub_entry="False">
+      <reg_short_name>PMCCR</reg_short_name>
+        
+        <reg_long_name>PMU Configuration Control Register</reg_long_name>
+
+
+        <reg_parent_link id="pmu.xml">PMU</reg_parent_link>
+
+      
+            <reg_condition otherwise="RES0">when FEAT_PMUv3_EXTPMN is implemented</reg_condition>
+      
+
+
+
+    
+    <reg_address
+        external_access="False"
+        mem_map_access="False"
+        block_access="True"
+        memory_access="True"
+        table_id="PMUacccessor0"
+    >
+  
+  <reg_frame>PMU</reg_frame>
+  
+    
+    <reg_offset><hexnumber>0xE58</hexnumber></reg_offset>
+    <reg_access>
+    
+        
+      <reg_access_state>
+          <reg_access_level>When DoubleLockStatus() or !IsCorePowered()</reg_access_level>
+          <reg_access_type>ERROR</reg_access_type>
+      </reg_access_state>
+        
+      <reg_access_state>
+          <reg_access_level>When !IsMostSecureAccess(addrdesc)</reg_access_level>
+          <reg_access_type>RAZ/WI</reg_access_type>
+      </reg_access_state>
+        
+      <reg_access_state>
+          <reg_access_type>RW</reg_access_type>
+      </reg_access_state>
+    </reg_access>
+</reg_address>
+
+
+          <reg_reset_value></reg_reset_value>
+
+      <reg_mappings>
+        
+
+
+
+
+      </reg_mappings>
+
+        <reg_purpose>
+          
+    
+      <purpose_text>
+        <para>Contains PMU configuration controls.</para>
+      </purpose_text>
+
+        </reg_purpose>
+
+      <reg_groups>
+          <reg_group>PMU</reg_group>
+      </reg_groups>
+      <reg_configuration>
+        
+    
+
+      </reg_configuration>
+      
+      
+        
+      <reg_attributes>
+          
+    
+      <attributes_text>
+        <para>PMCCR is a 64-bit register.</para>
+      </attributes_text>
+
+      </reg_attributes>
+      <reg_fieldsets>
+        
+
+
+
+
+
+
+<fields id="fieldset_0" length="64">
+  <text_before_fields/>
+  <field id="fieldset_0-63_9" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>63</field_msb>
+    <field_lsb>9</field_lsb>
+    <rel_range>63:9</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-8_8-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>OSLO</field_name>
+    <field_msb>8</field_msb>
+    <field_lsb>8</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>OS Lock Override.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>No external access to any Performance Monitor register is affected by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>For the purpose of determining the access permissions of Performance Monitor registers, an external access that is a Most secure access ignores <register_link state="AArch64" id="AArch64-oslsr_el1.xml">OSLSR_EL1</register_link>.OSLK.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_number>'0'</field_reset_number>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_EXTPMN is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-8_8-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>8</field_msb>
+    <field_lsb>8</field_lsb>
+    <rel_range>8</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-7_7-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>EPME</field_name>
+    <field_msb>7</field_msb>
+    <field_lsb>7</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>External Enable.</para>
+    </field_description>
+    <field_description order="after"><para>The counters affected by this field are the event counters in the third range.</para>
+<para>Other event counters, <register_link id="pmu.pmccntr_el0.xml" state="">PMCCNTR_EL0</register_link>, and, if <xref linkend="#FEAT_PMUv3_ICNTR">FEAT_PMUv3_ICNTR</xref> is implemented, <register_link id="pmu.pmicntr_el0.xml" state="">PMICNTR_EL0</register_link> are not affected by this field.</para>
+<para>If the Effective value of PMCCR.EPMN is equal to NUM_PMU_COUNTERS, then this field has no effect.</para></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Affected counters are disabled and do not count.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Affected counters are enabled by <register_link id="pmu.pmcntenset_el0.xml" state="">PMCNTENSET_EL0</register_link>.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_number>'0'</field_reset_number>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_EXTPMN is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-7_7-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>7</field_msb>
+    <field_lsb>7</field_lsb>
+    <rel_range>7</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-6_5" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>6</field_msb>
+    <field_lsb>5</field_lsb>
+    <rel_range>6:5</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-4_0-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>EPMN</field_name>
+    <field_msb>4</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>4:0</rel_range>
+    <field_description order="before">
+      <para>Defines the number of event counters <register_link id="pmu.pmevcntrn_el0.xml" state="">PMEVCNTR&lt;n&gt;_EL0</register_link> and, if <xref linkend="#FEAT_PMUv3_SS">FEAT_PMUv3_SS</xref> is implemented, snapshot registers <register_link id="pmu.pmevcntsvrn_el1.xml" state="">PMEVCNTSVR&lt;n&gt;_EL1</register_link>, that are reserved for external use.</para>
+    </field_description>
+    <field_description order="after"><para>PMCCR.EPMN divides the event counters into event counters that are accessible from self-hosted software, and which might be further divided into first and second ranges by <register_link state="AArch64" id="AArch64-mdcr_el2.xml">MDCR_EL2</register_link>.HPMN, and a third range that is inaccessible from self-hosted software.</para>
+<para>If PMCCR.EPMN is not 0 and is less than the number of PMU event counters implemented by the PE, <value>NUM_PMU_COUNTERS</value>, then event counters [0..(PMCCR.EPMN-1)] are in the first and second ranges, and event counters [PMCCR.EPMN..(<value>NUM_PMU_COUNTERS</value>-1)] are in the third range.</para>
+<para>If PMCCR.EPMN is equal to <value>NUM_PMU_COUNTERS</value>, or FEAT_PMUv3_EXTPMN is not implemented, then all of the following apply:</para>
+<list type="unordered">
+<listitem><content>All counters are in the first and second ranges.</content>
+</listitem><listitem><content>No counters are in the third range.</content>
+</listitem></list>
+<para>If PMCCR.EPMN is zero, then all of the following apply:</para>
+<list type="unordered">
+<listitem><content>No counters are in the first and second ranges.</content>
+</listitem><listitem><content>All counters are in the third range.</content>
+</listitem></list>
+<para>All the following apply for an event counter <register_link id="pmu.pmevcntrn_el0.xml" state="">PMEVCNTR&lt;n&gt;_EL0</register_link> in the third range:</para>
+<list type="unordered">
+<listitem><content>The counter is accessible to a Most secure access of <register_link id="pmu.pmevcntrn_el0.xml" state="">PMEVCNTR&lt;n&gt;_EL0</register_link>. That is, an external access which is one of the following:<list type="unordered">
+<listitem><content>Root access, when FEAT_RME is implemented.</content>
+</listitem><listitem><content>Secure access, when FEAT_RME is not implemented and Secure state is implemented.</content>
+</listitem><listitem><content>Non-secure access, otherwise.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>The counter is not accessible to other external accesses, or as the System register <register_link state="AArch64" id="AArch64-pmevcntrn_el0.xml">PMEVCNTR&lt;n&gt;_EL0</register_link> at any Exception level.</content>
+</listitem><listitem><content>The counter overflow flag <register_link id="pmu.pmovsset_el0.xml" state="">PMOVSSET_EL0</register_link>[n] is set on unsigned overflow of <register_link id="pmu.pmevcntrn_el0.xml" state="">PMEVCNTR&lt;n&gt;_EL0</register_link>[63:0].</content>
+</listitem><listitem><content>PMCCR.EPME and <register_link id="pmu.pmcntenset_el0.xml" state="">PMCNTENSET_EL0</register_link> enable operation of the event counter.</content>
+</listitem></list>
+<para>If <xref linkend="#FEAT_PMUv3_SS">FEAT_PMUv3_SS</xref> is implemented, then all of the following apply for an event counter snapshot register <register_link id="pmu.pmevcntsvrn_el1.xml" state="">PMEVCNTSVR&lt;n&gt;_EL1</register_link> in the third range:</para>
+<list type="unordered">
+<listitem><content>The event counter snapshot register is accessible to a Most secure access of <register_link id="pmu.pmevcntsvrn_el1.xml" state="">PMEVCNTSVR&lt;n&gt;_EL1</register_link>.</content>
+</listitem><listitem><content>The event counter snapshot register is not accessible to other external accesses, or as the System register <register_link state="AArch64" id="AArch64-pmevcntsvrn_el1.xml">PMEVCNTSVR&lt;n&gt;_EL1</register_link> at any Exception level.</content>
+</listitem></list>
+<para>For information about counters in the first and second ranges, see the description of <register_link state="AArch64" id="AArch64-mdcr_el2.xml">MDCR_EL2</register_link>.HPMN.</para>
+<para>Values greater than <value>NUM_PMU_COUNTERS</value> are reserved.</para>
+<para>If this field is set to a reserved value, then the following <arm-defined-word>CONSTRAINED UNPREDICTABLE</arm-defined-word> behaviors apply:</para>
+<list type="unordered">
+<listitem><content>The value returned by an external read of PMCCR.EPMN is <arm-defined-word>UNKNOWN</arm-defined-word> and less than or equal to 31.</content>
+</listitem><listitem><content>For the purpose of indirect reads of PMCCR.EPMN as a result of the following reads, the Effective value of PMCCR.EPMN is <arm-defined-word>UNKNOWN</arm-defined-word> and less than or equal to 31:<list type="unordered">
+<listitem><content>Direct reads of <register_link state="AArch64" id="AArch64-pmcr_el0.xml">PMCR_EL0</register_link>.N or <register_link state="AArch32" id="AArch32-pmcr.xml">PMCR</register_link>.N.</content>
+</listitem><listitem><content>Direct reads of <register_link state="AArch64" id="AArch64-mdcr_el2.xml">MDCR_EL2</register_link>.HPMN.</content>
+</listitem><listitem><content>External reads of <register_link id="pmu.pmcfgr.xml" state="">PMCFGR</register_link>.N.</content>
+</listitem><listitem><content>If FEAT_PMUv3_ICNTR is implemented, external reads of <register_link id="pmu.pmcgcr0.xml" state="">PMCGCR0</register_link>.CG0NC.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>For all other purposes the Effective value of PMCCR.EPMN is <arm-defined-word>UNKNOWN</arm-defined-word> and less than or equal to <value>NUM_PMU_COUNTERS</value>.</content>
+</listitem></list>
+<para>If <xref linkend="#FEAT_PMUv3_EXTPMN">FEAT_PMUv3_EXTPMN</xref> is not implemented, then the Effective value of PMCCR.EPMN is <value>NUM_PMU_COUNTERS</value>.</para></field_description>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_expression>NUM_PMU_COUNTERS</field_reset_expression>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_EXTPMN is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-4_0-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>4</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>4:0</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <text_after_fields/>
+</fields>
+
+
+
+
+<reg_fieldset length="64">
+  <fieldat id="fieldset_0-63_9" msb="63" lsb="9"/>
+  <fieldat id="fieldset_0-8_8-1" msb="8" lsb="8"/>
+  <fieldat id="fieldset_0-7_7-1" msb="7" lsb="7"/>
+  <fieldat id="fieldset_0-6_5" msb="6" lsb="5"/>
+  <fieldat id="fieldset_0-4_0-1" msb="4" lsb="0"/>
+</reg_fieldset>
+
+
+      </reg_fieldsets>
+
+      <access_mechanisms>
+          
+
+
+  
+    
+
+
+
+
+
+    
+        
+        <access_mechanism type="BlockAccessAbstract" table_id="PMUacccessor0">
+        
+        
+        
+        
+        <access_header>Accessible at offset <hexnumber>0xE58</hexnumber> from PMU</access_header>
+    </access_mechanism>
+
+      </access_mechanisms>
+
+      <arch_variants>
+      </arch_variants>
+  </register>
+</registers>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_page>

@@ -1,0 +1,1674 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_page SYSTEM "registers.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+
+<register_page>
+  <registers>
+  
+    <register execution_state="AArch64" is_register="True" is_internal="True" is_stub_entry="False">
+      <reg_short_name>PMEVTYPER&lt;n&gt;_EL0</reg_short_name>
+        
+        <reg_long_name>Performance Monitors Event Type Registers</reg_long_name>
+
+
+
+      
+            <reg_condition otherwise="UNDEFINED">when FEAT_PMUv3 is implemented and FEAT_AA64 is implemented</reg_condition>
+          <reg_array>
+              <reg_array_start>0</reg_array_start>
+              <reg_array_end>30</reg_array_end>
+         </reg_array>
+      
+
+
+
+
+          <reg_reset_value></reg_reset_value>
+
+      <reg_mappings>
+        
+
+
+
+    
+      
+      <reg_mapping>
+        
+  
+
+    
+
+  
+
+    <mapped_name filename="AArch32-pmevtypern.xml">PMEVTYPER&lt;n&gt;</mapped_name>
+  <mapped_type>Architectural</mapped_type>
+      <mapped_execution_state>AArch32</mapped_execution_state>
+    <mapped_from_startbit>31</mapped_from_startbit>
+    <mapped_from_endbit>0</mapped_from_endbit>
+    <mapped_to_startbit>31</mapped_to_startbit>
+    <mapped_to_endbit>0</mapped_to_endbit>
+    <mapped_from_rangeset output="31:0">
+      <range>
+        <msb>31</msb>
+        <lsb>0</lsb>
+      </range>
+    </mapped_from_rangeset>
+    <mapped_to_rangeset output="31:0">
+      <range>
+        <msb>31</msb>
+        <lsb>0</lsb>
+      </range>
+    </mapped_to_rangeset>
+
+      </reg_mapping>
+    
+      
+      <reg_mapping>
+        
+  
+
+    
+
+  
+
+    <mapped_name filename="pmu.pmevtypern_el0.xml">PMEVTYPER&lt;n&gt;_EL0</mapped_name>
+  <mapped_type>Architectural</mapped_type>
+    <mapped_execution_state>External</mapped_execution_state>
+    <mapped_from_startbit>31</mapped_from_startbit>
+    <mapped_from_endbit>0</mapped_from_endbit>
+    <mapped_to_startbit>31</mapped_to_startbit>
+    <mapped_to_endbit>0</mapped_to_endbit>
+    <mapped_from_rangeset output="31:0">
+      <range>
+        <msb>31</msb>
+        <lsb>0</lsb>
+      </range>
+    </mapped_from_rangeset>
+    <mapped_to_rangeset output="31:0">
+      <range>
+        <msb>31</msb>
+        <lsb>0</lsb>
+      </range>
+    </mapped_to_rangeset>
+
+      </reg_mapping>
+    
+      
+      <reg_mapping>
+        
+  
+
+    
+
+  
+
+    <mapped_name filename="pmu.pmevtypern_el0.xml">PMEVTYPER&lt;n&gt;_EL0</mapped_name>
+  <mapped_type>Architectural</mapped_type>
+    <mapped_execution_state>External</mapped_execution_state>
+    <mapped_from_startbit>63</mapped_from_startbit>
+    <mapped_from_endbit>32</mapped_from_endbit>
+    <mapped_to_startbit>63</mapped_to_startbit>
+    <mapped_to_endbit>32</mapped_to_endbit>
+    <mapped_from_rangeset output="63:32">
+      <range>
+        <msb>63</msb>
+        <lsb>32</lsb>
+      </range>
+    </mapped_from_rangeset>
+    <mapped_to_rangeset output="63:32">
+      <range>
+        <msb>63</msb>
+        <lsb>32</lsb>
+      </range>
+    </mapped_to_rangeset>
+
+        <mapped_to_condition>when FEAT_PMUv3_TH is implemented, or FEAT_PMUv3p8 is implemented, or FEAT_PMUv3_EXT64 is implemented, or FEAT_PMUv3_SME is implemented</mapped_to_condition>
+      </reg_mapping>
+
+      </reg_mappings>
+
+        <reg_purpose>
+          
+    
+      <purpose_text>
+        <para>Configures event counter n, where n is 0 to 30.</para>
+      </purpose_text>
+
+        </reg_purpose>
+
+      <reg_groups>
+          <reg_group>PMU</reg_group>
+      </reg_groups>
+      
+      
+        
+      <reg_attributes>
+          
+    
+      <attributes_text>
+        <para>PMEVTYPER&lt;n&gt;_EL0 is a 64-bit register.</para>
+      </attributes_text>
+
+      </reg_attributes>
+      <reg_fieldsets>
+        
+
+
+
+
+
+
+<fields id="fieldset_0" length="64">
+  <text_before_fields/>
+  <field id="fieldset_0-63_61-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>TC</field_name>
+    <field_msb>63</field_msb>
+    <field_lsb>61</field_lsb>
+    <rel_range>2:0</rel_range>
+    <field_description order="before"><para>Threshold Control. Defines the threshold function. In the description of this field:</para>
+<list type="unordered">
+<listitem><content>V<sub>B</sub>[n] is the value the event specified by PMEVTYPER&lt;n&gt;_EL0 would increment event counter n by on a processor cycle if the threshold function is disabled.</content>
+</listitem><listitem><content>For odd values of n, V[n-1] is the value that event counter n-1 increments by on the same processor cycle. V[n-1] is the result of applying the threshold and edge functions on event counter n-1. If event counter n-1 is disabled, then V[n-1] is zero. V[n-1] is not defined for even values of n.</content>
+</listitem><listitem><content>TH[n] is the value of PMEVTYPER&lt;n&gt;_EL0.TH.</content>
+</listitem></list></field_description>
+    <field_description order="after"><para>Comparisons treat V<sub>B</sub>[n] and TH[n] as unsigned integer values.</para>
+<para>On each processor cycle when the condition specified by PMEVTYPER&lt;n&gt;_EL0.TC[2:1] is true:</para>
+<list type="unordered">
+<listitem><content>If PMEVTYPER&lt;n&gt;_EL0.TC[0] is 0, then the counter increments by V<sub>B</sub>[n].</content>
+</listitem><listitem><content>If PMEVTYPER&lt;n&gt;_EL0.TC[0] is 1, then the counter increments by 1.</content>
+</listitem></list>
+<para>On each processor cycle when the condition specified by PMEVTYPER&lt;n&gt;_EL0.TC[2:1] is false:</para>
+<list type="unordered">
+<listitem><content>If FEAT_PMUv3_TH2 is implemented, n is odd, and PMEVTYPER&lt;n&gt;_EL0.TLC is <binarynumber>0b01</binarynumber>, then the counter increments by V[n-1].</content>
+</listitem><listitem><content>Otherwise, the counter does not increment.</content>
+</listitem></list>
+<para>If PMEVTYPER&lt;n&gt;_EL0.{TC, TLC, TH} are zero, then the threshold function is disabled.</para></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b000</field_value>
+        <field_value_description>
+          <para>Not-equal. The counter increments by V<sub>B</sub>[n] on each processor cycle when V<sub>B</sub>[n] is not equal to TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b001</field_value>
+        <field_value_description>
+          <para>Not-equal, count. The counter increments by 1 on each processor cycle when V<sub>B</sub>[n] is not equal to TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b010</field_value>
+        <field_value_description>
+          <para>Equals. The counter increments by V<sub>B</sub>[n] on each processor cycle when V<sub>B</sub>[n] is equal to TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b011</field_value>
+        <field_value_description>
+          <para>Equals, count. The counter increments by 1 on each processor cycle when V<sub>B</sub>[n] is equal to TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b100</field_value>
+        <field_value_description>
+          <para>Greater-than-or-equal. The counter increments by V<sub>B</sub>[n] on each processor cycle when V<sub>B</sub>[n] is greater than or equal to TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b101</field_value>
+        <field_value_description>
+          <para>Greater-than-or-equal, count. The counter increments by 1 on each processor cycle when V<sub>B</sub>[n] is greater than or equal to TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b110</field_value>
+        <field_value_description>
+          <para>Less-than. The counter increments by V<sub>B</sub>[n] on each processor cycle when V<sub>B</sub>[n] is less than TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b111</field_value>
+        <field_value_description>
+          <para>Less-than, count. The counter increments by 1 on each processor cycle when V<sub>B</sub>[n] is less than TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_AA32EL1 is implemented">
+            <field_reset>
+              <field_reset_number>'000'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_TH is implemented, (FEAT_PMUv3_EDGE is not implemented or PMEVTYPER&lt;n&gt;_EL0.TE == '0'), and (FEAT_PMUv3_TH2 is not implemented, or n is even, or PMEVTYPER&lt;n&gt;_EL0.TLC IN {'0x'})</fields_condition>
+  </field>
+  <field id="fieldset_0-63_61-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>TC</field_name>
+    <field_msb>63</field_msb>
+    <field_lsb>61</field_lsb>
+    <rel_range>2:0</rel_range>
+    <field_description order="before"><para>Threshold Control. Defines the threshold function. In the description of this field:</para>
+<list type="unordered">
+<listitem><content>V<sub>B</sub>[n] is the value the event specified by PMEVTYPER&lt;n&gt;_EL0 would increment event counter n by on a processor cycle if the threshold function is disabled.</content>
+</listitem><listitem><content>V[n-1] is the value that event counter n-1 increments by on the same processor cycle. V[n-1] is the result of applying the threshold and edge functions on event counter n-1. If event counter n-1 is disabled, then V[n-1] is zero.</content>
+</listitem><listitem><content>TH[n] is the value of PMEVTYPER&lt;n&gt;_EL0.TH.</content>
+</listitem></list></field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para>Comparisons treat V<sub>B</sub>[n] and TH[n] as unsigned integer values.</para>
+<para>On each processor cycle when the condition specified by PMEVTYPER&lt;n&gt;_EL0.TC is true, the counter increments by V[n-1].</para>
+<para>On each processor cycle when the condition specified by PMEVTYPER&lt;n&gt;_EL0.TC is false, the counter does not increment.</para></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b000</field_value>
+        <field_value_description>
+          <para>Not-equal. The counter increments by V[n-1] on each processor cycle when V<sub>B</sub>[n] is not equal to TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b010</field_value>
+        <field_value_description>
+          <para>Equals. The counter increments by V[n-1] on each processor cycle when V<sub>B</sub>[n] is equal to TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b100</field_value>
+        <field_value_description>
+          <para>Greater-than-or-equal. The counter increments by V[n-1] on each processor cycle when V<sub>B</sub>[n] is greater than or equal to TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b110</field_value>
+        <field_value_description>
+          <para>Less-than. The counter increments by V[n-1] on each processor cycle when V<sub>B</sub>[n] is less than TH[n].</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_AA32EL1 is implemented">
+            <field_reset>
+              <field_reset_number>'000'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_TH2 is implemented, PMEVTYPER&lt;n&gt;_EL0.TE == '0', n is odd, and PMEVTYPER&lt;n&gt;_EL0.TLC == '10'</fields_condition>
+  </field>
+  <field id="fieldset_0-63_61-3" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>TC</field_name>
+    <field_msb>63</field_msb>
+    <field_lsb>61</field_lsb>
+    <rel_range>2:0</rel_range>
+    <field_description order="before"><para>Threshold Control. Defines the threshold function. In the description of this field:</para>
+<list type="unordered">
+<listitem><content>V<sub>B</sub>[n] is the value the event specified by PMEVTYPER&lt;n&gt;_EL0 would increment event counter n by on a processor cycle if the threshold function is disabled.</content>
+</listitem><listitem><content>For odd values of n, V[n-1] is the value that event counter n-1 increments by on the same processor cycle. V[n-1] is the result of applying the threshold and edge functions on event counter n-1. If event counter n-1 is disabled, then V[n-1] is zero. V[n-1] is not defined for even values of n.</content>
+</listitem><listitem><content>TH[n] is the value of PMEVTYPER&lt;n&gt;_EL0.TH.</content>
+</listitem></list></field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para>Comparisons treat V<sub>B</sub>[n] and TH[n] as unsigned integer values.</para>
+<para>On each processor cycle when the condition specified by PMEVTYPER&lt;n&gt;_EL0.TC is true:</para>
+<list type="unordered">
+<listitem><content>If FEAT_PMUv3_TH2 is implemented, n is odd, and PMEVTYPER&lt;n&gt;_EL0.TLC is <binarynumber>0b10</binarynumber>, then the counter increments by V[n-1].</content>
+</listitem><listitem><content>Otherwise, the counter increments by 1.</content>
+</listitem></list>
+<para>On each processor cycle when the condition specified by PMEVTYPER&lt;n&gt;_EL0.TC is false, the counter does not increment.</para></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b001</field_value>
+        <field_value_description>
+          <para>Equal to not-equal. The counter increments on each processor cycle when V<sub>B</sub>[n] is not equal to TH[n] and V<sub>B</sub>[n] was equal to TH[n] on the previous processor cycle.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b010</field_value>
+        <field_value_description><para>Equal to/from not-equal. The counter increments on each processor cycle when either:</para>
+<list type="unordered">
+<listitem><content>V<sub>B</sub>[n] is not equal to TH[n]  and V<sub>B</sub>[n] was equal to TH[n] on the previous processor cycle.</content>
+</listitem><listitem><content>V<sub>B</sub>[n] is equal to TH[n] and V<sub>B</sub>[n] was not equal to TH[n] on the previous processor cycle.</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b011</field_value>
+        <field_value_description>
+          <para>Not-equal to equal. The counter increments on each processor cycle when V<sub>B</sub>[n] is equal to TH[n] and V<sub>B</sub>[n] was not equal to TH[n] on the previous processor cycle.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b101</field_value>
+        <field_value_description>
+          <para>Less-than to greater-than-or-equal. The counter increments on each processor cycle when V<sub>B</sub>[n] is greater than or equal to TH[n] and V<sub>B</sub>[n] was less than TH[n] on the previous processor cycle.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b110</field_value>
+        <field_value_description><para>Less-than to/from greater-than-or-equal. The counter increments on each processor cycle when either:</para>
+<list type="unordered">
+<listitem><content>V<sub>B</sub>[n] is greater than or equal to TH[n] and V<sub>B</sub>[n] was less than TH[n] on the previous processor cycle.</content>
+</listitem><listitem><content>V<sub>B</sub>[n] is less than TH[n] and V<sub>B</sub>[n] was greater than or equal to TH[n] on the previous processor cycle.</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b111</field_value>
+        <field_value_description>
+          <para>Greater-than-or-equal to less-than. The counter increments on each processor cycle when V<sub>B</sub>[n] is less than TH[n] and V<sub>B</sub>[n] was greater than or equal to TH[n] on the previous processor cycle.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_AA32EL1 is implemented">
+            <field_reset>
+              <field_reset_number>'000'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_EDGE is implemented and PMEVTYPER&lt;n&gt;_EL0.TE == '1'</fields_condition>
+  </field>
+  <field id="fieldset_0-63_61-4" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>63</field_msb>
+    <field_lsb>61</field_lsb>
+    <rel_range>63:61</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-60_60-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>TE</field_name>
+    <field_msb>60</field_msb>
+    <field_lsb>60</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Threshold Edge. Enables the edge condition. When PMEVTYPER&lt;n&gt;_EL0.TE is 1, the event counter increments on cycles when the result of the threshold condition changes. See PMEVTYPER&lt;n&gt;_EL0.TC for more information.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Threshold edge condition disabled.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Threshold edge condition enabled.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_AA32EL1 is implemented">
+            <field_reset>
+              <field_reset_number>'0'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_EDGE is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-60_60-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>60</field_msb>
+    <field_lsb>60</field_lsb>
+    <rel_range>60</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-59_58" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>59</field_msb>
+    <field_lsb>58</field_lsb>
+    <rel_range>59:58</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-57_56-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>VS</field_name>
+    <field_msb>57</field_msb>
+    <field_lsb>56</field_lsb>
+    <rel_range>1:0</rel_range>
+    <field_description order="before">
+      <para>SVE mode filtering. Controls counting events in Streaming and Non-streaming SVE modes.</para>
+    </field_description>
+    <field_description order="after">
+      <para>All other values are reserved.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b00</field_value>
+        <field_value_description>
+          <para>This mechanism has no effect on the filtering of events.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b01</field_value>
+        <field_value_description>
+          <para>The PE does not count events in Streaming SVE mode.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b10</field_value>
+        <field_value_description>
+          <para>The PE does not count events in Non-streaming SVE mode.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_SME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-57_56-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>57</field_msb>
+    <field_lsb>56</field_lsb>
+    <rel_range>57:56</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-55_54-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>TLC</field_name>
+    <field_msb>55</field_msb>
+    <field_lsb>54</field_lsb>
+    <rel_range>1:0</rel_range>
+    <field_description order="before">
+      <para>Threshold Linking Control. Extends PMEVTYPER&lt;n&gt;_EL0.TC with additional controls for event linking. See PMEVTYPER&lt;n&gt;_EL0.TC.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para>See PMEVTYPER&lt;n&gt;_EL0.TC for more information</para></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b00</field_value>
+        <field_value_description>
+          <para>Threshold linking disabled.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b01</field_value>
+        <field_value_description>
+          <para>Threshold linking enabled. If the threshold condition described by PMEVTYPER&lt;n&gt;_EL0.TC is false, the counter increments by V[n-1]. Otherwise, the counter increments as described by PMEVTYPER&lt;n&gt;_EL0.TC.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b10</field_value>
+        <field_value_description>
+          <para>Threshold linking enabled. If the threshold condition described by PMEVTYPER&lt;n&gt;_EL0.TC is true, the counter increments by V[n-1]. Otherwise, the counter does not increment.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_TH2 is implemented and n is odd</fields_condition>
+  </field>
+  <field id="fieldset_0-55_54-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>55</field_msb>
+    <field_lsb>54</field_lsb>
+    <rel_range>55:54</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-53_44" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>53</field_msb>
+    <field_lsb>44</field_lsb>
+    <rel_range>53:44</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-43_32-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>TH</field_name>
+    <field_msb>43</field_msb>
+    <field_lsb>32</field_lsb>
+    <rel_range>11:0</rel_range>
+    <field_description order="before">
+      <para>Threshold value. Provides the unsigned value for the threshold function defined by PMEVTYPER&lt;n&gt;_EL0.TC.</para>
+    </field_description>
+    <field_description order="after"><para>If PMEVTYPER&lt;n&gt;_EL0.{TC, TH} are both zero and either FEAT_PMUv3_TH2 is not implemented or PMEVTYPER&lt;n&gt;_EL0.TLC is also zero, then the threshold function is disabled.</para>
+<para>If <register_link state="AArch64" id="AArch64-pmmir_el1.xml">PMMIR_EL1</register_link>.THWIDTH is less than 12, then bits PMEVTYPER&lt;n&gt;_EL0.TH[11:UInt(<register_link state="AArch64" id="AArch64-pmmir_el1.xml">PMMIR_EL1</register_link>.THWIDTH)] are <arm-defined-word>RES0</arm-defined-word>. This accounts for the behavior when writing a value greater-than-or-equal-to 2<sup>UInt(<register_link state="AArch64" id="AArch64-pmmir_el1.xml">PMMIR_EL1</register_link>.THWIDTH)</sup>.</para></field_description>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_AA32EL1 is implemented">
+            <field_reset>
+              <field_reset_expression>0x000</field_reset_expression>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3_TH is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-43_32-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>43</field_msb>
+    <field_lsb>32</field_lsb>
+    <rel_range>43:32</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-31_31" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>P</field_name>
+    <field_msb>31</field_msb>
+    <field_lsb>31</field_lsb>
+    <rel_range>31</rel_range>
+    <field_description order="before">
+      <para>EL1 filtering. Controls counting events in EL1.</para>
+    </field_description>
+    <field_description order="after"><para>If Secure and Non-secure states are implemented, then counting events in Non-secure EL1 is further controlled by PMEVTYPER&lt;n&gt;_EL0.NSK.</para>
+<para>If <xref linkend="#FEAT_RME">FEAT_RME</xref> is implemented, then counting events in Realm EL1 is further controlled by PMEVTYPER&lt;n&gt;_EL0.RLK.</para>
+<para>If EL3 is implemented, then counting events at EL3 is further controlled by PMEVTYPER&lt;n&gt;_EL0.M.</para></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This mechanism has no effect on filtering of events.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The PE does not count events in EL1.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+  </field>
+  <field id="fieldset_0-30_30" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>U</field_name>
+    <field_msb>30</field_msb>
+    <field_lsb>30</field_lsb>
+    <rel_range>30</rel_range>
+    <field_description order="before">
+      <para>EL0 filtering. Controls counting events in EL0.</para>
+    </field_description>
+    <field_description order="after"><para>If Secure and Non-secure states are implemented, then counting events in Non-secure EL0 is further controlled by PMEVTYPER&lt;n&gt;_EL0.NSU.</para>
+<para>If <xref linkend="#FEAT_RME">FEAT_RME</xref> is implemented, then counting events in Realm EL0 is further controlled by PMEVTYPER&lt;n&gt;_EL0.RLU.</para></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This mechanism has no effect on filtering of events.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The PE does not count events in EL0.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+  </field>
+  <field id="fieldset_0-29_29-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>NSK</field_name>
+    <field_msb>29</field_msb>
+    <field_lsb>29</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Non-secure EL1 filtering. Controls counting events in Non-secure EL1. If PMEVTYPER&lt;n&gt;_EL0.NSK is not equal to PMEVTYPER&lt;n&gt;_EL0.P, then the PE does not count events in Non-secure EL1. Otherwise, this mechanism has no effect on filtering of events in Non-secure EL1.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.P == 0, this mechanism has no effect on filtering of events.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.P == 1, the PE does not count events in Non-secure EL1.</para></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.P == 0, the PE does not count events in Non-secure EL1.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.P == 1, this mechanism has no effect on filtering of events.</para></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When EL3 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-29_29-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>29</field_msb>
+    <field_lsb>29</field_lsb>
+    <rel_range>29</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-28_28-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>NSU</field_name>
+    <field_msb>28</field_msb>
+    <field_lsb>28</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Non-secure EL0 filtering. Controls counting events in Non-secure EL0. If PMEVTYPER&lt;n&gt;_EL0.NSU is not equal to PMEVTYPER&lt;n&gt;_EL0.U, then the PE does not count events in Non-secure EL0. Otherwise, this mechanism has no effect on filtering of events in Non-secure EL0.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.U == 0, this mechanism has no effect on filtering of events.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.U == 1, the PE does not count events in Non-secure EL0.</para></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.U == 0, the PE does not count events in Non-secure EL0.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.U == 1, this mechanism has no effect on filtering of events.</para></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When EL3 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-28_28-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>28</field_msb>
+    <field_lsb>28</field_lsb>
+    <rel_range>28</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-27_27-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>NSH</field_name>
+    <field_msb>27</field_msb>
+    <field_lsb>27</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>EL2 filtering. Controls counting events in EL2.</para>
+    </field_description>
+    <field_description order="after"><para>If EL3 is implemented and <xref linkend="#FEAT_SEL2">FEAT_SEL2</xref> is implemented, then counting events in Secure EL2 is further controlled by PMEVTYPER&lt;n&gt;_EL0.SH.</para>
+<para>If <xref linkend="#FEAT_RME">FEAT_RME</xref> is implemented, then counting events in Realm EL2 is further controlled by PMEVTYPER&lt;n&gt;_EL0.RLH.</para></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The PE does not count events in EL2.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>This mechanism has no effect on filtering of events.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When EL2 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-27_27-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>27</field_msb>
+    <field_lsb>27</field_lsb>
+    <rel_range>27</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-26_26-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>M</field_name>
+    <field_msb>26</field_msb>
+    <field_lsb>26</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>EL3 filtering. Controls counting events in  EL3. If PMEVTYPER&lt;n&gt;_EL0.M is not equal to PMEVTYPER&lt;n&gt;_EL0.P, then the PE does not count events in  EL3. Otherwise, this mechanism has no effect on filtering of events in  EL3.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.P == 0, this mechanism has no effect on filtering of events.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.P == 1, the PE does not count events in  EL3.</para></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.P == 0, the PE does not count events in  EL3.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.P == 1, this mechanism has no effect on filtering of events.</para></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When EL3 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-26_26-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>26</field_msb>
+    <field_lsb>26</field_lsb>
+    <rel_range>26</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-25_25-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>MT</field_name>
+    <field_msb>25</field_msb>
+    <field_lsb>25</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Multithreading.</para>
+    </field_description>
+    <field_description order="after"><para>Unless otherwise stated:</para>
+<list type="unordered">
+<listitem><content>If the event counts PE cycles when a stall condition is true and a second condition is true, then the counter counts Processor cycles when the stall condition is true for all of these PEs, and the second condition is true for any of these PEs.</content>
+</listitem><listitem><content>If the event counts PE cycles when any other condition is true, then the counter counts Processor cycles when the condition is true for any of these PEs.</content>
+</listitem><listitem><content>Otherwise, the event counts by the sum of the count across all of these PEs.</content>
+</listitem></list>
+<para>For the stall events, the stall condition means the applicable condition described by the STALL, STALL_FRONTEND, or STALL_BACKEND event.</para>
+<para>The second condition is any condition in addition to this.</para>
+<para>For example, for the STALL_FRONTEND_L1I event, the stall condition is STALL_FRONTEND, and the second condition is when there is a demand instruction miss in the first level of instruction cache.</para>
+<para>For the STALL, STALL_FRONTEND, and STALL_BACKEND events themselves, the second condition is the null TRUE condition.</para>
+<para>See <xref linkend="#CACIAGGH">'Multithreaded implementations'</xref> and <xref linkend="#cycle_event_counting_multithreaded_implementations">'Cycle event counting in multithreaded implementations'</xref>.</para>
+<para>From Armv8.6, the <arm-defined-word>IMPLEMENTATION DEFINED</arm-defined-word> multi-threaded PMU extension is not permitted, meaning if <xref linkend="#FEAT_MTPMU">FEAT_MTPMU</xref> is not implemented, this field is <arm-defined-word>RES0</arm-defined-word>. See <register_link state="AArch64" id="AArch64-id_aa64dfr0_el1.xml">ID_AA64DFR0_EL1</register_link>.MTPMU.</para>
+<para>This field is ignored by the PE and treated as zero when <xref linkend="#FEAT_MTPMU">FEAT_MTPMU</xref> is implemented and disabled.</para></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Count events only on controlling PE.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Count events from any PE with the same affinity at level 1 and above as this PE.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_MTPMU is implemented or an IMPLEMENTATION DEFINED multi-threaded PMU extension is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-25_25-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>25</field_msb>
+    <field_lsb>25</field_lsb>
+    <rel_range>25</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-24_24-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>SH</field_name>
+    <field_msb>24</field_msb>
+    <field_lsb>24</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Secure EL2 filtering. Controls counting events in Secure EL2. If PMEVTYPER&lt;n&gt;_EL0.SH is equal to PMEVTYPER&lt;n&gt;_EL0.NSH, then the PE does not count events in Secure EL2. Otherwise, this mechanism has no effect on filtering of events in Secure EL2.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.NSH == 0, the PE does not count events in Secure EL2.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.NSH == 1, this mechanism has no effect on filtering of events.</para></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.NSH == 0, this mechanism has no effect on filtering of events.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.NSH == 1, the PE does not count events in Secure EL2.</para></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level>When Secure EL2 is not implemented</field_access_level>
+        <field_access_type>
+          <arm-defined-word>RES0</arm-defined-word>
+        </field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When EL3 is implemented and FEAT_SEL2 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-24_24-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>24</field_msb>
+    <field_lsb>24</field_lsb>
+    <rel_range>24</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-23_23" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>23</field_msb>
+    <field_lsb>23</field_lsb>
+    <rel_range>23</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-22_22-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>RLK</field_name>
+    <field_msb>22</field_msb>
+    <field_lsb>22</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Realm EL1 filtering. Controls counting events in Realm EL1. If PMEVTYPER&lt;n&gt;_EL0.RLK is not equal to PMEVTYPER&lt;n&gt;_EL0.P, then the PE does not count events in Realm EL1. Otherwise, this mechanism has no effect on filtering of events in Realm EL1.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.P == 0, this mechanism has no effect on filtering of events.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.P == 1, the PE does not count events in Realm EL1.</para></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.P == 0, the PE does not count events in Realm EL1.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.P == 1, this mechanism has no effect on filtering of events.</para></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_RME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-22_22-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>22</field_msb>
+    <field_lsb>22</field_lsb>
+    <rel_range>22</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-21_21-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>RLU</field_name>
+    <field_msb>21</field_msb>
+    <field_lsb>21</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Realm EL0 filtering. Controls counting events in Realm EL0. If PMEVTYPER&lt;n&gt;_EL0.RLU is not equal to PMEVTYPER&lt;n&gt;_EL0.U, then the PE does not count events in Realm EL0. Otherwise, this mechanism has no effect on filtering of events in Realm EL0.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.U == 0, this mechanism has no effect on filtering of events.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.U == 1, the PE does not count events in Realm EL0.</para></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.U == 0, the PE does not count events in Realm EL0.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.U == 1, this mechanism has no effect on filtering of events.</para></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_RME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-21_21-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>21</field_msb>
+    <field_lsb>21</field_lsb>
+    <rel_range>21</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-20_20-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>RLH</field_name>
+    <field_msb>20</field_msb>
+    <field_lsb>20</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Realm EL2 filtering. Controls counting events in Realm EL2. If PMEVTYPER&lt;n&gt;_EL0.RLH is equal to PMEVTYPER&lt;n&gt;_EL0.NSH, then the PE does not count events in Realm EL2. Otherwise, this mechanism has no effect on filtering of events in Realm EL2.</para>
+    </field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.NSH == 0, the PE does not count events in Realm EL2.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.NSH == 1, this mechanism has no effect on filtering of events.</para></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description><para>When PMEVTYPER&lt;n&gt;_EL0.NSH == 0, this mechanism has no effect on filtering of events.</para>
+<para>When PMEVTYPER&lt;n&gt;_EL0.NSH == 1, the PE does not count events in Realm EL2.</para></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_RME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-20_20-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>20</field_msb>
+    <field_lsb>20</field_lsb>
+    <rel_range>20</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-19_16" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>19</field_msb>
+    <field_lsb>16</field_lsb>
+    <rel_range>19:16</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-15_10-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>evtCount[15:10]</field_name>
+    <field_msb>15</field_msb>
+    <field_lsb>10</field_lsb>
+    <rel_range>5:0</rel_range>
+    <field_description order="before">
+      <para>Extension to evtCount[9:0]. For more information, see evtCount[9:0].</para>
+    </field_description>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <fields_condition>When FEAT_PMUv3p1 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-15_10-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>15</field_msb>
+    <field_lsb>10</field_lsb>
+    <rel_range>15:10</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-9_0" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>evtCount[9:0]</field_name>
+    <field_msb>9</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>9:0</rel_range>
+    <field_description order="before"><para>Event to count.</para>
+<para>The event number of the event that is counted by event counter <register_link state="AArch64" id="AArch64-pmevcntrn_el0.xml">PMEVCNTR&lt;n&gt;_EL0</register_link>.</para>
+<para>The ranges of event numbers allocated to each type of event are shown in <xref linkend="#CACIDECJ">'Allocation of the PMU event number space'</xref>.</para>
+<para>If <xref linkend="#FEAT_PMUv3p8">FEAT_PMUv3p8</xref> is implemented and PMEVTYPER&lt;n&gt;_EL0.evtCount is programmed to an event that is reserved or not supported by the PE, no events are counted and the value returned by a direct or external read of the PMEVTYPER&lt;n&gt;_EL0.evtCount field is the value written to the field.</para>
+<note><para>Arm recommends this behavior for all implementations of <xref linkend="#FEAT_PMUv3">FEAT_PMUv3</xref>.</para></note><para>Otherwise, if PMEVTYPER&lt;n&gt;_EL0.evtCount is programmed to an event that is reserved or not supported by the PE, the behavior depends on the value written:</para>
+<list type="unordered">
+<listitem><content>For the range <hexnumber>0x0000</hexnumber> to <hexnumber>0x003F</hexnumber>, no events are counted and the value returned by a direct or external read of the PMEVTYPER&lt;n&gt;_EL0.evtCount field is the value written to the field.</content>
+</listitem><listitem><content>If <xref linkend="#FEAT_PMUv3p1">FEAT_PMUv3p1</xref> is implemented, for the range <hexnumber>0x4000</hexnumber> to <hexnumber>0x403F</hexnumber>, no events are counted and the value returned by a direct or external read of the PMEVTYPER&lt;n&gt;_EL0.evtCount field is the value written to the field.</content>
+</listitem><listitem><content>For other values, it is <arm-defined-word>UNPREDICTABLE</arm-defined-word> what event, if any, is counted and the value returned by a direct or external read of the PMEVTYPER&lt;n&gt;_EL0.evtCount field is <arm-defined-word>UNKNOWN</arm-defined-word>.</content>
+</listitem></list>
+<note><para><arm-defined-word>UNPREDICTABLE</arm-defined-word> means the event must not expose privileged information.</para></note></field_description>
+    <field_resets>
+      <field_reset reset_type="Cold">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="FEAT_PMUv3_EXTPMN is not implemented">
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+  </field>
+  <text_after_fields/>
+</fields>
+
+
+
+
+<reg_fieldset length="64">
+  <fieldat id="fieldset_0-63_61-1" msb="63" lsb="61"/>
+  <fieldat id="fieldset_0-60_60-1" msb="60" lsb="60"/>
+  <fieldat id="fieldset_0-59_58" msb="59" lsb="58"/>
+  <fieldat id="fieldset_0-57_56-1" msb="57" lsb="56"/>
+  <fieldat id="fieldset_0-55_54-1" msb="55" lsb="54"/>
+  <fieldat id="fieldset_0-53_44" msb="53" lsb="44"/>
+  <fieldat id="fieldset_0-43_32-1" msb="43" lsb="32"/>
+  <fieldat id="fieldset_0-31_31" msb="31" lsb="31"/>
+  <fieldat id="fieldset_0-30_30" msb="30" lsb="30"/>
+  <fieldat id="fieldset_0-29_29-1" msb="29" lsb="29"/>
+  <fieldat id="fieldset_0-28_28-1" msb="28" lsb="28"/>
+  <fieldat id="fieldset_0-27_27-1" msb="27" lsb="27"/>
+  <fieldat id="fieldset_0-26_26-1" msb="26" lsb="26"/>
+  <fieldat id="fieldset_0-25_25-1" msb="25" lsb="25"/>
+  <fieldat id="fieldset_0-24_24-1" msb="24" lsb="24"/>
+  <fieldat id="fieldset_0-23_23" msb="23" lsb="23"/>
+  <fieldat id="fieldset_0-22_22-1" msb="22" lsb="22"/>
+  <fieldat id="fieldset_0-21_21-1" msb="21" lsb="21"/>
+  <fieldat id="fieldset_0-20_20-1" msb="20" lsb="20"/>
+  <fieldat id="fieldset_0-19_16" msb="19" lsb="16"/>
+  <fieldat id="fieldset_0-15_10-1" msb="15" lsb="10"/>
+  <fieldat id="fieldset_0-9_0" msb="9" lsb="0"/>
+</reg_fieldset>
+
+
+      </reg_fieldsets>
+        <reg_variables>
+              <reg_variable variable="n" max="30"/>
+        </reg_variables>
+
+      <access_mechanisms>
+          
+
+
+  
+    
+      <access_permission_text>
+        <para>PMEVTYPER&lt;n&gt;_EL0 can also be accessed by using <register_link state="AArch64" id="AArch64-pmxevtyper_el0.xml">PMXEVTYPER_EL0</register_link> with <register_link state="AArch64" id="AArch64-pmselr_el0.xml">PMSELR_EL0</register_link>.SEL set to n.</para>
+
+      </access_permission_text>
+      <access_permission_text>
+        <para>If <xref linkend="#FEAT_FGT">FEAT_FGT</xref> is implemented and &lt;n&gt; is greater than or equal to the number of accessible event counters, then the behavior of permitted reads and writes of PMEVTYPER&lt;n&gt;_EL0 is as follows:</para>
+
+      </access_permission_text>
+      <access_permission_text>
+        <list type="unordered">
+<listitem><content>If &lt;n&gt; is greater than or equal to the Effective value of <register_link id="pmu.pmccr.xml" state="">PMCCR</register_link>.EPMN, the access is <arm-defined-word>UNDEFINED</arm-defined-word>.</content>
+</listitem><listitem><content>Otherwise, the access is trapped to EL2.</content>
+</listitem></list>
+
+      </access_permission_text>
+      <access_permission_text>
+        <para>If <xref linkend="#FEAT_FGT">FEAT_FGT</xref> is not implemented and &lt;n&gt; is greater than or equal to the number of accessible event counters, then reads and writes of PMEVTYPER&lt;n&gt;_EL0 are <arm-defined-word>CONSTRAINED UNPREDICTABLE</arm-defined-word>, and the following behaviors are permitted:</para>
+
+      </access_permission_text>
+      <access_permission_text>
+        <list type="unordered">
+<listitem><content>Accesses to the register are <arm-defined-word>UNDEFINED</arm-defined-word>.</content>
+</listitem><listitem><content>Accesses to the register behave as RAZ/WI.</content>
+</listitem><listitem><content>Accesses to the register execute as a <instruction>NOP</instruction>.</content>
+</listitem><listitem><content>Accesses to the register behave as if &lt;n&gt; is an <arm-defined-word>UNKNOWN</arm-defined-word> value less-than-or-equal-to the index of the highest accessible event counter.</content>
+</listitem><listitem><content>If EL2 is implemented and enabled in the current Security state, and &lt;n&gt; is less than the number of implemented event counters, accesses from EL1 or permitted accesses from EL0 are trapped to EL2.</content>
+</listitem></list>
+
+      </access_permission_text>
+      <access_permission_text>
+        <para>Permitted reads and writes of PMEVTYPER&lt;n&gt;_EL0 are RAZ/WI if all of the following are true:</para>
+
+      </access_permission_text>
+      <access_permission_text>
+        <list type="unordered">
+<listitem><content>FEAT_PMUv3p9 is implemented.</content>
+</listitem><listitem><content>EL0 is the current Exception level.</content>
+</listitem><listitem><content><register_link state="AArch64" id="AArch64-pmuserenr_el0.xml">PMUSERENR_EL0</register_link>.UEN is 1.</content>
+</listitem><listitem><content><register_link state="AArch64" id="AArch64-pmuacr_el1.xml">PMUACR_EL1</register_link>.P&lt;n&gt; is 0.</content>
+</listitem></list>
+
+      </access_permission_text>
+      <access_permission_text>
+        <para>Permitted writes of PMEVTYPER&lt;n&gt;_EL0 are ignored if all of the following are true:</para>
+
+      </access_permission_text>
+      <access_permission_text>
+        <list type="unordered">
+<listitem><content>FEAT_PMUv3p9 is implemented.</content>
+</listitem><listitem><content>EL0 is the current Exception level.</content>
+</listitem><listitem><content><register_link state="AArch64" id="AArch64-pmuserenr_el0.xml">PMUSERENR_EL0</register_link>.{UEN,ER} is {1,1}.</content>
+</listitem></list>
+
+      </access_permission_text>
+      <access_permission_text>
+        <note><para>In EL0, an access is permitted if it is enabled by <register_link state="AArch64" id="AArch64-pmuserenr_el0.xml">PMUSERENR_EL0</register_link>.{UEN,EN}.</para><para>If EL2 is implemented and enabled in the current Security state, at EL1 and EL0, <register_link state="AArch64" id="AArch64-mdcr_el2.xml">MDCR_EL2</register_link>.HPMN identifies the number of accessible event counters. Otherwise, the number of accessible event counters is the number of implemented event counters. For more information, see <register_link state="AArch64" id="AArch64-mdcr_el2.xml">MDCR_EL2</register_link>.HPMN.</para></note>
+      </access_permission_text>
+
+
+
+
+
+    
+        
+        <access_mechanism accessor="MRS PMEVTYPER&lt;m&gt;_EL0" type="SystemAccessor">
+            <encoding>
+                
+                <acc_array var="m">
+                    <acc_array_range>0-30</acc_array_range>
+                </acc_array>
+            <access_instruction>MRS &lt;Xt&gt;, PMEVTYPER&lt;m&gt;_EL0</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b011"/>
+                
+                <enc n="CRn" v="0b1110"/>
+                
+                <enc n="CRm" v="0b11:m[4:3]"/>
+                
+                <enc n="op2" v="m[2:0]"/>
+            </encoding>
+            <access_permission>
+                <ps name="MRS" sections="1" secttype="access_permission">
+                <pstext>
+let m:integer = UInt(CRm[1:0] :: op2[2:0]);
+
+if !(IsFeatureImplemented(FEAT_PMUv3) &amp;&amp; IsFeatureImplemented(FEAT_AA64)) then
+    Undefined();
+elsif m &gt;= GetNumEventCountersSelfHosted() then
+    if IsFeatureImplemented(FEAT_FGT) then
+        Undefined();
+    else
+        ConstrainUnpredictableProcedure(Unpredictable_PMUEVENTCOUNTER);
+    end;
+elsif HaveEL(EL3) &amp;&amp; PSTATE.EL != EL3 &amp;&amp; EL3SDDUndefPriority() &amp;&amp; MDCR_EL3().TPM == '1' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    if PMUSERENR_EL0().EN == '0' &amp;&amp; (!IsFeatureImplemented(FEAT_PMUv3p9) || PMUSERENR_EL0().UEN == '0') then
+        AArch64_SystemAccessTraptoEL1orEL2(0x18);
+    elsif EL2Enabled() &amp;&amp; EffectivelyAtEL0NotInHost() &amp;&amp; IsFeatureImplemented(FEAT_FGT) &amp;&amp; (!HaveEL(EL3) || SCR_EL3().FGTEn == '1') &amp;&amp; HDFGRTR_EL2().PMEVTYPERn_EL0 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; MDCR_EL2().TPM == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; m &gt;= GetNumEventCountersAccessible() then
+        if !IsFeatureImplemented(FEAT_FGT) then
+            ConstrainUnpredictableProcedure(Unpredictable_PMUEVENTCOUNTER);
+        else
+            AArch64_SystemAccessTrap(EL2, 0x18);
+        end;
+    elsif HaveEL(EL3) &amp;&amp; MDCR_EL3().TPM == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif IsFeatureImplemented(FEAT_PMUv3p9) &amp;&amp; PMUSERENR_EL0().UEN == '1' &amp;&amp; PMUACR_EL1()[m] == '0' then
+        X{64}(t) = Zeros{64};
+    else
+        X{64}(t) = PMEVTYPER_EL0(m);
+    end;
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; IsFeatureImplemented(FEAT_FGT) &amp;&amp; (!HaveEL(EL3) || SCR_EL3().FGTEn == '1') &amp;&amp; HDFGRTR_EL2().PMEVTYPERn_EL0 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; MDCR_EL2().TPM == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; m &gt;= GetNumEventCountersAccessible() then
+        if !IsFeatureImplemented(FEAT_FGT) then
+            ConstrainUnpredictableProcedure(Unpredictable_PMUEVENTCOUNTER);
+        else
+            AArch64_SystemAccessTrap(EL2, 0x18);
+        end;
+    elsif HaveEL(EL3) &amp;&amp; MDCR_EL3().TPM == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = PMEVTYPER_EL0(m);
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; MDCR_EL3().TPM == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = PMEVTYPER_EL0(m);
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = PMEVTYPER_EL0(m);
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+    
+        
+        <access_mechanism accessor="MSRregister PMEVTYPER&lt;m&gt;_EL0" type="SystemAccessor">
+            <encoding>
+                
+                <acc_array var="m">
+                    <acc_array_range>0-30</acc_array_range>
+                </acc_array>
+            <access_instruction>MSR PMEVTYPER&lt;m&gt;_EL0, &lt;Xt&gt;</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b011"/>
+                
+                <enc n="CRn" v="0b1110"/>
+                
+                <enc n="CRm" v="0b11:m[4:3]"/>
+                
+                <enc n="op2" v="m[2:0]"/>
+            </encoding>
+            <access_permission>
+                <ps name="MSRregister" sections="1" secttype="access_permission">
+                <pstext>
+let m:integer = UInt(CRm[1:0] :: op2[2:0]);
+
+if !(IsFeatureImplemented(FEAT_PMUv3) &amp;&amp; IsFeatureImplemented(FEAT_AA64)) then
+    Undefined();
+elsif m &gt;= GetNumEventCountersSelfHosted() then
+    if IsFeatureImplemented(FEAT_FGT) then
+        Undefined();
+    else
+        ConstrainUnpredictableProcedure(Unpredictable_PMUEVENTCOUNTER);
+    end;
+elsif HaveEL(EL3) &amp;&amp; PSTATE.EL != EL3 &amp;&amp; EL3SDDUndefPriority() &amp;&amp; MDCR_EL3().TPM == '1' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    if PMUSERENR_EL0().EN == '0' &amp;&amp; (!IsFeatureImplemented(FEAT_PMUv3p9) || PMUSERENR_EL0().UEN == '0') then
+        AArch64_SystemAccessTraptoEL1orEL2(0x18);
+    elsif EL2Enabled() &amp;&amp; EffectivelyAtEL0NotInHost() &amp;&amp; IsFeatureImplemented(FEAT_FGT) &amp;&amp; (!HaveEL(EL3) || SCR_EL3().FGTEn == '1') &amp;&amp; HDFGWTR_EL2().PMEVTYPERn_EL0 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; MDCR_EL2().TPM == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; m &gt;= GetNumEventCountersAccessible() then
+        if !IsFeatureImplemented(FEAT_FGT) then
+            ConstrainUnpredictableProcedure(Unpredictable_PMUEVENTCOUNTER);
+        else
+            AArch64_SystemAccessTrap(EL2, 0x18);
+        end;
+    elsif HaveEL(EL3) &amp;&amp; MDCR_EL3().TPM == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif IsFeatureImplemented(FEAT_PMUv3p9) &amp;&amp; PMUSERENR_EL0().UEN == '1' &amp;&amp; (PMUACR_EL1()[m] == '0' || PMUSERENR_EL0().ER == '1') then
+        return;
+    else
+        PMEVTYPER_EL0(m) = X{64}(t);
+    end;
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; IsFeatureImplemented(FEAT_FGT) &amp;&amp; (!HaveEL(EL3) || SCR_EL3().FGTEn == '1') &amp;&amp; HDFGWTR_EL2().PMEVTYPERn_EL0 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; MDCR_EL2().TPM == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; m &gt;= GetNumEventCountersAccessible() then
+        if !IsFeatureImplemented(FEAT_FGT) then
+            ConstrainUnpredictableProcedure(Unpredictable_PMUEVENTCOUNTER);
+        else
+            AArch64_SystemAccessTrap(EL2, 0x18);
+        end;
+    elsif HaveEL(EL3) &amp;&amp; MDCR_EL3().TPM == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        PMEVTYPER_EL0(m) = X{64}(t);
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; MDCR_EL3().TPM == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        PMEVTYPER_EL0(m) = X{64}(t);
+    end;
+elsif PSTATE.EL == EL3 then
+    PMEVTYPER_EL0(m) = X{64}(t);
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+
+      </access_mechanisms>
+
+      <arch_variants>
+      </arch_variants>
+  </register>
+</registers>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_page>

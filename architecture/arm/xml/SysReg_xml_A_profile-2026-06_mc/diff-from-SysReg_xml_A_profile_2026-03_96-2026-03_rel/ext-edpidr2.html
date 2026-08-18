@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ext="http://exslt.org/common">
+  <head>
+    <title>EDPIDR2</title>
+    <link href="insn.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body><div align="center" class="htmldiff_header"><table><tbody><tr><td class="old">(old) </td><td class="explain">htmldiff from-</td><td class="new">(new) </td></tr></tbody></table></div><table style="margin: 0 auto;"><tr><td><div class="topbar"><a href="AArch32-regindex.html">AArch32 Registers</a></div></td><td><div class="topbar"><a href="AArch64-regindex.html">AArch64 Registers</a></div></td><td><div class="topbar"><a href="AArch32-sysindex.html">AArch32 Instructions</a></div></td><td><div class="topbar"><a href="AArch64-sysindex.html">AArch64 Instructions</a></div></td><td><div class="topbar"><a href="enc_index.html">Index by Encoding</a></div></td><td><div class="topbar"><a href="ext_alpha_index.html">External Registers</a></div></td><td><div class="topbar"><a href="ext_enc_index.html">External Registers by Offset</a></div></td><td><div class="topbar"><a href="func_index.html">Registers by Functional Group</a></div></td><td><div class="topbar"><a href="notice.html">Proprietary Notice</a></div></td></tr></table><hr/><h1 class="register-section">EDPIDR2, External Debug Peripheral Identification Register 2</h1><p>The EDPIDR2 characteristics are:</p><h2>Purpose</h2>
+        <p>Provides information to identify an external debug component.</p>
+
+      
+        <p>For more information, see <span class="xref">'About the Peripheral identification scheme'</span>.</p>
+      <h2>Configuration</h2><p>When FEAT_DoPD is implemented, EDPIDR2 is in the Core power domain. Otherwise, EDPIDR2 is in the Debug power domain.
+    </p><del>
+        </del><p><del>This register is required for CoreSight compliance.</del></p><del>
+      </del><p><ins>This</ins><del>Implementation</del> <ins>register</ins><del>of</del> <ins>is</ins><del>this</del> <ins>present</ins><del>register</del> <ins>only when FEAT_ED_PIDR </ins>is<ins> implemented. Otherwise, direct accesses to EDPIDR2 are</ins> <span class="arm-defined-word"><ins>RES0</ins><del>OPTIONAL</del></span>.</p><h2>Attributes</h2>
+        <p>EDPIDR2 is a 32-bit register.</p>
+      <h2>Field descriptions</h2><table class="regdiagram" id="fieldset_0"><thead><tr><td>31</td><td>30</td><td>29</td><td>28</td><td>27</td><td>26</td><td>25</td><td>24</td><td>23</td><td>22</td><td>21</td><td>20</td><td>19</td><td>18</td><td>17</td><td>16</td><td>15</td><td>14</td><td>13</td><td>12</td><td>11</td><td>10</td><td>9</td><td>8</td><td>7</td><td>6</td><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr></thead><tbody><tr class="firstrow"><td class="lr" colspan="24"><a href="#fieldset_0-31_8">RES0</a></td><td class="lr" colspan="4"><a href="#fieldset_0-7_4">REVISION</a></td><td class="lr" colspan="1"><a href="#fieldset_0-3_3">JEDEC</a></td><td class="lr" colspan="3"><a href="#fieldset_0-2_0">DES_1</a></td></tr></tbody></table><h4 id="fieldset_0-31_8">Bits [31:8]</h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_0-7_4">REVISION, bits [7:4]</h4><div class="field"><p>Indicates either the revision of the component, or a portion of the part number of the component.</p>
+<p>Where the component has a single 4-bit revision number, the revision number is an incremental value starting at zero for the first revision of the component.</p>
+<p>Where the component has separate major and minor revision numbers, the major and minor revision numbers are each incremental values starting at zero for the first revision of the component.
+For each minor revision of the component, the minor revision number increments monotonically.
+For each major revision of the component, the major revision number increments monotonically and the minor revision begins again at zero.</p>
+<p>For a component with a 12-bit part number with a single 4-bit revision number:</p>
+<ul>
+<li><a href="ext-edpidr2.html">EDPIDR2</a>.REVISION indicates the 4-bit revision number.
+</li><li><a href="ext-edpidr3.html">EDPIDR3</a>.REVAND indicates component modifications.
+</li></ul>
+<p>For a component with a 12-bit part number with separate major and minor revision numbers:</p>
+<ul>
+<li><a href="ext-edpidr2.html">EDPIDR2</a>.REVISION indicates the 4-bit major revision number.
+</li><li><a href="ext-edpidr3.html">EDPIDR3</a>.REVAND indicates the 4-bit minor revision number.
+</li></ul>
+<p>For a component with a 16-bit part number:</p>
+<ul>
+<li><a href="ext-edpidr2.html">EDPIDR2</a>.REVISION contains part number bits [3:0].
+</li><li><a href="ext-edpidr3.html">EDPIDR3</a>.REVAND indicates the 4-bit revision number.
+</li></ul>
+<p>The choice of which style of revision information is used is specific to the designer of the component, and might also be specific to each individual component with a different part number.</p>
+      <p>This field has an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> value.</p>
+    <p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-3_3">JEDEC, bit [3]</h4><div class="field">
+      <p>JEDEC-assigned JEP106 implementer code is used.</p>
+    
+      <p>Reads as <span class="binarynumber">0b1</span>.</p>
+    <p>Access to this field is <span class="access_level">RO</span>.</p></div><h4 id="fieldset_0-2_0">DES_1, bits [2:0]</h4><div class="field"><p>Designer, JEP106 identification code, bits [6:4].</p>
+<p>The JEP106 identification and continuation codes are stored as follows:</p>
+<ul>
+<li><a href="ext-edpidr1.html">EDPIDR1</a>.DES_0: JEP106 identification code bits[3:0].
+</li><li><a href="ext-edpidr2.html">EDPIDR2</a>.DES_1: JEP106 identification code bits[6:4].
+</li><li><a href="ext-edpidr4.html">EDPIDR4</a>.DES_2: JEP106 continuation code.
+</li></ul>
+<p>These codes indicate the designer of the component and not the implementer, except where the two are the same. To obtain a number, or to see the assignment of these codes, contact JEDEC http://www.jedec.org.</p>
+<p>A JEP106 identification and continuation code takes the following form:</p>
+<ul>
+<li>A sequence of zero or more numbers, all having the value <span class="hexnumber">0x7F</span>.
+</li><li>A following 8-bit number, that is not <span class="hexnumber">0x7F</span>, and where bit[7] is an odd parity bit.
+</li></ul>
+<p>The parity bit in the JEP106 identification code is not included.</p>
+<div class="note"><span class="note-header">Note</span><del>
+        </del><p>For example, Arm Limited is assigned the code <span class="hexnumber">0x7F</span> <span class="hexnumber">0x7F</span> <span class="hexnumber">0x7F</span> <span class="hexnumber">0x7F</span> <span class="hexnumber">0x3B</span>.</p><del>
+        </del><ul><del>
+          </del><li>The continuation code is the number of times <span class="hexnumber">0x7F</span> appears before the final number. For example, a component designed by Arm Limited has the code <span class="hexnumber">0x4</span>.</li><del>
+          </del><li>The identification code is bits[6:0] of the final number. For example, a component designed by Arm Limited has the code <span class="hexnumber">0x3B</span>.</li><del>
+        </del></ul><del>
+      </del></div>
+      <p>This field has an <span class="arm-defined-word">IMPLEMENTATION DEFINED</span> value.</p>
+    <p>Access to this field is <span class="access_level">RO</span>.</p></div><h2>Accessing EDPIDR2</h2><h4>EDPIDR2 can be accessed through the external debug interface:</h4><table class="info"><tr><th>Component</th><th>Offset</th><th>Instance</th></tr><tr><td>Debug</td><td><span class="hexnumber">0xFE8</span></td><td>EDPIDR2</td></tr></table><p>Accessible as follows:</p><ul><li>When FEAT_DoPD is implemented and !IsCorePowered(), accesses to this register generate an error response.
+          </li><li>Otherwise, accesses to this register are <span class="access_level">RO</span>.
+          </li></ul><hr class="bottom_line"/><table style="margin: 0 auto;"><tr><td><div class="topbar"><a href="AArch32-regindex.html">AArch32 Registers</a></div></td><td><div class="topbar"><a href="AArch64-regindex.html">AArch64 Registers</a></div></td><td><div class="topbar"><a href="AArch32-sysindex.html">AArch32 Instructions</a></div></td><td><div class="topbar"><a href="AArch64-sysindex.html">AArch64 Instructions</a></div></td><td><div class="topbar"><a href="enc_index.html">Index by Encoding</a></div></td><td><div class="topbar"><a href="ext_alpha_index.html">External Registers</a></div></td><td><div class="topbar"><a href="ext_enc_index.html">External Registers by Offset</a></div></td><td><div class="topbar"><a href="func_index.html">Registers by Functional Group</a></div></td><td><div class="topbar"><a href="notice.html">Proprietary Notice</a></div></td></tr></table><p class="versions"><ins>2026-06-24</ins><del>2026-03-26</del> <ins>14</ins><del>20</del>:<ins>06</ins><del>27</del>:<ins>58</ins><del>25</del>, <ins>2026-06_rel</ins><del>2026-03_rel</del></p><p class="copyconf">Copyright © 2010-2026 Arm Limited or its affiliates. All rights reserved. This document is Non-Confidential.</p><div align="center" class="htmldiff_header"><table><tbody><tr><td class="old">(old) </td><td class="explain">htmldiff from-</td><td class="new">(new) </td></tr></tbody></table></div></body>
+</html>

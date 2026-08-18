@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ext="http://exslt.org/common">
+  <head>
+    <title>TFSR_EL1</title>
+    <link href="insn.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body><div align="center" class="htmldiff_header"><table><tbody><tr><td class="old">(old) </td><td class="explain">htmldiff from-</td><td class="new">(new) </td></tr></tbody></table></div><table style="margin: 0 auto;"><tr><td><div class="topbar"><a href="AArch32-regindex.html">AArch32 Registers</a></div></td><td><div class="topbar"><a href="AArch64-regindex.html">AArch64 Registers</a></div></td><td><div class="topbar"><a href="AArch32-sysindex.html">AArch32 Instructions</a></div></td><td><div class="topbar"><a href="AArch64-sysindex.html">AArch64 Instructions</a></div></td><td><div class="topbar"><a href="enc_index.html">Index by Encoding</a></div></td><td><div class="topbar"><a href="ext_alpha_index.html">External Registers</a></div></td><td><div class="topbar"><a href="ext_enc_index.html">External Registers by Offset</a></div></td><td><div class="topbar"><a href="func_index.html">Registers by Functional Group</a></div></td><td><div class="topbar"><a href="notice.html">Proprietary Notice</a></div></td></tr></table><hr/><h1 class="register-section">TFSR_EL1, Tag Fault Status Register (EL1)</h1><p>The TFSR_EL1 characteristics are:</p><h2>Purpose</h2>
+        <p>Holds accumulated Tag Check Faults occurring at EL1 that are not taken precisely.</p>
+      <h2>Configuration</h2><p>This register is present only when FEAT_MTE_ASYNC is <ins>implemented or FEAT_MTE2 is </ins>implemented. Otherwise, direct accesses to TFSR_EL1 are <span class="arm-defined-word">UNDEFINED</span>.</p><h2>Attributes</h2>
+        <p>TFSR_EL1 is a 64-bit register.</p>
+      <h2>Field descriptions</h2><h3><ins>When FEAT_MTE_ASYNC is not implemented:</ins></h3><table class="regdiagram" id="fieldset_0"><thead><tr><td><ins class="nocount">63</ins></td><td><ins class="nocount">62</ins></td><td><ins class="nocount">61</ins></td><td><ins class="nocount">60</ins></td><td><ins class="nocount">59</ins></td><td><ins class="nocount">58</ins></td><td><ins class="nocount">57</ins></td><td><ins class="nocount">56</ins></td><td><ins class="nocount">55</ins></td><td><ins class="nocount">54</ins></td><td><ins class="nocount">53</ins></td><td><ins class="nocount">52</ins></td><td><ins class="nocount">51</ins></td><td><ins class="nocount">50</ins></td><td><ins class="nocount">49</ins></td><td><ins class="nocount">48</ins></td><td><ins class="nocount">47</ins></td><td><ins class="nocount">46</ins></td><td><ins class="nocount">45</ins></td><td><ins class="nocount">44</ins></td><td><ins class="nocount">43</ins></td><td><ins class="nocount">42</ins></td><td><ins class="nocount">41</ins></td><td><ins class="nocount">40</ins></td><td><ins class="nocount">39</ins></td><td><ins class="nocount">38</ins></td><td><ins class="nocount">37</ins></td><td><ins class="nocount">36</ins></td><td><ins class="nocount">35</ins></td><td><ins class="nocount">34</ins></td><td><ins class="nocount">33</ins></td><td><ins class="nocount">32</ins></td></tr></thead><tfoot><tr><td><ins class="nocount">31</ins></td><td><ins class="nocount">30</ins></td><td><ins class="nocount">29</ins></td><td><ins class="nocount">28</ins></td><td><ins class="nocount">27</ins></td><td><ins class="nocount">26</ins></td><td><ins class="nocount">25</ins></td><td><ins class="nocount">24</ins></td><td><ins class="nocount">23</ins></td><td><ins class="nocount">22</ins></td><td><ins class="nocount">21</ins></td><td><ins class="nocount">20</ins></td><td><ins class="nocount">19</ins></td><td><ins class="nocount">18</ins></td><td><ins class="nocount">17</ins></td><td><ins class="nocount">16</ins></td><td><ins class="nocount">15</ins></td><td><ins class="nocount">14</ins></td><td><ins class="nocount">13</ins></td><td><ins class="nocount">12</ins></td><td><ins class="nocount">11</ins></td><td><ins class="nocount">10</ins></td><td><ins class="nocount">9</ins></td><td><ins class="nocount">8</ins></td><td><ins class="nocount">7</ins></td><td><ins class="nocount">6</ins></td><td><ins class="nocount">5</ins></td><td><ins class="nocount">4</ins></td><td><ins class="nocount">3</ins></td><td><ins class="nocount">2</ins></td><td><ins class="nocount">1</ins></td><td><ins class="nocount">0</ins></td></tr></tfoot><tbody><tr class="firstrow"><td class="lr" colspan="32"><a href="#fieldset_0-63_0"><ins class="nocount">RAZ</ins></a></td></tr><tr class="firstrow"><td class="lr" colspan="32"><a href="#fieldset_0-63_0"><ins class="nocount">RAZ</ins></a></td></tr></tbody></table><table class="regdiagram" id="fieldset_0"><thead><tr><td><del class="nocount">63</del></td><td><del class="nocount">62</del></td><td><del class="nocount">61</del></td><td><del class="nocount">60</del></td><td><del class="nocount">59</del></td><td><del class="nocount">58</del></td><td><del class="nocount">57</del></td><td><del class="nocount">56</del></td><td><del class="nocount">55</del></td><td><del class="nocount">54</del></td><td><del class="nocount">53</del></td><td><del class="nocount">52</del></td><td><del class="nocount">51</del></td><td><del class="nocount">50</del></td><td><del class="nocount">49</del></td><td><del class="nocount">48</del></td><td><del class="nocount">47</del></td><td><del class="nocount">46</del></td><td><del class="nocount">45</del></td><td><del class="nocount">44</del></td><td><del class="nocount">43</del></td><td><del class="nocount">42</del></td><td><del class="nocount">41</del></td><td><del class="nocount">40</del></td><td><del class="nocount">39</del></td><td><del class="nocount">38</del></td><td><del class="nocount">37</del></td><td><del class="nocount">36</del></td><td><del class="nocount">35</del></td><td><del class="nocount">34</del></td><td><del class="nocount">33</del></td><td><del class="nocount">32</del></td></tr></thead><tfoot><tr><td><del class="nocount">31</del></td><td><del class="nocount">30</del></td><td><del class="nocount">29</del></td><td><del class="nocount">28</del></td><td><del class="nocount">27</del></td><td><del class="nocount">26</del></td><td><del class="nocount">25</del></td><td><del class="nocount">24</del></td><td><del class="nocount">23</del></td><td><del class="nocount">22</del></td><td><del class="nocount">21</del></td><td><del class="nocount">20</del></td><td><del class="nocount">19</del></td><td><del class="nocount">18</del></td><td><del class="nocount">17</del></td><td><del class="nocount">16</del></td><td><del class="nocount">15</del></td><td><del class="nocount">14</del></td><td><del class="nocount">13</del></td><td><del class="nocount">12</del></td><td><del class="nocount">11</del></td><td><del class="nocount">10</del></td><td><del class="nocount">9</del></td><td><del class="nocount">8</del></td><td><del class="nocount">7</del></td><td><del class="nocount">6</del></td><td><del class="nocount">5</del></td><td><del class="nocount">4</del></td><td><del class="nocount">3</del></td><td><del class="nocount">2</del></td><td><del class="nocount">1</del></td><td><del class="nocount">0</del></td></tr></tfoot><tbody><tr class="firstrow"><td class="lr" colspan="32"><a href="#fieldset_0-63_2"><del class="nocount">RES0</del></a></td></tr><tr class="firstrow"><td class="lr" colspan="30"><a href="#fieldset_0-63_2"><del class="nocount">RES0</del></a></td><td class="lr" colspan="1"><a href="#fieldset_0-1_1-1"><del class="nocount">TF1</del></a></td><td class="lr" colspan="1"><a href="#fieldset_0-0_0-1"><del class="nocount">TF0</del></a></td></tr></tbody></table><h4 id="fieldset_0-63_0"><ins>Bits [63:0]</ins></h4><div class="field"><ins>
+      </ins><p><ins>Reserved, RAZ.</ins></p><ins>
+    </ins></div><h3><ins>Otherwise:</ins></h3><table class="regdiagram" id="fieldset_1"><thead><tr><td><ins class="nocount">63</ins></td><td><ins class="nocount">62</ins></td><td><ins class="nocount">61</ins></td><td><ins class="nocount">60</ins></td><td><ins class="nocount">59</ins></td><td><ins class="nocount">58</ins></td><td><ins class="nocount">57</ins></td><td><ins class="nocount">56</ins></td><td><ins class="nocount">55</ins></td><td><ins class="nocount">54</ins></td><td><ins class="nocount">53</ins></td><td><ins class="nocount">52</ins></td><td><ins class="nocount">51</ins></td><td><ins class="nocount">50</ins></td><td><ins class="nocount">49</ins></td><td><ins class="nocount">48</ins></td><td><ins class="nocount">47</ins></td><td><ins class="nocount">46</ins></td><td><ins class="nocount">45</ins></td><td><ins class="nocount">44</ins></td><td><ins class="nocount">43</ins></td><td><ins class="nocount">42</ins></td><td><ins class="nocount">41</ins></td><td><ins class="nocount">40</ins></td><td><ins class="nocount">39</ins></td><td><ins class="nocount">38</ins></td><td><ins class="nocount">37</ins></td><td><ins class="nocount">36</ins></td><td><ins class="nocount">35</ins></td><td><ins class="nocount">34</ins></td><td><ins class="nocount">33</ins></td><td><ins class="nocount">32</ins></td></tr></thead><tfoot><tr><td><ins class="nocount">31</ins></td><td><ins class="nocount">30</ins></td><td><ins class="nocount">29</ins></td><td><ins class="nocount">28</ins></td><td><ins class="nocount">27</ins></td><td><ins class="nocount">26</ins></td><td><ins class="nocount">25</ins></td><td><ins class="nocount">24</ins></td><td><ins class="nocount">23</ins></td><td><ins class="nocount">22</ins></td><td><ins class="nocount">21</ins></td><td><ins class="nocount">20</ins></td><td><ins class="nocount">19</ins></td><td><ins class="nocount">18</ins></td><td><ins class="nocount">17</ins></td><td><ins class="nocount">16</ins></td><td><ins class="nocount">15</ins></td><td><ins class="nocount">14</ins></td><td><ins class="nocount">13</ins></td><td><ins class="nocount">12</ins></td><td><ins class="nocount">11</ins></td><td><ins class="nocount">10</ins></td><td><ins class="nocount">9</ins></td><td><ins class="nocount">8</ins></td><td><ins class="nocount">7</ins></td><td><ins class="nocount">6</ins></td><td><ins class="nocount">5</ins></td><td><ins class="nocount">4</ins></td><td><ins class="nocount">3</ins></td><td><ins class="nocount">2</ins></td><td><ins class="nocount">1</ins></td><td><ins class="nocount">0</ins></td></tr></tfoot><tbody><tr class="firstrow"><td class="lr" colspan="32"><a href="#fieldset_1-63_2"><ins class="nocount">RES0</ins></a></td></tr><tr class="firstrow"><td class="lr" colspan="30"><a href="#fieldset_1-63_2"><ins class="nocount">RES0</ins></a></td><td class="lr" colspan="1"><a href="#fieldset_1-1_1"><ins class="nocount">TF1</ins></a></td><td class="lr" colspan="1"><a href="#fieldset_1-0_0"><ins class="nocount">TF0</ins></a></td></tr></tbody></table><h4 id="fieldset_1-63_2">Bits [63:2]</h4><div class="field">
+      <p>Reserved, <span class="arm-defined-word">RES0</span>.</p>
+    </div><h4 id="fieldset_1-1_1"><ins>TF1, bit [1]</ins></h4><h4 id="fieldset_0-1_1-1"><del>TF1, bit [1]</del><span class="condition"><br/><del>When FEAT_MTE_ASYNC is implemented:
+                        </del></span></h4><div class="field">
+      <p>Tag Check Fault. Asynchronously set to 1 when a Tag Check Fault using a virtual address with bit[55] == '1' occurs.</p>
+    <p>The reset behavior of this field is:</p><ul><li>On a Warm reset, 
+      this field resets
+       to an architecturally <span class="arm-defined-word">UNKNOWN</span> value.</li></ul></div><div class="field"><del>
+      </del><p><del>Reserved, </del><span class="arm-defined-word"><del>RES0</del></span><del>.</del></p><del>
+    </del></div><h4 id="fieldset_0-0_0-1"><del>TF0, bit [0]</del><span class="condition"><br/><del>When FEAT_MTE_ASYNC is implemented:
+                        </del></span></h4><h4 id="fieldset_1-0_0"><ins>TF0, bit [0]</ins></h4><h4 id="fieldset_0-1_1-2"><span class="condition"><br/><del>Otherwise:
+                        </del></span></h4><div class="field">
+      <p>Tag Check Fault. Asynchronously set to 1 when a Tag Check Fault using a virtual address with bit[55] == '0' occurs.</p>
+    <p>The reset behavior of this field is:</p><ul><li>On a Warm reset, 
+      this field resets
+       to an architecturally <span class="arm-defined-word">UNKNOWN</span> value.</li></ul></div><h4 id="fieldset_0-0_0-2"><span class="condition"><br/><del>Otherwise:
+                        </del></span></h4><div class="field"><del>
+      </del><p><del>Reserved, </del><span class="arm-defined-word"><del>RES0</del></span><del>.</del></p><del>
+    </del></div><div class="access_mechanisms"><h2><del class="nocount">Accessing TFSR_EL1</del></h2><del>
+        </del><p><del>When the Effective value of </del><a href="AArch64-hcr_el2.html"><del>HCR_EL2</del></a><del>.E2H is 1, without explicit synchronization, accesses from EL3 using the accessor name TFSR_EL1 or TFSR_EL12 are not guaranteed to be ordered with respect to accesses using the other accessor name.</del></p><del>
+      </del><p><del>Accesses to this register use the following encodings in the System register encoding space:</del></p><div><h4 class="assembler"><del>MRS &lt;Xt>, TFSR_EL1</del></h4></div><table class="access_instructions"><tr><th><del class="nocount">op0</del></th><th><del class="nocount">op1</del></th><th><del class="nocount">CRn</del></th><th><del class="nocount">CRm</del></th><th><del class="nocount">op2</del></th></tr><tr><td><del class="nocount">0b11</del></td><td><del class="nocount">0b000</del></td><td><del class="nocount">0b0101</del></td><td><del class="nocount">0b0110</del></td><td><del class="nocount">0b000</del></td></tr></table><p class="pseudocode"><del>
+if !IsFeatureImplemented(FEAT_MTE_ASYNC) then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        Undefined();
+    elsif EffectiveHCR_EL2_NVx() == '011' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; !ELIsInHost(EL0) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; HCR_EL2().ATA == '1') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'111'} then
+        X{64}(t) = NVMem(0x190);
+    else
+        X{64}(t) = TFSR_EL1();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        Undefined();
+    elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif ELIsInHost(EL2) then
+        X{64}(t) = TFSR_EL2();
+    else
+        X{64}(t) = TFSR_EL1();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = TFSR_EL1();
+end;
+                </del></p><div><h4 class="assembler"><del>MSR TFSR_EL1, &lt;Xt></del></h4></div><table class="access_instructions"><tr><th><del class="nocount">op0</del></th><th><del class="nocount">op1</del></th><th><del class="nocount">CRn</del></th><th><del class="nocount">CRm</del></th><th><del class="nocount">op2</del></th></tr><tr><td><del class="nocount">0b11</del></td><td><del class="nocount">0b000</del></td><td><del class="nocount">0b0101</del></td><td><del class="nocount">0b0110</del></td><td><del class="nocount">0b000</del></td></tr></table><p class="pseudocode"><del>
+if !IsFeatureImplemented(FEAT_MTE_ASYNC) then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        Undefined();
+    elsif EffectiveHCR_EL2_NVx() == '011' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; !ELIsInHost(EL0) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; HCR_EL2().ATA == '1') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'111'} then
+        NVMem(0x190) = X{64}(t);
+    else
+        TFSR_EL1() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        Undefined();
+    elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif ELIsInHost(EL2) then
+        TFSR_EL2() = X{64}(t);
+    else
+        TFSR_EL1() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL3 then
+    TFSR_EL1() = X{64}(t);
+end;
+                </del></p><div><h4 class="condition"><del>
+When FEAT_VHE is implemented
+            </del></h4><h4 class="assembler"><del>MRS &lt;Xt>, TFSR_EL12</del></h4></div><table class="access_instructions"><tr><th><del class="nocount">op0</del></th><th><del class="nocount">op1</del></th><th><del class="nocount">CRn</del></th><th><del class="nocount">CRm</del></th><th><del class="nocount">op2</del></th></tr><tr><td><del class="nocount">0b11</del></td><td><del class="nocount">0b101</del></td><td><del class="nocount">0b0101</del></td><td><del class="nocount">0b0110</del></td><td><del class="nocount">0b000</del></td></tr></table><p class="pseudocode"><del>
+if !IsFeatureImplemented(FEAT_MTE_ASYNC) then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() == '101' then
+        X{64}(t) = NVMem(0x190);
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if ELIsInHost(EL2) then
+        if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            Undefined();
+        elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            X{64}(t) = TFSR_EL1();
+        end;
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL3 then
+    if ELIsInHost(EL2) then
+        X{64}(t) = TFSR_EL1();
+    else
+        Undefined();
+    end;
+end;
+                </del></p><div><h4 class="condition"><del>
+When FEAT_VHE is implemented
+            </del></h4><h4 class="assembler"><del>MSR TFSR_EL12, &lt;Xt></del></h4></div><table class="access_instructions"><tr><th><del class="nocount">op0</del></th><th><del class="nocount">op1</del></th><th><del class="nocount">CRn</del></th><th><del class="nocount">CRm</del></th><th><del class="nocount">op2</del></th></tr><tr><td><del class="nocount">0b11</del></td><td><del class="nocount">0b101</del></td><td><del class="nocount">0b0101</del></td><td><del class="nocount">0b0110</del></td><td><del class="nocount">0b000</del></td></tr></table><p class="pseudocode"><del>
+if !IsFeatureImplemented(FEAT_MTE_ASYNC) then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() == '101' then
+        NVMem(0x190) = X{64}(t);
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if ELIsInHost(EL2) then
+        if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            Undefined();
+        elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            TFSR_EL1() = X{64}(t);
+        end;
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL3 then
+    if ELIsInHost(EL2) then
+        TFSR_EL1() = X{64}(t);
+    else
+        Undefined();
+    end;
+end;
+                </del></p><div><h4 class="assembler"><del>MRS &lt;Xt>, TFSR_EL2</del></h4></div><table class="access_instructions"><tr><th><del class="nocount">op0</del></th><th><del class="nocount">op1</del></th><th><del class="nocount">CRn</del></th><th><del class="nocount">CRm</del></th><th><del class="nocount">op2</del></th></tr><tr><td><del class="nocount">0b11</del></td><td><del class="nocount">0b100</del></td><td><del class="nocount">0b0101</del></td><td><del class="nocount">0b0110</del></td><td><del class="nocount">0b000</del></td></tr></table><p class="pseudocode"><del>
+if !IsFeatureImplemented(FEAT_MTE_ASYNC) then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() IN {'1x1'} then
+        if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            Undefined();
+        elsif EL2Enabled() &amp;&amp; !ELIsInHost(EL0) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; HCR_EL2().ATA == '1') then
+            AArch64_SystemAccessTrap(EL2, 0x18);
+        elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            X{64}(t) = TFSR_EL1();
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        Undefined();
+    elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = TFSR_EL2();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = TFSR_EL2();
+end;
+                </del></p><div><h4 class="assembler"><del>MSR TFSR_EL2, &lt;Xt></del></h4></div><table class="access_instructions"><tr><th><del class="nocount">op0</del></th><th><del class="nocount">op1</del></th><th><del class="nocount">CRn</del></th><th><del class="nocount">CRm</del></th><th><del class="nocount">op2</del></th></tr><tr><td><del class="nocount">0b11</del></td><td><del class="nocount">0b100</del></td><td><del class="nocount">0b0101</del></td><td><del class="nocount">0b0110</del></td><td><del class="nocount">0b000</del></td></tr></table><p class="pseudocode"><del>
+if !IsFeatureImplemented(FEAT_MTE_ASYNC) then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() IN {'1x1'} then
+        if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            Undefined();
+        elsif EL2Enabled() &amp;&amp; !ELIsInHost(EL0) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; HCR_EL2().ATA == '1') then
+            AArch64_SystemAccessTrap(EL2, 0x18);
+        elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            TFSR_EL1() = X{64}(t);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        Undefined();
+    elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        TFSR_EL2() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL3 then
+    TFSR_EL2() = X{64}(t);
+end;
+                </del></p></div><div class="access_mechanisms"><h2><ins class="nocount">Accessing TFSR_EL1</ins></h2><ins>
+        </ins><p><ins>When the Effective value of </ins><a href="AArch64-hcr_el2.html"><ins>HCR_EL2</ins></a><ins>.E2H is 1, without explicit synchronization, accesses from EL3 using the accessor name TFSR_EL1 or TFSR_EL12 are not guaranteed to be ordered with respect to accesses using the other accessor name.</ins></p><ins>
+      </ins><p><ins>Accesses to this register use the following encodings in the System register encoding space:</ins></p><div><h4 class="assembler"><ins>MRS &lt;Xt>, TFSR_EL1</ins></h4></div><table class="access_instructions"><tr><th><ins class="nocount">op0</ins></th><th><ins class="nocount">op1</ins></th><th><ins class="nocount">CRn</ins></th><th><ins class="nocount">CRm</ins></th><th><ins class="nocount">op2</ins></th></tr><tr><td><ins class="nocount">0b11</ins></td><td><ins class="nocount">0b000</ins></td><td><ins class="nocount">0b0101</ins></td><td><ins class="nocount">0b0110</ins></td><td><ins class="nocount">0b000</ins></td></tr></table><p class="pseudocode"><ins>
+if !(IsFeatureImplemented(FEAT_MTE_ASYNC) || IsFeatureImplemented(FEAT_MTE2)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() == '011' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; !ELIsInHost(EL0) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; HCR_EL2().ATA == '1') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'111'} then
+        X{64}(t) = NVMem(0x190);
+    else
+        X{64}(t) = TFSR_EL1();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif ELIsInHost(EL2) then
+        X{64}(t) = TFSR_EL2();
+    else
+        X{64}(t) = TFSR_EL1();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = TFSR_EL1();
+end;
+                </ins></p><div><h4 class="assembler"><ins>MSR TFSR_EL1, &lt;Xt></ins></h4></div><table class="access_instructions"><tr><th><ins class="nocount">op0</ins></th><th><ins class="nocount">op1</ins></th><th><ins class="nocount">CRn</ins></th><th><ins class="nocount">CRm</ins></th><th><ins class="nocount">op2</ins></th></tr><tr><td><ins class="nocount">0b11</ins></td><td><ins class="nocount">0b000</ins></td><td><ins class="nocount">0b0101</ins></td><td><ins class="nocount">0b0110</ins></td><td><ins class="nocount">0b000</ins></td></tr></table><p class="pseudocode"><ins>
+if !(IsFeatureImplemented(FEAT_MTE_ASYNC) || IsFeatureImplemented(FEAT_MTE2)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() == '011' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; !ELIsInHost(EL0) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; HCR_EL2().ATA == '1') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'111'} then
+        NVMem(0x190) = X{64}(t);
+    else
+        TFSR_EL1() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif ELIsInHost(EL2) then
+        TFSR_EL2() = X{64}(t);
+    else
+        TFSR_EL1() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL3 then
+    TFSR_EL1() = X{64}(t);
+end;
+                </ins></p><div><h4 class="condition"><ins>
+When FEAT_VHE is implemented
+            </ins></h4><h4 class="assembler"><ins>MRS &lt;Xt>, TFSR_EL12</ins></h4></div><table class="access_instructions"><tr><th><ins class="nocount">op0</ins></th><th><ins class="nocount">op1</ins></th><th><ins class="nocount">CRn</ins></th><th><ins class="nocount">CRm</ins></th><th><ins class="nocount">op2</ins></th></tr><tr><td><ins class="nocount">0b11</ins></td><td><ins class="nocount">0b101</ins></td><td><ins class="nocount">0b0101</ins></td><td><ins class="nocount">0b0110</ins></td><td><ins class="nocount">0b000</ins></td></tr></table><p class="pseudocode"><ins>
+if !(IsFeatureImplemented(FEAT_MTE_ASYNC) || IsFeatureImplemented(FEAT_MTE2)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; PSTATE.EL == EL2 &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() == '101' then
+        X{64}(t) = NVMem(0x190);
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if ELIsInHost(EL2) then
+        if HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            X{64}(t) = TFSR_EL1();
+        end;
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL3 then
+    if ELIsInHost(EL2) then
+        X{64}(t) = TFSR_EL1();
+    else
+        Undefined();
+    end;
+end;
+                </ins></p><div><h4 class="condition"><ins>
+When FEAT_VHE is implemented
+            </ins></h4><h4 class="assembler"><ins>MSR TFSR_EL12, &lt;Xt></ins></h4></div><table class="access_instructions"><tr><th><ins class="nocount">op0</ins></th><th><ins class="nocount">op1</ins></th><th><ins class="nocount">CRn</ins></th><th><ins class="nocount">CRm</ins></th><th><ins class="nocount">op2</ins></th></tr><tr><td><ins class="nocount">0b11</ins></td><td><ins class="nocount">0b101</ins></td><td><ins class="nocount">0b0101</ins></td><td><ins class="nocount">0b0110</ins></td><td><ins class="nocount">0b000</ins></td></tr></table><p class="pseudocode"><ins>
+if !(IsFeatureImplemented(FEAT_MTE_ASYNC) || IsFeatureImplemented(FEAT_MTE2)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; PSTATE.EL == EL2 &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() == '101' then
+        NVMem(0x190) = X{64}(t);
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if ELIsInHost(EL2) then
+        if HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            TFSR_EL1() = X{64}(t);
+        end;
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL3 then
+    if ELIsInHost(EL2) then
+        TFSR_EL1() = X{64}(t);
+    else
+        Undefined();
+    end;
+end;
+                </ins></p><div><h4 class="assembler"><ins>MRS &lt;Xt>, TFSR_EL2</ins></h4></div><table class="access_instructions"><tr><th><ins class="nocount">op0</ins></th><th><ins class="nocount">op1</ins></th><th><ins class="nocount">CRn</ins></th><th><ins class="nocount">CRm</ins></th><th><ins class="nocount">op2</ins></th></tr><tr><td><ins class="nocount">0b11</ins></td><td><ins class="nocount">0b100</ins></td><td><ins class="nocount">0b0101</ins></td><td><ins class="nocount">0b0110</ins></td><td><ins class="nocount">0b000</ins></td></tr></table><p class="pseudocode"><ins>
+if !(IsFeatureImplemented(FEAT_MTE_ASYNC) || IsFeatureImplemented(FEAT_MTE2)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; ((PSTATE.EL == EL1 &amp;&amp; EffectiveHCR_EL2_NVx() IN {'1x1'}) || PSTATE.EL == EL2) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() IN {'1x1'} then
+        if EL2Enabled() &amp;&amp; !ELIsInHost(EL0) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; HCR_EL2().ATA == '1') then
+            AArch64_SystemAccessTrap(EL2, 0x18);
+        elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            X{64}(t) = TFSR_EL1();
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = TFSR_EL2();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = TFSR_EL2();
+end;
+                </ins></p><div><h4 class="assembler"><ins>MSR TFSR_EL2, &lt;Xt></ins></h4></div><table class="access_instructions"><tr><th><ins class="nocount">op0</ins></th><th><ins class="nocount">op1</ins></th><th><ins class="nocount">CRn</ins></th><th><ins class="nocount">CRm</ins></th><th><ins class="nocount">op2</ins></th></tr><tr><td><ins class="nocount">0b11</ins></td><td><ins class="nocount">0b100</ins></td><td><ins class="nocount">0b0101</ins></td><td><ins class="nocount">0b0110</ins></td><td><ins class="nocount">0b000</ins></td></tr></table><p class="pseudocode"><ins>
+if !(IsFeatureImplemented(FEAT_MTE_ASYNC) || IsFeatureImplemented(FEAT_MTE2)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; ((PSTATE.EL == EL1 &amp;&amp; EffectiveHCR_EL2_NVx() IN {'1x1'}) || PSTATE.EL == EL2) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() IN {'1x1'} then
+        if EL2Enabled() &amp;&amp; !ELIsInHost(EL0) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; HCR_EL2().ATA == '1') then
+            AArch64_SystemAccessTrap(EL2, 0x18);
+        elsif HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            TFSR_EL1() = X{64}(t);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; !(IsFeatureImplemented(FEAT_MTE2) &amp;&amp; SCR_EL3().ATA == '1') then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        TFSR_EL2() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL3 then
+    TFSR_EL2() = X{64}(t);
+end;
+                </ins></p></div><hr class="bottom_line"/><table style="margin: 0 auto;"><tr><td><div class="topbar"><a href="AArch32-regindex.html">AArch32 Registers</a></div></td><td><div class="topbar"><a href="AArch64-regindex.html">AArch64 Registers</a></div></td><td><div class="topbar"><a href="AArch32-sysindex.html">AArch32 Instructions</a></div></td><td><div class="topbar"><a href="AArch64-sysindex.html">AArch64 Instructions</a></div></td><td><div class="topbar"><a href="enc_index.html">Index by Encoding</a></div></td><td><div class="topbar"><a href="ext_alpha_index.html">External Registers</a></div></td><td><div class="topbar"><a href="ext_enc_index.html">External Registers by Offset</a></div></td><td><div class="topbar"><a href="func_index.html">Registers by Functional Group</a></div></td><td><div class="topbar"><a href="notice.html">Proprietary Notice</a></div></td></tr></table><p class="versions"><ins>2026-06-24</ins><del>2026-03-26</del> <ins>14</ins><del>20</del>:<ins>06</ins><del>27</del>:<ins>58</ins><del>25</del>, <ins>2026-06_rel</ins><del>2026-03_rel</del></p><p class="copyconf">Copyright © 2010-2026 Arm Limited or its affiliates. All rights reserved. This document is Non-Confidential.</p><div align="center" class="htmldiff_header"><table><tbody><tr><td class="old">(old) </td><td class="explain">htmldiff from-</td><td class="new">(new) </td></tr></tbody></table></div></body>
+</html>

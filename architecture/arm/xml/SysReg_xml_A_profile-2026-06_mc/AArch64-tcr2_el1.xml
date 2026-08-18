@@ -1,0 +1,1550 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_page SYSTEM "registers.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+
+<register_page>
+  <registers>
+  
+    <register execution_state="AArch64" is_register="True" is_internal="True" is_stub_entry="False">
+      <reg_short_name>TCR2_EL1</reg_short_name>
+        
+        <reg_long_name>Extended Translation Control Register (EL1)</reg_long_name>
+
+
+
+      
+            <reg_condition otherwise="UNDEFINED">when FEAT_TCR2 is implemented and FEAT_AA64 is implemented</reg_condition>
+      
+
+
+
+
+          <reg_reset_value></reg_reset_value>
+
+      <reg_mappings>
+        
+
+
+
+
+      </reg_mappings>
+
+        <reg_purpose>
+          
+    
+      <purpose_text>
+        <para>The control register for stage 1 of the EL1&amp;0 translation regime.</para>
+      </purpose_text>
+
+        </reg_purpose>
+
+      <reg_groups>
+            <reg_group>Memory</reg_group>
+      </reg_groups>
+      
+      
+        
+      <reg_attributes>
+          
+    
+      <attributes_text>
+        <para>TCR2_EL1 is a 64-bit register.</para>
+      </attributes_text>
+
+      </reg_attributes>
+      <reg_fieldsets>
+        
+
+
+
+
+
+
+<fields id="fieldset_0" length="64">
+  <text_before_fields>
+    <para>Unless stated otherwise, all the bits in TCR2_EL1 are permitted to be cached in a TLB.</para>
+  </text_before_fields>
+  <field id="fieldset_0-63_22" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>63</field_msb>
+    <field_lsb>22</field_lsb>
+    <rel_range>63:22</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-21_21-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>FNGNA1</field_name>
+    <field_msb>21</field_msb>
+    <field_lsb>21</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Force non-global for unassured translations using <register_link state="AArch64" id="AArch64-ttbr1_el1.xml">TTBR1_EL1</register_link>.</para>
+    </field_description>
+    <field_description order="after"><para>This bit is permitted to be cached in a TLB.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This bit has no effect on the interpretation of the nG bit.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description><para>Translations using <register_link state="AArch64" id="AArch64-ttbr1_el1.xml">TTBR1_EL1</register_link> are treated as non-global regardless of the value of the nG bit if all of the following is true:</para>
+<list type="unordered">
+<listitem><content>
+<para>The translation is for the EL1&amp;0 translation regime.</para>
+</content>
+</listitem><listitem><content>
+<para>Stage 1 and stage 2 translation are enabled.</para>
+</content>
+</listitem><listitem><content>
+<para>Protection is enabled.</para>
+</content>
+</listitem><listitem><content>
+<para>The final stage 1 translation using the descriptor does not have the Assured Translation property.</para>
+</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_standard_text>AU</field_reset_standard_text>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.FNGNA1 == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_THE is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-21_21-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>21</field_msb>
+    <field_lsb>21</field_lsb>
+    <rel_range>21</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-20_20-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>FNGNA0</field_name>
+    <field_msb>20</field_msb>
+    <field_lsb>20</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Force non-global for unassured translations using <register_link state="AArch64" id="AArch64-ttbr0_el1.xml">TTBR0_EL1</register_link>.</para>
+    </field_description>
+    <field_description order="after"><para>This bit is permitted to be cached in a TLB.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This bit has no effect on the interpretation of the nG bit.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description><para>Translations using <register_link state="AArch64" id="AArch64-ttbr0_el1.xml">TTBR0_EL1</register_link> are treated as non-global regardless of the value of the nG bit if all of the following is true:</para>
+<list type="unordered">
+<listitem><content>
+<para>The translation is for the EL1&amp;0 translation regime.</para>
+</content>
+</listitem><listitem><content>
+<para>Stage 1 and stage 2 translation are enabled.</para>
+</content>
+</listitem><listitem><content>
+<para>Protection is enabled.</para>
+</content>
+</listitem><listitem><content>
+<para>The final stage 1 translation using the descriptor does not have the Assured Translation property.</para>
+</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_standard_text>AU</field_reset_standard_text>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.FNGNA0 == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_THE is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-20_20-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>20</field_msb>
+    <field_lsb>20</field_lsb>
+    <rel_range>20</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-19_19" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>19</field_msb>
+    <field_lsb>19</field_lsb>
+    <rel_range>19</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-18_18-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>FNG1</field_name>
+    <field_msb>18</field_msb>
+    <field_lsb>18</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Force non-global translations for <register_link state="AArch64" id="AArch64-ttbr1_el1.xml">TTBR1_EL1</register_link>.</para>
+    </field_description>
+    <field_description order="after"><para>This bit is permitted to be cached in a TLB.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This bit has no effect on the interpretation of the nG bit.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Translations using <register_link state="AArch64" id="AArch64-ttbr1_el1.xml">TTBR1_EL1</register_link> are treated as non-global regardless of the value of the nG bit.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_standard_text>AU</field_reset_standard_text>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.FNG1 == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_ASID2 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-18_18-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>18</field_msb>
+    <field_lsb>18</field_lsb>
+    <rel_range>18</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-17_17-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>FNG0</field_name>
+    <field_msb>17</field_msb>
+    <field_lsb>17</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Force non-global translations for <register_link state="AArch64" id="AArch64-ttbr0_el1.xml">TTBR0_EL1</register_link>.</para>
+    </field_description>
+    <field_description order="after"><para>This bit is permitted to be cached in a TLB.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This bit has no effect on the interpretation of the nG bit.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Translations using <register_link state="AArch64" id="AArch64-ttbr0_el1.xml">TTBR0_EL1</register_link> are treated as non-global regardless of the value of the nG bit.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_standard_text>AU</field_reset_standard_text>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.FNG0 == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_ASID2 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-17_17-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>17</field_msb>
+    <field_lsb>17</field_lsb>
+    <rel_range>17</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-16_16-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>A2</field_name>
+    <field_msb>16</field_msb>
+    <field_lsb>16</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Enable use of two ASIDs.</para>
+    </field_description>
+    <field_description order="after"><para>This bit is permitted to be cached in a TLB.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Use of two ASIDs is disabled.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Use of two ASIDs is enabled.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_standard_text>AU</field_reset_standard_text>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.A2 == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_ASID2 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-16_16-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>16</field_msb>
+    <field_lsb>16</field_lsb>
+    <rel_range>16</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-15_15-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>DisCH1</field_name>
+    <field_msb>15</field_msb>
+    <field_lsb>15</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Disable the Contiguous bit for the Start Table for <register_link state="AArch64" id="AArch64-ttbr1_el1.xml">TTBR1_EL1</register_link>.</para>
+    </field_description>
+    <field_description order="after"><para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The Contiguous bit of Block or Page descriptors of the Start Table for <register_link state="AArch64" id="AArch64-ttbr1_el1.xml">TTBR1_EL1</register_link> is not affected by this field.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The Contiguous bit of Block or Page descriptors of the Start Table for <register_link state="AArch64" id="AArch64-ttbr1_el1.xml">TTBR1_EL1</register_link> is treated as 0.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_standard_text>AU</field_reset_standard_text>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.DisCH1 == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_D128 is implemented and TCR2_EL1.D128 == '1'</fields_condition>
+  </field>
+  <field id="fieldset_0-15_15-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>15</field_msb>
+    <field_lsb>15</field_lsb>
+    <rel_range>15</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-14_14-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>DisCH0</field_name>
+    <field_msb>14</field_msb>
+    <field_lsb>14</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Disable the Contiguous bit for the Start Table for <register_link state="AArch64" id="AArch64-ttbr0_el1.xml">TTBR0_EL1</register_link>.</para>
+    </field_description>
+    <field_description order="after"><para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The Contiguous bit of Block or Page descriptors of the Start Table for <register_link state="AArch64" id="AArch64-ttbr0_el1.xml">TTBR0_EL1</register_link> is not affected by this field.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The Contiguous bit of Block or Page descriptors of the Start Table for <register_link state="AArch64" id="AArch64-ttbr0_el1.xml">TTBR0_EL1</register_link> is treated as 0.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_standard_text>AU</field_reset_standard_text>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.DisCH0 == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_D128 is implemented and TCR2_EL1.D128 == '1'</fields_condition>
+  </field>
+  <field id="fieldset_0-14_14-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>14</field_msb>
+    <field_lsb>14</field_lsb>
+    <rel_range>14</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-13_12" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>13</field_msb>
+    <field_lsb>12</field_lsb>
+    <rel_range>13:12</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-11_11-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>HAFT</field_name>
+    <field_msb>11</field_msb>
+    <field_lsb>11</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before"><para>Hardware managed Access Flag for Table descriptors.</para>
+<para>Enables the Hardware managed Access Flag for Table descriptors.</para></field_description>
+    <field_description order="after"><para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Hardware managed Access Flag for Table descriptors is disabled.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Hardware managed Access Flag for Table descriptors is enabled.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="the highest implemented Exception level is EL1">
+            <field_reset>
+              <field_reset_number>'0'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition>
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.HAFT == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_HAFT is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-11_11-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>11</field_msb>
+    <field_lsb>11</field_lsb>
+    <rel_range>11</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-10_10-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>PTTWI</field_name>
+    <field_msb>10</field_msb>
+    <field_lsb>10</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before"><para>Permit Translation table walk Incoherence.</para>
+<para>Permits RCWS instructions to generate writes that have the Reduced Coherence property.</para></field_description>
+    <field_description order="after"><para>This bit is permitted to be implemented as a read-only bit with a fixed value of 0.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Write accesses generated by RCWS at EL1&amp;0 do not have the Reduced Coherence property.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Write accesses generated by RCWS at EL1&amp;0 have the Reduced Coherence property if <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.PTTWI is 1.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="the highest implemented Exception level is EL1">
+            <field_reset>
+              <field_reset_number>'0'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition>
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.PTTWI == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_THE is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-10_10-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>10</field_msb>
+    <field_lsb>10</field_lsb>
+    <rel_range>10</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-9_6" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>9</field_msb>
+    <field_lsb>6</field_lsb>
+    <rel_range>9:6</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-5_5-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>D128</field_name>
+    <field_msb>5</field_msb>
+    <field_lsb>5</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Enables VMSAv9-128 translation system.</para>
+    </field_description>
+    <field_description order="after"><para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Translation system follows VMSAv8-64 translation process.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Translation system follows VMSAv9-128 translation process.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="the highest implemented Exception level is EL1">
+            <field_reset>
+              <field_reset_number>'0'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition>
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.D128 == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_D128 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-5_5-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>5</field_msb>
+    <field_lsb>5</field_lsb>
+    <rel_range>5</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-4_4-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>AIE</field_name>
+    <field_msb>4</field_msb>
+    <field_lsb>4</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Enable Attribute Indexing Extension.</para>
+    </field_description>
+    <field_description order="after"><para>This field is <arm-defined-word>RES1</arm-defined-word> when TCR2_EL1.D128 is 1.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Attribute Indexing Extension Disabled.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Attribute Indexing Extension Enabled.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="the highest implemented Exception level is EL1">
+            <field_reset>
+              <field_reset_number>'0'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition>
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.AIE == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_AIE is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-4_4-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>4</field_msb>
+    <field_lsb>4</field_lsb>
+    <rel_range>4</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-3_3-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>POE</field_name>
+    <field_msb>3</field_msb>
+    <field_lsb>3</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Enables Permission Overlays for privileged accesses from EL1&amp;0 translation regime.</para>
+    </field_description>
+    <field_description order="after"><para>This bit is not permitted to be cached in a TLB.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Permission overlay disabled for EL1 access in stage 1 of EL1&amp;0 translation regime.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Permission overlay enabled for EL1 access in stage 1 of EL1&amp;0 translation regime.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="the highest implemented Exception level is EL1">
+            <field_reset>
+              <field_reset_number>'0'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition>
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.POE == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_S1POE is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-3_3-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>3</field_msb>
+    <field_lsb>3</field_lsb>
+    <rel_range>3</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-2_2-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>E0POE</field_name>
+    <field_msb>2</field_msb>
+    <field_lsb>2</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Enables Permission Overlays for unprivileged accesses from EL1&amp;0 translation regime.</para>
+    </field_description>
+    <field_description order="after"><para>This bit is not permitted to be cached in a TLB.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Permission overlay disabled for EL0 access in stage 1 of EL1&amp;0 translation regime.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Permission overlay enabled for EL0 access in stage 1 of EL1&amp;0 translation regime.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="the highest implemented Exception level is EL1">
+            <field_reset>
+              <field_reset_number>'0'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition>
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.E0POE == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_S1POE is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-2_2-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>2</field_msb>
+    <field_lsb>2</field_lsb>
+    <rel_range>2</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-1_1-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>PIE</field_name>
+    <field_msb>1</field_msb>
+    <field_lsb>1</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Enables usage of Indirect Permission Scheme.</para>
+    </field_description>
+    <field_description order="after"><para>This field is <arm-defined-word>RES1</arm-defined-word> when TCR2_EL1.D128 is 1.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Direct permission model.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>Indirect permission model.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="the highest implemented Exception level is EL1">
+            <field_reset>
+              <field_reset_number>'0'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition>
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.PIE == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_S1PIE is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-1_1-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>1</field_msb>
+    <field_lsb>1</field_lsb>
+    <rel_range>1</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-0_0-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>PnCH</field_name>
+    <field_msb>0</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Protected attribute enable. Enables use of bit[52] of the stage 1 translation table entries as the Protected bit, for translations using TTBRn_EL1.</para>
+    </field_description>
+    <field_description order="after"><para>If bit[52] is used as the Protected bit, it is not used as the Contiguous bit.</para>
+<para>This field is <arm-defined-word>RES0</arm-defined-word> when TCR2_EL1.D128 is 1.</para>
+<para>This field is ignored by the PE and treated as zero when any of the following are true:</para>
+<list type="unordered">
+<listitem><content>All of the following are true:<list type="unordered">
+<listitem><content>EL2 is implemented and enabled in the current Security state.</content>
+</listitem><listitem><content>The Effective value of <register_link state="AArch64" id="AArch64-hcrx_el2.xml">HCRX_EL2</register_link>.TCR2En is 0.</content>
+</listitem></list>
+</content>
+</listitem><listitem><content>EL3 is implemented and <register_link state="AArch64" id="AArch64-scr_el3.xml">SCR_EL3</register_link>.TCR2En == 0.</content>
+</listitem></list></field_description>
+    <field_values impdef="False">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>For translations using TTBRn_EL1, bit[52] of each stage 1 translation table entry is not the Protected bit.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>For translations using TTBRn_EL1, bit[52] of each stage 1 translation table entry is the Protected bit.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_resets>
+      <field_reset reset_type="Warm">
+        <field_reset_conditions>
+          <field_reset_condition condition="the highest implemented Exception level is EL1">
+            <field_reset>
+              <field_reset_number>'0'</field_reset_number>
+            </field_reset>
+          </field_reset_condition>
+          <field_reset_condition>
+            <field_reset>
+              <field_reset_standard_text>AU</field_reset_standard_text>
+            </field_reset>
+          </field_reset_condition>
+        </field_reset_conditions>
+      </field_reset>
+    </field_resets>
+    <field_access>
+      <field_access_state>
+        <field_access_level operand="AND">
+          <field_access_sublevel>FEAT_SRMASK is implemented</field_access_sublevel>
+          <field_access_sublevel>EL1 is the current Exception level</field_access_sublevel>
+          <field_access_sublevel>IsSystemRegisterMaskingEnabled(EL1)</field_access_sublevel>
+          <field_access_sublevel>TCR2MASK_EL1.PnCH == '1'</field_access_sublevel>
+        </field_access_level>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_THE is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-0_0-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>0</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <text_after_fields/>
+</fields>
+
+
+
+
+<reg_fieldset length="64">
+  <fieldat id="fieldset_0-63_22" msb="63" lsb="22"/>
+  <fieldat id="fieldset_0-21_21-1" msb="21" lsb="21"/>
+  <fieldat id="fieldset_0-20_20-1" msb="20" lsb="20"/>
+  <fieldat id="fieldset_0-19_19" msb="19" lsb="19"/>
+  <fieldat id="fieldset_0-18_18-1" msb="18" lsb="18"/>
+  <fieldat id="fieldset_0-17_17-1" msb="17" lsb="17"/>
+  <fieldat id="fieldset_0-16_16-1" msb="16" lsb="16"/>
+  <fieldat id="fieldset_0-15_15-1" msb="15" lsb="15"/>
+  <fieldat id="fieldset_0-14_14-1" msb="14" lsb="14"/>
+  <fieldat id="fieldset_0-13_12" msb="13" lsb="12"/>
+  <fieldat id="fieldset_0-11_11-1" msb="11" lsb="11"/>
+  <fieldat id="fieldset_0-10_10-1" msb="10" lsb="10"/>
+  <fieldat id="fieldset_0-9_6" msb="9" lsb="6"/>
+  <fieldat id="fieldset_0-5_5-1" msb="5" lsb="5"/>
+  <fieldat id="fieldset_0-4_4-1" msb="4" lsb="4"/>
+  <fieldat id="fieldset_0-3_3-1" msb="3" lsb="3"/>
+  <fieldat id="fieldset_0-2_2-1" msb="2" lsb="2"/>
+  <fieldat id="fieldset_0-1_1-1" msb="1" lsb="1"/>
+  <fieldat id="fieldset_0-0_0-1" msb="0" lsb="0"/>
+</reg_fieldset>
+
+
+      </reg_fieldsets>
+
+      <access_mechanisms>
+          
+
+
+  
+    
+      <access_permission_text>
+        <para>When the Effective value of <register_link state="AArch64" id="AArch64-hcr_el2.xml">HCR_EL2</register_link>.E2H is 1, without explicit synchronization, accesses from EL3 using the accessor name <value>TCR2_EL1</value> or <value>TCR2_EL12</value> are not guaranteed to be ordered with respect to accesses using the other accessor name.</para>
+
+      </access_permission_text>
+      <access_permission_text>
+        <para>If FEAT_SRMASK is implemented, accesses to TCR2_EL1 are masked by <register_link state="AArch64" id="AArch64-tcr2mask_el1.xml">TCR2MASK_EL1</register_link>.</para>
+      </access_permission_text>
+
+
+
+
+
+    
+        
+        <access_mechanism accessor="MRS TCR2_EL1" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MRS &lt;Xt&gt;, TCR2_EL1</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b000"/>
+                
+                <enc n="CRn" v="0b0010"/>
+                
+                <enc n="CRm" v="0b0000"/>
+                
+                <enc n="op2" v="0b011"/>
+            </encoding>
+            <access_permission>
+                <ps name="MRS" sections="1" secttype="access_permission">
+                <pstext>
+if !(IsFeatureImplemented(FEAT_TCR2) &amp;&amp; IsFeatureImplemented(FEAT_AA64)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; SCR_EL3().TCR2En == '0' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; HCR_EL2().TRVM == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; IsFeatureImplemented(FEAT_FGT) &amp;&amp; (!HaveEL(EL3) || SCR_EL3().FGTEn == '1') &amp;&amp; HFGRTR_EL2().TCR_EL1 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; (!IsHCRXEL2Enabled() || HCRX_EL2().TCR2En == '0') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'111'} then
+        X{64}(t) = NVMem(0x270);
+    else
+        X{64}(t) = TCR2_EL1();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif ELIsInHost(EL2) then
+        X{64}(t) = TCR2_EL2();
+    else
+        X{64}(t) = TCR2_EL1();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = TCR2_EL1();
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+    
+        
+        <access_mechanism accessor="MSRregister TCR2_EL1" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MSR TCR2_EL1, &lt;Xt&gt;</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b000"/>
+                
+                <enc n="CRn" v="0b0010"/>
+                
+                <enc n="CRm" v="0b0000"/>
+                
+                <enc n="op2" v="0b011"/>
+            </encoding>
+            <access_permission>
+                <ps name="MSRregister" sections="1" secttype="access_permission">
+                <pstext>
+if !(IsFeatureImplemented(FEAT_TCR2) &amp;&amp; IsFeatureImplemented(FEAT_AA64)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; SCR_EL3().TCR2En == '0' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; HCR_EL2().TVM == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; IsFeatureImplemented(FEAT_FGT) &amp;&amp; (!HaveEL(EL3) || SCR_EL3().FGTEn == '1') &amp;&amp; HFGWTR_EL2().TCR_EL1 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; (!IsHCRXEL2Enabled() || HCRX_EL2().TCR2En == '0') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'111'} then
+        NVMem(0x270) = X{64}(t);
+    else
+        TCR2_EL1() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif ELIsInHost(EL2) then
+        TCR2_EL2() = X{64}(t);
+    else
+        TCR2_EL1() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL3 then
+    TCR2_EL1() = X{64}(t);
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+    
+        
+        <access_mechanism accessor="MRS TCR2_EL12" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MRS &lt;Xt&gt;, TCR2_EL12</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b101"/>
+                
+                <enc n="CRn" v="0b0010"/>
+                
+                <enc n="CRm" v="0b0000"/>
+                
+                <enc n="op2" v="0b011"/>
+            </encoding>
+            <access_permission>
+                <ps name="MRS" sections="1" secttype="access_permission">
+                <pstext>
+if !(IsFeatureImplemented(FEAT_TCR2) &amp;&amp; IsFeatureImplemented(FEAT_AA64)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; PSTATE.EL == EL2 &amp;&amp; EL3SDDUndefPriority() &amp;&amp; SCR_EL3().TCR2En == '0' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() == '101' then
+        X{64}(t) = NVMem(0x270);
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if ELIsInHost(EL2) then
+        if HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            X{64}(t) = TCR2_EL1();
+        end;
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL3 then
+    if ELIsInHost(EL2) then
+        X{64}(t) = TCR2_EL1();
+    else
+        Undefined();
+    end;
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+    
+        
+        <access_mechanism accessor="MSRregister TCR2_EL12" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MSR TCR2_EL12, &lt;Xt&gt;</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b101"/>
+                
+                <enc n="CRn" v="0b0010"/>
+                
+                <enc n="CRm" v="0b0000"/>
+                
+                <enc n="op2" v="0b011"/>
+            </encoding>
+            <access_condition>
+When FEAT_VHE is implemented
+            </access_condition>
+            <access_permission>
+                <ps name="MSRregister" sections="1" secttype="access_permission">
+                <pstext>
+if !(IsFeatureImplemented(FEAT_TCR2) &amp;&amp; IsFeatureImplemented(FEAT_AA64)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; PSTATE.EL == EL2 &amp;&amp; EL3SDDUndefPriority() &amp;&amp; SCR_EL3().TCR2En == '0' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EffectiveHCR_EL2_NVx() == '101' then
+        NVMem(0x270) = X{64}(t);
+    elsif EffectiveHCR_EL2_NVx() IN {'xx1'} then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL2 then
+    if ELIsInHost(EL2) then
+        if HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+            if EL3SDDUndef() then
+                Undefined();
+            else
+                AArch64_SystemAccessTrap(EL3, 0x18);
+            end;
+        else
+            TCR2_EL1() = X{64}(t);
+        end;
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL3 then
+    if ELIsInHost(EL2) then
+        TCR2_EL1() = X{64}(t);
+    else
+        Undefined();
+    end;
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+    
+        
+        <access_mechanism accessor="MRS TCR2ALIAS_EL1" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MRS &lt;Xt&gt;, TCR2ALIAS_EL1</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b000"/>
+                
+                <enc n="CRn" v="0b0010"/>
+                
+                <enc n="CRm" v="0b0111"/>
+                
+                <enc n="op2" v="0b111"/>
+            </encoding>
+            <access_condition>
+When FEAT_SRMASK is implemented
+            </access_condition>
+            <access_permission>
+                <ps name="MRS" sections="1" secttype="access_permission">
+                <pstext>
+if !(IsFeatureImplemented(FEAT_TCR2) &amp;&amp; IsFeatureImplemented(FEAT_AA64)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; SCR_EL3().TCR2En == '0' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; HCR_EL2().TRVM == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; IsFeatureImplemented(FEAT_FGT2) &amp;&amp; ((HaveEL(EL3) &amp;&amp; SCR_EL3().FGTEn2 == '0') || HFGRTR2_EL2().nTCR2ALIAS_EL1 == '0') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; (!IsHCRXEL2Enabled() || HCRX_EL2().TCR2En == '0') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'111'} then
+        X{64}(t) = NVMem(0x270);
+    else
+        X{64}(t) = TCR2_EL1();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif ELIsInHost(EL2) then
+        X{64}(t) = TCR2_EL2();
+    else
+        X{64}(t) = TCR2_EL1();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = TCR2_EL1();
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+    
+        
+        <access_mechanism accessor="MSRregister TCR2ALIAS_EL1" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MSR TCR2ALIAS_EL1, &lt;Xt&gt;</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b000"/>
+                
+                <enc n="CRn" v="0b0010"/>
+                
+                <enc n="CRm" v="0b0111"/>
+                
+                <enc n="op2" v="0b111"/>
+            </encoding>
+            <access_condition>
+When FEAT_SRMASK is implemented
+            </access_condition>
+            <access_permission>
+                <ps name="MSRregister" sections="1" secttype="access_permission">
+                <pstext>
+if !(IsFeatureImplemented(FEAT_TCR2) &amp;&amp; IsFeatureImplemented(FEAT_AA64)) then
+    Undefined();
+elsif HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; SCR_EL3().TCR2En == '0' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    Undefined();
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; HCR_EL2().TVM == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; IsFeatureImplemented(FEAT_FGT2) &amp;&amp; ((HaveEL(EL3) &amp;&amp; SCR_EL3().FGTEn2 == '0') || HFGWTR2_EL2().nTCR2ALIAS_EL1 == '0') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif EL2Enabled() &amp;&amp; (!IsHCRXEL2Enabled() || HCRX_EL2().TCR2En == '0') then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif EffectiveHCR_EL2_NVx() IN {'111'} then
+        NVMem(0x270) = X{64}(t);
+    else
+        TCR2_EL1() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; SCR_EL3().TCR2En == '0' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    elsif ELIsInHost(EL2) then
+        TCR2_EL2() = X{64}(t);
+    else
+        TCR2_EL1() = X{64}(t);
+    end;
+elsif PSTATE.EL == EL3 then
+    TCR2_EL1() = X{64}(t);
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+
+      </access_mechanisms>
+
+      <arch_variants>
+      </arch_variants>
+  </register>
+</registers>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_page>

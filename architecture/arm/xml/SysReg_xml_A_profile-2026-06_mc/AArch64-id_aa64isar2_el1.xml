@@ -1,0 +1,742 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_page SYSTEM "registers.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+
+<register_page>
+  <registers>
+  
+    <register execution_state="AArch64" is_register="True" is_internal="True" is_stub_entry="False">
+      <reg_short_name>ID_AA64ISAR2_EL1</reg_short_name>
+        
+        <reg_long_name>AArch64 Instruction Set Attribute Register 2</reg_long_name>
+
+
+
+      
+            <reg_condition otherwise="UNDEFINED">when FEAT_AA64 is implemented</reg_condition>
+      
+
+
+
+
+          <reg_reset_value></reg_reset_value>
+
+      <reg_mappings>
+        
+
+
+
+
+      </reg_mappings>
+
+        <reg_purpose>
+          
+    
+      <purpose_text>
+        <para>Provides information about the features and instructions implemented in AArch64 state.</para>
+
+      </purpose_text>
+      <purpose_text>
+        <para>For general information about the interpretation of the ID registers, see <xref linkend="#BABFAFHI">'Principles of the ID scheme for fields in ID registers'</xref>.</para>
+      </purpose_text>
+
+        </reg_purpose>
+
+      <reg_groups>
+          <reg_group>Identification Registers</reg_group>
+      </reg_groups>
+      <reg_configuration>
+        
+    
+      <configuration_text>
+        <note><para>Prior to the introduction of the features described by this register, this register was unnamed and reserved, <arm-defined-word>RES0</arm-defined-word> from EL1, EL2, and EL3.</para></note>
+      </configuration_text>
+
+      </reg_configuration>
+      
+      
+        
+      <reg_attributes>
+          
+    
+      <attributes_text>
+        <para>ID_AA64ISAR2_EL1 is a 64-bit register.</para>
+      </attributes_text>
+
+      </reg_attributes>
+      <reg_fieldsets>
+        
+
+
+
+
+
+
+<fields id="fieldset_0" length="64">
+  <text_before_fields/>
+  <field id="fieldset_0-63_60" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>ATS1A</field_name>
+    <field_msb>63</field_msb>
+    <field_lsb>60</field_lsb>
+    <rel_range>63:60</rel_range>
+    <field_description order="before">
+      <para>Indicates support for address translation instructions, which perform stage 1 address translation for the given virtual address without checking for stage 1 permissions.</para>
+    </field_description>
+    <field_description order="after">
+      <para>All other values are reserved.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>Address Translate Stage 1 instructions without Permissions Checks are not implemented</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>Address Translate Stage 1 instructions without Permissions Checks are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-59_56" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>LUT</field_name>
+    <field_msb>59</field_msb>
+    <field_lsb>56</field_lsb>
+    <rel_range>59:56</rel_range>
+    <field_description order="before"><para>Indicates support for:</para>
+<list type="unordered">
+<listitem><content>
+<para>Advanced SIMD lookup table instructions with 2-bit and 4-bit indices.</para>
+</content>
+</listitem><listitem><content>
+<para>If <xref linkend="#FEAT_SVE2">FEAT_SVE2</xref> or <xref linkend="#FEAT_SME2">FEAT_SME2</xref> is implemented, SVE lookup table instructions with 2-bit and 4-bit indices.</para>
+</content>
+</listitem></list></field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_LUT">FEAT_LUT</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para>From Armv9.5, if <xref linkend="#FEAT_AdvSIMD">FEAT_AdvSIMD</xref> is implemented, the value <binarynumber>0b0000</binarynumber> is not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>Lookup table instructions with 2-bit indices <instruction>LUTI2</instruction> and 4-bit indices <instruction>LUTI4</instruction> are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-55_52" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>CSSC</field_name>
+    <field_msb>55</field_msb>
+    <field_lsb>52</field_lsb>
+    <rel_range>55:52</rel_range>
+    <field_description order="before"><para>Indicates support for common short sequence compression instructions.</para>
+<para>If <xref linkend="#FEAT_CMPBR">FEAT_CMPBR</xref> is implemented, indicates support for compare and branch instructions.</para></field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_CSSC">FEAT_CSSC</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para><xref linkend="#FEAT_CMPBR">FEAT_CMPBR</xref> implements the functionality identified by the value <binarynumber>0b0010</binarynumber>.</para>
+<para>From Armv9.4, the value <binarynumber>0b0000</binarynumber> is not permitted.</para>
+<para>From Armv9.6, the value <binarynumber>0b0001</binarynumber> is not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>Common short sequence compression instructions are not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description><para>The following common short sequence compression instructions are implemented:</para>
+<list type="unordered">
+<listitem><content>32-bit and 64-bit <instruction>ABS</instruction>, <instruction>CNT</instruction>, <instruction>CTZ</instruction></content>
+</listitem><listitem><content>32-bit <instruction>SMAX</instruction>, <instruction>UMAX</instruction>, <instruction>SMIN</instruction>, <instruction>UMIN</instruction> (immediate).</content>
+</listitem><listitem><content>64-bit <instruction>SMAX</instruction>, <instruction>UMAX</instruction>, <instruction>SMIN</instruction>, <instruction>UMIN</instruction> (immediate).</content>
+</listitem><listitem><content>32-bit <instruction>SMAX</instruction>, <instruction>UMAX</instruction>, <instruction>SMIN</instruction>, <instruction>UMIN</instruction> (register).</content>
+</listitem><listitem><content>64-bit <instruction>SMAX</instruction>, <instruction>UMAX</instruction>, <instruction>SMIN</instruction>, <instruction>UMIN</instruction> (register).</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0010</field_value>
+        <field_value_description><para>As <binarynumber>0b0001</binarynumber>, and adds compare and branch instructions:</para>
+<list type="unordered">
+<listitem><content><instruction>CBB</instruction>&lt;cc&gt;.</content>
+</listitem><listitem><content><instruction>CB</instruction>&lt;cc&gt; (immediate), <instruction>CB</instruction>&lt;cc&gt; (register).</content>
+</listitem><listitem><content><instruction>CBH</instruction>&lt;cc&gt;.</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-51_48" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>RPRFM</field_name>
+    <field_msb>51</field_msb>
+    <field_lsb>48</field_lsb>
+    <rel_range>51:48</rel_range>
+    <field_description order="before">
+      <para>RPRFM hint instruction.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_RPRFM">FEAT_RPRFM</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para><instruction>RPRFM</instruction> hint instruction is not implemented and is treated as a NOP.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para><instruction>RPRFM</instruction> hint instruction is implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-47_44" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>PCDPHINT</field_name>
+    <field_msb>47</field_msb>
+    <field_lsb>44</field_lsb>
+    <rel_range>47:44</rel_range>
+    <field_description order="before">
+      <para>Indicates support for producer-consumer data placement hints.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_PCDPHINT">FEAT_PCDPHINT</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The <instruction>STSHH</instruction> and <instruction>PRFM IR</instruction> hint instructions are not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>The <instruction>STSHH</instruction> and <instruction>PRFM IR</instruction> hint instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-43_40" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>PRFMSLC</field_name>
+    <field_msb>43</field_msb>
+    <field_lsb>40</field_lsb>
+    <rel_range>43:40</rel_range>
+    <field_description order="before">
+      <para>Indicates whether the <instruction>PRFM</instruction> and <instruction>PRFUM</instruction> instructions support a system level cache option.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_PRFMSLC">FEAT_PRFMSLC</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The <instruction>PRFM</instruction> and <instruction>PRFUM</instruction> instructions do not support the SLC target.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>The <instruction>PRFM</instruction> and <instruction>PRFUM</instruction> instructions support the SLC target.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-39_36" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SYSINSTR_128</field_name>
+    <field_msb>39</field_msb>
+    <field_lsb>36</field_lsb>
+    <rel_range>39:36</rel_range>
+    <field_description order="before">
+      <para>SYSINSTR_128. Indicates support for System instructions that can take 128-bit inputs.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_SYSINSTR128">FEAT_SYSINSTR128</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>System instructions that can take 128-bit inputs are not supported.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>System instructions that can take 128-bit inputs are supported.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-35_32" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SYSREG_128</field_name>
+    <field_msb>35</field_msb>
+    <field_lsb>32</field_lsb>
+    <rel_range>35:32</rel_range>
+    <field_description order="before">
+      <para>SYSREG_128. Indicates support for instructions to access 128-bit System Registers.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_SYSREG128">FEAT_SYSREG128</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>Instructions to access 128-bit System Registers are not supported.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>Instructions to access 128-bit System Registers are supported.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-31_28" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>CLRBHB</field_name>
+    <field_msb>31</field_msb>
+    <field_lsb>28</field_lsb>
+    <rel_range>31:28</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the <instruction>CLRBHB</instruction> instruction in AArch64 state.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_CLRBHB">FEAT_CLRBHB</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para>From Armv8.9, the value <binarynumber>0b0000</binarynumber> is not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para><instruction>CLRBHB</instruction> instruction is not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para><instruction>CLRBHB</instruction> instruction is implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-27_24" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>PAC_frac</field_name>
+    <field_msb>27</field_msb>
+    <field_lsb>24</field_lsb>
+    <rel_range>27:24</rel_range>
+    <field_description order="before">
+      <para>Indicates which address bit is used to determine the size of the PAC field.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_CONSTPACFIELD">FEAT_CONSTPACFIELD</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para>From Armv8.3, the permitted values are <binarynumber>0b0000</binarynumber> and <binarynumber>0b0001</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The address bit which is used to define the size of the PAC field is dependent on whether address tagging is used.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>The address bit which is used to define the size of the PAC field is fixed.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-23_20" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>BC</field_name>
+    <field_msb>23</field_msb>
+    <field_lsb>20</field_lsb>
+    <rel_range>23:20</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the <instruction>BC</instruction> instruction in AArch64 state.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_HBC">FEAT_HBC</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para>From Armv8.8, the value <binarynumber>0b0000</binarynumber> is not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para><instruction>BC</instruction> instruction is not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para><instruction>BC</instruction> instruction is implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-19_16" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>MOPS</field_name>
+    <field_msb>19</field_msb>
+    <field_lsb>16</field_lsb>
+    <rel_range>19:16</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the Memory Copy and Memory Set instructions in AArch64 state.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_MOPS">FEAT_MOPS</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para>From Armv8.8, the value <binarynumber>0b0000</binarynumber> is not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The Memory Copy and Memory Set instructions are not implemented in AArch64 state.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>The Memory Copy and Memory Set instructions are implemented in AArch64 state with the following exception. If <xref linkend="#FEAT_MTE">FEAT_MTE</xref> is implemented, then <instruction>SETGP*</instruction>, <instruction>SETGM*</instruction> and <instruction>SETGE*</instruction> instructions are also supported.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-15_12" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>APA3</field_name>
+    <field_msb>15</field_msb>
+    <field_lsb>12</field_lsb>
+    <rel_range>15:12</rel_range>
+    <field_description order="before">
+      <para>Indicates whether the QARMA3 algorithm is implemented in the PE for address authentication in AArch64 state. This applies to all Pointer Authentication instructions other than the <instruction>PACGA</instruction> instruction.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_PAuth">FEAT_PAuth</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para><xref linkend="#FEAT_EPAC">FEAT_EPAC</xref> implements the functionality identified by the value <binarynumber>0b0010</binarynumber>.</para>
+<para><xref linkend="#FEAT_PAuth2">FEAT_PAuth2</xref> implements the functionality identified by the value <binarynumber>0b0011</binarynumber>.</para>
+<para><xref linkend="#FEAT_FPAC">FEAT_FPAC</xref> implements the functionality identified by the value <binarynumber>0b0100</binarynumber>.</para>
+<para><xref linkend="#FEAT_FPACCOMBINE">FEAT_FPACCOMBINE</xref> implements the functionality identified by the value <binarynumber>0b0101</binarynumber>.</para>
+<para><xref linkend="#FEAT_PAuth_LR">FEAT_PAuth_LR</xref> implements the functionality identified by the value <binarynumber>0b0110</binarynumber>.</para>
+<para>When this field is nonzero, <xref linkend="#FEAT_PACQARMA3">FEAT_PACQARMA3</xref> is implemented.</para>
+<para>In Armv8.3, the permitted values are <binarynumber>0b0000</binarynumber>, <binarynumber>0b0001</binarynumber>, <binarynumber>0b0010</binarynumber>, <binarynumber>0b0011</binarynumber>, <binarynumber>0b0100</binarynumber>, and <binarynumber>0b0101</binarynumber>.</para>
+<para>From Armv8.6, the permitted values are <binarynumber>0b0000</binarynumber>, <binarynumber>0b0011</binarynumber>, <binarynumber>0b0100</binarynumber>, and <binarynumber>0b0101</binarynumber>.</para>
+<para>From Armv9.5, the permitted values are <binarynumber>0b0000</binarynumber>, <binarynumber>0b0011</binarynumber>, <binarynumber>0b0100</binarynumber>, <binarynumber>0b0101</binarynumber>, and <binarynumber>0b0110</binarynumber>.</para>
+<para>If the value of <register_link state="AArch64" id="AArch64-id_aa64isar1_el1.xml">ID_AA64ISAR1_EL1</register_link>.API is nonzero, or the value of <register_link state="AArch64" id="AArch64-id_aa64isar1_el1.xml">ID_AA64ISAR1_EL1</register_link>.APA is nonzero, this field must have the value <binarynumber>0b0000</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>Address Authentication using the QARMA3 algorithm is not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>Address Authentication using the QARMA3 algorithm is implemented, FEAT_EPAC and FEAT_PAuth2 are not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0010</field_value>
+        <field_value_description>
+          <para>Address Authentication using the QARMA3 algorithm is implemented, <xref linkend="#FEAT_EPAC">FEAT_EPAC</xref> is implemented, and FEAT_PAuth2 is not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0011</field_value>
+        <field_value_description>
+          <para>Address Authentication using the QARMA3 algorithm is implemented, FEAT_EPAC is not implemented, and <xref linkend="#FEAT_PAuth2">FEAT_PAuth2</xref> is implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0100</field_value>
+        <field_value_description>
+          <para>Address Authentication using the QARMA3 algorithm is implemented, FEAT_EPAC is not implemented, <xref linkend="#FEAT_PAuth2">FEAT_PAuth2</xref> and <xref linkend="#FEAT_FPAC">FEAT_FPAC</xref> are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0101</field_value>
+        <field_value_description>
+          <para>Address Authentication using the QARMA3 algorithm is implemented, FEAT_EPAC is not implemented, <xref linkend="#FEAT_PAuth2">FEAT_PAuth2</xref>, <xref linkend="#FEAT_FPAC">FEAT_FPAC</xref>, and <xref linkend="#FEAT_FPACCOMBINE">FEAT_FPACCOMBINE</xref> are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0110</field_value>
+        <field_value_description>
+          <para>Address Authentication using the QARMA3 algorithm is implemented, including instructions that allow signing of LR using SP and PC as diversifiers, FEAT_EPAC is not implemented, <xref linkend="#FEAT_PAuth2">FEAT_PAuth2</xref>, <xref linkend="#FEAT_FPAC">FEAT_FPAC</xref>, <xref linkend="#FEAT_FPACCOMBINE">FEAT_FPACCOMBINE</xref>, and <xref linkend="#FEAT_PAuth_LR">FEAT_PAuth_LR</xref> are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-11_8" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>GPA3</field_name>
+    <field_msb>11</field_msb>
+    <field_lsb>8</field_lsb>
+    <rel_range>11:8</rel_range>
+    <field_description order="before">
+      <para>Indicates whether the QARMA3 algorithm is implemented in the PE for generic code authentication in AArch64 state.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_PACQARMA3">FEAT_PACQARMA3</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para>When this field is nonzero, <xref linkend="#FEAT_PACQARMA3">FEAT_PACQARMA3</xref> is implemented.</para>
+<para>From Armv8.3, the permitted values are <binarynumber>0b0000</binarynumber> and <binarynumber>0b0001</binarynumber>.</para>
+<para>If the value of <register_link state="AArch64" id="AArch64-id_aa64isar1_el1.xml">ID_AA64ISAR1_EL1</register_link>.GPI is nonzero, or the value of <register_link state="AArch64" id="AArch64-id_aa64isar1_el1.xml">ID_AA64ISAR1_EL1</register_link>.GPA is nonzero, this field must have the value <binarynumber>0b0000</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>Generic Authentication using the QARMA3 algorithm is not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>Generic Authentication using the QARMA3 algorithm is implemented. This includes the <instruction>PACGA</instruction> instruction.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-7_4" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>RPRES</field_name>
+    <field_msb>7</field_msb>
+    <field_lsb>4</field_lsb>
+    <rel_range>7:4</rel_range>
+    <field_description order="before">
+      <para>Indicates support for 12 bits of mantissa in single-precision reciprocal and reciprocal square root instructions in AArch64 state, when <register_link state="AArch64" id="AArch64-fpcr.xml">FPCR</register_link>.AH is 1.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_RPRES">FEAT_RPRES</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para>When <register_link state="AArch64" id="AArch64-fpcr.xml">FPCR</register_link>.AH is 0, the floating-point reciprocal estimate and reciprocal square root estimate instructions give 8 bits of mantissa.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>Single-precision reciprocal and reciprocal square root estimates give 8 bits of mantissa, when <register_link state="AArch64" id="AArch64-fpcr.xml">FPCR</register_link>.AH is 1.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>Single-precision reciprocal and reciprocal square root estimates give 12 bits of mantissa, when <register_link state="AArch64" id="AArch64-fpcr.xml">FPCR</register_link>.AH is 1.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-3_0" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>WFxT</field_name>
+    <field_msb>3</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>3:0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the <instruction>WFET</instruction> and <instruction>WFIT</instruction> instructions in AArch64 state.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_WFxT">FEAT_WFxT</xref> implements the functionality identified by the value <binarynumber>0b0010</binarynumber>.</para>
+<para>From Armv8.7, the only permitted value is <binarynumber>0b0010</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para><instruction>WFET</instruction> and <instruction>WFIT</instruction> are not supported.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0010</field_value>
+        <field_value_description>
+          <para><instruction>WFET</instruction> and <instruction>WFIT</instruction> are supported, and the register number is reported in the <xref linkend="#ESR_ELx">ESR_ELx</xref> on exceptions.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <text_after_fields/>
+</fields>
+
+
+
+
+<reg_fieldset length="64">
+  <fieldat id="fieldset_0-63_60" msb="63" lsb="60"/>
+  <fieldat id="fieldset_0-59_56" msb="59" lsb="56"/>
+  <fieldat id="fieldset_0-55_52" msb="55" lsb="52"/>
+  <fieldat id="fieldset_0-51_48" msb="51" lsb="48"/>
+  <fieldat id="fieldset_0-47_44" msb="47" lsb="44"/>
+  <fieldat id="fieldset_0-43_40" msb="43" lsb="40"/>
+  <fieldat id="fieldset_0-39_36" msb="39" lsb="36"/>
+  <fieldat id="fieldset_0-35_32" msb="35" lsb="32"/>
+  <fieldat id="fieldset_0-31_28" msb="31" lsb="28"/>
+  <fieldat id="fieldset_0-27_24" msb="27" lsb="24"/>
+  <fieldat id="fieldset_0-23_20" msb="23" lsb="20"/>
+  <fieldat id="fieldset_0-19_16" msb="19" lsb="16"/>
+  <fieldat id="fieldset_0-15_12" msb="15" lsb="12"/>
+  <fieldat id="fieldset_0-11_8" msb="11" lsb="8"/>
+  <fieldat id="fieldset_0-7_4" msb="7" lsb="4"/>
+  <fieldat id="fieldset_0-3_0" msb="3" lsb="0"/>
+</reg_fieldset>
+
+
+      </reg_fieldsets>
+
+      <access_mechanisms>
+          
+
+
+
+
+
+
+    
+        
+        <access_mechanism accessor="MRS ID_AA64ISAR2_EL1" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MRS &lt;Xt&gt;, ID_AA64ISAR2_EL1</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b000"/>
+                
+                <enc n="CRn" v="0b0000"/>
+                
+                <enc n="CRm" v="0b0110"/>
+                
+                <enc n="op2" v="0b010"/>
+            </encoding>
+            <access_permission>
+                <ps name="MRS" sections="1" secttype="access_permission">
+                <pstext>
+if !IsFeatureImplemented(FEAT_AA64) then
+    UnimplementedIDRegister();
+elsif HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    if IsFeatureImplemented(FEAT_IDST) then
+        AArch64_SystemAccessTraptoEL1orEL2(0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; (IsFeatureImplemented(FEAT_FGT) || !IsZero(ID_AA64ISAR2_EL1()) || ImpDefBool("ID_AA64ISAR2_EL1 trapped by HCR_EL2.TID3")) &amp;&amp; HCR_EL2().TID3 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = ID_AA64ISAR2_EL1();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = ID_AA64ISAR2_EL1();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = ID_AA64ISAR2_EL1();
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+
+      </access_mechanisms>
+
+      <arch_variants>
+      </arch_variants>
+  </register>
+</registers>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_page>

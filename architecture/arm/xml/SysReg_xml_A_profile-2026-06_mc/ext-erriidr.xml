@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_page SYSTEM "registers.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+
+<register_page>
+  <registers>
+  
+    <register is_register="True" is_internal="False" is_stub_entry="False">
+      <reg_short_name>ERRIIDR</reg_short_name>
+        
+        <reg_long_name>Implementation Identification Register</reg_long_name>
+
+
+
+      
+            <reg_condition otherwise="RES0">when RAS System Architecture v1p1 is implemented</reg_condition>
+      
+
+    
+  <reg_address
+      external_access="False"
+    mem_map_access="True"
+      power_domain="None"
+  >
+    <reg_component>RAS</reg_component>
+    <reg_offset><hexnumber>0xE10</hexnumber></reg_offset>
+    <reg_instance>ERRIIDR</reg_instance>
+    <reg_access>
+      
+        
+      <reg_access_state>
+          <reg_access_type>RO</reg_access_type>
+      </reg_access_state>
+    </reg_access>
+</reg_address>
+
+
+
+          <reg_reset_value></reg_reset_value>
+
+      <reg_mappings>
+        
+
+
+
+
+      </reg_mappings>
+
+        <reg_purpose>
+          
+    
+      <purpose_text>
+        <para>Defines the implementer of the component.</para>
+      </purpose_text>
+
+        </reg_purpose>
+
+      <reg_groups>
+          <reg_group>RAS</reg_group>
+      </reg_groups>
+      
+      
+        
+      <reg_attributes>
+          
+    
+      <attributes_text>
+        <para>ERRIIDR is a 32-bit register.</para>
+      </attributes_text>
+
+      </reg_attributes>
+      <reg_fieldsets>
+        
+
+
+
+
+
+
+<fields id="fieldset_0" length="32">
+  <text_before_fields/>
+  <field id="fieldset_0-31_20" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>ProductID</field_name>
+    <field_msb>31</field_msb>
+    <field_lsb>20</field_lsb>
+    <rel_range>31:20</rel_range>
+    <field_description order="before">
+      <para>Part number, bits [11:0]. The part number is selected by the designer of the component.</para>
+    </field_description>
+    <field_description order="after"><para>If <register_link state="ext" id="ext-errpidr0.xml">ERRPIDR0</register_link> and <register_link state="ext" id="ext-errpidr1.xml">ERRPIDR1</register_link> are implemented, <register_link state="ext" id="ext-errpidr0.xml">ERRPIDR0</register_link>.PART_0 matches bits [7:0] of ERRIIDR.ProductID and <register_link state="ext" id="ext-errpidr1.xml">ERRPIDR1</register_link>.PART_1 matches bits [11:8] of ERRIIDR.ProductID.</para>
+<para>This field has an <arm-defined-word>IMPLEMENTATION DEFINED</arm-defined-word> value.</para></field_description>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-19_16" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>Variant</field_name>
+    <field_msb>19</field_msb>
+    <field_lsb>16</field_lsb>
+    <rel_range>19:16</rel_range>
+    <field_description order="before"><para>Component major revision.</para>
+<para>This field distinguishes product variants or major revisions of the product.</para></field_description>
+    <field_description order="after"><para>If <register_link state="ext" id="ext-errpidr2.xml">ERRPIDR2</register_link> is implemented, <register_link state="ext" id="ext-errpidr2.xml">ERRPIDR2</register_link>.REVISION matches ERRIIDR.Variant.</para>
+<para>This field has an <arm-defined-word>IMPLEMENTATION DEFINED</arm-defined-word> value.</para></field_description>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-15_12" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>Revision</field_name>
+    <field_msb>15</field_msb>
+    <field_lsb>12</field_lsb>
+    <rel_range>15:12</rel_range>
+    <field_description order="before"><para>Component minor revision.</para>
+<para>This field distinguishes minor revisions of the product.</para></field_description>
+    <field_description order="after"><para>If <register_link state="ext" id="ext-errpidr3.xml">ERRPIDR3</register_link> is implemented, <register_link state="ext" id="ext-errpidr3.xml">ERRPIDR3</register_link>.REVAND matches ERRIIDR.Revision.</para>
+<para>This field has an <arm-defined-word>IMPLEMENTATION DEFINED</arm-defined-word> value.</para></field_description>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-11_0" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>Implementer</field_name>
+    <field_msb>11</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>11:0</rel_range>
+    <field_description order="before"><para>Contains the JEP106 manufacturer's identification code of the designer of the RAS component.</para>
+<para>The code identifies the designer of the component, which might not be the same as the implementer of the device containing the component.</para>
+<para>Zero is not a valid JEP106 identification code, meaning a value of zero for ERRIIDR indicates this register is not implemented.</para>
+<para>For an implementation designed by Arm, this field reads as <hexnumber>0x43B</hexnumber>.</para>
+<para>Bits [11:8] contain the JEP106 bank identifier of the designer minus 1.</para>
+<para>Bit 7 is <arm-defined-word>RES0</arm-defined-word>.</para>
+<para>Bits [6:0] contain bits [6:0] of the JEP106 manufacturer's identification code of the designer.</para>
+<para>If <register_link id="ext.errpidr4.xml" state="">ERRPIDR4</register_link> is implemented, <register_link id="ext.errpidr4.xml" state="">ERRPIDR4</register_link>.DES_2 matches bits [11:8] of this field.</para>
+<para>If <register_link id="ext.errpidr2.xml" state="">ERRPIDR2</register_link> is implemented, <register_link id="ext.errpidr2.xml" state="">ERRPIDR2</register_link>.DES_1 matches bits [6:4] of this field.</para>
+<para>If <register_link id="ext.errpidr1.xml" state="">ERRPIDR1</register_link> is implemented, <register_link id="ext.errpidr1.xml" state="">ERRPIDR1</register_link>.DES_0 matches bits [3:0] of this field.</para></field_description>
+    <field_description order="after">
+      <para>This field has an <arm-defined-word>IMPLEMENTATION DEFINED</arm-defined-word> value.</para>
+    </field_description>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <text_after_fields/>
+</fields>
+
+
+
+
+<reg_fieldset length="32">
+  <fieldat id="fieldset_0-31_20" msb="31" lsb="20"/>
+  <fieldat id="fieldset_0-19_16" msb="19" lsb="16"/>
+  <fieldat id="fieldset_0-15_12" msb="15" lsb="12"/>
+  <fieldat id="fieldset_0-11_0" msb="11" lsb="0"/>
+</reg_fieldset>
+
+
+      </reg_fieldsets>
+
+      <access_mechanisms>
+          
+
+
+  
+    
+      <access_permission_text>
+        <para>This section shows the offset of ERRIIDR when FEAT_RASSA_4KB_GRP is implemented.
+If FEAT_RASSA_16KB_GRP or FEAT_RASSA_64KB_GRP is implemented, see <xref linkend="#RAS_registers_view">RAS memory-mapped register views</xref> for the offset of ERRIIDR.</para>
+      </access_permission_text>
+
+
+
+
+
+    
+
+      </access_mechanisms>
+
+      <arch_variants>
+      </arch_variants>
+  </register>
+</registers>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_page>

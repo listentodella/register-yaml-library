@@ -1,0 +1,1102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_page SYSTEM "registers.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+
+<register_page>
+  <registers>
+  
+    <register execution_state="AArch64" is_register="True" is_internal="True" is_stub_entry="False">
+      <reg_short_name>ID_AA64SMFR0_EL1</reg_short_name>
+        
+        <reg_long_name>SME Feature ID Register 0</reg_long_name>
+
+
+
+      
+      
+
+
+
+
+          <reg_reset_value></reg_reset_value>
+
+      <reg_mappings>
+        
+
+
+
+
+      </reg_mappings>
+
+        <reg_purpose>
+          
+    
+      <purpose_text>
+        <para>Provides information about the implemented features of the AArch64 Scalable Matrix Extension.</para>
+
+      </purpose_text>
+      <purpose_text>
+        <para>The fields in this register do not follow the standard ID scheme. See <xref linkend="#BABCEGGHG6">Alternative ID scheme used for ID_AA64SMFR0_EL1 and ID_AA64FPFR0_EL1</xref>.</para>
+      </purpose_text>
+
+        </reg_purpose>
+
+      <reg_groups>
+          <reg_group>Identification Registers</reg_group>
+      </reg_groups>
+      <reg_configuration>
+        
+    
+      <configuration_text>
+        <note><para>Prior to the introduction of the features described by this register, this register was unnamed and reserved, <arm-defined-word>RES0</arm-defined-word> from EL1, EL2, and EL3.</para></note>
+      </configuration_text>
+
+      </reg_configuration>
+      
+      
+        
+      <reg_attributes>
+          
+    
+      <attributes_text>
+        <para>ID_AA64SMFR0_EL1 is a 64-bit register.</para>
+      </attributes_text>
+
+      </reg_attributes>
+      <reg_fieldsets>
+        
+
+
+
+
+
+
+<fields id="fieldset_0" length="64">
+  <text_before_fields/>
+  <field id="fieldset_0-63_63" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>FA64</field_name>
+    <field_msb>63</field_msb>
+    <field_lsb>63</field_lsb>
+    <rel_range>63</rel_range>
+    <field_description order="before">
+      <para>Indicates support at each Exception Level for execution of the full AArch64 Advanced SIMD and SVE instruction sets when the PE is in Streaming SVE mode.</para>
+    </field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_SME_FA64">FEAT_SME_FA64</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>Only those AArch64 instructions defined as being legal can be executed in streaming SVE mode.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>All implemented AArch64 instructions are legal for execution in Streaming SVE mode, when enabled by <register_link state="AArch64" id="AArch64-smcr_el1.xml">SMCR_EL1</register_link>.FA64, <register_link state="AArch64" id="AArch64-smcr_el2.xml">SMCR_EL2</register_link>.FA64, and <register_link state="AArch64" id="AArch64-smcr_el3.xml">SMCR_EL3</register_link>.FA64.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-62_61" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>62</field_msb>
+    <field_lsb>61</field_lsb>
+    <rel_range>62:61</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-60_60" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>LUTv2</field_name>
+    <field_msb>60</field_msb>
+    <field_lsb>60</field_lsb>
+    <rel_range>60</rel_range>
+    <field_description order="before"><para>Indicates support for the following additional variants of SME2 lookup table <instruction>LUTI4</instruction> and <instruction>MOVT</instruction> instructions:</para>
+<list type="unordered">
+<listitem><content>A <instruction>LUTI4</instruction> instruction with 8-bit result elements, two consecutively numbered source vectors, and four consecutively numbered destination vectors.</content>
+</listitem><listitem><content>If <xref linkend="#FEAT_SME2p1">FEAT_SME2p1</xref> is implemented, a <instruction>LUTI4</instruction> instruction with 8-bit result elements, two consecutively numbered source vectors, and four destination vectors with strided register numbering.</content>
+</listitem><listitem><content>A <instruction>MOVT</instruction> instruction that copies a single Z source vector to ZT0.</content>
+</listitem></list></field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_SME_LUTv2">FEAT_SME_LUTv2</xref> implements the functionality identified by the value 1.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-59_56-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>SMEver</field_name>
+    <field_msb>59</field_msb>
+    <field_lsb>56</field_lsb>
+    <rel_range>3:0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SME instructions.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_SME2">FEAT_SME2</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para><xref linkend="#FEAT_SME2p1">FEAT_SME2p1</xref> implements the functionality identified by the value <binarynumber>0b0010</binarynumber>.</para>
+<para>From Armv9.4, the value <binarynumber>0b0001</binarynumber> is not permitted.</para>
+<para><xref linkend="#FEAT_SME2p2">FEAT_SME2p2</xref> implements the functionality identified by <binarynumber>0b0011</binarynumber>.</para>
+<para>From Armv9.6, the values <binarynumber>0b0000</binarynumber> and <binarynumber>0b0010</binarynumber> are not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The mandatory SME instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>As <binarynumber>0b0000</binarynumber>, and adds the mandatory SME2 instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0010</field_value>
+        <field_value_description>
+          <para>As <binarynumber>0b0001</binarynumber>, and adds the mandatory SME2.1 instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0011</field_value>
+        <field_value_description>
+          <para>As <binarynumber>0b0010</binarynumber>, and adds the mandatory SME2.2 instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_SME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-59_56-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>59</field_msb>
+    <field_lsb>56</field_lsb>
+    <rel_range>59:56</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-55_52" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>I16I64</field_name>
+    <field_msb>55</field_msb>
+    <field_lsb>52</field_lsb>
+    <rel_range>55:52</rel_range>
+    <field_description order="before"><para>Indicates support for the following SME instructions that accumulate into 64-bit integer elements in the ZA array:</para>
+<list type="unordered">
+<listitem><content>The variants of the <instruction>ADDHA</instruction>, <instruction>ADDVA</instruction>, <instruction>SMOPA</instruction>, <instruction>SMOPS</instruction>, <instruction>SUMOPA</instruction>, <instruction>SUMOPS</instruction>, <instruction>UMOPA</instruction>, <instruction>UMOPS</instruction>, <instruction>USMOPA</instruction>, and <instruction>USMOPS</instruction> instructions that accumulate into 64-bit integer tiles.</content>
+</listitem><listitem><content>When <xref linkend="#FEAT_SME2">FEAT_SME2</xref> is implemented, the variants of the <instruction>ADD</instruction>, <instruction>ADDA</instruction>, <instruction>SDOT</instruction>, <instruction>SMLALL</instruction>, <instruction>SMLSLL</instruction>, <instruction>SUB</instruction>, <instruction>SUBA</instruction>, <instruction>SVDOT</instruction>, <instruction>UDOT</instruction>, <instruction>UMLALL</instruction>, <instruction>UMLSLL</instruction>, and <instruction>UVDOT</instruction> instructions that accumulate into 64-bit integer elements in ZA array vectors.</content>
+</listitem></list></field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_SME_I16I64">FEAT_SME_I16I64</xref> implements the functionality identified by the value <binarynumber>0b1111</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1111</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-51_49" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>51</field_msb>
+    <field_lsb>49</field_lsb>
+    <rel_range>51:49</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-48_48" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F64F64</field_name>
+    <field_msb>48</field_msb>
+    <field_lsb>48</field_lsb>
+    <rel_range>48</rel_range>
+    <field_description order="before"><para>Indicates support for the following SME instructions that accumulate into double-precision floating-point elements in the ZA array:</para>
+<list type="unordered">
+<listitem><content>The variants of the <instruction>FMOPA</instruction> and <instruction>FMOPS</instruction> instructions that accumulate into double-precision tiles.</content>
+</listitem><listitem><content>When <xref linkend="#FEAT_SME2">FEAT_SME2</xref> is implemented, the variants of the <instruction>FADD</instruction>, <instruction>FMLA</instruction>, <instruction>FMLS</instruction>, and <instruction>FSUB</instruction> instructions that accumulate into double-precision elements in ZA array vectors.</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_SME_F64F64">FEAT_SME_F64F64</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented .</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-47_44-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>I16I32</field_name>
+    <field_msb>47</field_msb>
+    <field_lsb>44</field_lsb>
+    <rel_range>3:0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SME2 <instruction>SMOPA</instruction> (2-way), <instruction>SMOPS</instruction> (2-way), <instruction>UMOPA</instruction> (2-way), and <instruction>UMOPS</instruction> (2-way) instructions that accumulate 16-bit outer products into 32-bit integer tiles.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para>If <xref linkend="#FEAT_SME2">FEAT_SME2</xref> is implemented, the value <binarynumber>0b0000</binarynumber> is not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0101</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_SME2 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-47_44-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>47</field_msb>
+    <field_lsb>44</field_lsb>
+    <rel_range>47:44</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-43_43" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>B16B16</field_name>
+    <field_msb>43</field_msb>
+    <field_lsb>43</field_lsb>
+    <rel_range>43</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SME ZA-targeting non-widening BFloat16 <instruction>BFADD</instruction>, <instruction>BFMLA</instruction>, <instruction>BFMLS</instruction>, <instruction>BFMOPA</instruction>, <instruction>BFMOPS</instruction>, and <instruction>BFSUB</instruction> instructions with BFloat16 operands and results.</para>
+    </field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_SME_B16B16">FEAT_SME_B16B16</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-42_42" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F16F16</field_name>
+    <field_msb>42</field_msb>
+    <field_lsb>42</field_lsb>
+    <rel_range>42</rel_range>
+    <field_description order="before"><para>Indicates support for the following SME2 half-precision floating-point instructions:</para>
+<list type="unordered">
+<listitem><content><instruction>FMOPA</instruction> and <instruction>FMOPS</instruction> instructions that accumulate half-precision outer-products into half-precision tiles.</content>
+</listitem><listitem><content>Multi-vector <instruction>FADD</instruction>, <instruction>FMLA</instruction>, <instruction>FMLS</instruction>, and <instruction>FSUB</instruction> instructions with half-precision operands and results.</content>
+</listitem><listitem><content>Multi-vector <instruction>FCVT</instruction> and <instruction>FCVTL</instruction> instructions that convert half-precision inputs to single-precision results.</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_SME_F16F16">FEAT_SME_F16F16</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-41_41" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8F16</field_name>
+    <field_msb>41</field_msb>
+    <field_lsb>41</field_lsb>
+    <rel_range>41</rel_range>
+    <field_description order="before"><para>Indicates support for the following SME2 instructions:</para>
+<list type="unordered">
+<listitem><content>The ZA-targeting FP8 instructions <instruction>FDOT</instruction> (2-way), <instruction>FMLAL</instruction>, <instruction>FMOPA</instruction> (2-way), and <instruction>FVDOT</instruction> that accumulate into half-precision floating-point elements.</content>
+</listitem><listitem><content>ZA-targeting non-widening half-precision <instruction>FADD</instruction> and <instruction>FSUB</instruction> instructions.</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_SME_F8F16">FEAT_SME_F8F16</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-40_40" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F8F32</field_name>
+    <field_msb>40</field_msb>
+    <field_lsb>40</field_lsb>
+    <rel_range>40</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SME2 ZA-targeting FP8 <instruction>FDOT</instruction> (4-way), <instruction>FMLALL</instruction>, <instruction>FMOPA</instruction> (4-way), <instruction>FVDOTB</instruction>, and <instruction>FVDOTT</instruction> instructions that accumulate into single-precision floating-point elements.</para>
+    </field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_SME_F8F32">FEAT_SME_F8F32</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-39_36-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>I8I32</field_name>
+    <field_msb>39</field_msb>
+    <field_lsb>36</field_lsb>
+    <rel_range>3:0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SME <instruction>SMOPA</instruction>, <instruction>SMOPS</instruction>, <instruction>SUMOPA</instruction>, <instruction>SUMOPS</instruction>, <instruction>UMOPA</instruction>, <instruction>UMOPS</instruction>, <instruction>USMOPA</instruction>, and <instruction>USMOPS</instruction> instructions that accumulate 8-bit outer products into 32-bit tiles</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para>If <xref linkend="#FEAT_SME">FEAT_SME</xref> is implemented, the value <binarynumber>0b0000</binarynumber> is not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1111</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_SME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-39_36-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>39</field_msb>
+    <field_lsb>36</field_lsb>
+    <rel_range>39:36</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-35_35-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>F16F32</field_name>
+    <field_msb>35</field_msb>
+    <field_lsb>35</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SME <instruction>FMOPA</instruction> and <instruction>FMOPS</instruction> instructions that accumulate half-precision floating-point outer products into single-precision floating-point tiles.</para>
+    </field_description>
+    <field_description order="after">
+      <para>If <xref linkend="#FEAT_SME">FEAT_SME</xref> is implemented, the value 0 is not permitted.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_SME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-35_35-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>35</field_msb>
+    <field_lsb>35</field_lsb>
+    <rel_range>35</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-34_34-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>B16F32</field_name>
+    <field_msb>34</field_msb>
+    <field_lsb>34</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SME <instruction>BFMOPA</instruction> and <instruction>BFMOPS</instruction> instructions that accumulate BFloat16 outer products into single-precision floating-point tiles.</para>
+    </field_description>
+    <field_description order="after">
+      <para>If <xref linkend="#FEAT_SME">FEAT_SME</xref> is implemented, the value 0 is not permitted.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_SME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-34_34-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>34</field_msb>
+    <field_lsb>34</field_lsb>
+    <rel_range>34</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-33_33-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>BI32I32</field_name>
+    <field_msb>33</field_msb>
+    <field_lsb>33</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SME <instruction>BMOPA</instruction> and <instruction>BMOPS</instruction> instructions that accumulate thirty-two 1-bit binary outer products into 32-bit integer tiles.</para>
+    </field_description>
+    <field_description order="after">
+      <para>If <xref linkend="#FEAT_SME2">FEAT_SME2</xref> is implemented, the value 0 is not permitted.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_SME2 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-33_33-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>33</field_msb>
+    <field_lsb>33</field_lsb>
+    <rel_range>33</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-32_32-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>F32F32</field_name>
+    <field_msb>32</field_msb>
+    <field_lsb>32</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SME <instruction>FMOPA</instruction> and <instruction>FMOPS</instruction> instructions that accumulate single-precision floating-point outer products into single-precision floating-point tiles.</para>
+    </field_description>
+    <field_description order="after">
+      <para>If <xref linkend="#FEAT_SME">FEAT_SME</xref> is implemented, the value 0 is not permitted.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_SME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-32_32-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>32</field_msb>
+    <field_lsb>32</field_lsb>
+    <rel_range>32</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-31_31" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>31</field_msb>
+    <field_lsb>31</field_lsb>
+    <rel_range>31</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-30_30" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SF8FMA</field_name>
+    <field_msb>30</field_msb>
+    <field_lsb>30</field_lsb>
+    <rel_range>30</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE2 FP8 to single-precision and half-precision multiply-accumulate <instruction>FMLALB</instruction>, <instruction>FMLALT</instruction>, <instruction>FMLALLBB</instruction>, <instruction>FMLALLBT</instruction>, <instruction>FMLALLTB</instruction>, and <instruction>FMLALLTT</instruction> instructions when the PE is in Streaming SVE mode.</para>
+    </field_description>
+    <field_description order="after"><note><para>Other features may support some of the specified instructions in Non-streaming SVE mode.</para></note><para>If <xref linkend="#FEAT_SME2">FEAT_SME2</xref> and <xref linkend="#FEAT_FP8FMA">FEAT_FP8FMA</xref> are implemented, the value 0 is not permitted.</para>
+<para><xref linkend="#FEAT_SSVE_FP8FMA">FEAT_SSVE_FP8FMA</xref> implements the functionality identified by the value 1.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This control has no effect on Streaming SVE mode behavior.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are supported in Streaming SVE mode.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-29_29" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SF8DP4</field_name>
+    <field_msb>29</field_msb>
+    <field_lsb>29</field_lsb>
+    <rel_range>29</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE2 FP8 to single-precision 4-way dot product <instruction>FDOT</instruction> (4-way) instructions when the PE is in Streaming SVE mode.</para>
+    </field_description>
+    <field_description order="after"><note><para>Other features may support some of the specified instructions in Non-streaming SVE mode.</para></note><para>If <xref linkend="#FEAT_SME2">FEAT_SME2</xref> and <xref linkend="#FEAT_FP8DOT4">FEAT_FP8DOT4</xref> are implemented, the value 0 is not permitted.</para>
+<para><xref linkend="#FEAT_SSVE_FP8DOT4">FEAT_SSVE_FP8DOT4</xref> implements the functionality identified by the value 1.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This control has no effect on Streaming SVE mode behavior.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are supported in Streaming SVE mode.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-28_28" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SF8DP2</field_name>
+    <field_msb>28</field_msb>
+    <field_lsb>28</field_lsb>
+    <rel_range>28</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE2 FP8 to half-precision 2-way dot product <instruction>FDOT</instruction> (2-way) instructions when the PE is in Streaming SVE mode.</para>
+    </field_description>
+    <field_description order="after"><note><para>Other features may support some of the specified instructions in Non-streaming SVE mode.</para></note><para>If <xref linkend="#FEAT_SME2">FEAT_SME2</xref> and <xref linkend="#FEAT_FP8DOT2">FEAT_FP8DOT2</xref> are implemented, the value 0 is not permitted.</para>
+<para><xref linkend="#FEAT_SSVE_FP8DOT2">FEAT_SSVE_FP8DOT2</xref> implements the functionality identified by the value 1.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This control has no effect on Streaming SVE mode behavior.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are supported in Streaming SVE mode.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-27_26" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>27</field_msb>
+    <field_lsb>26</field_lsb>
+    <rel_range>27:26</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-25_25" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SBitPerm</field_name>
+    <field_msb>25</field_msb>
+    <field_lsb>25</field_lsb>
+    <rel_range>25</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE bit permute instructions identified as implemented by <register_link state="AArch64" id="AArch64-id_aa64zfr0_el1.xml">ID_AA64ZFR0_EL1</register_link>.BitPerm, when the PE is in Streaming SVE mode.</para>
+    </field_description>
+    <field_description order="after">
+      <note>
+        <para>Other features may support some of the specified instructions in Non-streaming SVE mode.</para>
+      </note>
+      <para><xref linkend="#FEAT_SSVE_BitPerm">FEAT_SSVE_BitPerm</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This control has no effect on Streaming SVE mode behavior.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented when the PE is in Streaming SVE mode.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-24_24" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>AES</field_name>
+    <field_msb>24</field_msb>
+    <field_lsb>24</field_lsb>
+    <rel_range>24</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE AES and 128-bit polynomial multiply long instructions identified as implemented by <register_link state="AArch64" id="AArch64-id_aa64zfr0_el1.xml">ID_AA64ZFR0_EL1</register_link>.AES, when the PE is in Streaming SVE mode.</para>
+    </field_description>
+    <field_description order="after">
+      <note>
+        <para>Other features may support some of the specified instructions in Non-streaming SVE mode.</para>
+      </note>
+      <para><xref linkend="#FEAT_SSVE_AES">FEAT_SSVE_AES</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This control has no effect on Streaming SVE mode behavior.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are supported when the PE is in Streaming SVE mode.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-23_23" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SFEXPA</field_name>
+    <field_msb>23</field_msb>
+    <field_lsb>23</field_lsb>
+    <rel_range>23</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE <instruction>FEXPA</instruction> instruction when the PE is in Streaming SVE mode.</para>
+    </field_description>
+    <field_description order="after">
+      <note>
+        <para>Other features may support some of the specified instructions in Non-streaming SVE mode.</para>
+      </note>
+      <para><xref linkend="#FEAT_SSVE_FEXPA">FEAT_SSVE_FEXPA</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>This control has no effect on Streaming SVE mode behavior.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instruction is supported when the PE is in Streaming SVE mode.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-22_17" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>22</field_msb>
+    <field_lsb>17</field_lsb>
+    <rel_range>22:17</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-16_16" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>STMOP</field_name>
+    <field_msb>16</field_msb>
+    <field_lsb>16</field_lsb>
+    <rel_range>16</rel_range>
+    <field_description order="before"><para>Indicates support for the following SME Structured sparsity outer product instructions:</para>
+<list type="unordered">
+<listitem><content><instruction>BFTMOPA</instruction> (non-widening), if <xref linkend="#FEAT_SME_B16B16">FEAT_SME_B16B16</xref> is implemented.</content>
+</listitem><listitem><content><instruction>BFTMOPA</instruction> (widening, BF16 to FP32).</content>
+</listitem><listitem><content><instruction>FTMOPA</instruction> (non-widening, FP16), if <xref linkend="FEAT_SME_F16F16">FEAT_SME_F16F16</xref> is implemented.</content>
+</listitem><listitem><content><instruction>FTMOPA</instruction> (non-widening, FP32).</content>
+</listitem><listitem><content><instruction>FTMOPA</instruction> (widening, 2-way, FP16 to FP32).</content>
+</listitem><listitem><content><instruction>FTMOPA</instruction> (widening, 2-way, FP8 to FP16), if <xref linkend="FEAT_SME_F8F16">FEAT_SME_F8F16</xref> is implemented.</content>
+</listitem><listitem><content><instruction>FTMOPA</instruction> (widening, 4-way, FP8 to FP32) if <xref linkend="FEAT_SME_F8F32">FEAT_SME_F8F32</xref> is implemented.</content>
+</listitem><listitem><content><instruction>STMOPA</instruction>, <instruction>SUTMOPA</instruction>, <instruction>USTMOPA</instruction>, <instruction>UTMOPA</instruction> (4-way, Int8 to Int32).
+<instruction>STMOPA</instruction>, <instruction>UTMOPA</instruction> (2-way, Int16 to Int32).</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_SME_TMOP">FEAT_SME_TMOP</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-15_1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>15</field_msb>
+    <field_lsb>1</field_lsb>
+    <rel_range>15:1</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-0_0" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SMOP4</field_name>
+    <field_msb>0</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>0</rel_range>
+    <field_description order="before"><para>Indicates support for the following SME Quarter-tile outer product instructions:</para>
+<list type="unordered">
+<listitem><content><instruction>BFMOP4A</instruction>, <instruction>BFMOP4S</instruction> (non-widening, BF16), if <xref linkend="#FEAT_SME_B16B16">FEAT_SME_B16B16</xref> is implemented.</content>
+</listitem><listitem><content><instruction>BFMOP4A</instruction>, <instruction>BFMOP4S</instruction> (widening, 2-way, BF16 to FP32).</content>
+</listitem><listitem><content><instruction>FMOP4A</instruction>, <instruction>FMOP4S</instruction> (non-widening, FP16), if <xref linkend="#FEAT_SME_F16F16">FEAT_SME_F16F16</xref> is implemented.</content>
+</listitem><listitem><content><instruction>FMOP4A</instruction>, <instruction>FMOP4S</instruction> (non-widening, FP32).</content>
+</listitem><listitem><content><instruction>FMOP4A</instruction>, <instruction>FMOP4S</instruction> (non-widening, FP64), if <xref linkend="#FEAT_SME_F64F64">FEAT_SME_F64F64</xref> is implemented.</content>
+</listitem><listitem><content><instruction>FMOP4A</instruction>, <instruction>FMOP4S</instruction> (widening, 2-way, FP16 to FP32).</content>
+</listitem><listitem><content><instruction>FMOP4A</instruction>(widening, 2-way, FP8 to FP16), if <xref linkend="#FEAT_SME_F8F16">FEAT_SME_F8F16</xref> is implemented.</content>
+</listitem><listitem><content><instruction>FMOP4A</instruction>(widening, 4-way, FP8 to FP32) instruction, if <xref linkend="#FEAT_SME_F8F32">FEAT_SME_F8F32</xref> is implemented.</content>
+</listitem><listitem><content><instruction>SMOP4A</instruction>, <instruction>SMOP4S</instruction>, <instruction>SUMOP4A</instruction>, <instruction>SUMOP4S</instruction>, <instruction>UMOP4A</instruction>, <instruction>UMOP4S</instruction>, <instruction>USMOP4A</instruction>, <instruction>USMOP4S</instruction> (4-way, Int8 to Int32).</content>
+</listitem><listitem><content><instruction>SMOP4A</instruction>, <instruction>SMOP4S</instruction>, <instruction>SUMOP4A</instruction>, <instruction>SUMOP4S</instruction>, <instruction>UMOP4A</instruction>, <instruction>UMOP4S</instruction>, <instruction>USMOP4A</instruction>, <instruction>USMOP4S</instruction> (4-way, Int16 to Int64), if <xref linkend="#FEAT_SME_I16I64">FEAT_SME_I16I64</xref> is implemented.</content>
+</listitem><listitem><content><instruction>SMOP4A</instruction>, <instruction>SMOP4S</instruction>, <instruction>UMOP4A</instruction>, <instruction>UMOP4S</instruction> (2-way, Int16 to Int32).</content>
+</listitem></list></field_description>
+    <field_description order="after">
+      <para><xref linkend="#FEAT_SME_MOP4">FEAT_SME_MOP4</xref> implements the functionality identified by the value 1.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0</field_value>
+        <field_value_description>
+          <para>The specified instructions are not implemented by this control.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b1</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <text_after_fields/>
+</fields>
+
+
+
+
+<reg_fieldset length="64">
+  <fieldat id="fieldset_0-63_63" msb="63" lsb="63"/>
+  <fieldat id="fieldset_0-62_61" msb="62" lsb="61"/>
+  <fieldat id="fieldset_0-60_60" msb="60" lsb="60"/>
+  <fieldat id="fieldset_0-59_56-1" msb="59" lsb="56"/>
+  <fieldat id="fieldset_0-55_52" msb="55" lsb="52"/>
+  <fieldat id="fieldset_0-51_49" msb="51" lsb="49"/>
+  <fieldat id="fieldset_0-48_48" msb="48" lsb="48"/>
+  <fieldat id="fieldset_0-47_44-1" msb="47" lsb="44"/>
+  <fieldat id="fieldset_0-43_43" msb="43" lsb="43"/>
+  <fieldat id="fieldset_0-42_42" msb="42" lsb="42"/>
+  <fieldat id="fieldset_0-41_41" msb="41" lsb="41"/>
+  <fieldat id="fieldset_0-40_40" msb="40" lsb="40"/>
+  <fieldat id="fieldset_0-39_36-1" msb="39" lsb="36"/>
+  <fieldat id="fieldset_0-35_35-1" msb="35" lsb="35"/>
+  <fieldat id="fieldset_0-34_34-1" msb="34" lsb="34"/>
+  <fieldat id="fieldset_0-33_33-1" msb="33" lsb="33"/>
+  <fieldat id="fieldset_0-32_32-1" msb="32" lsb="32"/>
+  <fieldat id="fieldset_0-31_31" msb="31" lsb="31"/>
+  <fieldat id="fieldset_0-30_30" msb="30" lsb="30"/>
+  <fieldat id="fieldset_0-29_29" msb="29" lsb="29"/>
+  <fieldat id="fieldset_0-28_28" msb="28" lsb="28"/>
+  <fieldat id="fieldset_0-27_26" msb="27" lsb="26"/>
+  <fieldat id="fieldset_0-25_25" msb="25" lsb="25"/>
+  <fieldat id="fieldset_0-24_24" msb="24" lsb="24"/>
+  <fieldat id="fieldset_0-23_23" msb="23" lsb="23"/>
+  <fieldat id="fieldset_0-22_17" msb="22" lsb="17"/>
+  <fieldat id="fieldset_0-16_16" msb="16" lsb="16"/>
+  <fieldat id="fieldset_0-15_1" msb="15" lsb="1"/>
+  <fieldat id="fieldset_0-0_0" msb="0" lsb="0"/>
+</reg_fieldset>
+
+
+      </reg_fieldsets>
+
+      <access_mechanisms>
+          
+
+
+  
+    
+      <access_permission_text>
+        <para>This register is read-only and can be accessed from EL1 and higher.</para>
+
+      </access_permission_text>
+      <access_permission_text>
+        <para>This register is only accessible from the AArch64 state.</para>
+      </access_permission_text>
+
+
+
+
+
+    
+        
+        <access_mechanism accessor="MRS ID_AA64SMFR0_EL1" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MRS &lt;Xt&gt;, ID_AA64SMFR0_EL1</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b000"/>
+                
+                <enc n="CRn" v="0b0000"/>
+                
+                <enc n="CRm" v="0b0100"/>
+                
+                <enc n="op2" v="0b101"/>
+            </encoding>
+            <access_permission>
+                <ps name="MRS" sections="1" secttype="access_permission">
+                <pstext>
+if HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    if IsFeatureImplemented(FEAT_IDST) then
+        AArch64_SystemAccessTraptoEL1orEL2(0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; (IsFeatureImplemented(FEAT_FGT) || !IsZero(ID_AA64SMFR0_EL1()) || ImpDefBool("ID_AA64SMFR0_EL1 trapped by HCR_EL2.TID3")) &amp;&amp; HCR_EL2().TID3 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = ID_AA64SMFR0_EL1();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = ID_AA64SMFR0_EL1();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = ID_AA64SMFR0_EL1();
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+
+      </access_mechanisms>
+
+      <arch_variants>
+      </arch_variants>
+  </register>
+</registers>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_page>

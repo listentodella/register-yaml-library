@@ -1,0 +1,17 @@
+<!--
+
+Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved.
+
+--> 
+
+<!ELEMENT toptitle EMPTY>
+<!ATTLIST toptitle architecture CDATA #REQUIRED>
+
+<!ELEMENT register_index (toptitle, register_links, timestamp, commit_id)>
+<!ELEMENT register_links (register_link*)>
+<!ATTLIST register_links title CDATA #REQUIRED>
+<!ELEMENT timestamp (#PCDATA)> <!-- timestamp and version number, for footer -->
+<!ELEMENT commit_id (#PCDATA)> <!-- commit id, for footer -->
+
+<!ELEMENT register_link (#PCDATA)>
+<!ATTLIST register_link id CDATA #REQUIRED heading CDATA #REQUIRED registerfile CDATA #REQUIRED>

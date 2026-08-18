@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_page SYSTEM "registers.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+
+<register_page>
+  <registers>
+  
+    <register is_register="True" is_internal="False" is_stub_entry="False">
+      <reg_short_name>MPAMCFG_OUT_TL_MASK</reg_short_name>
+        
+        <reg_long_name>MPAM Egress PARTID Translation Mask Configuration Register</reg_long_name>
+
+        <power_domain_text>The power domain of MPAMCFG_OUT_TL_MASK is <arm-defined-word>IMPLEMENTATION DEFINED</arm-defined-word></power_domain_text>
+
+
+      
+            <reg_condition otherwise="RES0">when FEAT_MPAM_MSC_DOMAINS is implemented, MPAMF_IDR.HAS_OUT_TL == '1', and MPAMF_OUT_TL_IDR.HAS_BASE_MASK == '1'</reg_condition>
+      
+
+    
+  <reg_address
+      external_access="False"
+    mem_map_access="True"
+      power_domain="None"
+  >
+    <reg_component>MPAM</reg_component>
+    <reg_frame>MPAMF_BASE_s</reg_frame>
+    <reg_offset><hexnumber>0x3218</hexnumber></reg_offset>
+    <reg_instance>MPAMCFG_OUT_TL_MASK_s</reg_instance>
+    <reg_access>
+      
+        
+      <reg_access_state>
+          <reg_access_level>When FEAT_MPAMv1p0 is implemented or FEAT_MPAMv0p1 is implemented</reg_access_level>
+          <reg_access_type>RW</reg_access_type>
+      </reg_access_state>
+    </reg_access>
+</reg_address>
+    
+  <reg_address
+      external_access="False"
+    mem_map_access="True"
+      power_domain="None"
+  >
+    <reg_component>MPAM</reg_component>
+    <reg_frame>MPAMF_BASE_ns</reg_frame>
+    <reg_offset><hexnumber>0x3218</hexnumber></reg_offset>
+    <reg_instance>MPAMCFG_OUT_TL_MASK_ns</reg_instance>
+    <reg_access>
+      
+        
+      <reg_access_state>
+          <reg_access_level>When FEAT_MPAMv1p0 is implemented or FEAT_MPAMv0p1 is implemented</reg_access_level>
+          <reg_access_type>RW</reg_access_type>
+      </reg_access_state>
+    </reg_access>
+</reg_address>
+    
+  <reg_address
+      external_access="False"
+    mem_map_access="True"
+      power_domain="None"
+  >
+    <reg_component>MPAM</reg_component>
+    <reg_frame>MPAMF_BASE_rt</reg_frame>
+    <reg_offset><hexnumber>0x3218</hexnumber></reg_offset>
+    <reg_instance>MPAMCFG_OUT_TL_MASK_rt</reg_instance>
+    <reg_access>
+      
+        
+      <reg_access_state>
+          <reg_access_level>When FEAT_RME is implemented and (FEAT_MPAMv1p0 is implemented or FEAT_MPAMv0p1 is implemented)</reg_access_level>
+          <reg_access_type>RW</reg_access_type>
+      </reg_access_state>
+    </reg_access>
+</reg_address>
+    
+  <reg_address
+      external_access="False"
+    mem_map_access="True"
+      power_domain="None"
+  >
+    <reg_component>MPAM</reg_component>
+    <reg_frame>MPAMF_BASE_rl</reg_frame>
+    <reg_offset><hexnumber>0x3218</hexnumber></reg_offset>
+    <reg_instance>MPAMCFG_OUT_TL_MASK_rl</reg_instance>
+    <reg_access>
+      
+        
+      <reg_access_state>
+          <reg_access_level>When FEAT_RME is implemented and (FEAT_MPAMv1p0 is implemented or FEAT_MPAMv0p1 is implemented)</reg_access_level>
+          <reg_access_type>RW</reg_access_type>
+      </reg_access_state>
+    </reg_access>
+</reg_address>
+
+
+
+          <reg_reset_value></reg_reset_value>
+
+      <reg_mappings>
+        
+
+
+
+
+      </reg_mappings>
+
+        <reg_purpose>
+          
+    
+      <purpose_text>
+        <para>Configures the mask value used to calculate translation PARTIDs for egress PARTIDs that do not have direct translation.</para>
+      </purpose_text>
+
+        </reg_purpose>
+
+      <reg_groups>
+          <reg_group>MPAM</reg_group>
+      </reg_groups>
+      <reg_configuration>
+        
+    
+      <configuration_text>
+        <para>The power and reset domain of each MSC component is specific to that component.</para>
+      </configuration_text>
+
+      </reg_configuration>
+      
+      
+        
+      <reg_attributes>
+          
+    
+      <attributes_text>
+        <para>MPAMCFG_OUT_TL_MASK is a 32-bit register.</para>
+      </attributes_text>
+
+      </reg_attributes>
+      <reg_fieldsets>
+        
+
+
+
+
+
+
+<fields id="fieldset_0" length="32">
+  <text_before_fields/>
+  <field id="fieldset_0-31_5" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>31</field_msb>
+    <field_lsb>5</field_lsb>
+    <rel_range>31:5</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-4_0" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>MASK_WD</field_name>
+    <field_msb>4</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>4:0</rel_range>
+    <field_description order="before">
+      <para>Value used to calculate the mask as 2<sup>MASK_WD</sup>-1. The mask is then used to calculate the egress translation of PARTIDs that do not have a direct translation configured.</para>
+    </field_description>
+  </field>
+  <text_after_fields/>
+</fields>
+
+
+
+
+<reg_fieldset length="32">
+  <fieldat id="fieldset_0-31_5" msb="31" lsb="5"/>
+  <fieldat id="fieldset_0-4_0" msb="4" lsb="0"/>
+</reg_fieldset>
+
+
+      </reg_fieldsets>
+
+      <access_mechanisms>
+          
+
+
+  
+    
+      <access_permission_text>
+        <para>If both <xref linkend="#FEAT_MPAM">FEAT_MPAM</xref> and <xref linkend="#FEAT_RME">FEAT_RME</xref> are implemented, the following statements apply:</para>
+
+      </access_permission_text>
+      <access_permission_text>
+        <list type="unordered">
+<listitem><content>
+<para>In a system that supports Secure, Non-secure, Root, and Realm memory maps, there must be MPAM feature pages in all four address maps:</para>
+</content>
+</listitem><listitem><content>
+<para>MPAMCFG_OUT_TL_MASK_s must only be accessible from the Secure MPAM feature page.</para>
+</content>
+</listitem><listitem><content>
+<para>MPAMCFG_OUT_TL_MASK_ns must only be accessible from the Non-secure MPAM feature page.</para>
+</content>
+</listitem><listitem><content>
+<para>MPAMCFG_OUT_TL_MASK_rt must only be accessible from the Root MPAM feature page.</para>
+</content>
+</listitem><listitem><content>
+<para>MPAMCFG_OUT_TL_MASK_rl must only be accessible from the Realm MPAM feature page.</para>
+</content>
+</listitem><listitem><content>
+<para>MPAMCFG_OUT_TL_MASK_s, MPAMCFG_OUT_TL_MASK_ns, MPAMCFG_OUT_TL_MASK_rt, and MPAMCFG_OUT_TL_MASK_rl must be separate registers:</para>
+</content>
+</listitem><listitem><content>
+<para>The Secure instance (MPAMCFG_OUT_TL_MASK_s) accesses the egress PARTID translation mask used for Secure PARTIDs.</para>
+</content>
+</listitem><listitem><content>
+<para>The Non-secure instance (MPAMCFG_OUT_TL_MASK_ns) accesses the egress PARTID translation mask used for Non-secure PARTIDs.</para>
+</content>
+</listitem><listitem><content>
+<para>The Root instance (MPAMCFG_OUT_TL_MASK_rt) accesses the egress PARTID translation mask used for Root PARTIDs.</para>
+</content>
+</listitem><listitem><content>
+<para>The Realm instance (MPAMCFG_OUT_TL_MASK_rl) accesses the egress PARTID translation mask used for Realm PARTIDs.</para>
+</content>
+</listitem></list>
+
+      </access_permission_text>
+      <access_permission_text>
+        <para>When RIS is implemented, loads and stores to MPAMCFG_OUT_TL_MASK access the egress PARTID translation mask configuration settings without being affected by <register_link state="ext" id="ext-mpamcfg_part_sel.xml">MPAMCFG_PART_SEL</register_link>.RIS.</para>
+      </access_permission_text>
+
+
+
+
+
+    
+    
+    
+    
+
+      </access_mechanisms>
+
+      <arch_variants>
+      </arch_variants>
+  </register>
+</registers>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_page>

@@ -1,0 +1,1409 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_block_page SYSTEM "register_blocks.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+<register_block_page>
+  <register_blocks>
+    <register_block>
+      <reg_short_name>AMU</reg_short_name>
+
+
+
+      <mappings>
+          <map>
+            <condition>FEAT_AMU_EXT32 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcfgr.xml">AMCFGR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcfgr_el0.xml">AMCFGR_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT64 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcfgr.xml">AMCFGR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcfgr_el0.xml">AMCFGR_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcfgr.xml">AMCFGR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amcfgr.xml">AMCFGR</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT32 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcgcr.xml">AMCGCR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcgcr_el0.xml">AMCGCR_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT64 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcgcr.xml">AMCGCR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcgcr_el0.xml">AMCGCR_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcgcr.xml">AMCGCR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amcgcr.xml">AMCGCR</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcntenclr0.xml">AMCNTENCLR0</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcntenclr0_el0.xml">AMCNTENCLR0_EL0</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcntenset0_el0.xml">AMCNTENSET0_EL0</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amcntenclr0.xml">AMCNTENCLR0</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amcntenset0.xml">AMCNTENSET0</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcntenset0.xml">AMCNTENSET0</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcntenclr1.xml">AMCNTENCLR1</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcntenclr1_el0.xml">AMCNTENCLR1_EL0</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcntenset1_el0.xml">AMCNTENSET1_EL0</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amcntenclr1.xml">AMCNTENCLR1</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amcntenset1.xml">AMCNTENSET1</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcntenset1.xml">AMCNTENSET1</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcntenclr.xml">AMCNTENCLR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcntenclr0_el0.xml">AMCNTENCLR0_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT64 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="63:32">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>32</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcntenclr.xml">AMCNTENCLR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcntenclr1_el0.xml">AMCNTENCLR1_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcntenset.xml">AMCNTENSET</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcntenset0_el0.xml">AMCNTENSET0_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT64 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="63:32">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>32</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcntenset.xml">AMCNTENSET</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcntenset1_el0.xml">AMCNTENSET1_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT32 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcr.xml">AMCR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcr_el0.xml">AMCR_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT64 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcr.xml">AMCR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amcr_el0.xml">AMCR_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amcr.xml">AMCR</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amcr.xml">AMCR</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevcntr0n.xml">AMEVCNTR0&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amevcntr0n_el0.xml">AMEVCNTR0&lt;n&gt;_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevcntr0n.xml">AMEVCNTR0&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amevcntr0n.xml">AMEVCNTR0&lt;n&gt;</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevcntr1n.xml">AMEVCNTR1&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amevcntr1n_el0.xml">AMEVCNTR1&lt;n&gt;_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevcntr1n.xml">AMEVCNTR1&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amevcntr1n.xml">AMEVCNTR1&lt;n&gt;</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT32 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevtyper0n.xml">AMEVTYPER0&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amevtyper0n_el0.xml">AMEVTYPER0&lt;n&gt;_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT64 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevtyper0n.xml">AMEVTYPER0&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amevtyper0n_el0.xml">AMEVTYPER0&lt;n&gt;_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevtyper0n.xml">AMEVTYPER0&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amevtyper0n.xml">AMEVTYPER0&lt;n&gt;</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT32 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevtyper1n.xml">AMEVTYPER1&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amevtyper1n_el0.xml">AMEVTYPER1&lt;n&gt;_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+            <condition>FEAT_AMU_EXT64 is implemented</condition>
+
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevtyper1n.xml">AMEVTYPER1&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="63:0">
+                    <range>
+                      <msb>63</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch64-amevtyper1n_el0.xml">AMEVTYPER1&lt;n&gt;_EL0</block_link>
+            </element>
+
+        </map>
+          <map>
+
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="amu.amevtyper1n.xml">AMEVTYPER1&lt;n&gt;</block_link>
+            </element>
+          
+            <element>
+                <rangeset output="31:0">
+                    <range>
+                      <msb>31</msb>
+                      <lsb>0</lsb>
+                    </range>
+                </rangeset>
+
+              
+                  <block_link id="AArch32-amevtyper1n.xml">AMEVTYPER1&lt;n&gt;</block_link>
+            </element>
+
+        </map>
+      </mappings>
+
+
+      <reg_attributes>
+        <attributes_text>
+          <para>AMU is a block of size: 4096 bytes</para>
+        </attributes_text>
+      </reg_attributes>
+      <child_blocks default_access="RES0">
+                     
+          <child_block>
+            <block_offset>0x000 + (8 * n) for n in 3:0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amevcntr0n.xml">AMEVCNTR0&lt;n&gt;</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+          <child_block>
+            <block_offset>0x000 + (8 * n) for n in 3:0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amevcntr0n.xml">AMEVCNTR0&lt;n&gt;</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0x100 + (8 * n) for n in 15:0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amevcntr1n.xml">AMEVCNTR1&lt;n&gt;</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+          <child_block>
+            <block_offset>0x100 + (8 * n) for n in 15:0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amevcntr1n.xml">AMEVCNTR1&lt;n&gt;</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0x400 + (8 * n) for n in 3:0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amevtyper0n.xml">AMEVTYPER0&lt;n&gt;</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0x400 + (4 * n) for n in 3:0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amevtyper0n.xml">AMEVTYPER0&lt;n&gt;</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0x480 + (4 * n) for n in 15:0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amevtyper1n.xml">AMEVTYPER1&lt;n&gt;</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0x500 + (8 * n) for n in 15:0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amevtyper1n.xml">AMEVTYPER1&lt;n&gt;</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xC00</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcntenset.xml">AMCNTENSET</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT64 is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xC00</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcntenset0.xml">AMCNTENSET0</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT32 is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xC04</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcntenset1.xml">AMCNTENSET1</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT32 is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xC10</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcnten.xml">AMCNTEN</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT64 is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xC20</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcntenclr.xml">AMCNTENCLR</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT64 is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xC20</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcntenclr0.xml">AMCNTENCLR0</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT32 is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xC24</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcntenclr1.xml">AMCNTENCLR1</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xCE0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcgcr.xml">AMCGCR</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+          <child_block>
+            <block_offset>0xCE0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcgcr.xml">AMCGCR</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xE00</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcfgr.xml">AMCFGR</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+          <child_block>
+            <block_offset>0xE00</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcfgr.xml">AMCFGR</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xE04</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcr.xml">AMCR</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xE08</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amiidr.xml">AMIIDR</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+          <child_block>
+            <block_offset>0xE08</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amiidr.xml">AMIIDR</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xE10</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcr.xml">AMCR</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xE40</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amscr.xml">AMSCR</block_link>
+            <block_condition>When FEAT_AMU_EXTACR is implemented and FEAT_RME is not implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXTACR is implemented and FEAT_RME is not implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RW</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xE48</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amrootcr.xml">AMROOTCR</block_link>
+            <block_condition>When FEAT_AMU_EXTACR is implemented and FEAT_RME is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXTACR is implemented and FEAT_RME is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RW</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFA8</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amdevaff.xml">AMDEVAFF</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT64 is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFA8</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amdevaff0.xml">AMDEVAFF0</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT32 is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFAC</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amdevaff1.xml">AMDEVAFF1</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT32 is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFBC</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amdevarch.xml">AMDEVARCH</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+          <child_block>
+            <block_offset>0xFBC</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amdevarch.xml">AMDEVARCH</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFCC</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amdevtype.xml">AMDEVTYPE</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT64 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+          <child_block>
+            <block_offset>0xFCC</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amdevtype.xml">AMDEVTYPE</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMU_EXT32 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFD0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.ampidr4.xml">AMPIDR4</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFD4</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.ampidr5.xml">AMPIDR5</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFD8</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.ampidr6.xml">AMPIDR6</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFDC</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.ampidr7.xml">AMPIDR7</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFE0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.ampidr0.xml">AMPIDR0</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFE4</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.ampidr1.xml">AMPIDR1</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFE8</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.ampidr2.xml">AMPIDR2</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFEC</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.ampidr3.xml">AMPIDR3</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented, FEAT_AMU_EXT is implemented, and FEAT_AMU_PIDR is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFF0</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcidr0.xml">AMCIDR0</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFF4</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcidr1.xml">AMCIDR1</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFF8</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcidr2.xml">AMCIDR2</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+                     
+          <child_block>
+            <block_offset>0xFFC</block_offset>
+            <block_type>Register</block_type>
+            <block_link id="amu.amcidr3.xml">AMCIDR3</block_link>
+            <block_condition>When FEAT_AMUv1 is implemented and FEAT_AMU_EXT is implemented</block_condition>
+            <accessor_condition>
+                When FEAT_AMUv1 is implemented
+            </accessor_condition>
+            <block_access>
+            <pstext>RO</pstext>
+            </block_access>
+          </child_block>
+      </child_blocks>
+
+    </register_block>
+  </register_blocks>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_block_page>

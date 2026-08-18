@@ -1,0 +1,687 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE register_page SYSTEM "registers.dtd">
+<!-- Copyright (c) 2010-2026 Arm Limited or its affiliates. All rights reserved. -->
+<!-- This document is Non-Confidential. This document may only be used and distributed in accordance with the terms of the agreement entered into by Arm and the party that Arm delivered this document to. -->
+<!--The data contained in this document is preliminary and subject to change or correction following further review. -->
+<?xml-stylesheet href="one_register.xsl" type="text/xsl" ?>
+
+
+
+
+
+
+
+<register_page>
+  <registers>
+  
+    <register execution_state="AArch64" is_register="True" is_internal="True" is_stub_entry="False">
+      <reg_short_name>ID_AA64ZFR0_EL1</reg_short_name>
+        
+        <reg_long_name>SVE Feature ID Register 0</reg_long_name>
+
+
+
+      
+      
+
+
+
+
+          <reg_reset_value></reg_reset_value>
+
+      <reg_mappings>
+        
+
+
+
+
+      </reg_mappings>
+
+        <reg_purpose>
+          
+    
+      <purpose_text>
+        <para>Provides additional information about the implemented features of the AArch64 Scalable Vector Extension instruction set, when <xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE">FEAT_SVE</xref> or <xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SME">FEAT_SME</xref> is implemented.</para>
+
+      </purpose_text>
+      <purpose_text>
+        <para>For general information about the interpretation of the ID registers, see <xref filename="D_aarch64_system_register_descriptions.fm" linkend="BABFAFHI">'Principles of the ID scheme for fields in ID registers'</xref>.</para>
+      </purpose_text>
+
+        </reg_purpose>
+
+      <reg_groups>
+          <reg_group>Identification Registers</reg_group>
+      </reg_groups>
+      <reg_configuration>
+        
+    
+      <configuration_text>
+        <note><para>Prior to the introduction of the features described by this register, this register was unnamed and reserved, <arm-defined-word>RES0</arm-defined-word> from EL1, EL2, and EL3.</para><para>If <xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SME">FEAT_SME</xref> is implemented and <xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE">FEAT_SVE</xref> is not implemented, then SVE instructions can only be executed when the PE is in Streaming SVE mode and the instructions are legal for execution in Streaming SVE mode.</para></note>
+      </configuration_text>
+
+      </reg_configuration>
+      
+      
+        
+      <reg_attributes>
+          
+    
+      <attributes_text>
+        <para>ID_AA64ZFR0_EL1 is a 64-bit register.</para>
+      </attributes_text>
+
+      </reg_attributes>
+      <reg_fieldsets>
+        
+
+
+
+
+
+
+<fields id="fieldset_0" length="64">
+  <text_before_fields/>
+  <field id="fieldset_0-63_60" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>63</field_msb>
+    <field_lsb>60</field_lsb>
+    <rel_range>63:60</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-59_56" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F64MM</field_name>
+    <field_msb>59</field_msb>
+    <field_lsb>56</field_lsb>
+    <rel_range>59:56</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE double-precision floating-point matrix multiply-accumulate instruction <instruction>FMMLA</instruction>, the <instruction>LD1RO*</instruction> instructions, the 128-bit element variants of the SVE <instruction>TRN1</instruction>, <instruction>TRN2</instruction>, <instruction>UZP1</instruction>, <instruction>UZP2</instruction>, <instruction>ZIP1</instruction>, and <instruction>ZIP2</instruction> instructions.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_F64MM">FEAT_F64MM</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber>.</para>
+<para>The instructions described by nonzero values of this field might not be legal when the PE is in Streaming SVE mode.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-55_52" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F32MM</field_name>
+    <field_msb>55</field_msb>
+    <field_lsb>52</field_lsb>
+    <rel_range>55:52</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE single-precision floating-point matrix multiply-accumulate instruction <instruction>FMMLA</instruction>.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_F32MM">FEAT_F32MM</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber>.</para>
+<para>The instructions described by nonzero values of this field might not be legal when the PE is in Streaming SVE mode.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instruction.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>The specified instruction is implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-51_48" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>F16MM</field_name>
+    <field_msb>51</field_msb>
+    <field_lsb>48</field_lsb>
+    <rel_range>51:48</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE half-precision floating-point matrix multiply-accumulate to single-precision instruction <instruction>FMMLA</instruction> (widening, FP16 to FP32).</para>
+    </field_description>
+    <field_description order="after"><para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE_F16F32MM">FEAT_SVE_F16F32MM</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber>.</para>
+<para>The instructions described by nonzero values of this field might not be legal when the PE is in Streaming SVE mode.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instruction.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>The specified instruction is implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-47_44" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>I8MM</field_name>
+    <field_msb>47</field_msb>
+    <field_lsb>44</field_lsb>
+    <rel_range>47:44</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the following SVE 8-bit integer sum-of-products and accumulate to 32-bit integer instructions <instruction>SMMLA</instruction>, <instruction>SUDOT</instruction>, <instruction>UMMLA</instruction>, <instruction>USMMLA</instruction>, and <instruction>USDOT</instruction>.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_I8MM">FEAT_I8MM</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber>.</para>
+<para>When Advanced SIMD and SVE are both implemented, this field must return the same value as <register_link state="AArch64" id="AArch64-id_aa64isar1_el1.xml">ID_AA64ISAR1_EL1</register_link>.I8MM.</para>
+<para>From Armv8.6, if SVE is implemented, the value <binarynumber>0b0000</binarynumber> is not permitted.</para>
+<para>SVE <instruction>SMMLA</instruction>, <instruction>UMMLA</instruction>, and <instruction>USMMLA</instruction> instructions might not be legal when the PE is in Streaming SVE mode.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-43_40" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SM4</field_name>
+    <field_msb>43</field_msb>
+    <field_lsb>40</field_lsb>
+    <rel_range>43:40</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SVE SM4 instructions.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE_SM4">FEAT_SVE_SM4</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber>.</para>
+<para>The instructions described by nonzero values of this field might not be legal when the PE is in Streaming SVE mode.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>SVE <instruction>SM4E</instruction> and <instruction>SM4EKEY</instruction> instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-39_36" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>39</field_msb>
+    <field_lsb>36</field_lsb>
+    <rel_range>39:36</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-35_32" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>SHA3</field_name>
+    <field_msb>35</field_msb>
+    <field_lsb>32</field_lsb>
+    <rel_range>35:32</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE SHA3 instructions.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE_SHA3">FEAT_SVE_SHA3</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber>.</para>
+<para>If <xref linkend="#FEAT_SME2p1">FEAT_SME2p1</xref> is not implemented, then the instructions described by nonzero values of this field might not be legal when the PE is in Streaming SVE mode.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>SVE <instruction>RAX1</instruction> instruction is implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-31_28" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>31</field_msb>
+    <field_lsb>28</field_lsb>
+    <rel_range>31:28</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-27_24" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>B16B16</field_name>
+    <field_msb>27</field_msb>
+    <field_lsb>24</field_lsb>
+    <rel_range>27:24</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SVE non-widening BFloat16 instructions and SME multi-vector Z-targeting non-widening BFloat16 instructions.</para>
+    </field_description>
+    <field_description order="after"><para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE_B16B16">FEAT_SVE_B16B16</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber>.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE_BFSCALE">FEAT_SVE_BFSCALE</xref> implements the functionality identified by <binarynumber>0b0010</binarynumber>.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description><para>The following non-widening BFloat16 instructions are implemented:</para>
+<list type="unordered">
+<listitem><content>SVE instructions: <instruction>BFADD</instruction>, <instruction>BFCLAMP</instruction>, <instruction>BFMAX</instruction>, <instruction>BFMAXNM</instruction>, <instruction>BFMIN</instruction>, <instruction>BFMINNM</instruction>, <instruction>BFMLA</instruction>, <instruction>BFMLS</instruction>, <instruction>BFMUL</instruction>, and <instruction>BFSUB</instruction>.</content>
+</listitem><listitem><content>If <xref linkend="#FEAT_SME2">FEAT_SME2</xref> is implemented, SME multi-vector Z-targeting instructions: <instruction>BFCLAMP</instruction>, <instruction>BFMAX</instruction>, <instruction>BFMAXNM</instruction>, <instruction>BFMIN</instruction>, and <instruction>BFMINNM</instruction>.</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0010</field_value>
+        <field_value_description><para>As <binarynumber>0b0001</binarynumber>, and adds the following non-widening BFloat16 instructions:</para>
+<list type="unordered">
+<listitem><content>
+<para>SVE instruction <instruction>BFSCALE</instruction>.</para>
+</content>
+</listitem><listitem><content>
+<para>If <xref linkend="#FEAT_SME2">FEAT_SME2</xref> is implemented, SME multi-vector Z-targeting instructions <instruction>BFMUL</instruction> and <instruction>BFSCALE</instruction>.</para>
+</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-23_20" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>BF16</field_name>
+    <field_msb>23</field_msb>
+    <field_lsb>20</field_lsb>
+    <rel_range>23:20</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SVE BFloat16 instructions.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref linkend="#FEAT_BF16">FEAT_BF16</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber>.</para>
+<para><xref linkend="#FEAT_EBF16">FEAT_EBF16</xref> implements the functionality identified by <binarynumber>0b0010</binarynumber>.</para>
+<para>This field must return the same value as <register_link state="AArch64" id="AArch64-id_aa64isar1_el1.xml">ID_AA64ISAR1_EL1</register_link>.BF16.</para>
+<para>SVE <instruction>BFMMLA</instruction> instructions might not be legal when the PE is in Streaming SVE mode.</para>
+<para>From Armv8.6 and Armv9.1, the value <binarynumber>0b0000</binarynumber> is not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>SVE BFloat16 instructions are not implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>SVE <instruction>BFCVT</instruction>, <instruction>BFCVTNT</instruction>, <instruction>BFDOT</instruction>, <instruction>BFMLALB</instruction>, <instruction>BFMLALT</instruction>, and <instruction>BFMMLA</instruction> instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0010</field_value>
+        <field_value_description>
+          <para>As <binarynumber>0b0001</binarynumber>, but the <register_link state="AArch64" id="AArch64-fpcr.xml">FPCR</register_link>.EBF field is also supported.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-19_16" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>BitPerm</field_name>
+    <field_msb>19</field_msb>
+    <field_lsb>16</field_lsb>
+    <rel_range>19:16</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE bit permute instructions <instruction>BDEP</instruction>, <instruction>BEXT</instruction>, and <instruction>BGRP</instruction>.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE_BitPerm">FEAT_SVE_BitPerm</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber> when the PE is not in Streaming SVE mode.</para>
+<para><xref linkend="FEAT_SSVE_BitPerm">FEAT_SSVE_BitPerm</xref> which is identified in <register_link state="AArch64" id="AArch64-id_aa64smfr0_el1.xml">ID_AA64SMFR0_EL1</register_link>.SBitPerm, indicates whether the FEAT_SVE_BitPerm functionality is implemented when the PE is in Streaming SVE mode.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>The specified instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-15_12-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>EltPerm</field_name>
+    <field_msb>15</field_msb>
+    <field_lsb>12</field_lsb>
+    <rel_range>3:0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for the SVE element permute instructions.</para>
+    </field_description>
+    <field_description order="after">
+      <para>If <xref linkend="#FEAT_SVE2p2">FEAT_SVE2p2</xref> or <xref linkend="#FEAT_SME2p2">FEAT_SME2p2</xref> is implemented, the value <binarynumber>0b0000</binarynumber> is not permitted.</para>
+    </field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description><para>If <xref linkend="#FEAT_SVE2p2">FEAT_SVE2p2</xref> is implemented, the following SVE instructions are implemented when the PE is not in Streaming SVE mode:</para>
+<list type="unordered">
+<listitem><content>
+<para>8-bit and 16-bit element <instruction>COMPACT</instruction>.</para>
+</content>
+</listitem><listitem><content>
+<para>8-bit, 16-bit, 32-bit, and 64-bit element <instruction>EXPAND</instruction>.</para>
+</content>
+</listitem></list>
+<para>If <xref linkend="#FEAT_SME2p2">FEAT_SME2p2</xref> is implemented, all variants of the SVE <instruction>COMPACT</instruction> and <instruction>EXPAND</instruction> instructions are implemented when the PE is in Streaming SVE mode.</para></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_SVE2p2 is implemented or FEAT_SME2p2 is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-15_12-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>15</field_msb>
+    <field_lsb>12</field_lsb>
+    <rel_range>15:12</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <field id="fieldset_0-11_8" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>11</field_msb>
+    <field_lsb>8</field_lsb>
+    <rel_range>11:8</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+  </field>
+  <field id="fieldset_0-7_4" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False">
+    <field_name>AES</field_name>
+    <field_msb>7</field_msb>
+    <field_lsb>4</field_lsb>
+    <rel_range>7:4</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SVE Advanced Encryption Standard instructions and 128-bit polynomial multiply long instructions.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE_AES">FEAT_SVE_AES</xref> implements the functionality identified by the value <binarynumber>0b0001</binarynumber>.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE_PMULL128">FEAT_SVE_PMULL128</xref> implements the functionality identified by the value <binarynumber>0b0010</binarynumber>.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE_AES2">FEAT_SVE_AES2</xref> implements the functionality identified by <binarynumber>0b0011</binarynumber>.</para>
+<para>If <xref linkend="FEAT_SSVE_AES">FEAT_SSVE_AES</xref> is not implemented, then the instructions described by nonzero values of this field might not be legal when the PE is in Streaming SVE mode.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>This field does not indicate support for the specified instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description><para>The following instructions are implemented:</para>
+<list type="unordered">
+<listitem><content>
+<para>SVE single-vector <instruction>AESD</instruction>, <instruction>AESE</instruction>, <instruction>AESIMC</instruction>, and <instruction>AESMC</instruction> instructions.</para>
+</content>
+</listitem><listitem><content>
+<para>The 128-bit destination element variant of the SVE single-vector <instruction>PMULLB</instruction> and <instruction>PMULLT</instruction> instructions.</para>
+</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0010</field_value>
+        <field_value_description>
+          <para>As <binarynumber>0b0001</binarynumber>.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0011</field_value>
+        <field_value_description><para>As <binarynumber>0b0010</binarynumber>, and adds the following SVE instructions:</para>
+<list type="unordered">
+<listitem><content>Multi-vector <instruction>AESD</instruction>, <instruction>AESDIMC</instruction>, <instruction>AESE</instruction> and <instruction>AESEMC</instruction> instructions.</content>
+</listitem><listitem><content>Multi-vector 128-bit destination element <instruction>PMULL</instruction> and <instruction>PMLAL</instruction> instructions.</content>
+</listitem></list></field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+  </field>
+  <field id="fieldset_0-3_0-1" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="True" is_partial_field="False" is_conditional_field_name="False" reserved_type="RES0">
+    <field_name>SVEver</field_name>
+    <field_msb>3</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>3:0</rel_range>
+    <field_description order="before">
+      <para>Indicates support for SVE instructions.</para>
+    </field_description>
+    <field_description order="after"><para>All other values are reserved.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE2">FEAT_SVE2</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber> when the PE is not in Streaming SVE mode.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SME">FEAT_SME</xref> implements the functionality identified by <binarynumber>0b0001</binarynumber> when the PE is in Streaming SVE mode.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SME2p1">FEAT_SME2p1</xref> implements the functionality identified by <binarynumber>0b0010</binarynumber> when the PE is in Streaming SVE mode.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE2p1">FEAT_SVE2p1</xref> implements the functionality identified by <binarynumber>0b0010</binarynumber> when the PE is not in Streaming SVE mode.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SVE2p2">FEAT_SVE2p2</xref> implements the functionality identified by <binarynumber>0b0011</binarynumber> when the PE is not in Streaming SVE mode.</para>
+<para><xref filename="A_armv8_architecture_extensions.fm" linkend="FEAT_SME2p2">FEAT_SME2p2</xref> implements the functionality identified by <binarynumber>0b0011</binarynumber> when the PE is in Streaming SVE mode.</para>
+<para>From Armv9, the value <binarynumber>0b0000</binarynumber> is not permitted.</para>
+<para>From Armv9.4, the value <binarynumber>0b0001</binarynumber> is not permitted.</para>
+<para>From Armv9.6, the value <binarynumber>0b0010</binarynumber> is not permitted.</para></field_description>
+    <field_values impdef="True">
+      <field_value_instance>
+        <field_value>0b0000</field_value>
+        <field_value_description>
+          <para>The SVE instructions are implemented.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0001</field_value>
+        <field_value_description>
+          <para>As <binarynumber>0b0000</binarynumber>, and adds the mandatory SVE2 instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0010</field_value>
+        <field_value_description>
+          <para>As <binarynumber>0b0001</binarynumber>, and adds the mandatory SVE2.1 instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+      <field_value_instance>
+        <field_value>0b0011</field_value>
+        <field_value_description>
+          <para>As <binarynumber>0b0010</binarynumber>, and adds the mandatory SVE2.2 instructions.</para>
+        </field_value_description>
+      </field_value_instance>
+    </field_values>
+    <field_access>
+      <field_access_state>
+        <field_access_type>RO</field_access_type>
+      </field_access_state>
+    </field_access>
+    <fields_condition>When FEAT_SVE is implemented or FEAT_SME is implemented</fields_condition>
+  </field>
+  <field id="fieldset_0-3_0-2" has_partial_fieldset="False" is_linked_to_partial_fieldset="False" is_access_restriction_possible="False" is_variable_length="False" is_constant_value="False" is_partial_field="False" is_conditional_field_name="False" rwtype="RES0">
+    <field_msb>3</field_msb>
+    <field_lsb>0</field_lsb>
+    <rel_range>3:0</rel_range>
+    <field_description order="before"/>
+    <field_description order="before">
+      <para>Reserved, <arm-defined-word>RES0</arm-defined-word>.</para>
+    </field_description>
+    <fields_condition>Otherwise</fields_condition>
+  </field>
+  <text_after_fields/>
+</fields>
+
+
+
+
+<reg_fieldset length="64">
+  <fieldat id="fieldset_0-63_60" msb="63" lsb="60"/>
+  <fieldat id="fieldset_0-59_56" msb="59" lsb="56"/>
+  <fieldat id="fieldset_0-55_52" msb="55" lsb="52"/>
+  <fieldat id="fieldset_0-51_48" msb="51" lsb="48"/>
+  <fieldat id="fieldset_0-47_44" msb="47" lsb="44"/>
+  <fieldat id="fieldset_0-43_40" msb="43" lsb="40"/>
+  <fieldat id="fieldset_0-39_36" msb="39" lsb="36"/>
+  <fieldat id="fieldset_0-35_32" msb="35" lsb="32"/>
+  <fieldat id="fieldset_0-31_28" msb="31" lsb="28"/>
+  <fieldat id="fieldset_0-27_24" msb="27" lsb="24"/>
+  <fieldat id="fieldset_0-23_20" msb="23" lsb="20"/>
+  <fieldat id="fieldset_0-19_16" msb="19" lsb="16"/>
+  <fieldat id="fieldset_0-15_12-1" msb="15" lsb="12"/>
+  <fieldat id="fieldset_0-11_8" msb="11" lsb="8"/>
+  <fieldat id="fieldset_0-7_4" msb="7" lsb="4"/>
+  <fieldat id="fieldset_0-3_0-1" msb="3" lsb="0"/>
+</reg_fieldset>
+
+
+      </reg_fieldsets>
+
+      <access_mechanisms>
+          
+
+
+
+
+
+
+    
+        
+        <access_mechanism accessor="MRS ID_AA64ZFR0_EL1" type="SystemAccessor">
+            <encoding>
+            <access_instruction>MRS &lt;Xt&gt;, ID_AA64ZFR0_EL1</access_instruction>
+                
+                <enc n="op0" v="0b11"/>
+                
+                <enc n="op1" v="0b000"/>
+                
+                <enc n="CRn" v="0b0000"/>
+                
+                <enc n="CRm" v="0b0100"/>
+                
+                <enc n="op2" v="0b100"/>
+            </encoding>
+            <access_permission>
+                <ps name="MRS" sections="1" secttype="access_permission">
+                <pstext>
+if HaveEL(EL3) &amp;&amp; !(EffectivelyAtEL0InHost() || EffectivelyAtEL0NotInHost() || PSTATE.EL == EL3) &amp;&amp; EL3SDDUndefPriority() &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+    Undefined();
+elsif PSTATE.EL == EL0 then
+    if IsFeatureImplemented(FEAT_IDST) then
+        AArch64_SystemAccessTraptoEL1orEL2(0x18);
+    else
+        Undefined();
+    end;
+elsif PSTATE.EL == EL1 then
+    if EL2Enabled() &amp;&amp; (IsFeatureImplemented(FEAT_FGT) || !IsZero(ID_AA64ZFR0_EL1()) || ImpDefBool("ID_AA64ZFR0_EL1 trapped by HCR_EL2.TID3")) &amp;&amp; HCR_EL2().TID3 == '1' then
+        AArch64_SystemAccessTrap(EL2, 0x18);
+    elsif HaveEL(EL3) &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = ID_AA64ZFR0_EL1();
+    end;
+elsif PSTATE.EL == EL2 then
+    if HaveEL(EL3) &amp;&amp; IsFeatureImplemented(FEAT_IDTE3) &amp;&amp; SCR_EL3().TID3 == '1' then
+        if EL3SDDUndef() then
+            Undefined();
+        else
+            AArch64_SystemAccessTrap(EL3, 0x18);
+        end;
+    else
+        X{64}(t) = ID_AA64ZFR0_EL1();
+    end;
+elsif PSTATE.EL == EL3 then
+    X{64}(t) = ID_AA64ZFR0_EL1();
+end;
+                </pstext>
+                </ps>
+            </access_permission>
+        </access_mechanism>
+
+      </access_mechanisms>
+
+      <arch_variants>
+      </arch_variants>
+  </register>
+</registers>
+<timestamp>2026-06-24 14:06:58</timestamp>
+<commit_id>2026-06_rel</commit_id>
+</register_page>
