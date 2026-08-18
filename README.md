@@ -13,6 +13,7 @@ architecture/
 controllers/
   usb/rockchip/           Rockchip SoC 中的 USB 控制器
 sensors/
+  imu/bosch/              Bosch BMI 系列惯性测量单元
   imu/qst/                QST QMA/QMI 系列运动传感器
 schema/                   YAML 格式说明
 templates/                新数据文件模板
@@ -74,6 +75,14 @@ catalog.json              机器可读的全库索引
 | 六轴惯性测量单元 | QMI8660 | [`qmi8660.yaml`](sensors/imu/qst/qmi8660.yaml) |
 
 这些文件保留现有解析结果中的中文寄存器说明。数据来源、文档版本和许可状态记录在各文件的 `source` 字段及 [`NOTICE.md`](NOTICE.md) 中；仓库不分发原始厂商文档。
+
+### Bosch 惯性测量单元
+
+| 类型 | 系列 | 文件 |
+| --- | --- | --- |
+| 六轴惯性测量单元 | BMI323 | [`bmi323.yaml`](sensors/imu/bosch/bmi323.yaml) |
+
+BMI323 使用 Bosch Sensortec BMI323 Datasheet BST-BMI323-DS000-11（文档修订 1.5，2025-03-27）。主寄存器页按 16 位字编址，扩展特性寄存器通过 `FEATURE_DATA_ADDR`、`FEATURE_DATA_TX` 和 `FEATURE_DATA_STATUS` 事务访问。来源与许可边界见 [`NOTICE.md`](NOTICE.md)。
 
 完整统计、来源版本、许可证和 SHA-256 位于 [`catalog.json`](catalog.json)。
 

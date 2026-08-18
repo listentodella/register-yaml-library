@@ -524,6 +524,37 @@
       "sha256": "f3cf6226ce93207e2a0042d275b9b9751d940464bb9ddc935871e1145e60c95b"
     },
     {
+      "id": "sensors:imu:bosch:bmi323",
+      "path": "sensors/imu/bosch/bmi323.yaml",
+      "category": "sensors",
+      "taxonomy": [
+        "sensors",
+        "imu",
+        "bosch"
+      ],
+      "sensor": "BMI323",
+      "vendor": "Bosch Sensortec",
+      "family": "BMI323",
+      "device_type": "imu",
+      "schema_version": 1,
+      "register_space": "mmio",
+      "architecture": null,
+      "profile": null,
+      "source": {
+        "title": "BMI323 Datasheet",
+        "version": "BST-BMI323-DS000-11",
+        "revision": "1.5 (March 27, 2025)",
+        "url": "https://www.bosch-sensortec.com/products/motion-sensors/imus/bmi323/",
+        "license": "Bosch vendor documentation; redistribution terms not specified"
+      },
+      "stats": {
+        "pages": 2,
+        "registers": 113,
+        "fields": 285
+      },
+      "sha256": "2cb63658a4fc4655d25b559af02b8c5f1c6c36160112df8895cfc2795146353d"
+    },
+    {
       "id": "sensors:imu:qst:qma6100p",
       "path": "sensors/imu/qst/qma6100p.yaml",
       "category": "sensors",

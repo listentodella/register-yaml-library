@@ -1,0 +1,2287 @@
+schema_version: 1
+sensor: BMI323
+vendor: "Bosch Sensortec"
+family: BMI323
+device_type: imu
+source:
+  title: "BMI323 Datasheet"
+  version: "BST-BMI323-DS000-11"
+  revision: "1.5 (March 27, 2025)"
+  document: "BMI323 Datasheet, document BST-BMI323-DS000-11"
+  url: "https://www.bosch-sensortec.com/products/motion-sensors/imus/bmi323/"
+  license: "Bosch vendor documentation; redistribution terms not specified"
+  notice: "Register facts extracted from the user's Zotero PDF attachment; the PDF itself is not redistributed."
+who_am_i:
+  reg: 0x00
+  values:
+    - value: 0x43
+      desc: "BMI323 chip identifier in CHIP_ID[7:0]"
+
+pages:
+  UI:
+    page_id: 0x00
+    address_unit_bits: 16
+    access: "SPI / I2C / I3C"
+    desc: "Primary 16-bit word-addressed register map. Each address selects one 16-bit register, so width is 2 bytes and address_span is 1."
+    registers:
+      - addr: 0x00
+        name: CHIP_ID
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0043
+        roles: [identity]
+        desc: "Device identification code. Only bits 0 to 7 contain valid information, the contents of bits 8 to 15 must be ignored."
+        fields:
+          - name: chip_id
+            bits: "7:0"
+            desc: "Chip identifier"
+
+      - addr: 0x01
+        name: ERR_REG
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        read_clear: true
+        desc: "Reports sensor error conditions"
+        fields:
+          - name: i3c_error3
+            bits: "11"
+            desc: "S0/S1 error occurred. When S0/S1 error occurs, the slave will recover automatically after 60 us as if we see a HDR-exit pattern on the bus while the flag will persist for notification purpose. This flag is clear-on-read type. It is cleared automatically once read."
+          - name: i3c_error0
+            bits: "8"
+            desc: "SDR parity error or read abort condition (maximum clock stall time for I3C read transfer) occurred. This flag is a clear-on-read type. It is cleared automatically once read. Refer to the MIPI I3C specification chapter 'Master Clock Stalling' for detail info regarding the read abort condition."
+          - name: gyr_conf_err
+            bits: "6"
+            desc: "Unsupported gyroscope configuration set by user. This flag will be reset when configuration has been corrected."
+          - name: acc_conf_err
+            bits: "5"
+            desc: "Unsupported accelerometer configuration set by user. This flag will be reset when configuration has been corrected."
+          - name: feat_eng_wd
+            bits: "4"
+            desc: "Watchdog timer of the feature engine triggered. This flag is clear-on-read."
+          - name: feat_eng_ovrld
+            bits: "2"
+            desc: "Overload of the feature engine detected. This flag is clear-on-read."
+          - name: fatal_err
+            bits: "0"
+            desc: "Fatal Error, chip is not in operational state (Boot-, power-system). This flag will be reset only by power-on-reset or softreset."
+
+      - addr: 0x02
+        name: STATUS
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0001
+        read_clear: true
+        desc: "Sensor status flags"
+        fields:
+          - name: drdy_acc
+            bits: "7"
+            desc: "Data ready for Accelerometer. This flag is clear-on-read."
+          - name: drdy_gyr
+            bits: "6"
+            desc: "Data ready for Gyroscope. This flag is clear-on-read."
+          - name: drdy_temp
+            bits: "5"
+            desc: "Data ready for Temperature. This flag is clear-on-read."
+          - name: por_detected
+            bits: "0"
+            desc: "'1' after device power up or soft-reset. This flag is clear-on-read."
+
+      - addr: 0x03
+        name: ACC_DATA_X
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x8000
+        roles: [accel_data]
+        desc: "Acceleration sample, x channel in the default axes configuration Signed 16-bit two's-complement sample."
+        fields:
+          - name: acc_x
+            bits: "15:0"
+            desc: "Signed 16-bit two's-complement X-axis acceleration sample."
+
+      - addr: 0x04
+        name: ACC_DATA_Y
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x8000
+        roles: [accel_data]
+        desc: "Acceleration sample, y channel in the default axes configuration Signed 16-bit two's-complement sample."
+        fields:
+          - name: acc_y
+            bits: "15:0"
+            desc: "Signed 16-bit two's-complement Y-axis acceleration sample."
+
+      - addr: 0x05
+        name: ACC_DATA_Z
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x8000
+        roles: [accel_data]
+        desc: "Acceleration sample, z channel in the default axes configuration Signed 16-bit two's-complement sample."
+        fields:
+          - name: acc_z
+            bits: "15:0"
+            desc: "Signed 16-bit two's-complement Z-axis acceleration sample."
+
+      - addr: 0x06
+        name: GYR_DATA_X
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x8000
+        roles: [gyro_data]
+        desc: "Angular rate sample, x channel in the default axes configuration Signed 16-bit two's-complement sample."
+        fields:
+          - name: gyr_x
+            bits: "15:0"
+            desc: "Signed 16-bit two's-complement X-axis angular-rate sample."
+
+      - addr: 0x07
+        name: GYR_DATA_Y
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x8000
+        roles: [gyro_data]
+        desc: "Angular rate sample, y channel in the default axes configuration Signed 16-bit two's-complement sample."
+        fields:
+          - name: gyr_y
+            bits: "15:0"
+            desc: "Signed 16-bit two's-complement Y-axis angular-rate sample."
+
+      - addr: 0x08
+        name: GYR_DATA_Z
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x8000
+        roles: [gyro_data]
+        desc: "Angular rate sample, z channel in the default axes configuration Signed 16-bit two's-complement sample."
+        fields:
+          - name: gyr_z
+            bits: "15:0"
+            desc: "Signed 16-bit two's-complement Z-axis angular-rate sample."
+
+      - addr: 0x09
+        name: TEMP_DATA
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x8000
+        roles: [temp_data]
+        desc: "Temperature Data. The resolution is 512 LSB/K. 0x0000 -> 23 degrees C 0x8000 -> invalid Signed 16-bit temperature output; temperature [deg C] = raw / 512 + 23."
+        fields:
+          - name: temp_data
+            bits: "15:0"
+            desc: "Temperature value. T ( degrees C) := temp_data/512 + 23"
+
+      - addr: 0x0A
+        name: SENSOR_TIME_0
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Sensor time, least significant word (15:0) Combine SENSOR_TIME_1:SENSOR_TIME_0 as a 32-bit sensor timestamp."
+        fields:
+          - name: sensor_time_15_0
+            bits: "15:0"
+            desc: "Least significant word of the sensor time (15:0) where 1 LSB corresponds to 39.0625 us"
+
+      - addr: 0x0B
+        name: SENSOR_TIME_1
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Sensor time, most significant word (31:16) Combine SENSOR_TIME_1:SENSOR_TIME_0 as a 32-bit sensor timestamp."
+        fields:
+          - name: sensor_time_31_16
+            bits: "15:0"
+            desc: "Most significant word of the sensor time (31:16)"
+
+      - addr: 0x0C
+        name: SAT_FLAGS
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Saturation flags for each sensor and axis"
+        fields:
+          - name: satf_gyr_z
+            bits: "5"
+            desc: "Saturation flag for the gyroscope z axis in the default axes configuration"
+          - name: satf_gyr_y
+            bits: "4"
+            desc: "Saturation flag for the gyroscope y axis in the default axes configuration"
+          - name: satf_gyr_x
+            bits: "3"
+            desc: "Saturation flag for the gyroscope x axis in the default axes configuration"
+          - name: satf_acc_z
+            bits: "2"
+            desc: "Saturation flag for the accelerometer z axis in the default axes configuration"
+          - name: satf_acc_y
+            bits: "1"
+            desc: "Saturation flag for the accelerometer y axis in the default axes configuration"
+          - name: satf_acc_x
+            bits: "0"
+            desc: "Saturation flag for the accelerometer x axis in the default axes configuration"
+
+      - addr: 0x0D
+        name: INT_STATUS_INT1
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        read_clear: true
+        roles: [interrupt_status]
+        desc: "INT1 Status Register. This register is clear-on-read."
+        fields:
+          - name: int1_ffull
+            bits: "15"
+            desc: "FIFO full interrupt"
+          - name: int1_fwm
+            bits: "14"
+            desc: "FIFO watermark interrupt"
+          - name: int1_acc_drdy
+            bits: "13"
+            desc: "Accelerometer data ready interrupt"
+          - name: int1_gyr_drdy
+            bits: "12"
+            desc: "Gyroscope data ready interrupt"
+          - name: int1_temp_drdy
+            bits: "11"
+            desc: "Temperature data ready interrupt"
+          - name: int1_err_status
+            bits: "10"
+            desc: "Feature engine error or status change"
+          - name: int1_i3c
+            bits: "9"
+            desc: "I3C tc sync data ready interrupt"
+          - name: int1_tap
+            bits: "8"
+            desc: "Tap detection output"
+          - name: int1_tilt
+            bits: "7"
+            desc: "Tilt detection output"
+          - name: int1_sig_motion
+            bits: "6"
+            desc: "Sigmotion detection output"
+          - name: int1_step_counter
+            bits: "5"
+            desc: "Step counter watermark output"
+          - name: int1_step_detector
+            bits: "4"
+            desc: "Step detector output"
+          - name: int1_orientation
+            bits: "3"
+            desc: "Orientation detection output"
+          - name: int1_flat
+            bits: "2"
+            desc: "Flat detection output"
+          - name: int1_any_motion
+            bits: "1"
+            desc: "Any motion detection output"
+          - name: int1_no_motion
+            bits: "0"
+            desc: "No motion detection output"
+
+      - addr: 0x0E
+        name: INT_STATUS_INT2
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        read_clear: true
+        roles: [interrupt_status]
+        desc: "INT2 Status Register. This register is clear-on-read."
+        fields:
+          - name: int2_ffull
+            bits: "15"
+            desc: "FIFO full interrupt"
+          - name: int2_fwm
+            bits: "14"
+            desc: "FIFO watermark interrupt"
+          - name: int2_acc_drdy
+            bits: "13"
+            desc: "Accelerometer data ready interrupt"
+          - name: int2_gyr_drdy
+            bits: "12"
+            desc: "Gyroscope data ready interrupt"
+          - name: int2_temp_drdy
+            bits: "11"
+            desc: "Temperature data ready interrupt"
+          - name: int2_err_status
+            bits: "10"
+            desc: "Feature engine error or status change"
+          - name: int2_i3c
+            bits: "9"
+            desc: "I3C tc sync data ready interrupt"
+          - name: int2_tap
+            bits: "8"
+            desc: "Tap detection output"
+          - name: int2_tilt
+            bits: "7"
+            desc: "Tilt detection output"
+          - name: int2_sig_motion
+            bits: "6"
+            desc: "Sigmotion detection output"
+          - name: int2_step_counter
+            bits: "5"
+            desc: "Step counter watermark output"
+          - name: int2_step_detector
+            bits: "4"
+            desc: "Step detector output"
+          - name: int2_orientation
+            bits: "3"
+            desc: "Orientation detection output"
+          - name: int2_flat
+            bits: "2"
+            desc: "Flat detection output"
+          - name: int2_any_motion
+            bits: "1"
+            desc: "Any motion detection output"
+          - name: int2_no_motion
+            bits: "0"
+            desc: "No motion detection output"
+
+      - addr: 0x0F
+        name: INT_STATUS_IBI
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        read_clear: true
+        roles: [interrupt_status]
+        desc: "I3C IBI Status Register. This register is clear-on-read."
+        fields:
+          - name: ibi_ffull
+            bits: "15"
+            desc: "FIFO full interrupt"
+          - name: ibi_fwm
+            bits: "14"
+            desc: "FIFO watermark interrupt"
+          - name: ibi_acc_drdy
+            bits: "13"
+            desc: "Accelerometer data ready interrupt"
+          - name: ibi_gyr_drdy
+            bits: "12"
+            desc: "Gyroscope data ready interrupt"
+          - name: ibi_temp_drdy
+            bits: "11"
+            desc: "Temperature data ready interrupt"
+          - name: ibi_err_status
+            bits: "10"
+            desc: "Feature engine error or status change"
+          - name: ibi_i3c
+            bits: "9"
+            desc: "I3C tc sync data ready interrupt"
+          - name: ibi_tap
+            bits: "8"
+            desc: "Tap output"
+          - name: ibi_tilt
+            bits: "7"
+            desc: "Tilt output"
+          - name: ibi_sig_motion
+            bits: "6"
+            desc: "Sigmotion output"
+          - name: ibi_step_counter
+            bits: "5"
+            desc: "Step counter watermark output"
+          - name: ibi_step_detector
+            bits: "4"
+            desc: "Step detector output"
+          - name: ibi_orientation
+            bits: "3"
+            desc: "Orientation output"
+          - name: ibi_flat
+            bits: "2"
+            desc: "Flat output"
+          - name: ibi_any_motion
+            bits: "1"
+            desc: "Any_motion output"
+          - name: ibi_no_motion
+            bits: "0"
+            desc: "No_motion output"
+
+      - addr: 0x10
+        name: FEATURE_IO0
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Feature engine configuration, before setting/changing an active configuration the register must be cleared (set to 0)"
+        fields:
+          - name: i3c_sync_en
+            bits: "15"
+            desc: "Enables I3C TC-sync feature."
+          - name: tap_detector_t_tap_en
+            bits: "14"
+            desc: "Enables triple tap feature"
+          - name: tap_detector_d_tap_en
+            bits: "13"
+            desc: "Enables double tap feature"
+          - name: tap_detector_s_tap_en
+            bits: "12"
+            desc: "Enables single tap feature"
+          - name: tilt_en
+            bits: "11"
+            desc: "Enables tilt feature"
+          - name: sig_motion_en
+            bits: "10"
+            desc: "Enables significant motion feature"
+          - name: step_counter_en
+            bits: "9"
+            desc: "Enables step counter feature"
+          - name: step_detector_en
+            bits: "8"
+            desc: "Enables step detector feature"
+          - name: orientation_en
+            bits: "7"
+            desc: "Enables orientation feature"
+          - name: flat_en
+            bits: "6"
+            desc: "Enables flat feature"
+          - name: any_motion_z_en
+            bits: "5"
+            desc: "Enables any motion feature for Z-axis"
+          - name: any_motion_y_en
+            bits: "4"
+            desc: "Enables any motion feature for Y-axis"
+          - name: any_motion_x_en
+            bits: "3"
+            desc: "Enables any motion feature for X-axis"
+          - name: no_motion_z_en
+            bits: "2"
+            desc: "Enables no motion feature for Z-axis"
+          - name: no_motion_y_en
+            bits: "1"
+            desc: "Enables no motion feature for Y-axis"
+          - name: no_motion_x_en
+            bits: "0"
+            desc: "Enables no motion feature for X-axis"
+
+      - addr: 0x11
+        name: FEATURE_IO1
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Feature engine I/O register 0"
+        fields:
+          - name: state
+            bits: "12:11"
+            desc: "Current state of the system"
+            values:
+              0x00: "System in feature mode"
+              0x01: "System is executing self-calibration of gyroscope in feature mode"
+              0x02: "System in self-test mode"
+              0x03: "System in error mode"
+          - name: axis_map_complete
+            bits: "10"
+            desc: "Axis mapping completed"
+          - name: sample_rate_err
+            bits: "7"
+            desc: "Insufficient sample rate for either 50Hz or 200Hz or I3C TC-sync feature"
+          - name: st_result
+            bits: "6"
+            desc: "Accelerometer and/or gyroscope self-test result (1=OK, 0=Not OK). Bit sc_st_complete should be 1 prior to reading this bit."
+          - name: gyro_sc_result
+            bits: "5"
+            desc: "Gyroscope self-calibration result (1=OK, 0=Not OK). Bit sc_st_complete should be 1 prior to reading this bit."
+          - name: sc_st_complete
+            bits: "4"
+            desc: "Self-calibration (gyroscope only) or self-test (accelerometer and/or gyroscope) execution status. 0 indicates that the procedure is ongoing. 1 indicates that the procedure is completed."
+          - name: error_status
+            bits: "3:0"
+            desc: "Error and status information"
+            values:
+              0x00: "Feature engine still inactive"
+              0x01: "Feature engine activated"
+              0x03: "Configuration string download failed"
+              0x05: "No error"
+              0x06: "Axis-map command rejected because a sensor, self-calibration, or self-test was active"
+              0x08: "I3C timing-control synchronization configuration error"
+              0x09: "Gyroscope self-calibration or self-test aborted"
+              0x0A: "Gyroscope self-calibration command ignored because another operation was active"
+              0x0B: "Self-test command ignored because another operation was active"
+              0x0C: "Self-calibration or self-test preconditions were not met"
+              0x0D: "Illegal sensor configuration change during self-calibration or self-test"
+              0x0E: "I3C synchronization request deferred until self-test completes"
+              0x0F: "Illegal sensor configuration change while I3C synchronization was active"
+
+      - addr: 0x12
+        name: FEATURE_IO2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Feature engine I/O register 1 The detailed table shows read access, but the documented feature-engine initialization protocol writes startup configuration before enable; after enable the same word is a read-only step-counter output."
+        fields:
+          - name: startup_config_0_or_step_counter_out_0
+            bits: "15:0"
+            desc: "Before the feature engine is enabled, this is startup configuration word 0; after enable, it is the low word of the step-counter output."
+
+      - addr: 0x13
+        name: FEATURE_IO3
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Feature engine I/O register 2 The detailed table shows read access, but the documented feature-engine initialization protocol writes startup configuration before enable; after enable the same word is a read-only step-counter output."
+        fields:
+          - name: startup_config_1_or_step_counter_out_1
+            bits: "15:0"
+            desc: "Before the feature engine is enabled, this is startup configuration word 1; after enable, it is the high word of the step-counter output."
+
+      - addr: 0x14
+        name: FEATURE_IO_STATUS
+        access: RW
+        width: 2
+        address_span: 1
+        desc: "Feature I/O synchronization status and trigger The register-map overview gives reset 0x0018, while the detailed bit table shows all bits reset to 0; reset is omitted here because the source is internally inconsistent."
+        fields:
+          - name: feature_io_status
+            bits: "0"
+            desc: "On read: data has been written by the feature engine On write: data written by the host shall be sent to the feature engine"
+
+      - addr: 0x15
+        name: FIFO_FILL_LEVEL
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        roles: [fifo_status]
+        desc: "FIFO fill state in words"
+        fields:
+          - name: fifo_fill_level
+            bits: "10:0"
+            desc: "Current fill level of FIFO buffer An empty FIFO corresponds to 0x000. The word counter may be reset by reading out all frames from the FIFO buffer or when the FIFO is reset through fifo_flush. The word counter is updated each time a complete frame was read or written."
+
+      - addr: 0x16
+        name: FIFO_DATA
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        no_dump: true
+        no_dump_reason: "FIFO stream port; read only as part of a deliberate FIFO transaction."
+        roles: [fifo_data]
+        desc: "FIFO data output register"
+        fields:
+          - name: fifo_data
+            bits: "15:0"
+            desc: "FIFO read data (16 bits) Data format depends on the setting of register FIFO_CONF. The FIFO data are organized in frames. The new data flag is preserved. Read burst access must be used, the address will not increment when the read burst reads at the address of FIFO_DATA. When a frame is only partially read out it is retransmitted including the header at the next readout."
+
+      - addr: 0x20
+        name: ACC_CONF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0028
+        desc: "Sets the output data rate, bandwidth, range and the mode of the accelerometer"
+        fields:
+          - name: acc_mode
+            bits: "14:12"
+            desc: "Operation modes for the accelerometer"
+            values:
+              0x00: "Accelerometer disabled"
+              0x03: "Accelerometer duty-cycling mode"
+              0x04: "Accelerometer continuous low-power mode"
+              0x07: "Accelerometer high-performance mode"
+          - name: acc_avg_num
+            bits: "10:8"
+            desc: "Numbers of samples to be averaged"
+            values:
+              0x00: "No averaging; pass sample without filtering"
+              0x01: "Averaging of 2 samples"
+              0x02: "Averaging of 4 samples"
+              0x03: "Averaging of 8 samples"
+              0x04: "Averaging of 16 samples"
+              0x05: "Averaging of 32 samples"
+              0x06: "Averaging of 64 samples"
+          - name: acc_bw
+            bits: "7"
+            desc: "Configure the -3dB cut-off frequency for the accelerometer"
+            values:
+              0x00: "BW = acc_odr/2"
+              0x01: "BW = acc_odr/4"
+          - name: acc_range
+            bits: "6:4"
+            desc: "Full scale, Resolution"
+            values:
+              0x00: "+/-2g, 16.38 LSB/mg"
+              0x01: "+/-4g, 8.19 LSB/mg"
+              0x02: "+/-8g, 4.10 LSB/mg"
+              0x03: "+/-16g, 2.05 LSB/mg"
+          - name: acc_odr
+            bits: "3:0"
+            desc: "Sample rate (ODR) in Hz"
+            values:
+              0x01: "ODR = 0.78125Hz"
+              0x02: "ODR = 1.5625Hz"
+              0x03: "ODR = 3.125Hz"
+              0x04: "ODR = 6.25Hz"
+              0x05: "ODR = 12.5Hz"
+              0x06: "ODR = 25Hz"
+              0x07: "ODR = 50Hz"
+              0x08: "ODR = 100Hz"
+              0x09: "ODR = 200Hz"
+              0x0A: "ODR = 400Hz"
+              0x0B: "ODR = 800Hz"
+              0x0C: "ODR = 1.6kHz"
+              0x0D: "ODR = 3.2kHz"
+              0x0E: "ODR = 6.4kHz"
+
+      - addr: 0x21
+        name: GYR_CONF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0048
+        desc: "Sets the output data rate, bandwidth, range and the mode of the Gyroscope in the sensor"
+        fields:
+          - name: gyr_mode
+            bits: "14:12"
+            desc: "Operation modes for the gyroscope"
+            values:
+              0x00: "Disables the gyroscope"
+              0x01: "Disables the gyroscope but keep the gyroscope drive enabled"
+              0x03: "Enables the gyroscope with sensing operated in duty-cycling"
+              0x04: "Enables the gyroscope in a continuous operation mode with reduced current"
+              0x07: "Enables the gyroscope in high performance mode"
+          - name: gyr_avg_num
+            bits: "10:8"
+            desc: "Numbers of samples to be averaged"
+            values:
+              0x00: "No averaging; pass sample without filtering"
+              0x01: "averaging of 2 samples"
+              0x02: "Averaging of 4 samples"
+              0x03: "Averaging of 8 samples"
+              0x04: "Averaging of 16 samples"
+              0x05: "Averaging of 32 samples"
+              0x06: "Averaging of 64 samples"
+          - name: gyr_bw
+            bits: "7"
+            desc: "Configure the -3dB cut-off frequency for the gyroscope"
+            values:
+              0x00: "BW = gyr_odr/2"
+              0x01: "BW = gyr_odr/4"
+          - name: gyr_range
+            bits: "6:4"
+            desc: "Full scale, Resolution"
+            values:
+              0x00: "+/-125 dps, 262.144 LSB/dps"
+              0x01: "+/-250 dps, 131.072 LSB/dps"
+              0x02: "+/-500 dps, 65.536 LSB/dps"
+              0x03: "+/-1000 dps, 32.768 LSB/dps"
+              0x04: "+/-2000 dps, 16.4 LSB/dps"
+          - name: gyr_odr
+            bits: "3:0"
+            desc: "Sample rate (ODR) in Hz"
+            values:
+              0x01: "ODR = 0.78125Hz"
+              0x02: "ODR = 1.5625Hz"
+              0x03: "ODR = 3.125Hz"
+              0x04: "ODR = 6.25Hz"
+              0x05: "ODR = 12.5Hz"
+              0x06: "ODR = 25Hz"
+              0x07: "ODR = 50Hz"
+              0x08: "ODR = 100Hz"
+              0x09: "ODR = 200Hz"
+              0x0A: "ODR = 400Hz"
+              0x0B: "ODR = 800Hz"
+              0x0C: "ODR = 1.6kHz"
+              0x0D: "ODR = 3.2kHz"
+              0x0E: "ODR = 6.4kHz"
+
+      - addr: 0x28
+        name: ALT_ACC_CONF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x3206
+        desc: "Sets the alternative output data rate, bandwidth, range and the mode of the accelerometer"
+        fields:
+          - name: alt_acc_mode
+            bits: "14:12"
+            desc: "Operation modes for the accelerometer"
+            values:
+              0x00: "Accelerometer disabled"
+              0x03: "Accelerometer duty-cycling mode"
+              0x04: "Accelerometer continuous low-power mode"
+              0x07: "Accelerometer high-performance mode"
+          - name: alt_acc_avg_num
+            bits: "10:8"
+            desc: "Numbers of samples to be averaged"
+            values:
+              0x00: "No averaging; pass sample without filtering"
+              0x01: "Averaging of 2 samples"
+              0x02: "Averaging of 4 samples"
+              0x03: "Averaging of 8 samples"
+              0x04: "Averaging of 16 samples"
+              0x05: "Averaging of 32 samples"
+              0x06: "Averaging of 64 samples"
+          - name: alt_acc_odr
+            bits: "3:0"
+            desc: "Sample rate (ODR) in Hz"
+            values:
+              0x01: "ODR = 0.78125Hz"
+              0x02: "ODR = 1.5625Hz"
+              0x03: "ODR = 3.125Hz"
+              0x04: "ODR = 6.25Hz"
+              0x05: "ODR = 12.5Hz"
+              0x06: "ODR = 25Hz"
+              0x07: "ODR = 50Hz"
+              0x08: "ODR = 100Hz"
+              0x09: "ODR = 200Hz"
+              0x0A: "ODR = 400Hz"
+              0x0B: "ODR = 800Hz"
+              0x0C: "ODR = 1.6kHz"
+              0x0D: "ODR = 3.2kHz"
+              0x0E: "ODR = 6.4kHz"
+
+      - addr: 0x29
+        name: ALT_GYR_CONF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x1206
+        desc: "Sets the alternative output data rate, bandwidth, range and the mode of the gyroscope"
+        fields:
+          - name: alt_gyr_mode
+            bits: "14:12"
+            desc: "Operation modes for the gyroscope"
+            values:
+              0x00: "Disables the gyroscope"
+              0x01: "Disables the gyroscope but keep the gyroscope drive enabled"
+              0x03: "Enables the gyroscope with sensing operated in duty-cycling"
+              0x04: "Enables the gyroscope in a continuous operation mode with reduced current"
+              0x07: "Enables the gyroscope in high performance mode"
+          - name: alt_gyr_avg_num
+            bits: "10:8"
+            desc: "Numbers of samples to be averaged"
+            values:
+              0x00: "No averaging; pass sample without filtering"
+              0x01: "Averaging of 2 samples"
+              0x02: "Averaging of 4 samples"
+              0x03: "Averaging of 8 samples"
+              0x04: "Averaging of 16 samples"
+              0x05: "Averaging of 32 samples"
+              0x06: "Averaging of 64 samples"
+          - name: alt_gyr_odr
+            bits: "3:0"
+            desc: "Sample rate (ODR) in Hz"
+            values:
+              0x01: "ODR = 0.78125Hz"
+              0x02: "ODR = 1.5625Hz"
+              0x03: "ODR = 3.125Hz"
+              0x04: "ODR = 6.25Hz"
+              0x05: "ODR = 12.5Hz"
+              0x06: "ODR = 25Hz"
+              0x07: "ODR = 50Hz"
+              0x08: "ODR = 100Hz"
+              0x09: "ODR = 200Hz"
+              0x0A: "ODR = 400Hz"
+              0x0B: "ODR = 800Hz"
+              0x0C: "ODR = 1.6kHz"
+              0x0D: "ODR = 3.2kHz"
+              0x0E: "ODR = 6.4kHz"
+
+      - addr: 0x2A
+        name: ALT_CONF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Alternate configuration control"
+        fields:
+          - name: alt_rst_conf_write_en
+            bits: "8"
+            desc: "If enabled, any write to ACC_CONF or GYR_CONF will instantly switch back to associated user configuration."
+          - name: alt_gyr_en
+            bits: "4"
+            desc: "Enables switching possibility to alternate configuration for gyroscope."
+          - name: alt_acc_en
+            bits: "0"
+            desc: "Enables switching possibility to alternate configuration for accelerometer."
+
+      - addr: 0x2B
+        name: ALT_STATUS
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Reports the active configuration for the accelerometer and gyroscope"
+        fields:
+          - name: alt_gyr_active
+            bits: "4"
+            desc: "gyro is using ALT_GYR_CONF if set; GYR_CONF otherwise"
+          - name: alt_acc_active
+            bits: "0"
+            desc: "accel is using ALT_ACC_CONF if set; ACC_CONF otherwise"
+
+      - addr: 0x35
+        name: FIFO_WATERMARK
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "FIFO watermark level"
+        fields:
+          - name: fifo_watermark
+            bits: "9:0"
+            desc: "Trigger an interrupt when FIFO contains fifo_watermark words"
+
+      - addr: 0x36
+        name: FIFO_CONF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Configuration of the FIFO data buffer behaviour"
+        fields:
+          - name: fifo_temp_en
+            bits: "11"
+            desc: "Write temperature samples into the FIFO data buffer"
+            values:
+              0x00: "No temperature data is written"
+              0x01: "Temperature data is written"
+          - name: fifo_gyr_en
+            bits: "10"
+            desc: "Write 3D angular rate samples from the gyroscope into the FIFO data buffer"
+            values:
+              0x00: "No gyroscope data is written"
+              0x01: "Gyroscope data is written"
+          - name: fifo_acc_en
+            bits: "9"
+            desc: "Write 3D acceleration samples from the accelerometer into the FIFO data buffer"
+            values:
+              0x00: "No accelerometer data is written"
+              0x01: "Accelerometer data is written"
+          - name: fifo_time_en
+            bits: "8"
+            desc: "Write the sensor time into the FIFO data buffer."
+            values:
+              0x00: "No sensortime is written"
+              0x01: "Sensortime is written"
+          - name: fifo_stop_on_full
+            bits: "0"
+            desc: "Configure whether to overwrite oldest samples when the FIFO data buffer is full"
+            values:
+              0x00: "Continue writing to the data buffer by overwriting oldest samples"
+              0x01: "Stop writing into the FIFO data buffer when full"
+
+      - addr: 0x37
+        name: FIFO_CTRL
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Control of the FIFO data buffer"
+        fields:
+          - name: fifo_flush
+            bits: "0"
+            desc: "Writing 0b1 clears the FIFO data buffer."
+
+      - addr: 0x38
+        name: IO_INT_CTRL
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Configures the electrical behavior of the interrupt pins"
+        fields:
+          - name: int2_output_en
+            bits: "10"
+            desc: "Output enable for INT2 pin"
+          - name: int2_od
+            bits: "9"
+            desc: "Configure behavior of INT2 pin"
+            values:
+              0x00: "push-pull"
+              0x01: "open drain"
+          - name: int2_lvl
+            bits: "8"
+            desc: "Configure level of INT2 pin"
+            values:
+              0x00: "active low"
+              0x01: "active high"
+          - name: int1_output_en
+            bits: "2"
+            desc: "Output enable for INT1 pin"
+          - name: int1_od
+            bits: "1"
+            desc: "Configure behavior of INT1 pin"
+            values:
+              0x00: "push-pull"
+              0x01: "open drain"
+          - name: int1_lvl
+            bits: "0"
+            desc: "Configure level of INT1 pin"
+            values:
+              0x00: "active low"
+              0x01: "active high"
+
+      - addr: 0x39
+        name: INT_CONF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Interrupt Configuration Register."
+        fields:
+          - name: int_latch
+            bits: "0"
+            desc: "Configuration of the interrupt clear behaviour as not latched or permanently latched."
+            values:
+              0x00: "non latched"
+              0x01: "permanent latched"
+
+      - addr: 0x3A
+        name: INT_MAP1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Mapping of feature engine interrupts to outputs"
+        fields:
+          - name: tilt_out
+            bits: "15:14"
+            desc: "Map tilt output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: sig_motion_out
+            bits: "13:12"
+            desc: "Map sigmotion output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: step_counter_out
+            bits: "11:10"
+            desc: "Map step_counter watermark output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: step_detector_out
+            bits: "9:8"
+            desc: "Map step_detector output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: orientation_out
+            bits: "7:6"
+            desc: "Map orientation output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: flat_out
+            bits: "5:4"
+            desc: "Map flat output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: any_motion_out
+            bits: "3:2"
+            desc: "Map any motion output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: no_motion_out
+            bits: "1:0"
+            desc: "Map no motion output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+
+      - addr: 0x3B
+        name: INT_MAP2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Mapping of feature engine interrupts, data ready interrupts for signals and FIFO buffer interrupts to outputs"
+        fields:
+          - name: fifo_full_int
+            bits: "15:14"
+            desc: "Map FIFO full interrupt to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: fifo_watermark_int
+            bits: "13:12"
+            desc: "Map FIFO watermark interrupt to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: acc_drdy_int
+            bits: "11:10"
+            desc: "Map accel data ready interrupt to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: gyr_drdy_int
+            bits: "9:8"
+            desc: "Map gyro data ready interrupt to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: temp_drdy_int
+            bits: "7:6"
+            desc: "Map temperature data ready interrupt to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: err_status
+            bits: "5:4"
+            desc: "Map feature engine's error or status change to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: i3c_out
+            bits: "3:2"
+            desc: "Map i3c output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+          - name: tap_out
+            bits: "1:0"
+            desc: "Map tap output to either INT1 or INT2 or IBI"
+            values:
+              0x00: "Interrupt disabled"
+              0x01: "Mapped to INT1"
+              0x02: "Mapped to INT2"
+              0x03: "Mapped to I3C IBI"
+
+      - addr: 0x40
+        name: FEATURE_CTRL
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Feature engine control register"
+        fields:
+          - name: engine_en
+            bits: "0"
+            desc: "Enable or disable the feature engine. Note: a soft-reset is required to re-enable the feature engine."
+
+      - addr: 0x41
+        name: FEATURE_DATA_ADDR
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Address register for feature data: configurations and extended output"
+        fields:
+          - name: data_address
+            bits: "10:0"
+            desc: "Start address for the feature data, that is feature configurations and extended feature output"
+
+      - addr: 0x42
+        name: FEATURE_DATA_TX
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        no_dump: true
+        no_dump_reason: "Feature-engine transfer port; accesses participate in the selected extended-register transaction."
+        desc: "I/O port for the data values of the feature engine"
+        fields:
+          - name: data_tx_value
+            bits: "15:0"
+            desc: "Data port for DMA transfers."
+
+      - addr: 0x43
+        name: FEATURE_DATA_STATUS
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Status of the data access to the feature engine"
+        fields:
+          - name: data_tx_ready
+            bits: "1"
+            desc: "Data is writable to the feature engine or readable from the feature engine."
+          - name: data_outofbound_err
+            bits: "0"
+            desc: "Too much data read or written to the feature engine. Bit will be reset upon next data transfer to or from the feature engine."
+
+      - addr: 0x45
+        name: FEATURE_ENGINE_STATUS
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Status of the feature engine"
+        fields:
+          - name: watchdog_not_ack
+            bits: "5"
+            desc: "The feature engine did not acknowledge its internal watchdog in time. Perform a soft-reset to re-enable the feature engine."
+          - name: disabled_by_host
+            bits: "4"
+            desc: "Feature engine was disabled by the host. Perform a soft-reset to re-enable the feature engine."
+          - name: data_tx_active
+            bits: "3"
+            desc: "DMA controller has started DMA and DMA transactions are ongoing"
+          - name: overload
+            bits: "1"
+            desc: "Transfer of data to or from the feature engine is ongoing."
+          - name: sleep
+            bits: "0"
+            desc: "Feature engine halted or sleeping."
+
+      - addr: 0x47
+        name: FEATURE_EVENT_EXT
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Register of extended data on feature events. The register content is valid in combination with an active bit in INT_STATUS_INT1/2"
+        fields:
+          - name: t_tap
+            bits: "5"
+            desc: "Triple tap detected"
+          - name: d_tap
+            bits: "4"
+            desc: "Double tap detected"
+          - name: s_tap
+            bits: "3"
+            desc: "Single tap detected"
+          - name: orientation_faceup_down
+            bits: "2"
+            desc: "Output value of face down face up orientation (only if ud_en is enabled). Value after device initialization is 0b0 i.e. Face up"
+            values:
+              0x00: "Face up orientation"
+              0x01: "Face down orientation"
+          - name: orientation_portrait_landscape
+            bits: "1:0"
+            desc: "Output value of the orientation detection feature. Value after device initialization is 0b00 i.e. Portrait upright"
+            values:
+              0x00: "Portrait upright orientation"
+              0x01: "Landscape left orientation"
+              0x02: "Portrait upside down orientation"
+              0x03: "Landscape right orientation"
+
+      - addr: 0x4F
+        name: IO_PDN_CTRL
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Pull down behavior control"
+        fields:
+          - name: anaio_pdn_dis
+            bits: "0"
+            desc: "Disable the pull down on the PIN2 and PIN3"
+
+      - addr: 0x50
+        name: IO_SPI_IF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Configuration register for the SPI interface"
+        fields:
+          - name: spi3_en
+            bits: "0"
+            desc: "Enable or disable the 3-wire SPI interface. 0b0 enables the default 4-wire configuration, 0b1 enables the 3-wire configuration."
+
+      - addr: 0x51
+        name: IO_PAD_STRENGTH
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x000A
+        desc: "Configuration register for the electrical characteristics of the pads"
+        fields:
+          - name: if_i2c_boost
+            bits: "3"
+            desc: "Enable or disable the drive strength for SDX when interfacing via I2C. 0b1 enables the default increased drive strength, 0b0 does not increase the drive strength."
+          - name: if_drv
+            bits: "2:0"
+            desc: "Generic drive strength control for the output pads: 0:=weakest; 7:=strongest"
+
+      - addr: 0x52
+        name: IO_I2C_IF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Configuration register for the I2C interface"
+        fields:
+          - name: watchdog_timer_en
+            bits: "1"
+            desc: "Enable or disable the watchdog for the I2C interface. Disable this feature when using I3C or SPI"
+          - name: watchdog_timer_sel
+            bits: "0"
+            desc: "Select the timer period for the I2C watchdog"
+            values:
+              0x00: "I2C watchdog timeout after 1.25 ms"
+              0x01: "I2C watchdog timeout after 40 ms"
+
+      - addr: 0x53
+        name: IO_ODR_DEVIATION
+        access: RO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "ODR Deviation Trim Register (OTP backed) - User mirror register"
+        fields:
+          - name: odr_deviation
+            bits: "4:0"
+            desc: "ODR clock deviation"
+
+      - addr: 0x60
+        name: ACC_DP_OFF_X
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the accelerometer offset of axis x"
+        fields:
+          - name: acc_dp_off_x
+            bits: "13:0"
+            desc: "Data path register for the temperature independent accelerometer offset of axis x: 1 LSB = 30.52ug; 0x2000 -> invalid"
+
+      - addr: 0x61
+        name: ACC_DP_DGAIN_X
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the accelerometer re-scale of axis x"
+        fields:
+          - name: acc_dp_dgain_x
+            bits: "7:0"
+            desc: "Data path register for the temperature independent accelerometer re-scale of axis x: covers +/-3.125% of sensitivity"
+
+      - addr: 0x62
+        name: ACC_DP_OFF_Y
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the accelerometer offset of axis y"
+        fields:
+          - name: acc_dp_off_y
+            bits: "13:0"
+            desc: "Data path register for the temperature independent accelerometer offset of axis y: 1 LSB = 30.52ug; 0x2000 -> invalid"
+
+      - addr: 0x63
+        name: ACC_DP_DGAIN_Y
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the accelerometer re-scale of axis y"
+        fields:
+          - name: acc_dp_dgain_y
+            bits: "7:0"
+            desc: "Data path register for the temperature independent accelerometer re-scale of axis y: covers +/-3.125% of sensitivity"
+
+      - addr: 0x64
+        name: ACC_DP_OFF_Z
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the accelerometer offset of axis z"
+        fields:
+          - name: acc_dp_off_z
+            bits: "13:0"
+            desc: "Data path register for the temperature independent accelerometer offset of axis z: 1 LSB = 30.52ug; 0x2000 -> invalid"
+
+      - addr: 0x65
+        name: ACC_DP_DGAIN_Z
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the accelerometer re-scale of axis z"
+        fields:
+          - name: acc_dp_dgain_z
+            bits: "7:0"
+            desc: "Data path register for the temperature independent accelerometer re-scale of axis z: covers +/-3.125% of sensitivity"
+
+      - addr: 0x66
+        name: GYR_DP_OFF_X
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the gyroscope offset of axis x"
+        fields:
+          - name: gyr_dp_off_x
+            bits: "9:0"
+            desc: "Data path register for the temperature independent gyroscope offset of axis x: 1 LSB = 0.061 degrees /s; 0x200 -> invalid"
+
+      - addr: 0x67
+        name: GYR_DP_DGAIN_X
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the gyroscope re-scale of axis x"
+        fields:
+          - name: gyr_dp_dgain_x
+            bits: "6:0"
+            desc: "Data path register for the temperature independent gyroscope re-scale of axis x: covers +/-12.5% of sensitivity"
+
+      - addr: 0x68
+        name: GYR_DP_OFF_Y
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the gyroscope offset of axis y"
+        fields:
+          - name: gyr_dp_off_y
+            bits: "9:0"
+            desc: "Data path register for the temperature independent gyroscope offset of axis y: 1 LSB = 0.061 degrees /s; 0x200 -> invalid"
+
+      - addr: 0x69
+        name: GYR_DP_DGAIN_Y
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the gyroscope re-scale of axis y"
+        fields:
+          - name: gyr_dp_dgain_y
+            bits: "6:0"
+            desc: "Data path register for the temperature independent gyroscope re-scale of axis y: covers +/-12.5% of sensitivity"
+
+      - addr: 0x6A
+        name: GYR_DP_OFF_Z
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the gyroscope offset of axis z"
+        fields:
+          - name: gyr_dp_off_z
+            bits: "9:0"
+            desc: "Data path register for the temperature independent gyroscope offset of axis z: 1 LSB = 0.061 degrees /s; 0x200 -> invalid"
+
+      - addr: 0x6B
+        name: GYR_DP_DGAIN_Z
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Data path register for the gyroscope re-scale of axis z"
+        fields:
+          - name: gyr_dp_dgain_z
+            bits: "6:0"
+            desc: "Data path register for the temperature independent gyroscope re-scale of axis z: covers +/-12.5% of sensitivity"
+
+      - addr: 0x70
+        name: I3C_TC_SYNC_TPH
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "I3C Timing Control Sync TPH Register"
+        fields:
+          - name: i3c_tc_sync_tph
+            bits: "15:0"
+            desc: "I3C Timing Control Sync TPH Register"
+
+      - addr: 0x71
+        name: I3C_TC_SYNC_TU
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "I3C Timing Control Sync TU Register"
+        fields:
+          - name: i3c_tc_sync_tu
+            bits: "7:0"
+            desc: "I3C Timing Control Sync TU Register"
+
+      - addr: 0x72
+        name: I3C_TC_SYNC_ODR
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "I3C Timing Control Sync ODR Register"
+        fields:
+          - name: i3c_tc_sync_odr
+            bits: "7:0"
+            desc: "I3C Timing Control Sync ODR Register"
+
+      - addr: 0x7E
+        name: CMD
+        access: WO
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        roles: [command]
+        desc: "Command Register"
+        fields:
+          - name: cmd
+            bits: "15:0"
+            desc: "Available commands (Note: Register will always return 0x00 as read result)"
+            values:
+              0x100: "Trigger accelerometer and gyroscope self-test"
+              0x101: "Trigger gyroscope self-calibration"
+              0x200: "Abort running gyroscope self-calibration"
+              0x201: "Apply I3C timing-control synchronization configuration"
+              0x300: "Apply axis mapping and sign-inversion configuration"
+              0xDEAF: "Soft reset the device and feature engine"
+
+      - addr: 0x7F
+        name: CFG_RES
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Reserved configuration"
+        fields:
+          - name: value_two
+            bits: "15:14"
+            desc: "Reserved configuration value; the datasheet does not document its functional meaning."
+          - name: value_one
+            bits: "4:0"
+            desc: "Reserved configuration value; the datasheet does not document its functional meaning."
+
+  EXTENDED:
+    page_id: 0x01
+    address_unit_bits: 16
+    access: "FEATURE_DATA_ADDR / FEATURE_DATA_TX transaction"
+    desc: "Feature-engine extended 16-bit register map. Select the extended address through FEATURE_DATA_ADDR and transfer data through FEATURE_DATA_TX while observing FEATURE_DATA_STATUS."
+    registers:
+      - addr: 0x02
+        name: GEN_SET_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0006
+        desc: "Common register settings"
+        fields:
+          - name: sw_lock
+            bits: "5"
+            reserved: "RESERVED"
+            desc: "Reserved field; preserve the documented reset value during read-modify-write updates."
+          - name: int_hold_dur
+            bits: "4:1"
+            desc: "Interrupt hold time duration. Range 0 to 13. Hold time = 0.625ms * ( 2 ^interrupt_hold_duration) i.e 0.625ms to 5120ms. If set above 13, then hold time input is considered as 13. Default is 5ms. The hold time is only applicable for interrupts A..I in non-latched mode. Deviation up to +/- 1.25ms + ODR accuracy deviation. If tap detector is active the hold time MUST NOT be 5ms if not applied the enhanced configuration prior via 'bmi3x0_configure_enhanced_flexibility' (sensor driver API)"
+          - name: event_report_mode
+            bits: "0"
+            desc: "Configuration of the reporting mode"
+            values:
+              0x00: "All detected events are reported."
+              0x01: "Report first detected event, then keep silent."
+
+      - addr: 0x03
+        name: AXIS_MAP_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Describes axis map settings"
+        fields:
+          - name: invert_z
+            bits: "5"
+            desc: "Invert the z axis of accelerometer and gyroscope"
+            values:
+              0x00: "Clear this bit to not invert the z axis"
+              0x01: "Set this bit to invert the z axis"
+          - name: invert_y
+            bits: "4"
+            desc: "Invert the y axis of accelerometer and gyroscope"
+            values:
+              0x00: "Clear this bit to not invert the y axis"
+              0x01: "Set this bit to invert the y axis"
+          - name: invert_x
+            bits: "3"
+            desc: "Invert the x axis of accelerometer and gyroscope"
+            values:
+              0x00: "Clear this bit to not invert the x axis"
+              0x01: "Set this bit to invert the x axis"
+          - name: axis_map
+            bits: "2:0"
+            desc: "Map accelerometer and gyroscope axis to desired configuration"
+            values:
+              0x00: "x=x; y=y; z=z"
+              0x01: "x=y; y=x; z=z"
+              0x02: "x=x; y=z; z=y"
+              0x03: "x=z; y=x; z=y"
+              0x04: "x=y; y=z; z=x"
+              0x05: "x=z; y=y; z=x"
+
+      - addr: 0x05
+        name: ANYMO_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x100A
+        desc: "Configuration of acceleration slope threshold and reference update mode"
+        fields:
+          - name: acc_ref_up
+            bits: "12"
+            desc: "Mode of the acceleration reference update."
+            values:
+              0x00: "On detection of the event"
+              0x01: "On update of acceleration signal"
+          - name: slope_thres
+            bits: "11:0"
+            desc: "Minimum slope of acceleration signal for motion detection The field slope_thres has the following properties: Unit g"
+
+      - addr: 0x06
+        name: ANYMO_2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0002
+        desc: "Configuration for hysteresis of acceleration slope"
+        fields:
+          - name: hysteresis
+            bits: "9:0"
+            desc: "Hysteresis for the slope of the acceleration signal"
+
+      - addr: 0x07
+        name: ANYMO_3
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x600A
+        desc: "Configuration of timing related parameters for motion detection"
+        fields:
+          - name: wait_time
+            bits: "15:13"
+            desc: "Wait time for clearing the event after slope is below threshold The field wait_time has the following properties: Unit s"
+          - name: duration
+            bits: "12:0"
+            desc: "Minimum duration for which the slope shall be greater than threshold for motion detection"
+
+      - addr: 0x08
+        name: NOMO_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x100A
+        desc: "Configuration of acceleration slope threshold and reference update mode"
+        fields:
+          - name: acc_ref_up
+            bits: "12"
+            desc: "Mode of the acceleration reference update."
+            values:
+              0x00: "On detection of the event"
+              0x01: "On update of acceleration signal"
+          - name: slope_thres
+            bits: "11:0"
+            desc: "Maximum slope of acceleration signal for stationary state detection"
+
+      - addr: 0x09
+        name: NOMO_2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0002
+        desc: "Configuration for hysteresis of acceleration slope"
+        fields:
+          - name: hysteresis
+            bits: "9:0"
+            desc: "Hysteresis for the slope of the acceleration signal"
+
+      - addr: 0x0A
+        name: NOMO_3
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x600A
+        desc: "Configuration of timing related parameters for stationary detection"
+        fields:
+          - name: wait_time
+            bits: "15:13"
+            desc: "Wait time for clearing the event after slope is below threshold The field wait_time has the following properties: Unit s"
+          - name: duration
+            bits: "12:0"
+            desc: "Minimum duration for which the slope shall be less than threshold for stationary detection"
+
+      - addr: 0x0B
+        name: FLAT_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x2088
+        desc: "Settings for maximum tilt angle for flat state, blocking mode and minimum duration in state for event detection"
+        fields:
+          - name: hold_time
+            bits: "15:8"
+            desc: "Minimum duration the device shall be in flat position for status to be asserted"
+          - name: blocking
+            bits: "7:6"
+            desc: "Blocking mode to prevent change of flat status during large movement of device."
+            values:
+              0x00: "Blocking is disabled"
+              0x01: "Block if acceleration on any axis is greater than 1.5g"
+              0x02: "half of slope_thres"
+              0x03: "slope_thres"
+          - name: theta
+            bits: "5:0"
+            desc: "Maximum allowed tilt angle for device to be in flat state"
+
+      - addr: 0x0C
+        name: FLAT_2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x09CD
+        desc: "Settings for consecutive sample slope and hysteresis"
+        fields:
+          - name: hysteresis
+            bits: "15:8"
+            desc: "Angle of hysteresis for flat detection."
+          - name: slope_thres
+            bits: "7:0"
+            desc: "Minimum slope between consecutive acceleration samples to pervent the change of flat status during large movement"
+
+      - addr: 0x0D
+        name: SIGMO_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x00FA
+        desc: "Size of the segment for detection of significant motion"
+        fields:
+          - name: block_size
+            bits: "15:0"
+            desc: "Size of the segment for detection of significant motion of the device"
+
+      - addr: 0x0E
+        name: SIGMO_2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x4426
+        desc: "Configuration of minimum value of peak to peak acceleration magnitude and mean crossing rate"
+        fields:
+          - name: mcr_min
+            bits: "15:10"
+            desc: "Minimum number of mean crossing per second in acceleration magnitude"
+          - name: peak_2_peak_min
+            bits: "9:0"
+            desc: "Minimum value of the peak to peak acceleration magnitude"
+
+      - addr: 0x0F
+        name: SIGMO_3
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x4653
+        desc: "Configuration of maximum value of peak to peak acceleration magnitude and mean crossing rate"
+        fields:
+          - name: mcr_max
+            bits: "15:10"
+            desc: "Maximum number of mean crossing per second in acceleration magnitude"
+          - name: peak_2_peak_max
+            bits: "9:0"
+            desc: "Maximum value of the peak to peak acceleration magnitude"
+
+      - addr: 0x10
+        name: SC_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Configuration for step counter watermark and global reset"
+        fields:
+          - name: reset_counter
+            bits: "10"
+            desc: "Reset the accumulated step count value"
+          - name: watermark_level
+            bits: "9:0"
+            desc: "An interrupt will be triggered every time the difference in number of steps counted from last event is equal to set value. If 0, the interrupt is disabled."
+
+      - addr: 0x1C
+        name: ORIENT_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x2CFC
+        desc: "Orientation general configuration flags"
+        fields:
+          - name: hold_time
+            bits: "15:11"
+            desc: "Minimum duration the device shall be in new orientation for change detection"
+          - name: theta
+            bits: "10:5"
+            desc: "Maximum allowed tilt angle for device to be in flat state"
+          - name: blocking
+            bits: "4:3"
+            desc: "Blocking allows to prevent change of orientation during large movement of device"
+            values:
+              0x00: "Blocking is disabled"
+              0x01: "Block if acceleration on any axis is greater than 1.5g"
+              0x02: "half of slope_thres"
+              0x03: "slope_thres"
+          - name: mode
+            bits: "2:1"
+            desc: "Selection of mode for orientation spread in the detection plane"
+            values:
+              0x00: "Symmetrical spread of area for portrait and landscape orientations"
+              0x01: "Area of landscape is more compared to portrait orientation"
+              0x02: "Area of portrait is more compared to landscape orientation"
+          - name: ud_en
+            bits: "0"
+            desc: "Selection of upside down orientation detection"
+            values:
+              0x00: "Disable detection of upside-down position"
+              0x01: "Enable detection of upside-down position"
+
+      - addr: 0x1D
+        name: ORIENT_2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x20CD
+        desc: "Settings for acceleration slope and hysteresis in orientation detection"
+        fields:
+          - name: hysteresis
+            bits: "15:8"
+            desc: "Hysteresis of acceleration for orientation change detection The field hysteresis has the following properties: Unit g"
+          - name: slope_thres
+            bits: "7:0"
+            desc: "Minimum slope between consecutive acceleration samples to prevent the change of orientation during large movement"
+
+      - addr: 0x1E
+        name: TAP_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0076
+        desc: "Selection of the tap detection axis, gesture reporting approach, detection mode"
+        fields:
+          - name: mode
+            bits: "7:6"
+            desc: "Mode for detection of tap gesture. Default value = Normal. In stable position of device, to improve detection accuracy, sensitive mode can be used. Under noisy scenarios, the false detection can be suppressed with Robust mode"
+            values:
+              0x00: "Sensitive detection mode"
+              0x01: "Normal detection mode"
+              0x02: "Robust detection mode"
+          - name: max_peaks_for_tap
+            bits: "5:3"
+            desc: "Maximum number of threshold crossing expected around a tap"
+          - name: wait_for_timeout
+            bits: "2"
+            desc: "Perform gesture confirmation with wait time set by max_gesture_dur"
+            values:
+              0x00: "Report the gesture when detected"
+              0x01: "Report the gesture after confirmation"
+          - name: axis_sel
+            bits: "1:0"
+            desc: "Dominant sensing axis of accelerometer along which tap gesture is performed"
+            values:
+              0x00: "Use x-axis for tap detection"
+              0x01: "Use y-axis for tap detection"
+              0x02: "Use z-axis for tap detection"
+
+      - addr: 0x1F
+        name: TAP_2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x402D
+        desc: "Tap detector setting"
+        fields:
+          - name: max_gesture_dur
+            bits: "15:10"
+            desc: "Maximum duration from first tap within the second and/or third tap is expected to happen"
+          - name: tap_peak_thres
+            bits: "9:0"
+            desc: "Minimum threshold for peak resulting from the tap"
+
+      - addr: 0x20
+        name: TAP_3
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x6864
+        desc: "Tap detector setting"
+        fields:
+          - name: quite_time_after_gesture
+            bits: "15:12"
+            desc: "Minimum quite duration between two gestures"
+          - name: min_quite_dur_between_taps
+            bits: "11:8"
+            desc: "Mimimum duration between two consecutive tap impact"
+          - name: tap_shock_settling_dur
+            bits: "7:4"
+            desc: "Maximum duration for which tap impact is observed The field tap_shock_settling_dur has the following properties: Unit s"
+          - name: max_dur_between_peaks
+            bits: "3:0"
+            desc: "Maximum duration between positive and negative peaks to tap"
+
+      - addr: 0x21
+        name: TILT_1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0xD264
+        desc: "Configuration for averaging duration of reference vector and minimum tilt angle"
+        fields:
+          - name: min_tilt_angle
+            bits: "15:8"
+            desc: "Minimum angle by which the device shall be tilted for event detection"
+          - name: segment_size
+            bits: "7:0"
+            desc: "Duration for which the acceleration vector is averaged to be reference vector"
+
+      - addr: 0x22
+        name: TILT_2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0xF069
+        desc: "Configuration for averaging of acceleration vector"
+        fields:
+          - name: beta_acc_mean
+            bits: "15:0"
+            desc: "Exponential smoothing coefficient for computing low-pass mean of acceleration vector"
+
+      - addr: 0x23
+        name: ALT_CONFIG_CHG
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Conditions to switch to alternate or user config of the sensors"
+        fields:
+          - name: alt_conf_user_switch_src_select
+            bits: "7:4"
+            desc: "Selection of interrupt (none = 0, A..I) for switch to user configuration mode for both accel and gyro. Invalid values will be ignored and the last valid configuration will remain. Note: Based on the selection in 'alt_conf_alt_switch_src_select' and 'alt_conf_user_switch_src_select' the state transition may happen immediately into the selected mode according to the events detected by the feature engine."
+            values:
+              0x00: "None selected"
+              0x01: "Selection of int A for switch of configuration"
+              0x02: "Selection of int B for switch of configuration"
+              0x03: "Selection of int C for switch of configuration"
+              0x04: "Selection of int D for switch of configuration"
+              0x05: "Selection of int E for switch of configuration"
+              0x06: "Selection of int F for switch of configuration"
+              0x07: "Selection of int G for switch of configuration"
+              0x08: "Selection of int H for switch of configuration"
+              0x09: "Selection of int I for switch of configuration"
+          - name: alt_conf_alt_switch_src_select
+            bits: "3:0"
+            desc: "Selection of int (none = 0, A..I) for switch to alternate configuration mode for both accel and gyro. Invalid values will be ignored and the last valid configuration will remain. Note: Based on the selection in 'alt_conf_alt_switch_src_select' and 'alt_conf_user_switch_src_select' the state transition may happen immediately into the selected mode according to the events detected by the feature engine."
+            values:
+              0x00: "None selected"
+              0x01: "Selection of int A for switch of configuration"
+              0x02: "Selection of int B for switch of configuration"
+              0x03: "Selection of int C for switch of configuration"
+              0x04: "Selection of int D for switch of configuration"
+              0x05: "Selection of int E for switch of configuration"
+              0x06: "Selection of int F for switch of configuration"
+              0x07: "Selection of int G for switch of configuration"
+              0x08: "Selection of int H for switch of configuration"
+              0x09: "Selection of int I for switch of configuration"
+
+      - addr: 0x24
+        name: ST_RESULT
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Self-test (accelerometer and gyroscope) results"
+        fields:
+          - name: gyr_drive_ok
+            bits: "6"
+            desc: "Self-test of gyroscope drive"
+          - name: gyr_sens_z_ok
+            bits: "5"
+            desc: "Self-test of gyroscope Z-axis"
+          - name: gyr_sens_y_ok
+            bits: "4"
+            desc: "Self-test of gyroscope Y-axis"
+          - name: gyr_sens_x_ok
+            bits: "3"
+            desc: "Self-test of gyroscope X-axis"
+          - name: acc_sens_z_ok
+            bits: "2"
+            desc: "Self-test of accelerometer Z-axis"
+          - name: acc_sens_y_ok
+            bits: "1"
+            desc: "Self-test of accelerometer Y-axis"
+          - name: acc_sens_x_ok
+            bits: "0"
+            desc: "Self-test of accelerometer X-axis"
+
+      - addr: 0x25
+        name: ST_SELECT
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0003
+        desc: "Self-test (accelerometer and gyroscope) type selection"
+        fields:
+          - name: gyr_st_en
+            bits: "1"
+            desc: "Enable self-test of gyroscope"
+          - name: acc_st_en
+            bits: "0"
+            desc: "Enable self-test of accelerometer"
+
+      - addr: 0x26
+        name: GYR_SC_SELECT
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0007
+        desc: "Self-calibration (gyroscope only) type selection"
+        fields:
+          - name: apply_corr
+            bits: "2"
+            desc: "Apply correction of offset and/or sensitivity error calculated by gyroscope self-calibration feature"
+          - name: offs_en
+            bits: "1"
+            desc: "Enable gyroscope self-calibration of offset"
+          - name: sens_en
+            bits: "0"
+            desc: "Enable gyroscope self-calibration of sensitivity"
+
+      - addr: 0x27
+        name: GYR_SC_ST_CONF
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0B76
+        desc: "Self-calibration (gyroscope only) and self-test (gyroscope only) configuration and result register."
+        fields:
+          - name: gyr_sc_st_conf_res
+            bits: "14:13"
+            desc: "The datasheet labels this two-bit field only as 'res' and provides no further semantics."
+          - name: offs_filtercoeff
+            bits: "12:9"
+            desc: "Filter coefficient of low pass filter used during gyroscope offset self-calibration. Range = 3 to 11. Number of gyroscope samples (@1600Hz) averaged = 2^(offs_filtercoeff+2)."
+          - name: sens_filtercoeff
+            bits: "8:6"
+            desc: "Filter coefficient of low pass filter used during gyroscope sensitivity self-calibration and self-test. Range = 3 to 6. Number of gyroscope samples (@1600Hz) averaged = 2*(2^(sens_filtercoeff+2))."
+
+      - addr: 0x28
+        name: SC_ST_VALUE0
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value0 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE0 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x29
+        name: SC_ST_VALUE1
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value1 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE1 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x2A
+        name: SC_ST_VALUE2
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value2 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE2 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x2B
+        name: SC_ST_VALUE3
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value3 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE3 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x2C
+        name: SC_ST_VALUE4
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value4 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE4 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x2D
+        name: SC_ST_VALUE5
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value5 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE5 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x2E
+        name: SC_ST_VALUE6
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value6 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE6 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x2F
+        name: SC_ST_VALUE7
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value7 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE7 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x30
+        name: SC_ST_VALUE8
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value8 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE8 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x31
+        name: SC_ST_VALUE9
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value9 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE9 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x32
+        name: SC_ST_VALUE10
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value10 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE10 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x33
+        name: SC_ST_VALUE11
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value11 register."
+        fields:
+          - name: value
+            bits: "15:0"
+            desc: "Raw SC_ST_VALUE11 value used by the self-calibration/self-test engine; the datasheet does not document its encoding."
+
+      - addr: 0x34
+        name: SC_ST_VALUE12
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "BMI323 sc st value12 register."
+        fields:
+          - name: ref_z
+            bits: "14:10"
+            desc: "Reference value for Z-axis"
+          - name: ref_y
+            bits: "9:5"
+            desc: "Reference value for Y-axis"
+          - name: ref_x
+            bits: "4:0"
+            desc: "Reference value for X-axis"
+
+      - addr: 0x35
+        name: GYR_MOT_DET
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Motion detection threshold common for both gyroscope self-calibration and gyroscope self-test"
+        fields:
+          - name: slope
+            bits: "4:0"
+            desc: "Maximum acceptable acceleration change between two accelerometer samples. Range = 0 to 31. Value = 10mg + slope*5mg."
+
+      - addr: 0x36
+        name: I3C_TC
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "I3C time control (TC) settings"
+        fields:
+          - name: i3c_tc_res
+            bits: "0"
+            reserved: "RESERVED"
+            desc: "Reserved field; preserve the documented reset value during read-modify-write updates."
+
+      - addr: 0x37
+        name: SYNC_ACC_X
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        roles: [accel_data]
+        desc: "Synchronized acceleration sample, x channel in the default axes configuration"
+        fields:
+          - name: acc_x
+            bits: "15:0"
+            desc: "Synchronized acceleration sample, x channel in the default axes configuration"
+
+      - addr: 0x38
+        name: SYNC_ACC_Y
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        roles: [accel_data]
+        desc: "Synchronized acceleration sample, y channel in the default axes configuration"
+        fields:
+          - name: acc_y
+            bits: "15:0"
+            desc: "Synchronized acceleration sample, y channel in the default axes configuration"
+
+      - addr: 0x39
+        name: SYNC_ACC_Z
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        roles: [accel_data]
+        desc: "Synchronized acceleration sample, z channel in the default axes configuration"
+        fields:
+          - name: acc_z
+            bits: "15:0"
+            desc: "Synchronized acceleration sample, z channel in the default axes configuration"
+
+      - addr: 0x3A
+        name: SYNC_GYR_X
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        roles: [gyro_data]
+        desc: "Synchronized angular rate sample, x channel in the default axes configuration"
+        fields:
+          - name: gyr_x
+            bits: "15:0"
+            desc: "Synchronized angular rate sample, x channel in the default axes configuration"
+
+      - addr: 0x3B
+        name: SYNC_GYR_Y
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        roles: [gyro_data]
+        desc: "Synchronized angular rate sample, y channel in the default axes configuration"
+        fields:
+          - name: gyr_y
+            bits: "15:0"
+            desc: "Synchronized angular rate sample, y channel in the default axes configuration"
+
+      - addr: 0x3C
+        name: SYNC_GYR_Z
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        roles: [gyro_data]
+        desc: "Synchronized angular rate sample, z channel in the default axes configuration"
+        fields:
+          - name: gyr_z
+            bits: "15:0"
+            desc: "Synchronized angular rate sample, z channel in the default axes configuration"
+
+      - addr: 0x3D
+        name: SYNC_TEMP
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        roles: [temp_data]
+        desc: "Synchronized temperature sample."
+        fields:
+          - name: temp
+            bits: "15:0"
+            desc: "Synchronized temperature sample, only available after using bmi3x0_configure_enhanced_flexibility of sensor driver API"
+
+      - addr: 0x3E
+        name: SYNC_TIME
+        access: RW
+        width: 2
+        address_span: 1
+        reset: 0x0000
+        desc: "Synchronized time stamp"
+        fields:
+          - name: time_lsw
+            bits: "15:0"
+            desc: "Synchronized time stamp, least significant word"

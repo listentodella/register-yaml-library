@@ -28,6 +28,12 @@ Copyright (c) 2010-2026 Arm Limited (or its affiliates). All rights reserved.
 
 本仓库只提供人工整理的寄存器事实和说明，不分发原始 PDF。QST 厂商文档未在现有资料中声明开源许可或明确的再分发条款，因此这些 YAML 不按仓库的 MIT 许可授权；使用者应自行确认其使用和再分发符合原始文档条款。QST、QMA 和 QMI 是其各自权利人的名称或商标。
 
+## Bosch BMI323 Sensor
+
+`sensors/imu/bosch/bmi323.yaml` 整理自 Bosch Sensortec BMI323 Datasheet，文档号 `BST-BMI323-DS000-11`，文档修订 1.5，发布日期 2025-03-27。产品页：<https://www.bosch-sensortec.com/products/motion-sensors/imus/bmi323/>。
+
+本仓库不分发原始 PDF，只提供寄存器地址、访问属性、复位值和位域等事实的结构化整理。Bosch Sensortec 文档未在现有资料中声明开源许可证或明确的再分发条款，因此该 YAML 不按仓库的 MIT 许可授权；使用者应自行确认其使用和再分发符合原始文档条款。Bosch、Bosch Sensortec 和 BMI323 是其各自权利人的名称或商标。
+
 ## RISC-V Unified Database CSR
 
 `architecture/riscv/rv32/riscv-rv32-csr.yaml` 和 `architecture/riscv/rv64/riscv-rv64-csr.yaml` 由 RISC-V Unified Database 的 `spec/std/isa/csr` 目录生成。
