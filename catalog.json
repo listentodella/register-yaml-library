@@ -522,6 +522,130 @@
         "fields": 270
       },
       "sha256": "f3cf6226ce93207e2a0042d275b9b9751d940464bb9ddc935871e1145e60c95b"
+    },
+    {
+      "id": "sensors:accelerometer:qst:qma6100p",
+      "path": "sensors/accelerometer/qst/qma6100p.yaml",
+      "category": "sensors",
+      "taxonomy": [
+        "sensors",
+        "accelerometer",
+        "qst"
+      ],
+      "sensor": "QMA6100P",
+      "vendor": "QST",
+      "family": "QMA6100",
+      "device_type": "accelerometer",
+      "schema_version": 1,
+      "register_space": "mmio",
+      "architecture": null,
+      "profile": null,
+      "source": {
+        "title": "QMA6100P application note",
+        "version": "v02(1)",
+        "revision": null,
+        "url": "https://www.qstcorp.com/acce_prod/QMA6100P",
+        "license": "QST vendor documentation; redistribution terms not specified"
+      },
+      "stats": {
+        "pages": 1,
+        "registers": 36,
+        "fields": 58
+      },
+      "sha256": "9b0a4ad2c51aec0af454f46d0809e329751bb1544a2862c3a30c973da4a566ae"
+    },
+    {
+      "id": "sensors:accelerometer:qst:qma6101t",
+      "path": "sensors/accelerometer/qst/qma6101t.yaml",
+      "category": "sensors",
+      "taxonomy": [
+        "sensors",
+        "accelerometer",
+        "qst"
+      ],
+      "sensor": "QMA6101T",
+      "vendor": "QST",
+      "family": "QMA6101",
+      "device_type": "accelerometer",
+      "schema_version": 1,
+      "register_space": "mmio",
+      "architecture": null,
+      "profile": null,
+      "source": {
+        "title": "QMA6101T Preliminary Datasheet",
+        "version": "Rev D",
+        "revision": "QST-PD-B002-22",
+        "url": null,
+        "license": "QST vendor documentation; redistribution terms not specified"
+      },
+      "stats": {
+        "pages": 1,
+        "registers": 37,
+        "fields": 126
+      },
+      "sha256": "b3803a7e803d89cf204c0a67e112442a10d9d53faaceb7fbedc98ff30bbba935"
+    },
+    {
+      "id": "sensors:imu:qst:qmi8658a",
+      "path": "sensors/imu/qst/qmi8658a.yaml",
+      "category": "sensors",
+      "taxonomy": [
+        "sensors",
+        "imu",
+        "qst"
+      ],
+      "sensor": "QMI8658A",
+      "vendor": "QST",
+      "family": "QMI8658",
+      "device_type": "imu",
+      "schema_version": 1,
+      "register_space": "mmio",
+      "architecture": null,
+      "profile": null,
+      "source": {
+        "title": "QMI8658A Datasheet",
+        "version": "Rev D",
+        "revision": "Rev D",
+        "url": "https://www.qstcorp.com/imu_prod/QMI8658",
+        "license": "QST vendor documentation; redistribution terms not specified"
+      },
+      "stats": {
+        "pages": 1,
+        "registers": 67,
+        "fields": 123
+      },
+      "sha256": "af04d1512531841320a2188fbc98680bcc2352234ddceb3e6610c0685113f8f6"
+    },
+    {
+      "id": "sensors:imu:qst:qmi8660",
+      "path": "sensors/imu/qst/qmi8660.yaml",
+      "category": "sensors",
+      "taxonomy": [
+        "sensors",
+        "imu",
+        "qst"
+      ],
+      "sensor": "QMI8660",
+      "vendor": "QST",
+      "family": "QMI8660",
+      "device_type": "imu",
+      "schema_version": 1,
+      "register_space": "mmio",
+      "architecture": null,
+      "profile": null,
+      "source": {
+        "title": "QMI8660 register description",
+        "version": "Source revision not specified",
+        "revision": null,
+        "url": null,
+        "license": "QST vendor documentation; redistribution terms not specified"
+      },
+      "stats": {
+        "pages": 2,
+        "registers": 110,
+        "fields": 259
+      },
+      "sha256": "456e2a58986a602ae5665b9eff1fd8aa6f374b1d9f2f709e47aad8bc8a895b43"
     }
   ]
 }

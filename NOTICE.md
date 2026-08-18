@@ -22,6 +22,12 @@ Copyright (c) 2010-2026 Arm Limited (or its affiliates). All rights reserved.
 
 `controllers/usb/rockchip/rk3588-dwc3.yaml` 中的寄存器事实整理自 RK3588 TRM Part 2 Chapter 13 的 USB3 Controller 表格。仓库不分发原始手册，也不授予对 Rockchip 或 Synopsys 文档、商标及实现的额外权利。
 
+## QST QMA/QMI Sensors
+
+`sensors/accelerometer/qst/*.yaml` 和 `sensors/imu/qst/*.yaml` 整理自 QST QMA/QMI 系列厂商文档。其中 QMA6100P 使用 application note v02(1)，QMA6101T 使用 Preliminary Datasheet Rev D（QST-PD-B002-22）；QMI8658A 的公开产品页为 <https://www.qstcorp.com/imu_prod/QMI8658>，QMI8660 解析源未记录公开版本号。
+
+本仓库只提供人工整理的寄存器事实和说明，不分发原始 PDF。QST 厂商文档未在现有资料中声明开源许可或明确的再分发条款，因此这些 YAML 不按仓库的 MIT 许可授权；使用者应自行确认其使用和再分发符合原始文档条款。QST、QMA 和 QMI 是其各自权利人的名称或商标。
+
 ## RISC-V Unified Database CSR
 
 `architecture/riscv/rv32/riscv-rv32-csr.yaml` 和 `architecture/riscv/rv64/riscv-rv64-csr.yaml` 由 RISC-V Unified Database 的 `spec/std/isa/csr` 目录生成。

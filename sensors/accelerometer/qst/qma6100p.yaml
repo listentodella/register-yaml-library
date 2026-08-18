@@ -1,0 +1,494 @@
+schema_version: 1
+sensor: QMA6100P
+vendor: QST
+family: QMA6100
+device_type: accelerometer
+source:
+  title: "QMA6100P application note"
+  version: "v02(1)"
+  document: "QMA6100P application note v02(1)"
+  url: "https://www.qstcorp.com/acce_prod/QMA6100P"
+  license: "QST vendor documentation; redistribution terms not specified"
+  notice: "Generated register description; verify source-document redistribution rights before reuse"
+who_am_i:
+  reg: null
+  values: []
+
+pages:
+  UI:
+    page_id: 0x00
+    access: "SPI / I2C"
+    desc: "主接口寄存器页；本文件依据 QMA6100P application note v02(1) 整理，应用笔记未给出完整寄存器总览和 WHO_AM_I 值"
+    registers:
+      - addr: 0x01
+        name: ACC_DATA
+        access: RO
+        width: 6
+        multi_byte: true
+        roles: [data_block, accel_raw]
+        desc: "三轴加速度批量读取联合视图（0x01~0x06）；每轴为小端序 16 位二进制补码，拼接后右移 2 位得到 14 位有效数据"
+        alias_note: "与 X/Y/Z 单字节输出寄存器地址重叠"
+        fields:
+          - name: x
+            bits: "15:0"
+            desc: "X 轴原始输出；X_OUT_MSB:X_OUT_LSB 拼接为有符号 16 位后右移 2 位，低 2 位不计入数据"
+          - name: y
+            bits: "31:16"
+            desc: "Y 轴原始输出；Y_OUT_MSB:Y_OUT_LSB 拼接为有符号 16 位后右移 2 位，低 2 位不计入数据"
+          - name: z
+            bits: "47:32"
+            desc: "Z 轴原始输出；Z_OUT_MSB:Z_OUT_LSB 拼接为有符号 16 位后右移 2 位，低 2 位不计入数据"
+
+      - addr: 0x01
+        name: X_OUT_LSB
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "X 轴加速度输出低字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: x_lsb
+            bits: "7:0"
+            desc: "X 轴输出 [7:0]；与 0x02 拼接后按二进制补码解析，低 2 位不计入数据"
+
+      - addr: 0x02
+        name: X_OUT_MSB
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "X 轴加速度输出高字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: x_msb
+            bits: "7:0"
+            desc: "X 轴输出 [15:8]"
+
+      - addr: 0x03
+        name: Y_OUT_LSB
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Y 轴加速度输出低字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: y_lsb
+            bits: "7:0"
+            desc: "Y 轴输出 [7:0]；与 0x04 拼接后按二进制补码解析，低 2 位不计入数据"
+
+      - addr: 0x04
+        name: Y_OUT_MSB
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Y 轴加速度输出高字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: y_msb
+            bits: "7:0"
+            desc: "Y 轴输出 [15:8]"
+
+      - addr: 0x05
+        name: Z_OUT_LSB
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Z 轴加速度输出低字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: z_lsb
+            bits: "7:0"
+            desc: "Z 轴输出 [7:0]；与 0x06 拼接后按二进制补码解析，低 2 位不计入数据"
+
+      - addr: 0x06
+        name: Z_OUT_MSB
+        access: RO
+        width: 1
+        roles: [accel_data]
+        desc: "Z 轴加速度输出高字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: z_msb
+            bits: "7:0"
+            desc: "Z 轴输出 [15:8]"
+
+      - addr: 0x0F
+        name: ACC_RANGE_FILTER_SEL
+        access: RW
+        width: 1
+        roles: [accel_config, filter_config]
+        desc: "加速度计量程和滤波器类型选择寄存器"
+        fields:
+          - name: reserved7
+            bits: "7:7"
+            desc: "应用笔记未给出定义"
+          - name: filter_sel
+            bits: "6:6"
+            desc: "滤波器类型选择\n0 = Low-Pass Filter（低通滤波）\n1 = High-Pass Filter（高通滤波）"
+          - name: reserved5_4
+            bits: "5:4"
+            desc: "应用笔记未给出定义"
+          - name: range
+            bits: "3:0"
+            desc: "加速度计满量程选择\n0x1 = ±2g，4096 LSB/g，0.244 mg/LSB\n0x2 = ±4g，2048 LSB/g，0.488 mg/LSB\n0x4 = ±8g，1024 LSB/g，0.976 mg/LSB\n0x8 = ±16g，512 LSB/g，1.953 mg/LSB\n0xF = ±32g，256 LSB/g，3.906 mg/LSB\n其它 = 应用笔记未定义"
+
+      - addr: 0x10
+        name: ACC_ODR_FILTER_PARAM
+        access: RW
+        width: 1
+        roles: [accel_config, odr_config, filter_config]
+        desc: "加速度计 ODR 和滤波器参数寄存器"
+        fields:
+          - name: filter_param
+            bits: "7:5"
+            desc: "滤波器参数，含义由 0x0F.bit6 选择\n低通模式（0x0F.bit6=0）：000 = LPF 关闭；100 = IIR 1；*01 = IIR 2；*10 = IIR 4；*11 = IIR 8\n高通模式（0x0F.bit6=1）：000 = HPF 关闭；001 = CF=ODR/10；010 = CF=ODR/25；011 = CF=ODR/50；100 = CF=ODR/100；101 = CF=ODR/200；110 = CF=ODR/400；111 = CF=ODR/800"
+          - name: odr
+            bits: "4:0"
+            desc: "加速度计输出数据率选择；应用笔记表中以 ** 表示 bit[4:3] 不影响该行 ODR\n**000 = MCLK 51.2/102.4/25.6/12.8/6.4kHz 时 ODR 为 100/200/50/25/12.5Hz\n**001 = 200/400/100/50/25Hz\n**010 = 400/800/200/100/50Hz\n**011 = 800/1600/400/200/100Hz\n**100 = 1600/3200/800/400/200Hz\n**101 = 50/100/25/12.5/6.25Hz\n**110 = 25/50/12.5/6.25/3.125Hz\n**111 = 12.5/25/6.25/3.125/1.56Hz\n非 51.2kHz MCLK 下的 ODR 为理想值，实际 ODR 与实际 MCLK 成正比：Real_ODR = ODR_51.2kHz * (Real_MCLK / 51.2kHz)"
+
+      - addr: 0x11
+        name: MCLK_CFG
+        access: RW
+        width: 1
+        roles: [clock_config, power_config]
+        desc: "内部 MCLK 选择寄存器；MCLK 会影响实际 ODR 和功耗"
+        fields:
+          - name: reserved7_4
+            bits: "7:4"
+            desc: "应用笔记未给出定义"
+          - name: mclk
+            bits: "3:0"
+            desc: "MCLK 选择\n0x03 = 期望 102.4kHz，典型实际 112kHz，典型功耗 76uA\n0x04 = 期望 51.2kHz，典型实际 51.2kHz，典型功耗 38uA\n0x05 = 期望 25.6kHz，典型实际 23.6kHz，典型功耗 19uA\n0x06 = 期望 12.8kHz，典型实际 15kHz，典型功耗 10uA\n0x07 = 期望 6.4kHz，典型实际 9kHz，典型功耗 6uA\n其它 = 应用笔记未定义"
+
+      - addr: 0x12
+        name: STEP_SAMPLE_CNT
+        access: RW
+        width: 1
+        roles: [step_config]
+        desc: "计步器动态门限更新周期寄存器"
+        fields:
+          - name: step_sample_cnt
+            bits: "7:0"
+            desc: "更新动态门限值的周期，用于计算 (Max + Min) / 2"
+
+      - addr: 0x13
+        name: STEP_PRECISION
+        access: RW
+        width: 1
+        roles: [step_config]
+        desc: "计步器精度/过滤门限寄存器"
+        fields:
+          - name: step_precision
+            bits: "7:0"
+            desc: "低于该门限的数据会被舍弃不用"
+
+      - addr: 0x14
+        name: STEP_TIME_LOW
+        access: RW
+        width: 1
+        roles: [step_config]
+        desc: "计步器步态时间窗口下限寄存器"
+        fields:
+          - name: step_time_low
+            bits: "7:0"
+            desc: "时间窗口参数：STEP_TIME_LOW * ODR；超过时间窗之外的步数检测不会被认为是正常一步"
+
+      - addr: 0x15
+        name: STEP_TIME_UP
+        access: RW
+        width: 1
+        roles: [step_config]
+        desc: "计步器步态时间窗口上限寄存器"
+        fields:
+          - name: step_time_up
+            bits: "7:0"
+            desc: "时间窗口参数：8 * STEP_TIME_UP * ODR；超过时间窗之外的步数检测不会被认为是正常一步"
+
+      - addr: 0x18
+        name: MOTION_ENABLE
+        access: RW
+        width: 1
+        roles: [motion_config]
+        desc: "Any Motion / No Motion 功能轴使能寄存器"
+        fields:
+          - name: nm_axis_en
+            bits: "7:5"
+            desc: "No Motion 轴使能位，可控制任意几轴使能；应用笔记未给出 bit 到 X/Y/Z 的映射"
+          - name: reserved4_3
+            bits: "4:3"
+            desc: "应用笔记未给出定义"
+          - name: am_axis_en
+            bits: "2:0"
+            desc: "Any Motion 轴使能位，可控制 X/Y/Z 任意几轴使能；应用笔记未给出 bit 到 X/Y/Z 的映射"
+
+      - addr: 0x1A
+        name: INT1_MOTION_MAP
+        access: RW
+        width: 1
+        roles: [interrupt_config, motion_config]
+        desc: "运动检测中断到 INT1 的映射寄存器"
+        fields:
+          - name: int1_motion_map
+            bits: "7:0"
+            desc: "用于将 AM/NM 产生的中断设定在 INT1 输出；应用笔记未给出具体位定义"
+
+      - addr: 0x1C
+        name: INT2_MOTION_MAP
+        access: RW
+        width: 1
+        roles: [interrupt_config, motion_config]
+        desc: "运动检测中断到 INT2 的映射寄存器"
+        fields:
+          - name: int2_motion_map
+            bits: "7:0"
+            desc: "用于将 AM/NM 产生的中断设定在 INT2 输出；应用笔记未给出具体位定义"
+
+      - addr: 0x1F
+        name: STEP_COUNT_CFG
+        access: RW
+        width: 1
+        roles: [step_config]
+        desc: "计步器步数检测门限配置寄存器"
+        fields:
+          - name: step_count_cfg
+            bits: "7:0"
+            desc: "应用笔记将 STEP_COUNT_PEAK、STEP_COUNT_P2P、STEP_START_CNT 均标在 0x1F，但未给出位拆分\nSTEP_COUNT_PEAK：检测步伐峰值门限，约 0.05g~0.4g\nSTEP_COUNT_P2P：检测步伐峰峰值门限，约 0.3g~1g\nSTEP_START_CNT：从静止开始，连续累计步数超过 0/4/8/12/16/24/32/40 后更新到寄存器"
+
+      - addr: 0x20
+        name: I2C_ADDR_CTRL
+        access: RW
+        width: 1
+        roles: [interface_config]
+        desc: "I2C 地址相关控制寄存器"
+        fields:
+          - name: reserved7
+            bits: "7:7"
+            desc: "应用笔记未给出定义"
+          - name: force_i2c_addr_0x12
+            bits: "6:6"
+            desc: "I2C 地址控制\n0 = 地址由 AD0 引脚决定（应用笔记仅说明 AD0 需接 GND 或 VDD）\n1 = 不管 AD0 如何连接，I2C 地址均为 0x12"
+          - name: reserved5_0
+            bits: "5:0"
+            desc: "应用笔记未给出定义"
+
+      - addr: 0x22
+        name: RAISE_WAKE_SUM_DIFF0
+        access: RW
+        width: 1
+        roles: [raise_down_config]
+        desc: "Raise/Down 检测唤醒门限配置寄存器 0"
+        fields:
+          - name: wake_diff_part0
+            bits: "7:6"
+            desc: "WakeDiff 参数的一部分，与 0x23.bit[1:0] 共同使用；数据波动小于 WakeDiff 是检测抬手的必要条件，调大更容易触发但应保持在合理小范围"
+          - name: wake_sum
+            bits: "5:0"
+            desc: "WakeSum 门限；达到 WakeSum 门限后激活抬手检测，调小更容易触发检测抬起动作"
+
+      - addr: 0x23
+        name: RAISE_WAKE_DIFF_DOWN_THR
+        access: RW
+        width: 1
+        roles: [raise_down_config]
+        desc: "Raise/Down 检测 WakeDiff 和放下动作门限寄存器"
+        fields:
+          - name: down_abs_z_thr
+            bits: "7:5"
+            desc: "ABS(Z) 小于该门限是检测放下动作的必要条件"
+          - name: down_abs_x_thr
+            bits: "4:2"
+            desc: "ABS(X) 大于该门限是检测放下动作的必要条件"
+          - name: wake_diff_part1
+            bits: "1:0"
+            desc: "WakeDiff 参数的一部分，与 0x22.bit[7:6] 共同使用"
+
+      - addr: 0x24
+        name: RAISE_FAIL_TIMEOUT0
+        access: RW
+        width: 1
+        roles: [raise_down_config]
+        desc: "Raise/Down 检测未达条件次数配置低位寄存器"
+        fields:
+          - name: raise_fail_timeout0
+            bits: "7:0"
+            desc: "检测抬手功能被激活后，未达到条件的次数超过设定值则重新进入待激活状态；与 0x26.bit[3:0] 共同使用，应用笔记未给出更细位拆分"
+
+      - addr: 0x25
+        name: RAISE_STABLE_TIMEOUT0
+        access: RW
+        width: 1
+        roles: [raise_down_config]
+        desc: "Raise/Down 检测相对静止次数配置低位寄存器"
+        fields:
+          - name: raise_stable_timeout0
+            bits: "7:0"
+            desc: "检测抬手功能被激活后，数据波动小于设定门限超过设定值，则进入判断是否抬起或放下的动作；与 0x26.bit[6:4] 共同使用，应用笔记未给出更细位拆分"
+
+      - addr: 0x26
+        name: RAISE_CTRL
+        access: RW
+        width: 1
+        roles: [raise_down_config]
+        desc: "Raise/Down 检测控制寄存器"
+        fields:
+          - name: raise_mode_sel
+            bits: "7:7"
+            desc: "Raise/Down 检测选择\n0 = 检测 Raise 相关动作\n1 = 应用笔记未说明"
+          - name: raise_stable_timeout1
+            bits: "6:4"
+            desc: "相对静止次数配置高位，与 0x25 共同使用"
+          - name: raise_fail_timeout1
+            bits: "3:0"
+            desc: "未达条件次数配置高位，与 0x24 共同使用"
+
+      - addr: 0x27
+        name: X_OFFSET
+        access: RW
+        width: 1
+        roles: [offset_config]
+        desc: "X 轴零偏补偿寄存器"
+        fields:
+          - name: x_offset
+            bits: "7:0"
+            desc: "上电或 reset 后可写入 X 轴 offset 补偿值，芯片输出数据时自动补偿；补偿值按 offset(mg) / LSB(range) 换算，应用笔记未给出符号编码细节"
+
+      - addr: 0x28
+        name: Y_OFFSET
+        access: RW
+        width: 1
+        roles: [offset_config]
+        desc: "Y 轴零偏补偿寄存器"
+        fields:
+          - name: y_offset
+            bits: "7:0"
+            desc: "上电或 reset 后可写入 Y 轴 offset 补偿值，芯片输出数据时自动补偿；补偿值按 offset(mg) / LSB(range) 换算，应用笔记未给出符号编码细节"
+
+      - addr: 0x29
+        name: Z_OFFSET
+        access: RW
+        width: 1
+        roles: [offset_config]
+        desc: "Z 轴零偏补偿寄存器"
+        fields:
+          - name: z_offset
+            bits: "7:0"
+            desc: "上电或 reset 后可写入 Z 轴 offset 补偿值，芯片输出数据时自动补偿；例如 Z-offset = -200mg 时，写入值约为 (-200mg) / LSB(range)，应用笔记未给出符号编码细节"
+
+      - addr: 0x2C
+        name: MOTION_DURATION
+        access: RW
+        width: 1
+        roles: [motion_config]
+        desc: "Any Motion / No Motion 持续时间门限寄存器"
+        fields:
+          - name: motion_duration
+            bits: "7:0"
+            desc: "AM：bit[1:0] + 1 表示持续满足触发条件的数据笔数，最大 4 笔；NM：用于设置触发前持续满足触发条件的数据时间。应用笔记未给出 NM 的具体位拆分"
+
+      - addr: 0x2D
+        name: NO_MOTION_THR
+        access: RW
+        width: 1
+        roles: [motion_config]
+        desc: "No Motion 加速度大小门限寄存器"
+        fields:
+          - name: nm_thr
+            bits: "7:0"
+            desc: "No Motion 门限 THR；门限范围 = 寄存器值 * 16 * LSB"
+
+      - addr: 0x2E
+        name: ANY_MOTION_THR
+        access: RW
+        width: 1
+        roles: [motion_config]
+        desc: "Any Motion 加速度大小门限寄存器"
+        fields:
+          - name: am_thr
+            bits: "7:0"
+            desc: "Any Motion 门限 THR\nSLOPE 模式：门限 = 寄存器值 * 16 * LSB\nGRAVITY 模式：门限 = 寄存器值 * 32 * LSB"
+
+      - addr: 0x2F
+        name: ANY_MOTION_CFG
+        access: RW
+        width: 1
+        roles: [motion_config]
+        desc: "Any Motion 检测类型配置寄存器"
+        fields:
+          - name: reserved7
+            bits: "7:7"
+            desc: "应用笔记未给出定义"
+          - name: am_type
+            bits: "6:6"
+            desc: "Any Motion 检测类型选择；应用笔记只说明 bit6 用于选择 SLOPE 或 GRAVITY，但未明确 0/1 对应关系\nSLOPE：ACC(Tn) - ACC(T(n-1)) > THR\nGRAVITY：|ACC(Tn)| > THR"
+          - name: reserved5_0
+            bits: "5:0"
+            desc: "应用笔记未给出定义"
+
+      - addr: 0x34
+        name: RAISE_AXIS_THR0
+        access: RW
+        width: 1
+        roles: [raise_down_config]
+        desc: "Raise 检测 Y 轴和 YZ/ZX 组合门限寄存器"
+        fields:
+          - name: yz_zx_sum_thr
+            bits: "7:5"
+            desc: "ZY/ZX 之和大于设定门限触发\n0 = 700mg\n1 = 750mg\n2 = 800mg\n3 = 850mg\n4 = 900mg\n5 = 950mg\n6 = 1000mg\n7 = 1050mg"
+          - name: y_low_thr
+            bits: "4:0"
+            desc: "Y 小于设定门限触发；应用笔记给出参考表，编码 0~15 大致覆盖 0~-1000mg 到 831~-1000mg，编码 16/17/20/25/30 为更高门限参考点"
+
+      - addr: 0x35
+        name: RAISE_AXIS_THR1
+        access: RW
+        width: 1
+        roles: [raise_down_config]
+        desc: "Raise 检测 X/Z 轴门限寄存器"
+        fields:
+          - name: z_thr
+            bits: "7:4"
+            desc: "Z 需要超过设定门限触发，根据方向大于正向门限或小于负向门限\n0 = 64~1000mg\n1 = 127~1000mg\n2 = 255~1000mg\n3 = 383~1000mg\n4 = 511~1000mg\n5 = 575~1000mg\n6 = 703~1000mg\n7 = 767~1000mg\n8 = -831~-1000mg\n9 = -703~-1000mg\n10 = -575~-1000mg\n11 = -511~-1000mg\n12 = -383~-1000mg\n13 = -319~-1000mg\n14 = -191~-1000mg\n15 = -63~-1000mg"
+          - name: x_window_thr
+            bits: "3:0"
+            desc: "X 小于设定门限且在正负门限范围内触发\n0 = 63~0mg\n1 = 127~-64mg\n2 = 191~-128mg\n3 = 255~-192mg\n4 = 319~-256mg\n5 = 383~-320mg\n6 = 447~-384mg\n7 = 511~-448mg\n8~15 = 575~-512mg 到 575~-575mg（应用笔记参考表）"
+
+      - addr: 0x3E
+        name: AXIS_REMAP
+        access: RW
+        width: 1
+        roles: [axis_config, raise_down_config]
+        desc: "XYZ 方向交换配置寄存器"
+        fields:
+          - name: reserved7_6
+            bits: "7:6"
+            desc: "应用笔记未给出定义"
+          - name: axis_swap
+            bits: "5:3"
+            desc: "交换 XYZ 的方向；应用笔记未给出具体编码含义"
+          - name: reserved2_0
+            bits: "2:0"
+            desc: "应用笔记未给出定义"
+
+      - addr: 0x3F
+        name: FIFO_DATA
+        access: RO
+        width: 1
+        roles: [fifo_data]
+        no_dump: true
+        no_dump_reason: "FIFO 顺序读取专用寄存器；Bypass mode 可从该地址读取 1 组加速度数据，FIFO mode/Stream mode 下应按 FIFO 流程连续读取"
+        desc: "FIFO 数据输出寄存器"
+        fields:
+          - name: fifo_data
+            bits: "7:0"
+            roles: [fifo_data_byte]
+            desc: "FIFO 数据字节；加速度数据以二进制补码形式存放，低 2 位不计入数据"
+
+      - addr: 0x5F
+        name: WAKE_STATE_RESET
+        access: WO
+        width: 1
+        roles: [state_control]
+        desc: "Wake Mode 状态机重置寄存器"
+        fields:
+          - name: wake_state_reset
+            bits: "7:0"
+            desc: "进入 Wake Mode 后，需要依次执行 0x5F 写 0x80、0x5F 写 0x00，以重置状态机"

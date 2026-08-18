@@ -12,6 +12,9 @@ architecture/
   riscv/rv64/             RISC-V RV64 架构 CSR
 controllers/
   usb/rockchip/           Rockchip SoC 中的 USB 控制器
+sensors/
+  accelerometer/qst/      QST QMA 系列三轴加速度计
+  imu/qst/                QST QMI 系列六轴惯性测量单元
 schema/                   YAML 格式说明
 templates/                新数据文件模板
 locales/                  按语言和源路径组织的翻译 sidecar
@@ -61,6 +64,17 @@ catalog.json              机器可读的全库索引
 | 厂商 / 平台 | 控制器 | 文件 |
 | --- | --- | --- |
 | Rockchip RK3588 | Synopsys DesignWare USB 3 DRD | [`rk3588-dwc3.yaml`](controllers/usb/rockchip/rk3588-dwc3.yaml) |
+
+### QST 运动传感器
+
+| 类型 | 系列 | 文件 |
+| --- | --- | --- |
+| 三轴加速度计 | QMA6100P | [`qma6100p.yaml`](sensors/accelerometer/qst/qma6100p.yaml) |
+| 三轴加速度计 | QMA6101T | [`qma6101t.yaml`](sensors/accelerometer/qst/qma6101t.yaml) |
+| 六轴惯性测量单元 | QMI8658A | [`qmi8658a.yaml`](sensors/imu/qst/qmi8658a.yaml) |
+| 六轴惯性测量单元 | QMI8660 | [`qmi8660.yaml`](sensors/imu/qst/qmi8660.yaml) |
+
+这些文件保留现有解析结果中的中文寄存器说明。数据来源、文档版本和许可状态记录在各文件的 `source` 字段及 [`NOTICE.md`](NOTICE.md) 中；仓库不分发原始厂商文档。
 
 完整统计、来源版本、许可证和 SHA-256 位于 [`catalog.json`](catalog.json)。
 

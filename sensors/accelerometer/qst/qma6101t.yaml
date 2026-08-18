@@ -1,0 +1,1029 @@
+schema_version: 1
+sensor: QMA6101T
+vendor: QST
+family: QMA6101
+device_type: accelerometer
+source:
+  title: "QMA6101T Preliminary Datasheet"
+  version: "Rev D"
+  revision: "QST-PD-B002-22"
+  document: "QMA6101T Preliminary Datasheet Rev D"
+  license: "QST vendor documentation; redistribution terms not specified"
+  notice: "Generated register description; verify source-document redistribution rights before reuse"
+who_am_i:
+  reg: 0x00
+  values: []
+
+pages:
+  UI:
+    page_id: 0x00
+    address_unit_bits: 8
+    access: "SPI / I2C"
+    desc: "主接口寄存器页；依据 QMA6101T Preliminary Datasheet Rev D（QST-PD-B002-22）整理。CHIP_ID 仅规定高 4 位为 0xA，低 4 位由工厂设定，因此未列固定 WHO_AM_I 值"
+    registers:
+      - addr: 0x00
+        name: CHIP_ID
+        access: RO
+        width: 1
+        roles: [identity]
+        desc: "芯片身份和产品版本标识；高 4 位固定为 0xA，低 4 位由工厂设定，完整读值为 0xA*"
+        fields:
+          - name: product_id
+            bits: "7:4"
+            desc: "产品标识高半字节，固定为 0xA"
+            values:
+              0x0A: "QMA6101T 产品标识"
+          - name: factory_revision
+            bits: "3:0"
+            desc: "工厂设定的版本值，手册未规定固定取值"
+
+      - addr: 0x01
+        name: ACC_DATA
+        access: RO
+        width: 6
+        byte_order: little
+        multi_byte: true
+        roles: [data_block, accel_raw]
+        desc: "三轴加速度批量读取联合视图（0x01~0x06）；顺序为 Y、Z、X，每轴为小端序 16 位二进制补码，bit15 为符号位；主机应从 0x01 开始连续读取 6 字节"
+        alias_note: "与 Y/Z/X 单字节输出寄存器地址重叠"
+        fields:
+          - name: y
+            bits: "15:0"
+            desc: "Y 轴有符号 16 位加速度数据，Y_OUT_MSB:Y_OUT_LSB"
+          - name: z
+            bits: "31:16"
+            desc: "Z 轴有符号 16 位加速度数据，Z_OUT_MSB:Z_OUT_LSB"
+          - name: x
+            bits: "47:32"
+            desc: "X 轴有符号 16 位加速度数据，X_OUT_MSB:X_OUT_LSB"
+
+      - addr: 0x01
+        name: Y_OUT_LSB
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [accel_data]
+        desc: "Y 轴加速度输出低字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: y_lsb
+            bits: "7:0"
+            desc: "Y 轴数据 [7:0]；与 0x02 拼接为有符号 16 位二进制补码"
+
+      - addr: 0x02
+        name: Y_OUT_MSB
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [accel_data]
+        desc: "Y 轴加速度输出高字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: y_msb
+            bits: "7:0"
+            desc: "Y 轴数据 [15:8]，bit7 对应完整数据符号位 bit15"
+
+      - addr: 0x03
+        name: Z_OUT_LSB
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [accel_data]
+        desc: "Z 轴加速度输出低字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: z_lsb
+            bits: "7:0"
+            desc: "Z 轴数据 [7:0]；与 0x04 拼接为有符号 16 位二进制补码"
+
+      - addr: 0x04
+        name: Z_OUT_MSB
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [accel_data]
+        desc: "Z 轴加速度输出高字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: z_msb
+            bits: "7:0"
+            desc: "Z 轴数据 [15:8]，bit7 对应完整数据符号位 bit15"
+
+      - addr: 0x05
+        name: X_OUT_LSB
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [accel_data]
+        desc: "X 轴加速度输出低字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: x_lsb
+            bits: "7:0"
+            desc: "X 轴数据 [7:0]；与 0x06 拼接为有符号 16 位二进制补码"
+
+      - addr: 0x06
+        name: X_OUT_MSB
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [accel_data]
+        desc: "X 轴加速度输出高字节"
+        alias_note: "与 ACC_DATA 联合视图地址重叠"
+        fields:
+          - name: x_msb
+            bits: "7:0"
+            desc: "X 轴数据 [15:8]，bit7 对应完整数据符号位 bit15"
+
+      - addr: 0x09
+        name: MOTION_INT_STATUS_0
+        access: RO
+        width: 1
+        reset: 0x00
+        read_clear: true
+        roles: [interrupt_status, motion_status]
+        desc: "No Motion 和 Any Motion 中断状态；读取清除行为由 0x32.INT_RD_CLR 及中断锁存模式决定"
+        fields:
+          - name: no_motion
+            bits: "7:7"
+            desc: "No Motion 中断状态"
+            values:
+              0x00: "未检测到"
+              0x01: "已检测到"
+          - name: reserved6_4
+            bits: "6:4"
+            desc: "保留"
+          - name: any_mot_sign
+            bits: "3:3"
+            desc: "触发 Any Motion 的运动方向符号"
+            values:
+              0x00: "正方向"
+              0x01: "负方向"
+          - name: any_mot_x
+            bits: "2:2"
+            desc: "X 轴 Any Motion 触发状态"
+            values:
+              0x00: "未由 X 轴触发"
+              0x01: "由 X 轴触发"
+          - name: any_mot_z
+            bits: "1:1"
+            desc: "Z 轴 Any Motion 触发状态"
+            values:
+              0x00: "未由 Z 轴触发"
+              0x01: "由 Z 轴触发"
+          - name: any_mot_y
+            bits: "0:0"
+            desc: "Y 轴 Any Motion 触发状态"
+            values:
+              0x00: "未由 Y 轴触发"
+              0x01: "由 Y 轴触发"
+
+      - addr: 0x0A
+        name: MOTION_INT_STATUS_1
+        access: RO
+        width: 1
+        reset: 0x00
+        read_clear: true
+        roles: [interrupt_status, motion_status]
+        desc: "Significant Motion 中断状态；读取清除行为由 0x32.INT_RD_CLR 及中断锁存模式决定"
+        fields:
+          - name: reserved7_1
+            bits: "7:1"
+            desc: "保留"
+          - name: sig_mot_int
+            bits: "0:0"
+            desc: "Significant Motion 中断状态"
+            values:
+              0x00: "未检测到"
+              0x01: "已检测到"
+
+      - addr: 0x0B
+        name: DATA_INT_STATUS
+        access: RO
+        width: 1
+        reset: 0x00
+        read_clear: true
+        roles: [interrupt_status, fifo_status, data_ready]
+        desc: "FIFO 和数据就绪中断状态；状态读取清除行为由 0x32.INT_RD_CLR 及中断锁存模式决定。DATA_INT 在新数据更新时置 1，并在 DRDY 失效时自动清除"
+        fields:
+          - name: fifo_or
+            bits: "7:7"
+            desc: "FIFO Over-Run 状态"
+            values:
+              0x00: "未发生"
+              0x01: "已发生"
+          - name: fifo_wm_int
+            bits: "6:6"
+            desc: "FIFO Watermark 中断状态"
+            values:
+              0x00: "未激活"
+              0x01: "已激活"
+          - name: fifo_full_int
+            bits: "5:5"
+            desc: "FIFO Full 中断状态"
+            values:
+              0x00: "未激活"
+              0x01: "已激活"
+          - name: data_int
+            bits: "4:4"
+            desc: "数据就绪状态；新数据更新时置 1，DRDY 失效时自动清除"
+            values:
+              0x00: "未就绪"
+              0x01: "数据就绪"
+          - name: reserved3_0
+            bits: "3:0"
+            desc: "保留"
+
+      - addr: 0x0E
+        name: FIFO_FRAME_COUNT
+        access: RO
+        width: 1
+        reset: 0x00
+        roles: [fifo_status]
+        desc: "FIFO 中可用样本帧数；读完全部样本、写 FIFO_CFG(0x3E) 或写 FIFO_WM_LVL(0x31) 会将计数清零。向 0x3E 写 0x00 或对 0x31 执行任意写操作也会自动清空 FIFO"
+        fields:
+          - name: reserved7
+            bits: "7:7"
+            desc: "保留"
+          - name: fifo_frame_counter
+            bits: "6:0"
+            desc: "FIFO 可用样本帧数，最大有效帧数为 64"
+
+      - addr: 0x0F
+        name: RANGE
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [accel_config, filter_config]
+        desc: "加速度量程及高通/低通滤波选择寄存器"
+        fields:
+          - name: reserved7
+            bits: "7:7"
+            desc: "保留"
+          - name: hpf
+            bits: "6:4"
+            desc: "高通滤波截止频率，相对于当前 ODR"
+            values:
+              0x00: "ODR/10"
+              0x01: "ODR/25"
+              0x02: "ODR/50"
+              0x03: "ODR/100"
+              0x04: "ODR/200"
+              0x05: "ODR/200"
+              0x06: "ODR/200"
+              0x07: "ODR/200"
+          - name: lpf_hpf_sel
+            bits: "3:3"
+            desc: "输出滤波器选择"
+            values:
+              0x00: "低通滤波 LPF"
+              0x01: "高通滤波 HPF"
+          - name: range
+            bits: "2:0"
+            desc: "加速度满量程；对应典型灵敏度为 ±2g: 0.061mg/LSB，±4g: 0.122mg/LSB，±8g: 0.244mg/LSB，±16g: 0.488mg/LSB"
+            values:
+              0x01: "±2g"
+              0x02: "±4g"
+              0x03: "±8g"
+              0x04: "±16g"
+
+      - addr: 0x10
+        name: OSR_LPF_ASLP
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [accel_config, odr_config, filter_config, power_config]
+        desc: "低功耗过采样、低通滤波级数和自动低功耗输出率配置"
+        fields:
+          - name: en_aslp
+            bits: "7:7"
+            desc: "自动低功耗 ASLP 使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: nlpf
+            bits: "6:5"
+            desc: "低通滤波级数"
+            values:
+              0x00: "NLPF=1"
+              0x01: "NLPF=2"
+              0x02: "NLPF=4"
+              0x03: "NLPF=8"
+          - name: odr_aslp
+            bits: "4:3"
+            desc: "ASLP 状态下的输出数据率"
+            values:
+              0x00: "6.25 Hz"
+              0x01: "3.125 Hz"
+              0x02: "1.56 Hz"
+              0x03: "0.78 Hz"
+          - name: osr
+            bits: "2:0"
+            desc: "低功耗模式过采样率及允许的最大 ODR；若 PM.ODR 大于该上限，实际 ODR 被限制为上限"
+            values:
+              0x00: "OSR1，最大 ODR 1600 Hz"
+              0x01: "OSR2，最大 ODR 800 Hz"
+              0x02: "OSR4，最大 ODR 400 Hz"
+              0x03: "OSR8，最大 ODR 200 Hz"
+              0x04: "OSR16，最大 ODR 100 Hz"
+              0x05: "OSR32，最大 ODR 50 Hz"
+
+      - addr: 0x11
+        name: PM
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [power_config, odr_config, conversion_control]
+        desc: "电源模式、按需转换和输出数据率配置。推荐上电初始化先写 0x80 进入 Full Mode；软复位前也必须先将 bit7 写 1"
+        fields:
+          - name: mode
+            bits: "7:7"
+            desc: "基本工作状态"
+            values:
+              0x00: "Suspend Mode"
+              0x01: "Active Mode"
+          - name: lpm
+            bits: "6:6"
+            desc: "Active 状态下的功耗模式选择"
+            values:
+              0x00: "Full Mode"
+              0x01: "Low Power Mode"
+          - name: odc_bit
+            bits: "5:5"
+            desc: "按需转换控制；ODC_MODE=0 时写 1 触发一次转换，数据就绪后自动清零"
+            values:
+              0x00: "Normal Mode / 未触发"
+              0x01: "ODC Mode / 触发转换"
+          - name: odc_mode
+            bits: "4:4"
+            desc: "按需转换触发源选择"
+            values:
+              0x00: "接口写 ODC_BIT 触发，数据就绪后自动清除 ODC_BIT"
+              0x01: "INT2 上升沿触发，不自动清除 ODC_BIT"
+          - name: odr
+            bits: "3:0"
+            desc: "输出数据率选择；低功耗模式下还受 OSR 最大 ODR 限制"
+            values:
+              0x00: "1600 Hz"
+              0x01: "800 Hz"
+              0x02: "400 Hz"
+              0x03: "200 Hz"
+              0x04: "100 Hz"
+              0x05: "50 Hz"
+              0x06: "25 Hz"
+              0x07: "12.5 Hz"
+              0x08: "6.25 Hz"
+              0x09: "3.125 Hz"
+              0x0A: "1.56 Hz"
+              0x0B: "0.78 Hz"
+              0x0C: "0.78 Hz"
+              0x0D: "0.78 Hz"
+              0x0E: "0.78 Hz"
+              0x0F: "0.78 Hz"
+
+      - addr: 0x17
+        name: DATA_INT_CTRL
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_config, fifo_config, data_ready]
+        desc: "FIFO 和数据就绪中断使能寄存器"
+        fields:
+          - name: fifo_or_en
+            bits: "7:7"
+            desc: "FIFO Over-Run 中断使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: fifo_wm_en
+            bits: "6:6"
+            desc: "FIFO Watermark 中断使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: fifo_full_en
+            bits: "5:5"
+            desc: "FIFO Full 中断使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: drdy_en
+            bits: "4:4"
+            desc: "数据就绪中断使能；该中断固定为非锁存模式"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: reserved3_0
+            bits: "3:0"
+            desc: "保留"
+
+      - addr: 0x18
+        name: MOTION_INT_CTRL
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_config, motion_config]
+        desc: "No Motion 和 Any Motion 各轴检测使能寄存器"
+        fields:
+          - name: nmd_x
+            bits: "7:7"
+            desc: "X 轴 No Motion 检测使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: nmd_z
+            bits: "6:6"
+            desc: "Z 轴 No Motion 检测使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: nmd_y
+            bits: "5:5"
+            desc: "Y 轴 No Motion 检测使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: reserved4_3
+            bits: "4:3"
+            desc: "保留"
+          - name: amd_x
+            bits: "2:2"
+            desc: "X 轴 Any Motion 检测使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: amd_z
+            bits: "1:1"
+            desc: "Z 轴 Any Motion 检测使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+          - name: amd_y
+            bits: "0:0"
+            desc: "Y 轴 Any Motion 检测使能"
+            values:
+              0x00: "禁用"
+              0x01: "使能"
+
+      - addr: 0x19
+        name: INT1_MAP_CTRL0
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_map]
+        desc: "No Motion 和 Significant Motion 中断到 INT1 的映射寄存器"
+        fields:
+          - name: reserved7_2
+            bits: "7:2"
+            desc: "保留"
+          - name: nmd
+            bits: "1:1"
+            desc: "No Motion 中断映射到 INT1"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT1"
+          - name: sigmd
+            bits: "0:0"
+            desc: "Significant Motion 中断映射到 INT1"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT1"
+
+      - addr: 0x1A
+        name: INT1_MAP_CTRL1
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_map]
+        desc: "FIFO、数据就绪和 Any Motion 中断到 INT1 的映射寄存器"
+        fields:
+          - name: fifo_or
+            bits: "7:7"
+            desc: "FIFO Over-Run 中断映射到 INT1"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT1"
+          - name: fifo_watermark
+            bits: "6:6"
+            desc: "FIFO Watermark 中断映射到 INT1"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT1"
+          - name: fifo_full
+            bits: "5:5"
+            desc: "FIFO Full 中断映射到 INT1"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT1"
+          - name: drdy
+            bits: "4:4"
+            desc: "Data Ready 中断映射到 INT1"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT1"
+          - name: reserved3_1
+            bits: "3:1"
+            desc: "保留"
+          - name: amd
+            bits: "0:0"
+            desc: "Any Motion 中断映射到 INT1"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT1"
+
+      - addr: 0x1B
+        name: INT2_MAP_CTRL0
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_map]
+        desc: "No Motion 和 Significant Motion 中断到 INT2 的映射寄存器"
+        fields:
+          - name: reserved7_2
+            bits: "7:2"
+            desc: "保留"
+          - name: nmd
+            bits: "1:1"
+            desc: "No Motion 中断映射到 INT2"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT2"
+          - name: sigmd
+            bits: "0:0"
+            desc: "Significant Motion 中断映射到 INT2"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT2"
+
+      - addr: 0x1C
+        name: INT2_MAP_CTRL1
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interrupt_map]
+        desc: "FIFO、数据就绪和 Any Motion 中断到 INT2 的映射寄存器"
+        fields:
+          - name: fifo_or
+            bits: "7:7"
+            desc: "FIFO Over-Run 中断映射到 INT2"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT2"
+          - name: fifo_watermark
+            bits: "6:6"
+            desc: "FIFO Watermark 中断映射到 INT2"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT2"
+          - name: fifo_full
+            bits: "5:5"
+            desc: "FIFO Full 中断映射到 INT2"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT2"
+          - name: drdy
+            bits: "4:4"
+            desc: "Data Ready 中断映射到 INT2"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT2"
+          - name: reserved3_1
+            bits: "3:1"
+            desc: "保留"
+          - name: amd
+            bits: "0:0"
+            desc: "Any Motion 中断映射到 INT2"
+            values:
+              0x00: "不映射"
+              0x01: "映射到 INT2"
+
+      - addr: 0x20
+        name: INTPIN_CONF
+        access: RW
+        width: 1
+        reset: 0x05
+        roles: [interface_config, interrupt_config]
+        desc: "SPI 线制、SENB 上拉及 INT1/INT2 电气属性配置"
+        fields:
+          - name: dis_pu_senb
+            bits: "7:7"
+            desc: "SENB 引脚内部上拉禁用"
+            values:
+              0x00: "使能内部上拉"
+              0x01: "禁用内部上拉"
+          - name: reserved6
+            bits: "6:6"
+            desc: "保留"
+          - name: en_spi3w
+            bits: "5:5"
+            desc: "SPI 线制选择"
+            values:
+              0x00: "4 线 SPI"
+              0x01: "3 线 SPI"
+          - name: reserved4
+            bits: "4:4"
+            desc: "保留"
+          - name: int2_od
+            bits: "3:3"
+            desc: "INT2 输出类型"
+            values:
+              0x00: "推挽输出"
+              0x01: "开漏输出"
+          - name: int2_lvl
+            bits: "2:2"
+            desc: "INT2 有效电平"
+            values:
+              0x00: "低电平有效"
+              0x01: "高电平有效"
+          - name: int1_od
+            bits: "1:1"
+            desc: "INT1 输出类型"
+            values:
+              0x00: "推挽输出"
+              0x01: "开漏输出"
+          - name: int1_lvl
+            bits: "0:0"
+            desc: "INT1 有效电平"
+            values:
+              0x00: "低电平有效"
+              0x01: "高电平有效"
+
+      - addr: 0x21
+        name: INT_CFG0
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interface_config, interrupt_config]
+        desc: "I2C、SDX 上拉和中断锁存配置。Smart Low Power Mode 仅支持非锁存模式，此时 LATCH_INT 必须为 0"
+        fields:
+          - name: reserved7_6
+            bits: "7:6"
+            desc: "保留"
+          - name: dis_i2c
+            bits: "5:5"
+            desc: "I2C 接口禁用；SPI 模式下建议置 1"
+            values:
+              0x00: "使能 I2C"
+              0x01: "禁用 I2C"
+          - name: reserved4
+            bits: "4:4"
+            desc: "保留"
+          - name: dis_pu_sdx
+            bits: "3:3"
+            desc: "SDX 引脚内部上拉禁用"
+            values:
+              0x00: "使能内部上拉"
+              0x01: "禁用内部上拉"
+          - name: reserved2_1
+            bits: "2:1"
+            desc: "保留"
+          - name: latch_int
+            bits: "0:0"
+            desc: "运动和 FIFO 中断锁存模式选择；数据就绪中断始终为非锁存"
+            values:
+              0x00: "非锁存模式"
+              0x01: "锁存模式"
+
+      - addr: 0x22
+        name: INT_CFG1
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [interface_config, interrupt_config]
+        desc: "数字引脚上拉和驱动强度配置；Rev D 第 39 页本节表格地址误印为 0x21，寄存器映射及章节标题均表明实际地址为 0x22"
+        fields:
+          - name: en_pu_scx
+            bits: "7:7"
+            desc: "SCX 引脚内部上拉使能"
+            values:
+              0x00: "禁用内部上拉"
+              0x01: "使能内部上拉"
+          - name: dis_pu_ad0
+            bits: "6:6"
+            desc: "AD0 引脚内部上拉禁用"
+            values:
+              0x00: "使能内部上拉"
+              0x01: "禁用内部上拉"
+          - name: en_pu_int2
+            bits: "5:5"
+            desc: "INT2 引脚内部上拉使能"
+            values:
+              0x00: "禁用内部上拉"
+              0x01: "使能内部上拉"
+          - name: en_pu_int1
+            bits: "4:4"
+            desc: "INT1 引脚内部上拉使能"
+            values:
+              0x00: "禁用内部上拉"
+              0x01: "使能内部上拉"
+          - name: ds_sdx
+            bits: "3:3"
+            desc: "SDX 驱动强度"
+            values:
+              0x00: "普通驱动强度"
+              0x01: "增强驱动强度"
+          - name: ds_ad0
+            bits: "2:2"
+            desc: "AD0 驱动强度"
+            values:
+              0x00: "普通驱动强度"
+              0x01: "增强驱动强度"
+          - name: ds_int2
+            bits: "1:1"
+            desc: "INT2 驱动强度"
+            values:
+              0x00: "普通驱动强度"
+              0x01: "增强驱动强度"
+          - name: ds_int1
+            bits: "0:0"
+            desc: "INT1 驱动强度"
+            values:
+              0x00: "普通驱动强度"
+              0x01: "增强驱动强度"
+
+      - addr: 0x2C
+        name: MOTION_CFG0
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [motion_config]
+        desc: "No Motion 和 Any Motion 持续时间配置"
+        fields:
+          - name: no_mot_dur
+            bits: "7:2"
+            desc: "No Motion 条件连续满足时间。高 2 位=00: (低4位+1)*1s；高2位=01: (低4位+4)*5s；高2位=1x: (低4位+10)*10s"
+          - name: any_mot_dur
+            bits: "1:0"
+            desc: "Any Motion 条件必须连续满足的采样数"
+            values:
+              0x00: "1 个样本"
+              0x01: "2 个样本"
+              0x02: "3 个样本"
+              0x03: "4 个样本"
+
+      - addr: 0x2D
+        name: NO_MOTION_THR_CFG
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [motion_config]
+        desc: "No Motion 阈值配置"
+        fields:
+          - name: no_mot_th
+            bits: "7:0"
+            desc: "No Motion 阈值；TH = NO_MOT_TH * 16 * LSB，LSB 取决于当前量程"
+
+      - addr: 0x2E
+        name: ANY_MOTION_THR_CFG
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [motion_config]
+        desc: "Any Motion 阈值配置"
+        fields:
+          - name: any_mot_th
+            bits: "7:0"
+            desc: "Any Motion 阈值。ANY_MOT_IN_SEL=0: TH=值*16LSB，约为 值*(Range/2)/255；ANY_MOT_IN_SEL=1: TH=值*32LSB，约为 值*Range/255。ANY_MOT_IN_SEL 位于 0x2F.bit6"
+
+      - addr: 0x2F
+        name: MOTION_CFG2
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [motion_config, filter_config]
+        desc: "运动检测输入滤波、Significant Motion 时间和类型选择配置"
+        fields:
+          - name: rff_bp_lpf
+            bits: "7:7"
+            desc: "输出数据和 FIFO 数据的低通滤波旁路；字段名按手册 RFF_BP_LPF 保留"
+            values:
+              0x00: "经过 LPF"
+              0x01: "旁路 LPF"
+          - name: any_mot_in_sel
+            bits: "6:6"
+            desc: "Any Motion 输入类型"
+            values:
+              0x00: "Slope 相邻采样差分"
+              0x01: "Acceleration 绝对加速度"
+          - name: sig_mot_tproof
+            bits: "5:4"
+            desc: "Significant Motion T_PROOF；T_PROOF = 0.25s * 2^value"
+            values:
+              0x00: "0.25 s"
+              0x01: "0.5 s"
+              0x02: "1 s"
+              0x03: "2 s"
+          - name: sig_mot_tskip
+            bits: "3:2"
+            desc: "Significant Motion T_SKIP；手册公式写作 1.5s * 2^TPROOF，结合字段名应使用本字段值，原文可能存在笔误"
+            values:
+              0x00: "1.5 s"
+              0x01: "3 s"
+              0x02: "6 s"
+              0x03: "12 s"
+          - name: reserved1
+            bits: "1:1"
+            desc: "保留"
+          - name: sig_mot_sel
+            bits: "0:0"
+            desc: "运动中断算法选择"
+            values:
+              0x00: "Any Motion"
+              0x01: "Significant Motion"
+
+      - addr: 0x30
+        name: RST_MOTION_CFG
+        access: RW
+        width: 1
+        reset: 0x3F
+        roles: [motion_config, reset_control]
+        desc: "运动检测输入滤波和检测器复位控制；任一 *_RST_N 位写 0 可复位对应检测器，复位后必须写回 1"
+        fields:
+          - name: mo_bp_lpf
+            bits: "7:7"
+            desc: "运动检测输入低通滤波旁路"
+            values:
+              0x00: "经过 LPF"
+              0x01: "旁路 LPF"
+          - name: reserved6_3
+            bits: "6:3"
+            desc: "保留；复位值中的 bit5:3 为 1"
+          - name: no_mot_rst_n
+            bits: "2:2"
+            desc: "No Motion 检测器低有效复位；写 0 复位，随后写回 1"
+          - name: sig_mot_rst_n
+            bits: "1:1"
+            desc: "Significant Motion 检测器低有效复位；写 0 复位，随后写回 1"
+          - name: any_mot_rst_n
+            bits: "0:0"
+            desc: "Any Motion 检测器低有效复位；写 0 复位，随后写回 1"
+
+      - addr: 0x31
+        name: FIFO_WM_LVL
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [fifo_config]
+        desc: "FIFO Watermark 水位配置；FIFO 帧数达到设定值时可产生中断。修改本寄存器会将 FIFO_FRAME_COUNT 清零并清空 FIFO，最大有效水位为 64"
+        fields:
+          - name: reserved7
+            bits: "7:7"
+            desc: "保留"
+          - name: fifo_watermark_level
+            bits: "6:0"
+            desc: "FIFO Watermark 帧数，最大有效值 64"
+
+      - addr: 0x32
+        name: SELFTEST
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [self_test, interrupt_config, data_config]
+        desc: "传感器自检、中断读取清除方式和数据 Shadow 配置"
+        fields:
+          - name: selftest_bit
+            bits: "7:7"
+            desc: "传感器自检使能；使能后需要等待输出稳定"
+            values:
+              0x00: "正常模式"
+              0x01: "启用自检"
+          - name: int_rd_clr
+            bits: "6:6"
+            desc: "状态寄存器读取清除方式"
+            values:
+              0x00: "读取 0x09~0x0B 中某一寄存器时仅清除该寄存器对应中断"
+              0x01: "锁存模式下读取 0x09~0x0B 任一寄存器时清除全部中断"
+          - name: shadow_dis
+            bits: "5:5"
+            desc: "数据寄存器 Shadow 功能；Shadow 用于在连续读取开始后保持数据不变"
+            values:
+              0x00: "使能 Shadow"
+              0x01: "禁用 Shadow"
+          - name: reserved4_0
+            bits: "4:0"
+            desc: "保留"
+
+      - addr: 0x33
+        name: NVM
+        access: RW
+        width: 1
+        roles: [nvm_status, nvm_control]
+        desc: "OTP/NVM 加载控制和状态；复位值因芯片而异。芯片处于 Wake Mode 时写 0x08 可重新加载 OTP；上电初始化应轮询 bit0 和 bit2 均为 1"
+        fields:
+          - name: reserved7_4
+            bits: "7:4"
+            desc: "保留"
+          - name: nvm_load
+            bits: "3:3"
+            access: RW_SC
+            desc: "写 1 触发 NVM 加载，加载触发后自动清零"
+          - name: nvm_rdy
+            bits: "2:2"
+            access: RO
+            desc: "NVM 编程状态"
+            values:
+              0x00: "NVM 忙"
+              0x01: "NVM 就绪"
+          - name: reserved1
+            bits: "1:1"
+            desc: "保留"
+          - name: nvm_load_done
+            bits: "0:0"
+            access: RO
+            desc: "NVM 加载完成状态"
+            values:
+              0x00: "尚未完成"
+              0x01: "加载完成"
+
+      - addr: 0x36
+        name: SW_RESET
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [command, reset_control]
+        desc: "软件复位命令寄存器；必须先将 PM(0x11).bit7 置 1，再写 0xB6。命令会触发软复位并将全部寄存器恢复默认值"
+        fields:
+          - name: cmd
+            bits: "7:0"
+            desc: "软件复位命令"
+            values:
+              0xB6: "触发软件复位"
+
+      - addr: 0x3E
+        name: FIFO_CFG
+        access: RW
+        width: 1
+        reset: 0x07
+        roles: [fifo_config]
+        desc: "FIFO 工作模式和三轴数据存储使能。写本寄存器会将 FIFO_FRAME_COUNT 清零；写 0x00 会自动清空 FIFO"
+        fields:
+          - name: fifo_mode
+            bits: "7:6"
+            desc: "FIFO 工作模式"
+            values:
+              0x00: "Bypass，FIFO 禁用"
+              0x01: "FIFO 模式"
+              0x02: "Stream 模式"
+              0x03: "FIFO 模式，与 0x01 相同"
+          - name: reserved5_3
+            bits: "5:3"
+            desc: "保留"
+          - name: fifo_en_x
+            bits: "2:2"
+            desc: "X 轴数据写入 FIFO"
+            values:
+              0x00: "不存储 X 轴"
+              0x01: "存储 X 轴"
+          - name: fifo_en_z
+            bits: "1:1"
+            desc: "Z 轴数据写入 FIFO"
+            values:
+              0x00: "不存储 Z 轴"
+              0x01: "存储 Z 轴"
+          - name: fifo_en_y
+            bits: "0:0"
+            desc: "Y 轴数据写入 FIFO"
+            values:
+              0x00: "不存储 Y 轴"
+              0x01: "存储 Y 轴"
+
+      - addr: 0x3F
+        name: FIFO_DATA
+        access: RO
+        width: 1
+        reset: 0x00
+        no_dump: true
+        no_dump_reason: "FIFO 顺序读取端口；普通寄存器遍历会消耗 FIFO 数据并改变读指针，应根据 FIFO_FRAME_COUNT 和 FIFO_CFG 连续读取"
+        roles: [fifo_data, stream_port]
+        desc: "FIFO 流式数据读取端口，数据格式由 FIFO_CFG(0x3E).FIFO_EN_X/Z/Y 决定。寄存器映射标为 R，Rev D 第 44 页细表标为 RW；依据其只读数据端口语义按 RO 建模"
+        fields:
+          - name: fifo_data
+            bits: "7:0"
+            desc: "当前 FIFO 数据字节；读取会推进 FIFO 数据流"
+
+      - addr: 0x57
+        name: ANA_SETTING
+        access: RW
+        width: 1
+        roles: [initialization, undocumented]
+        desc: "模拟模块初始化设置；Rev D 第 18 页推荐上电初始化写 0x07，但第 9 章寄存器表未提供位定义和复位值，不应修改为其它值"
+        fields:
+          - name: init_value
+            bits: "7:0"
+            desc: "推荐初始化值"
+            values:
+              0x07: "手册推荐的 ANA Setting"
+
+      - addr: 0x60
+        name: RSV1
+        access: RW
+        width: 1
+        reset: 0x00
+        roles: [initialization, undocumented]
+        desc: "内部模块初始化控制；客户应在初始化时写 0x04。Rev D 第 44 页章节标题和寄存器映射地址为 0x60，但细表地址误印为 0x3F，本文按 0x60 建模"
+        fields:
+          - name: init_value
+            bits: "7:0"
+            desc: "手册未公开位定义，仅规定初始化写值"
+            values:
+              0x04: "禁用手册指定的内部模块"
